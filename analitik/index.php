@@ -49,13 +49,25 @@ sv_head('Kesehatan Penghimpunan', 'Data &amp; Analitik');
 .chip button{border:0;background:none;cursor:pointer;padding:6px;font:inherit;color:inherit}
 .chip button.x{color:var(--mute);font-size:12px}
 @media (max-width:560px){.sl{grid-template-columns:1fr 64px}.sl label{grid-column:1/-1}}
+.katg{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.kat{display:flex;flex-direction:column;overflow:hidden}
+.kat .viz{position:relative;background:var(--bg);border-bottom:1px solid var(--line);padding:32px 16px 10px}
+.kat .ilu{position:absolute;top:8px;right:10px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.kat .kb{padding:14px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.kat h3{margin:0;font-size:16px}
+.kat .q{margin:0;font-size:14px}
+.kat dl{margin:0;display:flex;flex-direction:column;gap:2px;font-size:13px;flex:1}
+.kat dt{font-weight:700;color:var(--mute);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;margin-top:6px}
+.kat dd{margin:0;color:var(--mute)}
+.kat .btn{align-self:flex-start;margin-top:6px}
 @media print{.top,.inbox,.noprint{display:none!important}.grid2{display:block}body{background:#fff}.card{box-shadow:none}}
 </style>
 <main class="wrap" style="display:flex;flex-direction:column;gap:18px;padding-top:22px">
   <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
     <div style="flex:1;min-width:240px"><p class="mute small" style="margin:0 0 4px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Data &amp; Analitik</p>
       <h1>Kesehatan Penghimpunan</h1>
-      <p class="mute" style="margin:6px 0 0;max-width:70ch">Isi angka rekap tahunan lembaga. Hasil langsung muncul tanpa perlu mengunggah data donatur: hanya angka total yang diperlukan, tidak ada nama atau data pribadi.</p></div>
+      <p class="mute" style="margin:6px 0 0;max-width:70ch">Isi angka rekap tahunan lembaga. Hasil langsung muncul tanpa perlu mengunggah data donatur: hanya angka total yang diperlukan, tidak ada nama atau data pribadi.</p>
+      <p class="mute small" style="margin:8px 0 0;max-width:72ch">Berbeda dengan <a href="/asesmen/">Asesmen Kesiapan Penghimpunan</a>, yang hasilnya ditelaah tim Zakademia lalu dikirim lewat email, hasil di halaman ini langsung keluar dan dapat dipakai saat itu juga.</p></div>
     <div class="noprint" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn ghost sm" type="button" id="btnNew">Analisis baru</button><button class="btn ghost sm" type="button" onclick="window.print()">Cetak / PDF</button></div>
   </div>
   <div class="chips noprint" id="saved"></div>
@@ -94,9 +106,19 @@ sv_head('Kesehatan Penghimpunan', 'Data &amp; Analitik');
 
     <section class="res" id="res" aria-live="polite"></section>
   </div>
+  <section class="noprint" style="display:flex;flex-direction:column;gap:14px;margin-top:18px;border-top:1px solid var(--line);padding-top:26px">
+    <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px"><p class="mute small" style="margin:0 0 4px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Analitik lanjutan · melalui konsultasi</p>
+        <h2 style="font-size:clamp(20px,2.6vw,26px)">Ketika angka rekap belum cukup</h2>
+        <p class="mute" style="margin:6px 0 0;max-width:72ch">Analisis berikut memerlukan data per donatur atau per transaksi, dari ribuan hingga jutaan baris. Data diolah bersama tim Zakademia dengan perjanjian kerahasiaan, identitas donatur dapat disamarkan, dan hasilnya dipresentasikan kepada pimpinan lembaga.</p></div>
+      <a class="btn" href="/?topik=Data%20%26%20Analitik#kontak">Jadwalkan konsultasi</a>
+    </div>
+    <div id="katalog" class="katg"></div>
+  </section>
 </main>
 <script>
 var CSRF=<?= json_encode($_SESSION['csrf']) ?>,SAVED=<?= json_encode($saved, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>,ORG=<?= json_encode($u['org'] ?: $u['name'], JSON_HEX_TAG) ?>;
 </script>
-<script src="/analitik/an.js?v=1"></script>
+<script src="/analitik/an.js?v=2"></script>
+<script src="/analitik/katalog.js?v=2"></script>
 </body></html>

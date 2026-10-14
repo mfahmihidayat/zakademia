@@ -354,3 +354,9 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
 
   document.getElementById('againBtn').addEventListener('click',function(){ok.hidden=true;form.hidden=false;});
 })();
+
+// isi otomatis formulir kontak dari tautan konsultasi (?topik=…&pesan=…#kontak)
+(function(){try{var q=new URLSearchParams(location.search),tp=q.get('topik'),ps=q.get('pesan');if(!tp&&!ps)return;
+  var j=document.getElementById('c-jenis'),m=document.getElementById('c-pesan');
+  if(j&&tp)[].forEach.call(j.options,function(o){if(o.text===tp)j.value=o.value||o.text;});
+  if(m&&ps&&!m.value)m.value=ps;}catch(_){}})();
