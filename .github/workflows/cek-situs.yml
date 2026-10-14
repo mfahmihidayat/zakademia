@@ -19,12 +19,10 @@ jobs:
           case " $ipweb " in *" $ipftp "*) same="SAMA";; *) same="BEDA";; esac
           echo "::notice::DNS zakademia.com = $ipweb | www = $ipwww | server FTP vs web: $same"
           echo "::notice::NS = $(dig +short NS zakademia.com | tr '\n' ' ')"
-          for u in https://zakademia.com/asesmen https://zakademia.com/asesmen/ http://zakademia.com/asesmen/ https://www.zakademia.com/asesmen https://zakademia.com/asesmen/admin.php https://zakademia.com/asesmen/index.html; do
-            for ip in $(dig +short zakademia.com A); do
-              h=$(curl -s -o /dev/null -w "%{http_code} redirect=%{redirect_url}" --max-time 20 --resolve "zakademia.com:443:$ip" --resolve "zakademia.com:80:$ip" "$u")
-              hd=$(curl -sI --max-time 20 --resolve "zakademia.com:443:$ip" "$u" | grep -i -E '^(x-hcdn-[a-z-]*|age|cache-control|x-cache[a-z-]*|location):' | tr -d '\r' | tr '\n' ';')
-              echo "::notice::[$ip] $u -> $h | $hd"
-            done
+          for u in /asesmen/ /asesmen/masuk.php /asesmen/daftar.php /asesmen/lupa.php /asesmen/akun.php /asesmen/admin.php /asesmen/data/asesmen.sqlite; do
+            h=$(curl -s -o /dev/null -w "%{http_code} redirect=%{redirect_url}" --max-time 20 "https://zakademia.com$u?cek=$RANDOM")
+            echo "::notice::$u -> $h"
           done
+          echo "::notice::akun.php?api=me -> $(curl -s --max-time 20 "https://zakademia.com/asesmen/akun.php?api=me")"
           curl -s --max-time 20 https://zakademia.com/ -o /tmp/live.html
           if cmp -s /tmp/live.html index.html; then echo "::notice::index.html di web SAMA dengan repositori"; else echo "::notice::index.html di web BEDA dengan repositori ($(wc -c < /tmp/live.html)B vs $(wc -c < index.html)B): $(head -c 300 /tmp/live.html | tr '\n' ' ')"; fi
