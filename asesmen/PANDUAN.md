@@ -68,3 +68,4 @@ Tambahkan tombol atau tautan "Ikuti asesmen" ke `https://zakademia.com/asesmen/`
 - **Email hasil tidak sampai:** periksa folder spam penerima dan menu Email Deliverability. Sebagian hosting membatasi fungsi `mail()`; tanyakan ke penyedia hosting bila email sama sekali tidak terkirim.
 - **Pesan "terlalu sering" saat mengisi:** satu alamat IP dibatasi 5 kiriman per 10 menit. Ubah `rate_limit` di `config.php` bila perlu.
 - **Cadangan data:** unduh `asesmen/data/asesmen.sqlite` secara berkala, atau gunakan fitur Backup di cPanel.
+- **Reset akun admin tanpa email:** ubah `admin_reset` di `config.php` ke nilai baru (misalnya `r2`) dan `setup_code_hash` ke hash SHA-256 kode penyiapan baru, lalu deploy. Semua akun admin terhapus satu kali; akun lembaga dan kiriman tetap. Buka `admin.php` dan buat akun admin dengan kode tersebut.

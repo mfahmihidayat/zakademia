@@ -78,7 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $f['name'] = clip($_POST['name'] ?? '', 120);
     $f['email'] = clip($_POST['email'] ?? '', 160);
     $p1 = (string)($_POST['password'] ?? '');
+    $codeHash = (string)(cfg('setup_code_hash') ?? '');
+    $code = strtoupper(trim((string)($_POST['kode'] ?? '')));
     if (!form_csrf_ok()) $error = 'Sesi kedaluwarsa. Silakan coba lagi.';
+    elseif (!throttle_ok('setup|' . ip_key(), 8, 3600)) $error = 'Terlalu banyak percobaan. Coba lagi dalam satu jam.';
+    elseif ($codeHash !== '' && !hash_equals($codeHash, hash('sha256', $code))) { throttle_hit('setup|' . ip_key()); $error = 'Kode penyiapan salah.'; }
     elseif ($f['name'] === '') $error = 'Nama wajib diisi.';
     elseif (!valid_email($f['email'])) $error = 'Alamat email belum benar.';
     elseif (mb_strlen($p1) < 10) $error = 'Kata sandi minimal 10 karakter.';
@@ -99,10 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 page('Buat akun admin', '
 <h1>Buat akun admin</h1>
-<p class="mute">Halaman ini hanya muncul sekali, selama belum ada akun admin. Gunakan email yang bisa Anda buka, karena "Lupa kata sandi" mengirim tautan ke email ini.</p>
+<p class="mute">Halaman ini hanya muncul sekali, selama belum ada akun admin. Isi kode penyiapan yang diberikan, lalu gunakan email yang bisa Anda buka (boleh Gmail pribadi), karena "Lupa kata sandi" mengirim tautan ke email ini.</p>
 ' . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
 <form method="post" action="admin.php" style="display:flex;flex-direction:column;gap:14px">
   ' . csrf_field() . '
+  ' . (cfg('setup_code_hash') ? '<label>Kode penyiapan<input name="kode" required autocomplete="off" placeholder="XXXX-XXXX-XXXX" style="text-transform:uppercase;letter-spacing:.08em"></label>' : '') . '
   <label>Nama<input name="name" value="' . e($f['name']) . '" required maxlength="120" autocomplete="name"></label>
   <label>Email admin<input type="email" name="email" value="' . e($f['email']) . '" required autocomplete="email"></label>
   <label>Kata sandi (minimal 10 karakter)<input type="password" name="password" required minlength="10" autocomplete="new-password"></label>

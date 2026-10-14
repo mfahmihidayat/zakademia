@@ -45,6 +45,7 @@ function db(): PDO
     $pdo->exec('CREATE TABLE IF NOT EXISTS attempts (k TEXT NOT NULL, ts INTEGER NOT NULL)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_attempts ON attempts (k, ts)');
     migrate_admin_json($pdo);
+    apply_admin_reset($pdo);
     return $pdo;
 }
 
@@ -120,6 +121,17 @@ function migrate_admin_json(PDO $pdo): void
             ->execute([$email, 'Admin Zakademia', 'Zakademia', 'admin', $d['hash'], gmdate('c')]);
     }
     @rename($f, $f . '.lama');
+}
+
+/** Hapus semua akun admin satu kali untuk setiap nilai admin_reset baru di config.php. */
+function apply_admin_reset(PDO $pdo): void
+{
+    $tag = (string)(cfg('admin_reset') ?? '');
+    $f = data_dir() . '/admin_reset.txt';
+    if ($tag === '' || (is_file($f) && trim((string)file_get_contents($f)) === $tag)) return;
+    $pdo->exec('DELETE FROM resets WHERE user_id IN (SELECT id FROM users WHERE role = "admin")');
+    $pdo->exec('DELETE FROM users WHERE role = "admin"');
+    file_put_contents($f, $tag);
 }
 
 function current_user(): ?array
