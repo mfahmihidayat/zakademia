@@ -19,7 +19,7 @@ Pengaturan yang diperlukan di **Settings → Secrets and variables → Actions**
 | `FTP_SERVER` | Secret | Alamat FTP dari hPanel, misalnya `ftp.zakademia.com` |
 | `FTP_USERNAME` | Secret | Nama pengguna FTP |
 | `FTP_PASSWORD` | Secret | Kata sandi FTP |
-| `FTP_DIR` | Variable (opsional) | Folder tujuan bila bukan `public_html/` |
+| `FTP_DIR` | Variable (opsional) | Folder tujuan bila bukan `/domains/zakademia.com/public_html/` |
 
 Folder `asesmen/data/` berisi database kiriman dan kata sandi admin. Folder ini dibuat otomatis di server, dilindungi `.htaccess`, dan tidak pernah diunggah atau ditimpa oleh penerbitan.
 
