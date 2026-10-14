@@ -15,4 +15,5 @@ jobs:
         run: |
           sudo apt-get -qq install -y lftp >/dev/null
           lftp -u "$U,$P" "$S" -e "set ftp:ssl-allow no; set net:max-retries 2; set net:timeout 20; pwd; cls -1 --sort=name -a; echo ---public_html; cls -1 -a public_html; echo ---domains; cls -1 domains; echo ---domains/zakademia.com; cls -1 -a domains/zakademia.com; echo ---domains/zakademia.com/public_html; cls -1 -a domains/zakademia.com/public_html; echo ---public_html/domains; cls -1 public_html/domains; bye" > daftar.txt 2>&1 || true
-          while IFS= read -r line; do echo "::notice::$line"; done < daftar.txt
+          # Satu anotasi per bagian, karena GitHub hanya menampilkan 10 anotasi per langkah.
+          awk 'BEGIN{sec="awal"} /^---/{print sec"|"buf; sec=$0; buf=""; next} {gsub(/\/home\/[^\/]*/,"/home/USER"); buf=buf" "$0} END{print sec"|"buf}' daftar.txt | while IFS= read -r line; do echo "::notice::$line"; done
