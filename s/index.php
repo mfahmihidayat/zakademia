@@ -52,7 +52,8 @@ $title = $s ? $def['title'] : 'Survei';
 <body>
 <main class="wrap" style="padding-top:24px" id="app">
 <?php if ($why && !$previewOwner): ?>
-  <div class="sv"><div class="card sv-done"><div class="ok" style="background:var(--mist)">i</div><h1><?= e($s ? $def['title'] : 'Survei tidak ditemukan') ?></h1><p class="mute"><?= e($why) ?></p></div>
+  <div class="sv"><div class="card sv-done"><div class="ok" style="background:var(--mist)">i</div><h1><?= e($s ? $def['title'] : 'Survei tidak ditemukan') ?></h1><p class="mute"><?= e($why) ?></p>
+  <?php if ($owner && $s['status'] === 'aktif' && sv_quota_full($s)): ?><p class="mute small">Anda melihat ini sebagai pemilik: batas <?= sv_quota($s) ?> jawaban sudah tercapai.</p><p><a class="btn" href="<?= e(sv_consult_url($s)) ?>" target="_blank" rel="noopener">Konsultasi untuk melanjutkan</a></p><?php endif; ?></div>
   <p class="sv-foot">Dibuat dengan <a href="/">Zakademia</a></p></div>
 <?php endif; ?>
 </main>

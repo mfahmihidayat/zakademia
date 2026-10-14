@@ -61,6 +61,15 @@ try {
         $pdo->prepare('UPDATE surveys SET slug = ?, status = ?, updated = ? WHERE id = ?')->execute([$slug, $status, gmdate('c'), $s['id']]);
         json_out(['ok' => true, 'slug' => $slug, 'status' => $status, 'url' => sv_public_url($slug)]);
     }
+    if ($act === 'kuota') {
+        // Hanya admin yang dapat membuka atau mengubah batas jawaban sebuah survei.
+        if ($u['role'] !== 'admin') json_out(['ok' => false, 'error' => 'Hanya admin yang dapat mengubah kuota.'], 403);
+        $raw = trim((string)($in['quota'] ?? ''));
+        if ($raw !== '' && !preg_match('/^\d{1,7}$/', $raw)) json_out(['ok' => false, 'error' => 'Isi kuota dengan angka (0 = tanpa batas), atau kosongkan untuk kembali ke bawaan.'], 422);
+        $pdo->prepare('UPDATE surveys SET quota = ? WHERE id = ?')->execute([$raw === '' ? null : (int)$raw, $s['id']]);
+        $s['quota'] = $raw === '' ? null : (int)$raw;
+        json_out(['ok' => true, 'quota' => sv_quota($s), 'custom' => $raw !== '']);
+    }
     if ($act === 'gandakan') {
         $def = json_decode($s['def'], true);
         $def['title'] = clip('Salinan ' . $def['title'], 200);

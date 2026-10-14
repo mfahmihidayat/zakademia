@@ -5,6 +5,9 @@ require_once __DIR__ . '/../asesmen/lib.php';
 const SV_TYPES = ['section', 'short', 'long', 'single', 'multi', 'dropdown', 'likert', 'matrix', 'linear', 'nps', 'rating', 'ranking', 'number', 'email', 'phone', 'date'];
 const SV_CHOICE = ['single', 'multi', 'dropdown', 'ranking'];
 const SV_RESERVED = ['index', 'admin', 'api', 'survei', 'asesmen', 'baru', 'edit', 'hasil'];
+/** Batas jawaban per survei untuk akun biasa. Admin dapat mengubahnya per survei. */
+const SV_FREE_QUOTA = 10;
+const SV_CONSULT_WA = '6285692090699';
 const LIKERT5 = ['Sangat tidak setuju', 'Tidak setuju', 'Netral', 'Setuju', 'Sangat setuju'];
 
 function sv_db(): PDO
@@ -20,6 +23,9 @@ function sv_db(): PDO
             duration INTEGER, ip_hash TEXT)');
         $pdo->exec('CREATE INDEX IF NOT EXISTS idx_resp ON responses (survey_id, created)');
         $pdo->exec('CREATE INDEX IF NOT EXISTS idx_surv_user ON surveys (user_id)');
+        // Kolom kuota: NULL = bawaan (10 untuk akun biasa, tanpa batas untuk survei milik admin), 0 = tanpa batas.
+        $cols = array_column($pdo->query('PRAGMA table_info(surveys)')->fetchAll(PDO::FETCH_ASSOC), 'name');
+        if (!in_array('quota', $cols, true)) $pdo->exec('ALTER TABLE surveys ADD COLUMN quota INTEGER');
         $done = true;
     }
     return $pdo;
@@ -219,16 +225,49 @@ function sv_clean_answers(array $def, array $in): array
     return [$ans, $err];
 }
 
+/** Kuota jawaban efektif sebuah survei: 0 = tanpa batas. */
+function sv_quota(array $s): int
+{
+    if (isset($s['quota']) && $s['quota'] !== null && $s['quota'] !== '') return max(0, (int)$s['quota']);
+    static $roles = [];
+    $uid = (int)$s['user_id'];
+    if (!isset($roles[$uid])) {
+        $q = db()->prepare('SELECT role FROM users WHERE id = ?');
+        $q->execute([$uid]);
+        $roles[$uid] = (string)$q->fetchColumn();
+    }
+    return $roles[$uid] === 'admin' ? 0 : SV_FREE_QUOTA;
+}
+
+function sv_count(array $s): int
+{
+    $q = sv_db()->prepare('SELECT COUNT(*) FROM responses WHERE survey_id = ?');
+    $q->execute([$s['id']]);
+    return (int)$q->fetchColumn();
+}
+
+/** True bila kuota (batas versi gratis atau yang diatur admin) sudah habis. */
+function sv_quota_full(array $s): bool
+{
+    $k = sv_quota($s);
+    return $k > 0 && sv_count($s) >= $k;
+}
+
+/** Tautan WhatsApp konsultasi untuk membuka kuota. */
+function sv_consult_url(array $s): string
+{
+    $t = 'Halo Zakademia, saya ingin konsultasi untuk melanjutkan survei "' . $s['title'] . '" (zakademia.com/s/' . $s['slug'] . ') yang sudah mencapai batas ' . sv_quota($s) . ' jawaban.';
+    return 'https://wa.me/' . SV_CONSULT_WA . '?text=' . rawurlencode($t);
+}
+
 /** Status survei untuk responden: null bila terbuka, atau pesan penutupan. */
 function sv_closed_reason(array $s, array $def): ?string
 {
     if ($s['status'] !== 'aktif') return $s['status'] === 'draf' ? 'Survei ini belum dibuka.' : 'Survei ini sudah ditutup. Terima kasih atas perhatian Anda.';
     if ($def['opt']['closes'] !== '' && (new DateTime('now', new DateTimeZone('Asia/Jakarta')))->format('Y-m-d') > $def['opt']['closes']) return 'Survei ini sudah ditutup. Terima kasih atas perhatian Anda.';
-    if ($def['opt']['max'] > 0) {
-        $q = sv_db()->prepare('SELECT COUNT(*) FROM responses WHERE survey_id = ?');
-        $q->execute([$s['id']]);
-        if ((int)$q->fetchColumn() >= $def['opt']['max']) return 'Kuota responden survei ini sudah terpenuhi. Terima kasih.';
-    }
+    $n = null;
+    if (sv_quota($s) > 0 && ($n = sv_count($s)) >= sv_quota($s)) return 'Survei ini sudah tidak menerima jawaban. Terima kasih atas perhatian Anda.';
+    if ($def['opt']['max'] > 0 && ($n ?? sv_count($s)) >= $def['opt']['max']) return 'Kuota responden survei ini sudah terpenuhi. Terima kasih.';
     return null;
 }
 

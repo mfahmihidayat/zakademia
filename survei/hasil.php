@@ -39,6 +39,13 @@ table.rs th{font-size:12px;color:var(--mute);background:var(--mist);position:sti
     <button class="btn ghost sm" type="button" id="btnShare">Bagikan</button>
     <?php if ($u['role'] === 'admin'): ?><a class="btn sm" href="/asesmen/admin.php?api=csv_survei&amp;id=<?= $id ?>">Unduh CSV (admin)</a><?php endif; ?>
   </div>
+<?php $kq = sv_quota($s); $kn = sv_count($s); if ($kq > 0): ?>
+  <?php if ($kn >= $kq): ?>
+  <div class="err-box" style="display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px">Batas <?= $kq ?> jawaban sudah tercapai. Survei tidak lagi menerima jawaban baru. Untuk melanjutkan pengumpulan data, silakan konsultasi dengan Zakademia.</span><a class="btn sm" href="<?= e(sv_consult_url($s)) ?>" target="_blank" rel="noopener">Konsultasi untuk melanjutkan</a></div>
+  <?php else: ?>
+  <p class="mute small" style="margin:0">Survei ini dapat menerima hingga <?= $kq ?> jawaban (tersisa <?= $kq - $kn ?>). Perlu lebih banyak? <a href="<?= e(sv_consult_url($s)) ?>" target="_blank" rel="noopener">Konsultasi dengan Zakademia</a>.</p>
+  <?php endif; ?>
+<?php endif; ?>
   <div class="kpis" id="kpis"></div>
   <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-v="sum" type="button">Ringkasan</button><button role="tab" aria-selected="false" data-v="ind" type="button">Tanggapan</button></div>
   <div id="sum" style="display:flex;flex-direction:column;gap:12px"></div>

@@ -4,7 +4,7 @@ require __DIR__ . '/lib_survei.php';
 start_session();
 $u = sv_require_user('/survei/');
 
-$sql = 'SELECT s.id, s.slug, s.title, s.status, s.updated, s.user_id, (SELECT COUNT(*) FROM responses r WHERE r.survey_id = s.id) AS n,
+$sql = 'SELECT s.id, s.slug, s.title, s.status, s.updated, s.user_id, s.quota, (SELECT COUNT(*) FROM responses r WHERE r.survey_id = s.id) AS n,
         (SELECT MAX(created) FROM responses r WHERE r.survey_id = s.id) AS last FROM surveys s';
 if ($u['role'] === 'admin' && isset($_GET['semua'])) {
     $q = sv_db()->query($sql . ' ORDER BY s.updated DESC');
@@ -13,7 +13,12 @@ if ($u['role'] === 'admin' && isset($_GET['semua'])) {
     $q->execute([$u['id']]);
 }
 $list = $q->fetchAll(PDO::FETCH_ASSOC);
-foreach ($list as &$r) { $r['url'] = sv_public_url($r['slug']); $r['n'] = (int)$r['n']; $r['id'] = (int)$r['id']; }
+foreach ($list as &$r) {
+    $r['url'] = sv_public_url($r['slug']); $r['n'] = (int)$r['n']; $r['id'] = (int)$r['id'];
+    $r['custom'] = $r['quota'] !== null; $r['quota'] = sv_quota($r);
+    $r['full'] = $r['quota'] > 0 && $r['n'] >= $r['quota'];
+    $r['consult'] = sv_consult_url($r);
+}
 unset($r);
 $tpls = [];
 foreach (sv_templates() as $k => $t) $tpls[] = ['k' => $k, 'name' => $t['name'], 'desc' => $t['desc']];
@@ -40,7 +45,7 @@ sv_head('Survei', 'Survei');
 
 <?php include __DIR__ . '/share.inc.php'; ?>
 <script>
-var CSRF=<?= json_encode($_SESSION['csrf']) ?>,LIST=<?= json_encode($list, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>,TPLS=<?= json_encode($tpls, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>;
+var CSRF=<?= json_encode($_SESSION['csrf']) ?>,ADMIN=<?= $u['role'] === 'admin' ? 'true' : 'false' ?>,LIST=<?= json_encode($list, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>,TPLS=<?= json_encode($tpls, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>;
 function h(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
 function toast(m){var t=h('div','toast',m);document.body.appendChild(t);setTimeout(function(){t.remove();},2600);}
 function api(a,body){return fetch('api.php?a='+a,{method:'POST',headers:{'Content-Type':'application/json','X-CSRF':CSRF},body:JSON.stringify(body||{})}).then(function(r){return r.json();}).then(function(j){if(!j.ok)throw new Error(j.error||'Gagal');return j;});}
@@ -58,18 +63,24 @@ function drawList(){var L=document.getElementById('list');L.textContent='';
     var info=h('div');info.style.cssText='flex:1;min-width:220px;display:flex;flex-direction:column;gap:4px';
     var tl=h('a',null,s.title);tl.href='edit.php?id='+s.id;tl.style.cssText='font-size:16px;text-decoration:none;color:var(--ink)';info.appendChild(tl);
     var meta=h('div','mute small');meta.appendChild(h('span','pill '+s.status,ST[s.status]));meta.appendChild(document.createTextNode('  /s/'+s.slug+' · diubah '+when(s.updated)));info.appendChild(meta);c.appendChild(info);
-    var n=h('a');n.href='hasil.php?id='+s.id;n.style.cssText='text-decoration:none;text-align:center;min-width:76px';var nb=h('b',null,String(s.n));nb.style.cssText='display:block;font-size:22px;color:var(--deep)';n.appendChild(nb);n.appendChild(h('span','mute small','jawaban'));c.appendChild(n);
+    var n=h('a');n.href='hasil.php?id='+s.id;n.style.cssText='text-decoration:none;text-align:center;min-width:76px';var nb=h('b',null,String(s.n));nb.style.cssText='display:block;font-size:22px;color:var(--deep)';n.appendChild(nb);n.appendChild(h('span','mute small',s.quota>0?'dari '+s.quota+' jawaban':'jawaban'));c.appendChild(n);
     var acts=h('div');acts.style.cssText='display:flex;gap:6px;flex-wrap:wrap';
     function a(label,cls,fn){var b=h('button','btn sm '+cls,label);b.type='button';b.onclick=fn;acts.appendChild(b);return b;}
     a('Sunting','ghost',function(){location.href='edit.php?id='+s.id;});
     a('Hasil','ghost',function(){location.href='hasil.php?id='+s.id;});
     a('Bagikan','',function(){openShare(s);});
     var more=h('select','f');more.style.cssText='width:auto;min-height:36px;padding:4px 10px;font-size:13.5px';more.setAttribute('aria-label','Tindakan lain');
-    [['','Lainnya…'],['dup','Gandakan'],['del','Hapus']].forEach(function(o){var x=h('option',null,o[1]);x.value=o[0];more.appendChild(x);});
+    [['','Lainnya…'],['dup','Gandakan'],['del','Hapus']].concat(ADMIN?[['quota','Atur kuota (admin)']]:[]).forEach(function(o){var x=h('option',null,o[1]);x.value=o[0];more.appendChild(x);});
     more.onchange=function(){var v=more.value;more.value='';
+      if(v==='quota'){var cur=s.custom?String(s.quota):'';var x=prompt('Kuota jawaban untuk "'+s.title+'"\nAngka = batas jawaban, 0 = tanpa batas, kosongkan = bawaan (10 untuk akun biasa).',cur);
+        if(x!==null)api('kuota',{id:s.id,quota:x.trim()}).then(function(j){s.quota=j.quota;s.custom=j.custom;s.full=s.quota>0&&s.n>=s.quota;drawList();toast(j.quota>0?'Kuota diatur: '+j.quota+' jawaban.':'Kuota: tanpa batas.');},function(e){toast(e.message);});}
       if(v==='dup')api('gandakan',{id:s.id}).then(function(j){location.href='edit.php?id='+j.id;},function(e){toast(e.message);});
       if(v==='del'&&confirm('Hapus survei "'+s.title+'" beserta '+s.n+' jawabannya? Tindakan ini tidak dapat dibatalkan.'))api('hapus',{id:s.id}).then(function(){LIST=LIST.filter(function(x){return x!==s;});drawList();toast('Survei dihapus.');},function(e){toast(e.message);});};
-    acts.appendChild(more);c.appendChild(acts);L.appendChild(c);});}
+    acts.appendChild(more);c.appendChild(acts);
+    if(s.full){var nb2=h('div','err-box');nb2.style.cssText='flex-basis:100%;display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap';
+      nb2.appendChild(h('span',null,'Batas '+s.quota+' jawaban sudah tercapai. Survei tidak lagi menerima jawaban baru.'));
+      var cl=h('a','btn sm','Konsultasi untuk melanjutkan');cl.href=s.consult;cl.target='_blank';cl.rel='noopener';nb2.appendChild(cl);c.appendChild(nb2);}
+    L.appendChild(c);});}
 drawList();
 
 function openShare(s){ZKShare.open(s,function(){drawList();});}
