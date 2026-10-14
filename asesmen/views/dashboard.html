@@ -252,6 +252,15 @@ textarea{font:400 14px/1.6 var(--sans);color:var(--ink);background:var(--bg);bor
 body{padding-bottom:24px}
 .adminbar a.btn{min-height:40px;padding:8px 16px;font-size:14px}
 #viewInbox>.card+.card{margin-top:18px}
+.pdfbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:6px}
+.pdfbar .btn{min-height:44px;padding:8px 20px;font-size:14.5px}
+.pdfopt{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--mute)}
+.pdfopt input{width:18px;height:18px;accent-color:var(--deep)}
+#pdfStage{position:fixed;left:-20000px;top:0;width:880px;background:var(--bg);padding:0 0 8px}
+#pdfStage .tablewrap{overflow:visible}
+#pdfStage .pdf-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--deep);padding:18px 0 12px;margin-bottom:6px}
+#pdfStage .pdf-head b{font-size:22px;color:var(--deep)}
+#pdfStage .pdf-head span{font:500 11.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
 .dlgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .dl{display:flex;flex-direction:column;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--bg)}
 .dl b{display:block;font-size:15.5px;color:var(--deep);margin-bottom:2px}
@@ -275,6 +284,9 @@ body{padding-bottom:24px}
     <span class="label">Hasil asesmen</span>
     <h1 id="resOrg" style="font-size:clamp(26px,3.6vw,38px)"></h1>
     <div class="res-meta" id="resMeta"></div>
+    <div class="pdfbar"><button class="btn btn-deep" type="button" id="pdfBtn">Unduh PDF</button>
+      <label class="pdfopt"><input type="checkbox" id="pdfReco"> Sertakan rekomendasi rinci (internal)</label>
+      <span class="toast" id="pdfToast" role="status"></span></div>
   </div>
   <div class="results">
     <div class="rgrid">
@@ -635,6 +647,38 @@ var views={inbox:document.getElementById('viewInbox'),result:document.getElement
 function show(v){Object.keys(views).forEach(function(k){views[k].hidden=(k!==v);});window.scrollTo(0,0);}
 (function(){var a=document.querySelector('.adminbar a[href$="#unduh"]');if(!a)return;a.addEventListener('click',function(ev){var t=document.getElementById('unduh');if(!t)return;ev.preventDefault();show('inbox');t.scrollIntoView({behavior:'smooth',block:'start'});});})();
 document.getElementById('resBack').addEventListener('click',function(){show('inbox');});
+/* ---------- Unduh PDF hasil asesmen (dibuat di peramban, khusus dashboard admin) ---------- */
+var PDFLIBS=['https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js','https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'];
+function loadScript(src){return new Promise(function(ok,no){if(document.querySelector('script[src="'+src+'"]'))return ok();var s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=function(){no(new Error('Pustaka PDF gagal dimuat. Periksa koneksi internet.'));};document.head.appendChild(s);});}
+function slug(t){return String(t||'lembaga').normalize('NFKD').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60)||'lembaga';}
+document.getElementById('pdfBtn').addEventListener('click',function(){
+  if(!current)return;var btn=this,toast=document.getElementById('pdfToast'),withReco=document.getElementById('pdfReco').checked;
+  btn.disabled=true;toast.textContent='Menyiapkan PDF…';var stage=null;
+  Promise.all(PDFLIBS.map(loadScript)).then(function(){return document.fonts?document.fonts.ready:null;}).then(function(){
+    stage=document.createElement('div');stage.id='pdfStage';stage.className='wrap';
+    var head=h('div','pdf-head');head.appendChild(h('b',null,'Zakademia'));head.appendChild(h('span',null,'Hasil Asesmen Kesiapan Penghimpunan'));
+    var blocks=[];var top=h('div');top.appendChild(head);var rh=document.querySelector('#viewResult .res-head').cloneNode(true);
+    ['#resBack','.pdfbar'].forEach(function(s){var x=rh.querySelector(s);if(x)x.remove();});rh.querySelectorAll('[id]').forEach(function(x){x.removeAttribute('id');});
+    top.appendChild(rh);blocks.push(top);
+    [].slice.call(document.querySelector('#viewResult .results').children).forEach(function(el){
+      if(el.id==='emailCard')return;if(el.classList.contains('reco')&&!withReco)return;
+      var c=el.cloneNode(true);c.removeAttribute('id');c.querySelectorAll('[id]').forEach(function(x){x.removeAttribute('id');});blocks.push(c);});
+    var col=h('div','results');col.style.paddingBlock='0';blocks.slice(1).forEach(function(b){col.appendChild(b);});
+    stage.appendChild(top);stage.appendChild(col);document.body.appendChild(stage);
+    var J=window.jspdf.jsPDF,pdf=new J({unit:'mm',format:'a4',compress:true}),W=210,H=297,M=12,FOOT=10,maxH=H-M-FOOT,y=M,first=true,n=0;
+    var scale=Math.min(2,(window.devicePixelRatio||1)>1?2:1.6);
+    return blocks.reduce(function(pr,b){return pr.then(function(){n++;toast.textContent='Menyusun halaman… ('+n+'/'+blocks.length+')';
+      return window.html2canvas(b,{scale:scale,backgroundColor:'#FFFFF0',useCORS:true,logging:false}).then(function(cv){
+        var w=W-2*M,hh=cv.height*w/cv.width;if(hh>maxH-M){w=w*(maxH-M)/hh;hh=maxH-M;}
+        if(!first&&y+hh>maxH){pdf.addPage();y=M;}
+        pdf.addImage(cv.toDataURL('image/jpeg',0.92),'JPEG',(W-w)/2,y,w,hh,undefined,'FAST');y+=hh+5;first=false;});});},Promise.resolve()).then(function(){
+      var pages=pdf.getNumberOfPages(),tgl=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+      for(var i=1;i<=pages;i++){pdf.setPage(i);pdf.setFontSize(8);pdf.setTextColor(74,99,85);
+        pdf.text('Zakademia · zakademia.com · info@zakademia.com',M,H-6);pdf.text('Dicetak '+tgl+' · Halaman '+i+' dari '+pages,W-M,H-6,{align:'right'});}
+      var d=current.dikirim?new Date(current.dikirim):new Date(),ymd=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+      pdf.save('hasil-asesmen-'+slug(current.org)+'-'+ymd+(withReco?'-internal':'')+'.pdf');toast.textContent='PDF selesai diunduh.';});
+  }).catch(function(err){toast.textContent='PDF belum jadi: '+(err&&err.message||err);}).then(function(){if(stage)stage.remove();btn.disabled=false;});
+});
 function load(){document.getElementById('inboxNote').textContent='Memuat kiriman…';
   BACKEND.list().then(function(list){list=list||[];LIST=list.filter(function(x){return x&&x.v===4;});SKIPPED=list.length-LIST.length;renderInbox();},function(err){document.getElementById('inboxNote').textContent='Kiriman belum dapat dimuat: '+(err&&err.message||err);});}
 function renderInbox(){
@@ -658,6 +702,7 @@ function openResult(rec){
   var sent=rec.status==='terkirim',sample=!rec.id;
   var sb2=document.getElementById('sendBtn'),mk=document.getElementById('markBtn');sb2.disabled=sample;mk.disabled=sample||sent;sb2.textContent=sent?'Kirim ulang email':'Kirim email';
   document.getElementById('emailToast').textContent=sample?'Ini contoh; email tidak dapat dikirim.':(sent?'Hasil sudah dikirim'+(rec.terkirimPada?' pada '+dateStr(rec.terkirimPada):'')+'.':'');
+  document.getElementById('pdfToast').textContent='';
   show('result');
 }
 function setSent(){current.status='terkirim';current.terkirimPada=new Date().toISOString();document.getElementById('markBtn').disabled=true;document.getElementById('sendBtn').textContent='Kirim ulang email';renderInbox();}
