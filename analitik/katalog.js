@@ -14,6 +14,15 @@ var V={
  rfm:function(){var seg=[['Juara',3,3,G,'#fff'],['Loyal',2,3,'#2E7D4F','#fff'],['Potensial',3,2,G2,INK],['Perlu disapa',2,2,G3,INK],['Baru',3,1,'#DCE5D7',INK],['Berisiko',1,3,GOLD,INK],['Hampir hilang',1,2,'#E2B37A',INK],['Hilang',1,1,RED,'#fff'],['Jarang',2,1,'#EFE7D2',INK]],s='';
    seg.forEach(function(g){var x=30+(g[1]-1)*74,y=8+(3-g[2])*38;s+=r(x,y,72,36,g[3],4)+t(x+36,y+21,g[0],{a:'middle',c:g[4],fs:8.5,w:700});});
    s+=t(141,128,'Kebaruan donasi →',{a:'middle'})+'<g transform="rotate(-90 12 65)">'+t(12,65,'Frekuensi & nilai →',{a:'middle'})+'</g>';return svg(256,132,s);},
+ piramida:function(){var T=[['Besar','5%','55%',G,'#fff'],['Menengah','20%','30%',G2,INK],['Ritel','75%','15%',G3,INK]],s='',y0=24,hh=36,L=70,R=230,W=60,H=hh*3;
+   function lw(y){return W*(y-y0)/H;}function rw(y){return W*(y0+H-y)/H;}
+   s+=t(L,12,'Jumlah donatur',{a:'middle',c:INK,w:700,fs:9})+t(R,12,'Kontribusi dana',{a:'middle',c:INK,w:700,fs:9});
+   T.forEach(function(x,i){var a=y0+i*hh,b=a+hh,m=(a+b)/2+3;
+     s+='<polygon points="'+(L-lw(a))+','+a+' '+(L+lw(a))+','+a+' '+(L+lw(b))+','+b+' '+(L-lw(b))+','+b+'" fill="'+x[3]+'" stroke="#fff" stroke-width="1.5"/>';
+     s+='<polygon points="'+(R-rw(a))+','+a+' '+(R+rw(a))+','+a+' '+(R+rw(b))+','+b+' '+(R-rw(b))+','+b+'" fill="'+x[3]+'" stroke="#fff" stroke-width="1.5"/>';
+     s+=t(L,i?m:m+8,x[1],{a:'middle',c:x[4],w:800,fs:i?10:8.5})+t(R,i<2?m:m-8,x[2],{a:'middle',c:i<2?x[4]:INK,w:800,fs:i<2?10:8.5});
+     s+=t(150,m,x[0],{a:'middle',c:MUTE,w:700,fs:8.5});});
+   s+=t(150,y0+H+14,'Lapisan donatur menurut nilai donasi',{a:'middle',fs:8});return svg(300,y0+H+20,s);},
  clv:function(){var d=[['Juara',8.4],['Loyal',5.1],['Potensial',2.6],['Baru',1.2],['Berisiko',0.8]],s='';
    d.forEach(function(x,i){var w=x[1]/8.4*150;s+=t(58,22+i*22,x[0],{a:'end'})+r(64,12+i*22,w,15,i<2?G:i<4?G2:GOLD)+t(68+w,24+i*22,'Rp'+String(x[1]).replace('.',',')+' jt',{fs:8.5,w:700,c:INK});});return svg(256,122,s);},
  churn:function(){var b=[30,26,22,17,14,11,9,8,10,13],s='';b.forEach(function(v,i){var h=v*3;s+=r(14+i*23,100-h,20,h,i<4?G2:i<7?GOLD:RED,2);});
@@ -38,8 +47,8 @@ var V={
 };
 
 var K=[
+ {k:'rfm',viz:['rfm','piramida'],wide:true,n:'Segmentasi RFM dan piramida donatur',q:'Siapa donatur juara, siapa yang mulai menjauh, dan siapa yang perlu disapa sekarang? Seberapa besar dana bergantung pada segelintir donatur besar dibanding basis donatur ritel?',v:'Peta segmen dari kebaruan, frekuensi, dan nilai donasi, ditambah dua segitiga berlawanan: piramida jumlah donatur per lapisan (besar, menengah, ritel) dan segitiga terbalik kontribusi dana dari lapisan yang sama. Keduanya menunjukkan lapisan mana yang menopang dana dan lapisan mana yang perlu ditumbuhkan.',d:'Tanggal, ID donatur, dan nominal setiap transaksi.'},
  {k:'kohort',n:'Analisis kohort',q:'Dari donatur yang mulai memberi pada tahun tertentu, berapa persen yang masih bertahan setelah 1, 2, dan 3 tahun?',v:'Tabel panas retensi per angkatan donatur.',d:'Riwayat transaksi per donatur (ID donatur dapat disamarkan), minimal 2 tahun.'},
- {k:'rfm',n:'Segmentasi RFM',q:'Siapa donatur juara, siapa yang mulai menjauh, dan siapa yang perlu disapa sekarang?',v:'Peta segmen dari kebaruan, frekuensi, dan nilai donasi.',d:'Tanggal, ID donatur, dan nominal setiap transaksi.'},
  {k:'clv',n:'CLV per segmen',q:'Segmen mana yang paling bernilai dalam jangka panjang, dan berapa layak dibelanjakan untuk menjaganya?',v:'Nilai seumur hidup donatur untuk setiap segmen.',d:'Riwayat transaksi per donatur dan biaya per kanal.'},
  {k:'churn',n:'Prediksi donatur berhenti',q:'Donatur mana yang berisiko tidak memberi lagi, sehingga bisa disapa sebelum terlambat?',v:'Sebaran skor risiko dan daftar prioritas sapaan.',d:'Riwayat transaksi per donatur, minimal 2 tahun.'},
  {k:'musim',n:'Pola musiman dan prakiraan',q:'Kapan puncak dan titik rendah penghimpunan, dan berapa perkiraan bulan-bulan berikutnya?',v:'Tren bulanan dengan penanda Ramadan, Zulhijah, akhir tahun, serta garis prakiraan.',d:'Total dana per bulan, minimal 3 tahun.'},
@@ -49,9 +58,10 @@ var K=[
 ];
 
 var box=document.getElementById('katalog');if(!box)return;
-K.forEach(function(x){var c=document.createElement('article');c.className='card kat';
-  c.innerHTML='<div class="viz">'+V[x.k]()+'<span class="ilu">Ilustrasi</span></div><div class="kb"><h3></h3><p class="q"></p><dl><dt>Visualisasi</dt><dd class="v"></dd><dt>Data yang diperlukan</dt><dd class="d"></dd></dl><a class="btn ghost sm">Konsultasikan</a></div>';
+K.forEach(function(x){var c=document.createElement('article');c.className='card kat'+(x.wide?' wide':'');
+  c.innerHTML='<div class="viz">'+(x.viz?'<div class="vz2">'+x.viz.map(function(k){return '<div>'+V[k]()+'</div>';}).join('')+'</div>':V[x.k]())+'<span class="ilu">Ilustrasi</span></div><div class="kb"><h3></h3><p class="q"></p><dl><dt>Visualisasi</dt><dd class="v"></dd><dt>Data yang diperlukan</dt><dd class="d"></dd></dl><a class="btn ghost sm">Konsultasikan</a></div>';
   c.querySelector('h3').textContent=x.n;c.querySelector('.q').textContent=x.q;c.querySelector('.v').textContent=x.v;c.querySelector('.d').textContent=x.d;
   c.querySelector('a').href='/?topik='+encodeURIComponent('Data & Analitik')+'&pesan='+encodeURIComponent('Kami tertarik dengan '+x.n+'. ')+'#kontak';
   c.querySelector('a').setAttribute('aria-label','Konsultasikan '+x.n);box.appendChild(c);});
+var cta=document.createElement('article');cta.className='card kat katcta';cta.innerHTML='<div class="kb"><h3>Punya pertanyaan lain?</h3><p class="q">Ceritakan keputusan yang sedang dihadapi lembaga. Kami bantu memilih metode dan data yang tepat.</p><a class="btn sm" href="/?topik=Data%20%26%20Analitik#kontak">Jadwalkan konsultasi</a></div>';box.appendChild(cta);
 })();

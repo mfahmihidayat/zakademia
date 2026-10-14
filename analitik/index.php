@@ -53,6 +53,10 @@ sv_head('Kesehatan Penghimpunan', 'Data &amp; Analitik');
 .kat{display:flex;flex-direction:column;overflow:hidden}
 .kat .viz{position:relative;background:var(--bg);border-bottom:1px solid var(--line);padding:32px 16px 10px}
 .kat .ilu{position:absolute;top:8px;right:10px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.kat .vz2{display:flex;gap:16px;flex-wrap:wrap;align-items:center}.kat .vz2>div{flex:1 1 230px;min-width:0}
+.kat.wide{grid-column:1/-1}
+@media (min-width:760px){.kat.wide{flex-direction:row}.kat.wide .viz{flex:1.4;border-bottom:0;border-right:1px solid var(--line);display:flex;align-items:center}.kat.wide .vz2{width:100%}.kat.wide .kb{flex:1;justify-content:center}}
+.katcta{background:var(--deep);color:#FFFFF0;border-color:var(--deep)}.katcta .q{opacity:.85}.katcta .btn{background:var(--gold);color:var(--ink)}
 .kat .kb{padding:14px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
 .kat h3{margin:0;font-size:16px}
 .kat .q{margin:0;font-size:14px}
@@ -120,5 +124,5 @@ sv_head('Kesehatan Penghimpunan', 'Data &amp; Analitik');
 var CSRF=<?= json_encode($_SESSION['csrf']) ?>,SAVED=<?= json_encode($saved, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>,ORG=<?= json_encode($u['org'] ?: $u['name'], JSON_HEX_TAG) ?>;
 </script>
 <script src="/analitik/an.js?v=2"></script>
-<script src="/analitik/katalog.js?v=2"></script>
+<script src="/analitik/katalog.js?v=4"></script>
 </body></html>
