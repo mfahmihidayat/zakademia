@@ -66,7 +66,7 @@ $svc = function (string $id, string $tag, string $name, string $info, array $btn
 };
 $services = '<h2>Layanan Anda</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">'
     . $svc('riset', 'Figur yang berlari', 'Riset Kebutuhan', $nSv ? e("$nSv survei ($nAktif aktif), $nJwb jawaban masuk.") : 'Susun kuesioner dengan 15 jenis pertanyaan, bagikan tautan pendek dan kode QR.', [['Buat Survei', '/survei/']])
-    . $svc('data', 'Lengkung dasar', 'Data & Analitik', 'Ringkasan otomatis setiap survei: grafik jawaban, rata-rata Likert, skor NPS, dan unduhan CSV untuk Excel.', [['Lihat hasil survei', '/survei/'], ['Konsultasi analisis', '/#kontak']])
+    . $svc('data', 'Lengkung dasar', 'Data & Analitik', 'Kesehatan Penghimpunan: retensi, CLV, CAC, dan biaya per rupiah dari angka rekap tahunan, tanpa unggah data donatur.', [['Analisis Data', '/analitik/'], ['Hasil survei', '/survei/']])
     . $svc('strategi', 'Daun muda', 'Pendampingan Strategi', 'Pendampingan dimulai dengan Asesmen Kesiapan Penghimpunan (sekitar 15 menit).', [[ 'Mulai Asesmen', '/asesmen/']])
     . $svc('belajar', 'Daun terbuka', 'Ruang Belajar', 'Kelas dan materi metodologi sedang kami siapkan. Sementara itu, baca bahan literasi Zakademia.', [['Baca literasi', '/#literasi']])
     . '</div>';

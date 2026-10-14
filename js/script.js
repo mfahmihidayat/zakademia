@@ -243,7 +243,7 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   // services switcher
   var svc=[
     {tag:'Figur yang berlari',name:'Riset Kebutuhan',cta:'Buat Survei',href:'/survei/',parts:'gold top leaf band',desc:'Mendengar pertanyaan yang paling penting bagi lembaga Anda, lalu mencarikan jawabannya dengan cermat.',m:'Seperti sosok yang berlari, riset menjaga lembaga terus bergerak maju dengan arah yang jelas.'},
-    {tag:'Lengkung dasar',name:'Data & Analitik',cta:'Analisis Data',href:'/asesmen/akun.php#data',parts:'base',desc:'Merapikan catatan kebaikan menjadi pijakan yang kokoh untuk melangkah.',m:'Fondasi yang kokoh membuat setiap langkah lebih mantap.'},
+    {tag:'Lengkung dasar',name:'Data & Analitik',cta:'Analisis Data',href:'/analitik/',parts:'base',desc:'Merapikan catatan kebaikan menjadi pijakan yang kokoh untuk melangkah.',m:'Fondasi yang kokoh membuat setiap langkah lebih mantap.'},
     {tag:'Daun muda',name:'Pendampingan Strategi',cta:'Mulai Asesmen',href:'/asesmen/',parts:'leaf',desc:'Berjalan bersama menyusun arah, dari temuan menjadi langkah yang dijalankan.',m:'Seperti daun muda, lembaga ditemani tumbuh dan berbuah secara berkelanjutan.'},
     {tag:'Daun terbuka',name:'Ruang Belajar',cta:'Masuk Ruang Belajar',href:'/asesmen/akun.php#belajar',parts:'top leaf',desc:'Menumbuhkan kemampuan meneliti di tangan para pengelola kebaikan.',m:'Seperti dua daun yang terbuka, ilmu dibuka untuk siapa saja yang ingin belajar.'}
   ];

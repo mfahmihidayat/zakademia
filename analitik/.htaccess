@@ -1,0 +1,11 @@
+# Halaman formulir dan dashboard selalu diambil versi terbaru, tidak disimpan di cache CDN atau browser.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|php)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
+DirectoryIndex index.php
+
+<FilesMatch "^(lib_analitik)\.php$">
+  Require all denied
+</FilesMatch>
