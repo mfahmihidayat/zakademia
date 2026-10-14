@@ -1,0 +1,28 @@
+name: Cek situs dari internet
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Periksa domain, alamat server, dan halaman
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+        run: |
+          out=""
+          ipweb=$(dig +short zakademia.com A | tr '\n' ' ')
+          ipwww=$(dig +short www.zakademia.com A | tr '\n' ' ')
+          ipftp=$(dig +short "$S" A | tail -1); [ -z "$ipftp" ] && ipftp="$S"
+          case " $ipweb " in *" $ipftp "*) same="SAMA";; *) same="BEDA";; esac
+          echo "::notice::DNS zakademia.com = $ipweb | www = $ipwww | server FTP vs web: $same"
+          echo "::notice::NS = $(dig +short NS zakademia.com | tr '\n' ' ')"
+          for u in https://zakademia.com/ https://zakademia.com/asesmen/ https://zakademia.com/asesmen/admin.php https://zakademia.com/asesmen.html https://zakademia.com/css/style.css https://www.zakademia.com/asesmen/; do
+            h=$(curl -s -o /tmp/b -w "%{http_code} %{content_type} %{size_download}B" -L --max-time 20 "$u")
+            srv=$(curl -sI --max-time 20 "$u" | grep -i -E '^(server|platform|x-powered-by|x-hcdn|x-turbo|location):' | tr -d '\r' | tr '\n' ';')
+            echo "::notice::$u -> $h | $srv"
+          done
+          curl -s --max-time 20 https://zakademia.com/ -o /tmp/live.html
+          if cmp -s /tmp/live.html index.html; then echo "::notice::index.html di web SAMA dengan repositori"; else echo "::notice::index.html di web BEDA dengan repositori ($(wc -c < /tmp/live.html)B vs $(wc -c < index.html)B): $(head -c 300 /tmp/live.html | tr '\n' ' ')"; fi
