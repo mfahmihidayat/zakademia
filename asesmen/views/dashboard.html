@@ -251,14 +251,22 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--deep)}
 textarea{font:400 14px/1.6 var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;resize:vertical}
 body{padding-bottom:24px}
 .adminbar a.btn{min-height:40px;padding:8px 16px;font-size:14px}
+#viewInbox>.card+.card{margin-top:18px}
+.dlgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.dl{display:flex;flex-direction:column;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--bg)}
+.dl b{display:block;font-size:15.5px;color:var(--deep);margin-bottom:2px}
+.dl .btn{align-self:flex-start;min-height:42px;padding:8px 18px;font-size:14px}
+.dlsv summary{cursor:pointer;font-weight:700;color:var(--deep);padding:4px 0}
+.dlsv table{min-width:560px;margin-top:10px}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><b>Zakademia</b><span class="sub">Dashboard Asesmen Kesiapan Penghimpunan</span><nav class="adminbar"><a class="btn btn-ghost" href="admin.php?api=csv">Unduh CSV</a><a class="btn btn-ghost" href="akun.php">Akun saya</a><a class="btn btn-ghost" href="keluar.php">Keluar</a></nav></div></header>
+<header class="top"><div class="wrap"><b>Zakademia</b><span class="sub">Dashboard Asesmen Kesiapan Penghimpunan</span><nav class="adminbar"><a class="btn btn-ghost" href="admin.php#unduh">Unduh data</a><a class="btn btn-ghost" href="akun.php">Akun saya</a><a class="btn btn-ghost" href="keluar.php">Keluar</a></nav></div></header>
 <main class="wrap" id="viewInbox">
   <div class="inbox-head"><div><span class="label">Pengelola</span><h1>Kiriman masuk</h1><p class="note" id="inboxNote">Memuat kiriman…</p></div>
     <div class="actions"><button class="btn btn-ghost" type="button" id="refreshBtn">Muat ulang</button><button class="btn btn-ghost" type="button" id="sampleView">Lihat contoh hasil</button></div></div>
   <div class="card"><div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Lembaga</th><th>Pengisi</th><th>Email</th><th>Indeks</th><th>Kesehatan</th><th>Konsistensi</th><th>Status</th><th><span class="sr-only">Aksi</span></th></tr></thead><tbody id="inboxBody"></tbody></table></div><div class="empty" id="inboxEmpty" hidden>Belum ada kiriman.</div></div>
+  <!--UNDUH-->
 </main>
 <!-- OWNER: RESULT -->
 <main class="wrap" id="viewResult" hidden>
@@ -625,6 +633,7 @@ function fillResult(rec){var st=decode(rec),r=compute(st);
 var LIST=[],current=null,SKIPPED=0;
 var views={inbox:document.getElementById('viewInbox'),result:document.getElementById('viewResult')};
 function show(v){Object.keys(views).forEach(function(k){views[k].hidden=(k!==v);});window.scrollTo(0,0);}
+(function(){var a=document.querySelector('.adminbar a[href$="#unduh"]');if(!a)return;a.addEventListener('click',function(ev){var t=document.getElementById('unduh');if(!t)return;ev.preventDefault();show('inbox');t.scrollIntoView({behavior:'smooth',block:'start'});});})();
 document.getElementById('resBack').addEventListener('click',function(){show('inbox');});
 function load(){document.getElementById('inboxNote').textContent='Memuat kiriman…';
   BACKEND.list().then(function(list){list=list||[];LIST=list.filter(function(x){return x&&x.v===4;});SKIPPED=list.length-LIST.length;renderInbox();},function(err){document.getElementById('inboxNote').textContent='Kiriman belum dapat dimuat: '+(err&&err.message||err);});}

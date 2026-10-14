@@ -36,6 +36,27 @@ if (isset($_GET['api'])) {
         if ($api === 'csv') {
             export_csv($pdo);
         }
+        if ($api === 'csv_survei') {
+            require_once __DIR__ . '/../survei/lib_survei.php';
+            $sid = (int)($_GET['id'] ?? 0);
+            if ($sid) {
+                $q = sv_db()->prepare('SELECT * FROM surveys WHERE id = ?');
+                $q->execute([$sid]);
+                $sv = $q->fetch(PDO::FETCH_ASSOC);
+                if (!$sv) json_out(['ok' => false, 'error' => 'Survei tidak ditemukan.'], 404);
+                $q = sv_db()->prepare('SELECT id, created, answers, duration FROM responses WHERE survey_id = ? ORDER BY id');
+                $q->execute([$sid]);
+                sv_csv($sv, json_decode($sv['def'], true) ?: ['items' => []], $q->fetchAll(PDO::FETCH_ASSOC));
+            }
+            export_survei_all();
+        }
+        if ($api === 'csv_analitik') {
+            require_once __DIR__ . '/../analitik/lib_analitik.php';
+            export_analitik();
+        }
+        if ($api === 'csv_akun') {
+            export_akun($pdo);
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(['ok' => false, 'error' => 'metode'], 405);
         check_csrf();
         $in = json_decode((string)file_get_contents('php://input'), true) ?: [];
@@ -64,6 +85,7 @@ if (isset($_GET['api'])) {
 /* ---------- dashboard, atau pembuatan akun admin pertama ---------- */
 if (is_admin()) {
     $html = (string)file_get_contents(__DIR__ . '/views/dashboard.html');
+    $html = str_replace('<!--UNDUH-->', unduh_panel(), $html);
     echo str_replace('__CSRF__', htmlspecialchars($_SESSION['csrf'], ENT_QUOTES), $html);
     exit;
 }
@@ -201,4 +223,148 @@ function export_csv(PDO $pdo): void
     }
     fclose($out);
     exit;
+}
+
+/* ---------- pusat unduhan (khusus admin) ---------- */
+
+function csv_open(string $name)
+{
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename="' . $name . '-' . gmdate('Ymd') . '.csv"');
+    header('Cache-Control: no-store');
+    $out = fopen('php://output', 'w');
+    fwrite($out, "\xEF\xBB\xBF");
+    return $out;
+}
+
+/** cegah isian dibaca sebagai rumus oleh aplikasi spreadsheet */
+function csv_safe(array $line): array
+{
+    return array_map(fn($v) => is_string($v) && preg_match('/^[=+\-@]/', $v) ? "'" . $v : $v, $line);
+}
+
+function wib(?string $iso): string
+{
+    if (!$iso) return '';
+    try { return (new DateTime($iso))->setTimezone(new DateTimeZone('Asia/Jakarta'))->format('Y-m-d H:i'); } catch (Throwable $e) { return $iso; }
+}
+
+/** Semua jawaban dari semua survei, satu baris per pertanyaan per tanggapan. */
+function export_survei_all(): void
+{
+    $pdo = sv_db();
+    $surveys = $pdo->query('SELECT s.*, u.email AS u_email, u.org AS u_org FROM surveys s LEFT JOIN users u ON u.id = s.user_id ORDER BY s.id')->fetchAll(PDO::FETCH_ASSOC);
+    $out = csv_open('survei-semua-jawaban');
+    fputcsv($out, ['survei_id', 'tautan', 'judul', 'status_survei', 'lembaga_pemilik', 'email_pemilik', 'tanggapan_no', 'waktu_wib', 'durasi_detik', 'pertanyaan_no', 'pertanyaan', 'jawaban']);
+    $q = $pdo->prepare('SELECT id, created, answers, duration FROM responses WHERE survey_id = ? ORDER BY id');
+    foreach ($surveys as $s) {
+        $def = json_decode($s['def'], true) ?: ['items' => []];
+        $q->execute([$s['id']]);
+        $n = 0;
+        while ($r = $q->fetch(PDO::FETCH_ASSOC)) {
+            $n++;
+            $a = json_decode($r['answers'], true) ?: [];
+            $no = 0;
+            foreach ($def['items'] ?? [] as $it) {
+                if (($it['t'] ?? '') === 'section') continue;
+                $no++;
+                $title = ($it['title'] ?? '') !== '' ? $it['title'] : 'Pertanyaan ' . $no;
+                $v = $a[$it['id'] ?? ''] ?? '';
+                $pairs = [];
+                if (($it['t'] ?? '') === 'matrix') {
+                    foreach (($it['rows'] ?? []) as $ri => $row) {
+                        $x = is_array($v) ? ($v[(string)$ri] ?? '') : '';
+                        $pairs[] = [$title . ' [' . $row . ']', $x === '' ? '' : $x . ' (' . ($it['opts'][$x - 1] ?? '') . ')'];
+                    }
+                } else {
+                    if (($it['t'] ?? '') === 'likert' && $v !== '' && !is_array($v)) $v = $v . ' (' . ($it['opts'][$v - 1] ?? '') . ')';
+                    elseif (is_array($v)) $v = implode(($it['t'] ?? '') === 'ranking' ? ' > ' : '; ', $v);
+                    $pairs[] = [$title, $v];
+                }
+                foreach ($pairs as [$t, $val]) {
+                    fputcsv($out, csv_safe([(int)$s['id'], '/s/' . $s['slug'], $s['title'], $s['status'], (string)$s['u_org'], (string)$s['u_email'],
+                        $n, wib($r['created']), $r['duration'], $no, $t, (string)$val]));
+                }
+            }
+        }
+    }
+    fclose($out);
+    exit;
+}
+
+/** Semua analisis Kesehatan Penghimpunan yang disimpan pengguna. */
+function export_analitik(): void
+{
+    $rows = an_db()->query('SELECT a.*, u.email AS u_email, u.org AS u_org, u.name AS u_name FROM analitik a LEFT JOIN users u ON u.id = a.user_id ORDER BY a.updated DESC')->fetchAll(PDO::FETCH_ASSOC);
+    $out = csv_open('analitik-kesehatan-penghimpunan');
+    $lab = ['danaL' => 'dana_tahun_lalu', 'danaN' => 'dana_tahun_ini', 'donL' => 'donatur_tahun_lalu', 'donN' => 'donatur_tahun_ini',
+        'trxL' => 'transaksi_tahun_lalu', 'trxN' => 'transaksi_tahun_ini', 'biayaL' => 'biaya_tahun_lalu', 'biayaN' => 'biaya_tahun_ini',
+        'baru' => 'donatur_baru', 'tahan' => 'donatur_bertahan', 'akuisisi' => 'biaya_akuisisi', 'top10' => 'dana_10_donatur_terbesar'];
+    fputcsv($out, array_merge(['id', 'lembaga', 'pengguna', 'email', 'label', 'tahun', 'dibuat_wib', 'diperbarui_wib'], array_values($lab),
+        ['pertumbuhan_dana_persen', 'retensi_persen', 'cac', 'biaya_per_rupiah', 'porsi_10_terbesar_persen']));
+    $div = fn($a, $b) => ($a !== null && $b) ? $a / $b : null;
+    $r2 = fn($v, $d = 2) => $v === null ? '' : round($v, $d);
+    foreach ($rows as $r) {
+        $d = json_decode($r['data'], true) ?: [];
+        $g = fn($k) => isset($d[$k]) && is_numeric($d[$k]) ? (float)$d[$k] : null;
+        $line = [(int)$r['id'], (string)$r['u_org'], (string)$r['u_name'], (string)$r['u_email'], $r['label'], $r['tahun'], wib($r['created']), wib($r['updated'])];
+        foreach (array_keys($lab) as $k) $line[] = $g($k) === null ? '' : $g($k);
+        $grow = ($g('danaN') !== null && $g('danaL')) ? ($g('danaN') - $g('danaL')) / $g('danaL') * 100 : null;
+        $ret = $div($g('tahan'), $g('donL'));
+        $top = $div($g('top10'), $g('danaN'));
+        array_push($line, $r2($grow, 1), $r2($ret === null ? null : $ret * 100, 1), $r2($div($g('akuisisi'), $g('baru')), 0),
+            $r2($div($g('biayaN'), $g('danaN')), 3), $r2($top === null ? null : $top * 100, 1));
+        fputcsv($out, csv_safe($line));
+    }
+    fclose($out);
+    exit;
+}
+
+/** Daftar akun pengguna (tanpa kata sandi). */
+function export_akun(PDO $pdo): void
+{
+    $rows = $pdo->query('SELECT * FROM users ORDER BY id')->fetchAll(PDO::FETCH_ASSOC);
+    $out = csv_open('akun-pengguna');
+    fputcsv($out, ['id', 'nama', 'email', 'lembaga', 'jenis_lembaga', 'peran', 'terdaftar_wib']);
+    foreach ($rows as $r) {
+        fputcsv($out, csv_safe([(int)$r['id'], (string)($r['name'] ?? ''), (string)($r['email'] ?? ''), (string)($r['org'] ?? ''),
+            (string)($r['org_type'] ?? ''), (string)($r['role'] ?? ''), wib($r['created'] ?? null)]));
+    }
+    fclose($out);
+    exit;
+}
+
+/** Kartu "Unduh data" di dashboard admin. */
+function unduh_panel(): string
+{
+    $n = function (string $sql): int { try { return (int)db()->query($sql)->fetchColumn(); } catch (Throwable $e) { return 0; } };
+    $nAs = $n('SELECT COUNT(*) FROM kiriman');
+    $nUs = $n('SELECT COUNT(*) FROM users');
+    $surveys = [];
+    $nJw = 0; $nAn = 0;
+    try {
+        require_once __DIR__ . '/../survei/lib_survei.php';
+        $surveys = sv_db()->query('SELECT s.id, s.slug, s.title, s.status, u.org AS u_org, (SELECT COUNT(*) FROM responses r WHERE r.survey_id = s.id) AS n
+            FROM surveys s LEFT JOIN users u ON u.id = s.user_id ORDER BY s.updated DESC')->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($surveys as $s) $nJw += (int)$s['n'];
+        require_once __DIR__ . '/../analitik/lib_analitik.php';
+        $nAn = (int)an_db()->query('SELECT COUNT(*) FROM analitik')->fetchColumn();
+    } catch (Throwable $e) { error_log('unduh panel: ' . $e->getMessage()); }
+    $item = fn($t, $d, $href) => '<div class="dl"><div><b>' . e($t) . '</b><span class="note">' . e($d) . '</span></div><a class="btn btn-ghost" href="' . e($href) . '">Unduh CSV</a></div>';
+    $h = '<div class="card" id="unduh"><div class="card-head"><div><span class="label">Khusus admin</span><h2>Unduh data</h2>'
+        . '<p>Semua unduhan data Zakademia ada di sini saja. File CSV siap dibuka di Excel atau SPSS.</p></div></div><div class="dlgrid">'
+        . $item('Asesmen Kesiapan Penghimpunan', $nAs . ' kiriman, lengkap dengan skor, gap, VRIO, dan kesehatan.', 'admin.php?api=csv')
+        . $item('Survei — semua jawaban', count($surveys) . ' survei, ' . $nJw . ' tanggapan. Satu baris per pertanyaan.', 'admin.php?api=csv_survei')
+        . $item('Analitik Kesehatan Penghimpunan', $nAn . ' analisis tersimpan, beserta retensi, CAC, dan biaya per rupiah.', 'admin.php?api=csv_analitik')
+        . $item('Akun pengguna', $nUs . ' akun: nama, email, lembaga, peran (tanpa kata sandi).', 'admin.php?api=csv_akun')
+        . '</div>';
+    if ($surveys) {
+        $h .= '<details class="dlsv"><summary>Unduh per survei (' . count($surveys) . ')</summary><div class="tablewrap"><table><thead><tr><th>Survei</th><th>Pemilik</th><th>Status</th><th>Tanggapan</th><th><span class="sr-only">Unduh</span></th></tr></thead><tbody>';
+        foreach ($surveys as $s) {
+            $h .= '<tr><td>' . e($s['title']) . '<br><span class="note">/s/' . e($s['slug']) . '</span></td><td>' . e((string)$s['u_org']) . '</td><td>' . e($s['status'])
+                . '</td><td>' . (int)$s['n'] . '</td><td><a class="linkbtn" href="admin.php?api=csv_survei&amp;id=' . (int)$s['id'] . '">Unduh CSV</a></td></tr>';
+        }
+        $h .= '</tbody></table></div></details>';
+    }
+    return $h . '</div>';
 }

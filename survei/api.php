@@ -11,6 +11,8 @@ $act = (string)($_GET['a'] ?? '');
 try {
     /* ---------- baca ---------- */
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        // Unduhan CSV hanya untuk admin; pemilik survei melihat hasil di layar.
+        if ($act === 'csv' && $u['role'] !== 'admin') json_out(['ok' => false, 'error' => 'Unduhan data hanya tersedia di dashboard admin.'], 403);
         if ($act === 'hasil' || $act === 'csv') {
             $s = sv_get_owned((int)($_GET['id'] ?? 0), $u);
             if (!$s) json_out(['ok' => false, 'error' => 'Survei tidak ditemukan.'], 404);
@@ -80,38 +82,4 @@ try {
 } catch (Throwable $e) {
     error_log('survei api: ' . $e->getMessage());
     json_out(['ok' => false, 'error' => 'Terjadi kesalahan di server.'], 500);
-}
-
-function sv_csv(array $s, array $def, array $rows): void
-{
-    $head = ['No', 'Waktu (WIB)', 'Durasi (detik)'];
-    $cols = [];
-    $no = 0;
-    foreach ($def['items'] as $it) {
-        if ($it['t'] === 'section') continue;
-        $no++;
-        if ($it['title'] === '') $it['title'] = 'Pertanyaan ' . $no;
-        if ($it['t'] === 'matrix') foreach ($it['rows'] as $ri => $r) { $head[] = $it['title'] . ' [' . $r . ']'; $cols[] = [$it, $ri]; }
-        else { $head[] = $it['title']; $cols[] = [$it, null]; }
-    }
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename="' . $s['slug'] . '-' . gmdate('Ymd') . '.csv"');
-    $out = fopen('php://output', 'w');
-    fwrite($out, "\xEF\xBB\xBF");
-    $safe = fn($v) => is_string($v) && preg_match('/^[=+\-@]/', $v) ? "'" . $v : $v;
-    fputcsv($out, array_map($safe, $head));
-    foreach ($rows as $n => $r) {
-        $a = json_decode($r['answers'], true) ?: [];
-        $t = (new DateTime($r['created']))->setTimezone(new DateTimeZone('Asia/Jakarta'))->format('Y-m-d H:i');
-        $line = [$n + 1, $t, $r['duration']];
-        foreach ($cols as [$it, $ri]) {
-            $v = $a[$it['id']] ?? '';
-            if ($ri !== null) { $x = $v[(string)$ri] ?? ''; $v = $x === '' ? '' : $x . ' (' . ($it['opts'][$x - 1] ?? '') . ')'; }
-            elseif ($it['t'] === 'likert' && $v !== '') $v = $v . ' (' . ($it['opts'][$v - 1] ?? '') . ')';
-            elseif (is_array($v)) $v = implode($it['t'] === 'ranking' ? ' > ' : '; ', $v);
-            $line[] = $safe($v);
-        }
-        fputcsv($out, $line);
-    }
-    exit;
 }

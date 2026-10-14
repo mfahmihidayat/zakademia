@@ -37,7 +37,7 @@ table.rs th{font-size:12px;color:var(--mute);background:var(--mist);position:sti
     <div style="flex:1;min-width:220px"><p class="mute small" style="margin:0 0 4px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Hasil survei</p><h1 id="ttl"><?= e($s['title']) ?></h1></div>
     <a class="btn ghost sm" href="edit.php?id=<?= $id ?>">Sunting</a>
     <button class="btn ghost sm" type="button" id="btnShare">Bagikan</button>
-    <a class="btn sm" href="api.php?a=csv&amp;id=<?= $id ?>">Unduh CSV (Excel)</a>
+    <?php if ($u['role'] === 'admin'): ?><a class="btn sm" href="/asesmen/admin.php?api=csv_survei&amp;id=<?= $id ?>">Unduh CSV (admin)</a><?php endif; ?>
   </div>
   <div class="kpis" id="kpis"></div>
   <div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-v="sum" type="button">Ringkasan</button><button role="tab" aria-selected="false" data-v="ind" type="button">Tanggapan</button></div>
