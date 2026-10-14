@@ -1,0 +1,293 @@
+{
+    "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
+    "version": "1.0.0",
+    "generatedTime": 1791995825255,
+    "data": [
+        {
+            "type": "file",
+            "name": ".ftp-deploy-sync-state.json",
+            "size": 9756,
+            "hash": "5266f4985f7a9f183cec86c894bb88d6e5c9605ca6c43c72e840cbd3e315ff15"
+        },
+        {
+            "type": "folder",
+            "name": "asesmen"
+        },
+        {
+            "type": "file",
+            "name": "asesmen.html",
+            "size": 40953,
+            "hash": "338206f73e7fad96686cf93a671cddde3fe62b63d0f9c897274399481bb14949"
+        },
+        {
+            "type": "folder",
+            "name": "assets"
+        },
+        {
+            "type": "folder",
+            "name": "css"
+        },
+        {
+            "type": "file",
+            "name": "index.html",
+            "size": 69938,
+            "hash": "ca9954176a4e4616d7b65093b6053043bb64985fdfb934d2c4cfcff4c758c9b1"
+        },
+        {
+            "type": "folder",
+            "name": "js"
+        },
+        {
+            "type": "file",
+            "name": "asesmen/config.php",
+            "size": 694,
+            "hash": "19bb49ade62dd5aa5a713e3b8476bc1dfb14c6e4e1286757cc0be6ac5e644471"
+        },
+        {
+            "type": "file",
+            "name": "asesmen/admin.php",
+            "size": 12840,
+            "hash": "05311dd94b19b625147adcf18fc7fc683dfe52c0afe36487adb50b9c9fac9159"
+        },
+        {
+            "type": "file",
+            "name": "asesmen/index.html",
+            "size": 59388,
+            "hash": "a59b3270eb8dd7d1c2915862374afb7b2dd9253891572bfc2d7ddc0da2599533"
+        },
+        {
+            "type": "file",
+            "name": "asesmen/lib.php",
+            "size": 4959,
+            "hash": "99e475e4d3785fe4557f461147d1ae0a32c0ac75addab77404bbb40dcde59f62"
+        },
+        {
+            "type": "file",
+            "name": "asesmen/simpan.php",
+            "size": 4767,
+            "hash": "22fdd60b163bd31784158563dbb67bd96acf3e8b3aa50f7521c800c9f1d90233"
+        },
+        {
+            "type": "folder",
+            "name": "asesmen/views"
+        },
+        {
+            "type": "folder",
+            "name": "assets/images"
+        },
+        {
+            "type": "folder",
+            "name": "assets/videos"
+        },
+        {
+            "type": "file",
+            "name": "css/style.css",
+            "size": 32181,
+            "hash": "4ea8e46be7ce8313fee0674d6c8df9815253c094ce3db9515fb2097214816f97"
+        },
+        {
+            "type": "file",
+            "name": "js/script.js",
+            "size": 23757,
+            "hash": "fba02f367450e25dd958c8417d524a8e60e50cef2411e672bb99962b39c623e5"
+        },
+        {
+            "type": "file",
+            "name": "asesmen/views/.htaccess",
+            "size": 210,
+            "hash": "39b5450c315b4a37fea31cd392eb0eba93f0713997fe68967f296dac0df7ebb4"
+        },
+        {
+            "type": "file",
+            "name": "asesmen/views/dashboard.html",
+            "size": 77824,
+            "hash": "611794c3ff7c3ff8616884c9c4fa0f3e5789d0f0caea6351e85a9dbf819afbfd"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/cover-c1.jpg",
+            "size": 38532,
+            "hash": "d35d9692d3160c12f635ed45a96972db090210357081d669a282a57d50d4c0de"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/cover-c2.jpg",
+            "size": 47315,
+            "hash": "df35805c3ef81e957b85baa41efb425cf57d7cd51874b4d8f57143ad15110ddf"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/cover-c3.jpg",
+            "size": 45047,
+            "hash": "8271e4ade68dc2945fe7826e1fcda2835f973070e72cd0651684f8d6354f5feb"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/cover-c4.jpg",
+            "size": 67261,
+            "hash": "285860fe50b86024163b45d1091a52f5a349250831b2f16b90e9915fa874a3e6"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/cover-c5.jpg",
+            "size": 61112,
+            "hash": "2a1edc2e8f389f262fbef7978b96be9fc3ce52c8fbd2cd566b8d4552693f1581"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/em-band.png",
+            "size": 56810,
+            "hash": "e12d82a0702712cd2e3c08903d858bbfdf63712c17c9f3a7e7d7ccfcb42bece4"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/em-base.png",
+            "size": 44172,
+            "hash": "78e528c90408541878c29ced09fafdb94be0710fd2470332826669b87d754ba7"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/em-gold.png",
+            "size": 29041,
+            "hash": "fa006ca691da5c8ae50d73e831dd6f4f0de52b6d5b1f6ee0b9d91e645292ca31"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/em-leaf.png",
+            "size": 45367,
+            "hash": "7fd58fc084dc6351b2bb0fcaeafb0f17a348669dcba1f4c4079f9d22e9163d56"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/em-top.png",
+            "size": 43496,
+            "hash": "b031d11af8edcba74dbfd7c1ca74cffb8a9f2d3fa9273ac87353530e81027782"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/favicon.png",
+            "size": 72781,
+            "hash": "8ae727d27d93a3efddebb2bfc64635b013b32879b1370501239f46315e5635f0"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/foto-1.jpg",
+            "size": 99675,
+            "hash": "4eb8eefdc4c020910e172c971681897fbcfb4bd182971d42a97e7d5645584dd3"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/foto-2.jpg",
+            "size": 198733,
+            "hash": "a58d3b1dd637af131e635047ea6eef2897bfca857c71bfe752c9d3fb3db98115"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/foto-3.jpg",
+            "size": 121640,
+            "hash": "c4931b1f803a83f734de091bf0d20cc2ae21fbe95f4670198c7d329fcff0a92f"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/foto-4.jpg",
+            "size": 236808,
+            "hash": "482c5ce089d1c42906cba49b811668a10ea40125b0f7604bd3dc3d073be05a77"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/foto-5.jpg",
+            "size": 111626,
+            "hash": "f63fbb70cbf6bb17fdd4f788319e6419b3e9ecec05211bfccb633453abbb91a5"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/foto-6.jpg",
+            "size": 96782,
+            "hash": "838bd5fa68d9e65c6bb377c86d37d25167c44c6501a9160c77c27c750595195b"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/foto-7.jpg",
+            "size": 103990,
+            "hash": "c947ad2b38f1b2e5c6f62817f6463a7610f131f9194d9a6fb9db8dd33b520f2b"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/logo-color.png",
+            "size": 72781,
+            "hash": "8ae727d27d93a3efddebb2bfc64635b013b32879b1370501239f46315e5635f0"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/logo-twotone.png",
+            "size": 28738,
+            "hash": "0cb0b8b441d24a59693aa742063c3fea1341dd8a7cb17a2a24a39ea2e89d861e"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/og-image.png",
+            "size": 216514,
+            "hash": "17623b1410c3bf7703a8451d67fa9d86504572dbd61908639214f6f55a79b5e3"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/rb-flash.png",
+            "size": 24568,
+            "hash": "d8cceff945d02f9d6235124ba06b27469f4658b41764454887f4c6452921d1f3"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/rb-pedia.png",
+            "size": 22045,
+            "hash": "182be6db0d095bd43d5052bad564fa856b7ebb4e98a3ca1fc5ab9dc4657054b5"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/rb-stat.png",
+            "size": 19093,
+            "hash": "45ff7383247c8df7728848eb5341620aef34168b7b090a5a77ab02148251f979"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/rb-talk.png",
+            "size": 19023,
+            "hash": "73c8f7a111d74a9cc94895e7ec39141d9b3f58bec19fbae4850767c66e465cbd"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/rb-story.png",
+            "size": 20507,
+            "hash": "c290457daf6aaedcae98f1c5d188dfdd9e45efe5035cd427cf288208a8d96a0a"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/rb-tips.png",
+            "size": 20155,
+            "hash": "0b9d3149dcb57164d95d233f6fd8f331c56e7ee0a1bc2d59f0b446ed78dd59fe"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/wafiy.jpg",
+            "size": 30826,
+            "hash": "132ea6ea4fa2d778dcb569722450351e09d821fec5af7858ec1c434040ef2438"
+        },
+        {
+            "type": "file",
+            "name": "assets/images/zaida.jpg",
+            "size": 26386,
+            "hash": "9f1bb7fd90cf0d684681e09feb6ea2128f4b1239be04d69149072a1dd300db8a"
+        },
+        {
+            "type": "file",
+            "name": "assets/videos/wafiy.mp4",
+            "size": 545426,
+            "hash": "2cecf5b2bb74cebc171e817f4ac8de63a7ba9f4ff30dda95a9c1895fc175adf3"
+        },
+        {
+            "type": "file",
+            "name": "assets/videos/zaida.mp4",
+            "size": 585739,
+            "hash": "5aeb1d3961d26359d2e495e5506795f65527cfb7436f68ab16fdd6d378d53ca2"
+        }
+    ]
+}

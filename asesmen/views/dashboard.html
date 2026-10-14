@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dashboard Asesmen Zakademia</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Respondent: one short screen at a time (wizard). Owner: inbox + result view. Single light theme (Zakademia brand). */
+:root{
+  --bg:#FFFFF0; --paper:#FFFFFF; --mist:#F2F5E6; --ink:#10291F; --mute:#4A6355; --line:#DCE5D7;
+  --deep:#0B4D33; --leaf:#6FAF78; --leaf-soft:#B9D9BE; --gold:#C99A3B; --gold-text:#8A6418; --warn:#9A3B1F;
+  --sans:"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --shadow:0 18px 40px -28px rgba(11,77,51,.45);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--sans);margin:0}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance;line-height:1.2}
+p{margin:0}
+.label{font:500 11.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
+header.top{border-bottom:1px solid var(--line);background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;gap:12px;padding-block:14px;flex-wrap:wrap}
+header.top img{width:34px;height:34px}
+header.top b{font-size:18px;color:var(--deep)}
+header.top .sub{color:var(--mute);font-size:14px}
+.adminbar{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.adminbar button{min-height:40px;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--paper);font:600 14px var(--sans);color:var(--ink);cursor:pointer}
+.adminbar button[aria-current="page"]{background:var(--deep);border-color:var(--deep);color:#FFFFF0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:999px;font:700 15px var(--sans);border:1.5px solid transparent;cursor:pointer;text-decoration:none}
+.btn-deep{background:var(--deep);color:#FFFFF0}
+.btn-ghost{background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn-gold{background:var(--gold);color:#10291F}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:24px clamp(16px,3vw,28px);display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow);min-width:0}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.card-head h2{font-size:21px}
+.card-head p{color:var(--mute);font-size:14px;max-width:62ch}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.qlabel{font-weight:700;font-size:14.5px}
+.field small{color:var(--mute);font-size:12.5px}
+input[type=text],input[type=email],input[type=tel],select{font:400 16px var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-height:48px;width:100%}
+[aria-invalid="true"]{border-color:var(--warn)!important}
+.note{font-size:13.5px;color:var(--mute)}
+.alert{background:#FBEFE6;border:1px solid #EBCBB4;color:#6E2C16;border-radius:14px;padding:12px 14px;font-size:14px}
+.toast{font-size:14px;color:var(--deep);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* ---------- wizard ---------- */
+.wz{max-width:760px;margin:0 auto;padding:22px 16px 0}
+.notice{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:14px;color:var(--mute);margin-bottom:14px}
+.stepbar{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.stepbar .where{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--mute);font-weight:600}
+.stepbar .where b{color:var(--deep)}
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;list-style:none;margin:0;padding:0}
+.steps li{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--mute);font-weight:600;min-width:0}
+.steps li i{height:6px;border-radius:6px;background:var(--line);display:block;overflow:hidden}
+.steps li i b{display:block;height:100%;background:var(--deep);border-radius:6px}
+.steps li.done i{background:var(--leaf)}
+.steps li.on{color:var(--deep)}
+@media (max-width:560px){.steps li span{display:none}}
+.screen{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:24px clamp(16px,4vw,32px);display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow)}
+.screen h1{font-size:clamp(25px,4.4vw,34px);font-weight:800}
+.screen h2{font-size:clamp(21px,3.4vw,26px);font-weight:800}
+.screen h3{font-size:16px}
+.screen .lead{color:var(--mute);font-size:15.5px}
+.how{background:var(--mist);border-radius:16px;padding:12px 16px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.how b{color:var(--deep)}
+.how ol{margin:4px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.facts div{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--bg);display:flex;flex-direction:column;gap:2px}
+.facts b{font-size:18px;color:var(--deep)}
+.facts span{font-size:13px;color:var(--mute)}
+.plan{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.plan li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+.plan li>i{width:34px;height:34px;border-radius:50%;background:var(--deep);color:#FFFFF0;display:grid;place-items:center;font-style:normal;font-weight:800}
+.plan li b{display:block}
+.plan li span{color:var(--mute);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips label{min-height:44px;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;background:var(--paper);font:600 14.5px var(--sans);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;user-select:none}
+.chips label:hover{border-color:var(--leaf)}
+.chips input:checked+label{background:var(--deep);border-color:var(--deep);color:#FFFFF0}
+.chips input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.chips.cards label{flex-direction:column;align-items:flex-start;justify-content:center;border-radius:14px;gap:1px;padding:10px 14px;text-align:left}
+.chips.cards label small{font-weight:500;font-size:12.5px;color:var(--mute)}
+.chips.cards input:checked+label small{color:#D7E6DA}
+.chips.tg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:640px){.chips.tg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ind .txt{font-size:15.5px;font-weight:600;margin-bottom:10px}
+.chips.gut{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:640px){.chips.gut{grid-template-columns:minmax(0,1fr)}}
+.chips.gut label{border-radius:12px;font-size:13.5px;padding:8px 12px;min-height:42px}
+.chips.gut label::before{content:'';width:16px;height:16px;border-radius:4px;border:1.5px solid #9DB9A4;background:#fff;flex:none}
+.chips.gut input:checked+label::before{background:var(--gold);border-color:var(--gold);box-shadow:inset 0 0 0 3px var(--deep)}
+.chips.yn label{min-width:84px;justify-content:center}
+.ind{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.ind:first-of-type{border-top:0;padding-top:4px}
+.ind .rung{width:48px;font-size:13.5px}
+.rung.v1{background:var(--mist);border-color:var(--line);color:var(--deep)}
+.rung.v2{background:var(--leaf-soft);border-color:var(--leaf-soft);color:var(--ink)}
+.rung.v3{background:var(--leaf);border-color:var(--leaf);color:var(--ink)}
+.rung.v4{background:var(--deep);border-color:var(--deep);color:#FFFFF0}
+.lvl{font-size:13px;color:var(--gold-text);font-weight:700;margin-top:8px}
+.sec{font-size:17px;padding-top:14px;border-top:1px solid var(--line)}
+.triads{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.triad.missing h3,.triad.missing .pct{color:var(--warn)}
+.knob{cursor:grab}.knob.unset{opacity:.45}
+.vrio{display:flex;flex-direction:column;gap:12px}
+.vcard{border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.vcard.missing{border-color:#E3B9A6}
+.vhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.vhead b{font-size:15.5px}
+.vrow{display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px dashed var(--line)}
+.vrow p{font-size:14.5px}
+.vrow p b{color:var(--deep)}
+.pill.gold{background:#FFF1D6;color:#7A5410;box-shadow:inset 0 0 0 1.5px var(--gold)}
+.vtable{min-width:640px}
+.vtable td.vc{text-align:center;color:var(--mute)}
+.vtable td.vc.yes{color:var(--deep);font-weight:700}
+.chips .unk{color:var(--mute);border-style:dashed}
+.chips input:checked+label.unk{background:var(--mute);border-color:var(--mute);color:#FFFFF0}
+.stmt-unused{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.stmt:first-of-type{border-top:0;padding-top:4px}
+.rung{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:16px;background:var(--mist);color:var(--deep);border:1.5px solid var(--line);transition:background .2s}
+.rung.v1{background:var(--leaf-soft);border-color:var(--leaf-soft)}
+.rung.v2{background:var(--deep);border-color:var(--deep);color:#FFFFF0}
+.stmt .txt{font-size:15.5px;font-weight:600;margin-bottom:10px}
+.missing .txt,.missing .qlabel{color:var(--warn)}
+.missing .chips label{border-color:#E3B9A6}
+.pos{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--mist);border-radius:16px;padding:12px 16px}
+.pos .bar{flex:1;min-width:140px;height:10px;border-radius:10px;background:#fff;border:1px solid var(--line);overflow:hidden}
+.pos .bar i{display:block;height:100%;background:var(--deep);width:0;transition:width .3s}
+.pos b{color:var(--deep)}
+.block{display:flex;flex-direction:column;gap:10px}
+.poles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.poles div{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--bg)}
+.poles b{display:block;color:var(--deep)}
+.poles span{font-size:13.5px;color:var(--mute)}
+.pair{border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.pair-q{font-weight:700}
+.prow{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px dashed var(--line)}
+.prow>span:first-child{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--gold-text)}
+.pscale{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 12px;max-width:520px;width:100%;align-self:center}
+.pscale .end{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.25;grid-row:1}
+.pscale .end.r{grid-column:2;text-align:right}
+.dots{grid-column:1/-1;grid-row:2;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
+.dots input{position:absolute;opacity:0;width:1px;height:1px}
+.dots label{display:block;border-radius:50%;border:2px solid var(--leaf);background:#fff;cursor:pointer}
+.dots label.s2{width:34px;height:34px}.dots label.s1{width:27px;height:27px}.dots label.s0{width:20px;height:20px;border-color:#9DB9A4}
+.dots input:checked+label{background:var(--deep);border-color:var(--deep);box-shadow:0 0 0 3px #E7C982}
+.dots input:focus-visible+label{outline:2px solid var(--gold);outline-offset:2px}
+.pcap{font-size:12.5px;color:var(--gold-text);font-weight:700;min-height:1.2em;text-align:center}
+.missing.prow>span:first-child{color:var(--warn)}
+.missing.prow .dots label{border-color:#E3B9A6}
+.preview{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:16px;align-items:center;background:var(--mist);border-radius:18px;padding:14px}
+.preview svg{width:100%;height:auto;display:block}
+.preview p{font-size:14px;color:var(--mute)}
+.preview p b{color:var(--ink)}
+@media (max-width:520px){.preview{grid-template-columns:minmax(0,1fr)}.preview svg{max-width:240px;margin:0 auto}}
+.kq{display:flex;flex-direction:column;gap:8px;padding:14px 0;border-top:1px solid var(--line)}
+.kq:first-of-type{border-top:0}
+.kq small{color:var(--mute);font-size:13px}
+.review>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-top:1px solid var(--line)}
+.review>div:first-child{border-top:0}
+.review b{font-size:14.5px}
+.review span{font-size:14px;color:var(--mute);grid-column:1}
+.review button{grid-row:1/span 2;grid-column:2;align-self:center}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--mute)}
+.consent input{width:22px;height:22px;margin-top:1px;accent-color:var(--deep);flex:none}
+.consent.missing span{color:var(--warn)}
+.nav{position:sticky;bottom:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 0 18px;margin-top:4px;background:linear-gradient(rgba(255,255,240,0),var(--bg) 35%)}
+.nav .sp{flex:1}
+.nav .err{color:var(--warn);font-size:13.5px;font-weight:600;flex-basis:100%}
+.nav .err:empty{display:none}
+.linkbtn{background:none;border:0;padding:0;font:600 14px var(--sans);color:var(--deep);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.thanks h1{font-size:30px}
+
+/* ---------- inbox ---------- */
+.inbox-head{padding-block:32px 16px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.inbox-head h1{font-size:clamp(26px,3.6vw,36px)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th{font:500 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+td{padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--deep)}
+.status{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.status.baru{background:#FFF1D6;color:#7A5410}
+.status.terkirim{background:var(--mist);color:var(--deep)}
+.empty{padding:28px;text-align:center;color:var(--mute)}
+/* ---------- result ---------- */
+.res-head{padding-block:28px 8px;display:flex;flex-direction:column;gap:10px}
+.res-meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--mute);font-size:14px}
+.results{padding-block:12px 64px;display:flex;flex-direction:column;gap:22px}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px}
+.chart svg{width:100%;height:auto;display:block}
+.idxcard{align-self:start;background:var(--deep);color:#FFFFF0;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.idxcard .label{color:#E7C982}
+.idx-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.idx-num{font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.idx-cat{font-weight:700;font-size:16px;background:rgba(255,255,240,.14);border-radius:999px;padding:4px 12px}
+.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.stages i{height:6px;border-radius:6px;background:rgba(255,255,240,.18)}
+.stages i.on{background:var(--gold)}
+.idxcard p{color:#D7E6DA;font-size:14px}
+.story ul{margin:0;padding-left:20px}
+.story li{margin-bottom:6px}
+.heat{display:grid;grid-template-columns:minmax(110px,1.3fr) repeat(5,minmax(0,1fr)) auto;gap:4px;align-items:center;font-size:13px;min-width:540px}
+.heat .h{font:500 11px var(--mono);color:var(--mute);text-align:center}
+.heat .rowname{font-weight:600;font-size:13px}
+.heat .cell{height:34px;border-radius:8px;display:grid;place-items:center;font-weight:700;font-size:12px;border:1px solid var(--line)}
+.heat .avg{font-weight:700;color:var(--deep);padding-left:6px;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--mute)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:5px}
+.triad{display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}
+.triad svg{width:100%;max-width:340px}
+.triad .pct{font-size:12.5px;color:var(--mute)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px}
+.kpi{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--bg);display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi>span{font-size:12.5px;color:var(--mute);font-weight:600}
+.kpi b{font-size:21px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi small{font-size:12px;color:var(--mute)}
+.kpi.key{border-color:var(--gold);background:linear-gradient(180deg,#FFF8E6,var(--bg))}
+.pill{align-self:flex-start;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.pill.ok{background:var(--mist);color:var(--deep)}
+.pill.warn{background:#FFF1D6;color:#7A5410}
+.pill.bad{background:#FBEFE6;color:#6E2C16}
+.health{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.health .pill{font-size:14px;padding:5px 14px}
+.explain{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.explain div{background:var(--mist);border-radius:14px;padding:10px 14px;font-size:13.5px}
+.explain b{color:var(--deep)}
+.reco{border:1.5px dashed var(--gold)}
+.reco h3{font-size:16px;margin-top:6px}
+.reco h4{margin:6px 0 0;font-size:14.5px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.reco ol,.reco ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.reco li{font-size:14.5px}
+.reco li small{display:block;color:var(--mute);font-size:12.5px;margin-top:2px}
+.reco .step{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--gold-text);margin-right:6px}
+.reco li.next{background:#FFF8E6;border-radius:10px;padding:6px 8px}
+.emailbox{white-space:pre-wrap;font:400 13.5px/1.6 var(--sans);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;max-height:280px;overflow:auto}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+textarea{font:400 14px/1.6 var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;resize:vertical}
+body{padding-bottom:24px}
+.adminbar a.btn{min-height:40px;padding:8px 16px;font-size:14px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><b>Zakademia</b><span class="sub">Dashboard Asesmen Kesiapan Penghimpunan</span><nav class="adminbar"><a class="btn btn-ghost" href="admin.php?api=csv">Unduh CSV</a><a class="btn btn-ghost" href="admin.php?logout=1">Keluar</a></nav></div></header>
+<main class="wrap" id="viewInbox">
+  <div class="inbox-head"><div><span class="label">Pengelola</span><h1>Kiriman masuk</h1><p class="note" id="inboxNote">Memuat kiriman…</p></div>
+    <div class="actions"><button class="btn btn-ghost" type="button" id="refreshBtn">Muat ulang</button><button class="btn btn-ghost" type="button" id="sampleView">Lihat contoh hasil</button></div></div>
+  <div class="card"><div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Lembaga</th><th>Pengisi</th><th>Email</th><th>Indeks</th><th>Kesehatan</th><th>Konsistensi</th><th>Status</th><th><span class="sr-only">Aksi</span></th></tr></thead><tbody id="inboxBody"></tbody></table></div><div class="empty" id="inboxEmpty" hidden>Belum ada kiriman.</div></div>
+</main>
+<!-- OWNER: RESULT -->
+<main class="wrap" id="viewResult" hidden>
+  <div class="res-head">
+    <button class="linkbtn" type="button" id="resBack" style="align-self:flex-start">Kembali ke kiriman masuk</button>
+    <span class="label">Hasil asesmen</span>
+    <h1 id="resOrg" style="font-size:clamp(26px,3.6vw,38px)"></h1>
+    <div class="res-meta" id="resMeta"></div>
+  </div>
+  <div class="results">
+    <div class="rgrid">
+      <div class="idxcard" id="idxCard"></div>
+      <div class="card story" id="story"></div>
+    </div>
+    <div class="card"><div class="card-head"><div><h2>Kinerja dan kesehatan penghimpunan</h2><p>Perkiraan dari rentang yang dipilih lembaga.</p></div></div><div id="kpi" style="display:flex;flex-direction:column;gap:16px"></div></div>
+    <div class="rgrid">
+      <div class="card"><div class="card-head"><div><h2>Radar chart enam dimensi</h2><p>Skor 1–4: rata-rata tingkat indikator per dimensi.</p></div></div><div class="chart" id="radar"></div></div>
+      <div class="card"><div class="card-head"><div><h2>Importance-Performance Matrix</h2><p>Dimensi di kiri atas bertarget tinggi tetapi kondisinya masih rendah.</p></div></div><div class="chart" id="ipa"></div></div>
+    </div>
+    <div class="rgrid">
+      <div class="card"><div class="card-head"><div><h2>Gap analysis</h2><p>Tingkat saat ini (hijau) dibandingkan tingkat target lembaga (garis emas).</p></div></div><div class="chart" id="gap"></div></div>
+      <div class="card"><div class="card-head"><div><h2>Ternary plot</h2><p>Prioritas strategi saat ini (emas) dan arah ke depan (hijau).</p></div></div><div class="chart" id="triRes"></div></div>
+    </div>
+    <div class="card"><div class="card-head"><div><h2>Peta keunggulan (VRIO) dan modal inovasi</h2><p>Keunggulan yang bernilai, langka, dan sulit ditiru tetapi belum dimanfaatkan merupakan modal inovasi utama.</p></div></div><div id="kuBox" style="display:flex;flex-direction:column;gap:14px"></div></div>
+    <div class="card"><div class="card-head"><div><h2>Heatmap 30 indikator</h2><p>Warna makin pekat menandakan tingkat praktik makin tinggi.</p></div></div>
+      <div class="tablewrap"><div class="heat" id="heat"></div></div>
+      <div class="legend"><span><i style="background:#EEF3E4"></i>1 Belum ada</span><span><i style="background:#B9D9BE"></i>2 Sudah ada</span><span><i style="background:#6FAF78"></i>3 Rutin dan tertulis</span><span><i style="background:#0B4D33"></i>4 Diukur dan dipakai</span><span><i style="background:#fff;outline:2px dashed #9A3B1F;outline-offset:-3px"></i>Jawaban tidak berurutan</span></div>
+      <p class="note" id="gutNote"></p>
+    </div>
+    <div class="card reco"><div class="card-head"><div><h2>Rekomendasi rinci</h2><p>Bahan sesi diskusi dengan lembaga. Bagian ini tidak ikut dalam email hasil.</p></div><span class="pill warn">Khusus admin</span></div>
+      <div id="reco" style="display:flex;flex-direction:column;gap:14px"></div>
+    </div>
+    <div class="card" id="emailCard"><div class="card-head"><div><h2>Kirim hasil ke lembaga</h2><p>Periksa dan sunting isi email, lalu kirim. Email dikirim dari alamat Zakademia melalui server hosting.</p></div></div>
+      <div class="grid2"><div class="field"><label for="mTo">Kepada</label><input type="email" id="mTo"></div><div class="field"><label for="mSubj">Subjek</label><input type="text" id="mSubj"></div></div>
+      <div class="field"><label for="mBody">Isi email</label><textarea id="mBody" rows="16"></textarea></div>
+      <div class="actions">
+        <button class="btn btn-deep" type="button" id="sendBtn">Kirim email</button>
+        <button class="btn btn-ghost" type="button" id="markBtn">Tandai terkirim tanpa mengirim</button>
+        <span class="toast" id="emailToast" role="status"></span>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+(function(){
+var CSRF='__CSRF__';
+function api(name,data){return fetch('admin.php?api='+name,{method:data?'POST':'GET',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF':CSRF},body:data?JSON.stringify(data):undefined})
+  .then(function(r){return r.json().catch(function(){return {ok:false,error:'Tanggapan server tidak terbaca ('+r.status+').'};});})
+  .then(function(j){if(!j||!j.ok){if(j&&j.login){location.href='admin.php';}throw new Error((j&&j.error)||'galat');}return j.data;});}
+var BACKEND={list:function(){return api('list');},send:function(id,to,s,b){return api('send',{id:id,to:to,subject:s,body:b});},mark:function(id){return api('mark',{id:id});}};
+var DIMS=[
+ {name:'Pemahaman donatur',short:'Pemahaman',q:'Seberapa baik lembaga mengenal siapa yang memberi, mengapa memberi, dan mengapa berhenti.',inds:['Profil donatur tercatat lengkap: jenis, domisili, tanggal pertama memberi, dan kanal','Donatur dikelompokkan menurut nilai, frekuensi, dan kebaruan donasi','Motivasi dan preferensi donatur digali melalui survei atau wawancara','Alasan donatur berhenti memberi diketahui','Potensi donatur di wilayah atau segmen sasaran dipetakan']},
+ {name:'Perjalanan donatur',short:'Perjalanan',q:'Apakah donatur dilayani dengan tepat sejak donasi pertama hingga menjadi donatur tetap.',inds:['Donatur baru menerima sambutan dalam pekan pertama','Setiap donasi dibalas ucapan terima kasih dan bukti setor yang cepat','Donatur menerima kabar dampak dari donasinya secara berkala','Ada program untuk mendorong donatur memberi lagi dan berdonasi rutin','Donatur yang berhenti dihubungi kembali secara terencana']},
+ {name:'Kanal dan kampanye',short:'Kanal',q:'Apakah lembaga mengetahui kanal yang paling produktif dan merencanakan kampanye berdasarkan data.',inds:['Kinerja tiap kanal dipantau: nilai, jumlah donatur, dan tren','Biaya penghimpunan per kanal dihitung','Kalender kampanye tahunan disusun sejak awal tahun','Setiap kampanye memiliki target dan dievaluasi setelah selesai','Pesan dan materi diuji, misalnya dua versi dibandingkan hasilnya']},
+ {name:'Fondasi data dan analitik',short:'Data',q:'Apakah data cukup rapi dan terhubung untuk menjawab pertanyaan pimpinan.',inds:['Data donatur dan transaksi tersimpan di satu sistem, bukan lembar kerja terpisah','Kualitas data dijaga: kolom wajib lengkap, tanpa duplikasi, dan diperbarui berkala','Dasbor penghimpunan tersedia dan dibaca pimpinan secara rutin','Analisis melampaui rekap: mencari penyebab dan memperkirakan tren','Data pribadi dilindungi sesuai UU Pelindungan Data Pribadi']},
+ {name:'Tata kelola dan kepercayaan',short:'Tata kelola',q:'Hal-hal yang menjaga kepercayaan donatur dan publik.',inds:['Izin operasional dan dasar hukum lembaga berlaku','Laporan keuangan diaudit dan diumumkan kepada publik','Dewan pengawas syariah aktif dan audit syariah dilakukan berkala','Kebijakan penghimpunan tertulis: jenis dana, hak amil, dan penanganan keluhan','Risiko reputasi dan penyalahgunaan dana dipetakan beserta mitigasinya']},
+ {name:'Kapasitas dan pembelajaran',short:'Kapasitas',q:'Apakah tim mampu menjalankan rencana dan belajar dari hasilnya.',inds:['Target tahunan disusun dari data tahun sebelumnya, dipecah per kanal dan bulan','Peran penghimpunan, layanan donatur, dan pengelolaan data memiliki penanggung jawab','Staf mendapat pelatihan penghimpunan dan literasi data','Rapat evaluasi rutin membahas angka, bukan hanya kegiatan','Pelajaran dari kampanye dan program didokumentasikan untuk tahun berikutnya']}
+];
+var GQ=['Sudah ada','Rutin dan tertulis','Diukur dan dipakai untuk keputusan'];
+var LVN=['Belum ada','Sudah ada','Rutin dan tertulis','Diukur dan dipakai'];
+var POLES=[{n:'Efisiensi Biaya',en:'Fundraising Efficiency',d:'Menekan biaya penghimpunan per rupiah terhimpun.'},{n:'Penghimpunan Tinggi',en:'High Fundraising Volume',d:'Memperbesar jumlah dana dan donatur baru.'},{n:'Retensi Donatur',en:'Donor Retention',d:'Mempertahankan donatur lama agar terus berdonasi.'}];
+var DIL=[{gain:'biaya per rupiah terhimpun ditekan dan hak amil terjaga',loss:'belanja akuisisi dan layanan donatur ikut ditekan, sehingga pertumbuhan cenderung lambat'},
+ {gain:'jumlah dana dan donatur baru tumbuh cepat lewat kampanye besar dan iklan',loss:'biaya penghimpunan naik dan banyak donatur baru hanya memberi sekali'},
+ {gain:'donatur yang ada dilayani dengan laporan dampak, layanan pribadi, dan donasi rutin',loss:'perolehan cepat dari donatur baru berkurang dan biaya layanan per donatur lebih tinggi'}];
+var KU=[['reputasi','Kepercayaan dan reputasi lembaga'],['komunitas','Jaringan komunitas, jamaah, atau alumni'],['mitra','Kemitraan dengan perusahaan, kampus, atau instansi'],['loyal','Basis donatur yang loyal'],['program','Program dengan dampak yang terlihat'],['tokoh','Tokoh atau pimpinan yang dikenal publik'],['digital','Kanal digital yang aktif'],['data','Data donatur yang tercatat rapi'],['relawan','Relawan atau tim lapangan yang kuat'],['khas','Program khas yang jarang dimiliki lembaga lain']];
+var KU_USE={reputasi:'jadikan bukti kepercayaan (hasil audit, laporan dampak, testimoni) sebagai inti pesan kampanye dan program donasi rutin',komunitas:'kembangkan penggalangan berbasis komunitas, misalnya donasi rutin kolektif atau perwakilan komunitas',mitra:'kembangkan skema donasi melalui mitra, misalnya potong gaji, program CSR bersama, atau program kampus',loyal:'tawarkan program donatur tetap: donasi rutin, laporan pribadi, dan ajakan mengajak kerabat',program:'kemas program menjadi produk donasi dengan target dan laporan dampak yang terukur',tokoh:'libatkan tokoh dalam kampanye tematik dan pertemuan dengan donatur besar',digital:'uji kampanye digital bertarget dan halaman donasi dengan pilihan nominal yang disarankan',data:'manfaatkan data untuk segmentasi, sapaan personal, dan prediksi donatur yang berisiko berhenti',relawan:'jadikan relawan penggalang dana (peer-to-peer fundraising) dengan target dan perangkat yang jelas',khas:'jadikan program khas sebagai pembeda utama dalam pesan dan kemitraan'};
+var VRIO=[['Bernilai','Keunggulan ini membuat donatur atau mitra memilih lembaga kami.'],['Langka','Hanya sedikit lembaga lain yang memilikinya.'],['Sulit ditiru','Tidak mudah ditiru lembaga lain dalam waktu singkat.'],['Terorganisasi','Sudah dimanfaatkan secara terencana dalam penghimpunan.']];
+var VCAT=[{n:'Belum menjadi keunggulan',c:'bad'},{n:'Setara lembaga lain',c:'warn'},{n:'Keunggulan sementara',c:'warn'},{n:'Belum dimanfaatkan',c:'gold'},{n:'Keunggulan berkelanjutan',c:'ok'}];
+var INO=[['produk','Produk donasi baru','Donasi rutin, wakaf produktif, atau paket program'],['kanal','Kanal baru','QRIS, aplikasi, potong gaji, atau marketplace'],['layanan','Layanan donatur','Laporan dampak personal atau komunitas donatur'],['mitra','Kemitraan','CSR, kampus, atau komunitas'],['usaha','Model pendanaan','Unit usaha atau investasi wakaf'],['data','Pemanfaatan data','Segmentasi atau prediksi donatur']];
+var INO_IDEA={produk:'rancang satu produk donasi baru dengan target, harga paket, dan laporan dampak, lalu uji pada segmen donatur terdekat',kanal:'uji satu kanal baru pada skala kecil dan bandingkan biaya per donatur baru dengan kanal yang ada',layanan:'uji laporan dampak personal atau komunitas donatur pada sebagian donatur, lalu bandingkan tingkat donasi ulangnya',mitra:'susun proposal kemitraan dengan manfaat yang jelas bagi mitra, mulai dari satu mitra percontohan',usaha:'kaji kelayakan unit usaha atau wakaf produktif, termasuk kesesuaian syariah dan risikonya',data:'mulai dari satu analisis sederhana, misalnya donatur yang berhenti tahun ini, lalu jadikan dasar sapaan ulang'};
+var FREK=['Belum pernah','Sesekali, tanpa rencana','Beberapa kali setahun','Rutin dan terencana'];
+var HAMB=[['dana','Anggaran'],['sdm','SDM dan keahlian'],['putusan','Keputusan pimpinan'],['data','Ketersediaan data'],['teknologi','Teknologi'],['risiko','Kekhawatiran risiko dan reputasi']];
+var HAMB_FIX={dana:'mulai dari uji coba berbiaya rendah dan ajukan anggaran setelah ada hasil awal',sdm:'tunjuk satu penanggung jawab inovasi dan lengkapi dengan pelatihan singkat',putusan:'ajukan uji coba kecil dengan batas waktu dan ukuran keberhasilan agar mudah disetujui pimpinan',data:'benahi pencatatan data dasar lebih dulu agar hasil uji coba dapat diukur',teknologi:'gunakan layanan yang sudah tersedia sebelum membangun sistem sendiri',risiko:'tetapkan batas risiko, kepatuhan syariah, dan rencana komunikasi sebelum uji coba'};
+var KPQ=[
+ {k:'total',s:'Total terhimpun',q:'Total dana terhimpun dalam setahun terakhir',o:[['< Rp100 juta',5e7],['Rp100–500 juta',3e8],['Rp500 juta–1 miliar',7.5e8],['Rp1–5 miliar',2.5e9],['Rp5–20 miliar',1e10],['> Rp20 miliar',3e10]]},
+ {k:'donor',s:'Jumlah donatur',q:'Jumlah donatur yang berdonasi dalam setahun terakhir',h:'Dihitung per orang atau lembaga, bukan per transaksi.',o:[['< 100',60],['100–500',300],['500–2.000',1200],['2.000–10.000',5000],['> 10.000',15000]]},
+ {k:'avg',s:'Rata-rata donasi',q:'Rata-rata nilai satu kali donasi',o:[['< Rp50 ribu',3e4],['Rp50–100 ribu',7.5e4],['Rp100–250 ribu',1.75e5],['Rp250 ribu–1 juta',5e5],['> Rp1 juta',1.5e6]]},
+ {k:'freq',s:'Frekuensi',q:'Rata-rata frekuensi berdonasi seorang donatur dalam setahun',o:[['Satu kali',1],['2–3 kali',2.5],['4–11 kali',7],['Setiap bulan',12]]},
+ {k:'ret',s:'Retensi',q:'Dari 10 donatur tahun lalu, berapa yang berdonasi lagi tahun ini?',o:[['0–2 orang',.15],['3–4 orang',.35],['5–6 orang',.55],['7–10 orang',.8]]},
+ {k:'cac',s:'Biaya per donatur baru',q:'Perkiraan biaya untuk mendapatkan satu donatur baru',h:'Biaya iklan, promosi, acara, atau komisi platform dibagi jumlah donatur baru.',o:[['Hampir tanpa biaya',1e4],['< Rp50 ribu',3e4],['Rp50–200 ribu',1.25e5],['Rp200 ribu–1 juta',5e5],['> Rp1 juta',1.5e6]]},
+ {k:'cost',s:'Biaya penghimpunan',q:'Dari setiap Rp100 yang terhimpun, berapa yang digunakan untuk biaya penghimpunan?',h:'Termasuk iklan, acara, gaji tim penghimpunan, dan sistem.',o:[['< Rp5',.03],['Rp5–12',.09],['Rp13–20',.165],['Rp21–35',.28],['> Rp35',.45]]},
+ {k:'grow',s:'Target tahun depan',q:'Target penghimpunan tahun depan dibandingkan tahun ini',o:[['Turun',-.1],['Sama',0],['Naik < 25%',.15],['Naik 25–50%',.375],['Naik > 50%',.6]]}
+];
+var TIM=['Belum ada yang khusus','1–2 orang','3–5 orang','6–10 orang','Lebih dari 10'];
+var TYPES=['Lembaga amil zakat','BAZNAS daerah','Unit pengumpul zakat','Nazhir wakaf','Lembaga filantropi kampus','Lembaga filantropi korporat','Lainnya'];
+var CATS=['Awal','Berkembang','Mapan','Unggul'];
+var CATTXT=['Praktik dasar penghimpunan belum terbentuk.','Praktik sudah ada, tetapi belum rutin dan terukur.','Praktik rutin dan mulai dipakai untuk keputusan.','Data mendorong perbaikan berkelanjutan.'];
+var TRI={A:[140,38],B:[22,232],C:[258,232]};
+function bary2xy(w){return [w[0]*TRI.A[0]+w[1]*TRI.B[0]+w[2]*TRI.C[0],w[0]*TRI.A[1]+w[1]*TRI.B[1]+w[2]*TRI.C[1]];}
+function xy2bary(x,y){var A=TRI.A,B=TRI.B,C=TRI.C;var det=(B[1]-C[1])*(A[0]-C[0])+(C[0]-B[0])*(A[1]-C[1]);var a=((B[1]-C[1])*(x-C[0])+(C[0]-B[0])*(y-C[1]))/det;var b=((C[1]-A[1])*(x-C[0])+(A[0]-C[0])*(y-C[1]))/det;var c=1-a-b;var w=[Math.max(0,a),Math.max(0,b),Math.max(0,c)];var s=w[0]+w[1]+w[2];return [w[0]/s,w[1]/s,w[2]/s];}
+var NS='http://www.w3.org/2000/svg',SVGN=0;
+function el(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function h(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;}
+function fmt(v,d){return v==null?'–':v.toFixed(d==null?1:d).replace('.',',');}
+function mean(a){var v=a.filter(function(x){return x!=null;});return v.length?v.reduce(function(s,x){return s+x;},0)/v.length:null;}
+function triSvg(parent,now,next){
+  var n=++SVGN;var svg=el('svg',{viewBox:'0 0 280 276',role:'img','aria-label':'Ternary plot prioritas strategi penghimpunan'},parent);
+  var defs=el('defs',{},svg);var g=el('linearGradient',{id:'tg'+n,x1:'0',y1:'0',x2:'0',y2:'1'},defs);el('stop',{offset:'0','stop-color':'#E7C982'},g);el('stop',{offset:'1','stop-color':'#6FAF78'},g);
+  var mk=el('marker',{id:'ar'+n,viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'6',markerHeight:'6',orient:'auto-start-reverse'},defs);el('path',{d:'M0 0L10 5L0 10z',fill:'#0B4D33'},mk);
+  el('polygon',{points:TRI.A+' '+TRI.B+' '+TRI.C,fill:'url(#tg'+n+')',stroke:'#0B4D33','stroke-width':'1.2','stroke-linejoin':'round'},svg);
+  var mid=[(TRI.A[0]+TRI.B[0]+TRI.C[0])/3,(TRI.A[1]+TRI.B[1]+TRI.C[1])/3];
+  [TRI.A,TRI.B,TRI.C].forEach(function(v){el('line',{x1:v[0],y1:v[1],x2:mid[0],y2:mid[1],stroke:'#FFFFF0','stroke-opacity':'.6','stroke-dasharray':'3 4'},svg);});
+  el('text',{x:TRI.A[0],y:14,'text-anchor':'middle','font-size':'12.5','font-weight':'700',fill:'#10291F'},svg,POLES[0].n);el('text',{x:TRI.A[0],y:28,'text-anchor':'middle','font-size':'10.5','font-style':'italic',fill:'#4A6355'},svg,POLES[0].en);
+  el('text',{x:TRI.B[0]-6,y:254,'text-anchor':'start','font-size':'12.5','font-weight':'700',fill:'#10291F'},svg,POLES[1].n);el('text',{x:TRI.B[0]-6,y:268,'text-anchor':'start','font-size':'10.5','font-style':'italic',fill:'#4A6355'},svg,POLES[1].en);
+  el('text',{x:TRI.C[0]+6,y:254,'text-anchor':'end','font-size':'12.5','font-weight':'700',fill:'#10291F'},svg,POLES[2].n);el('text',{x:TRI.C[0]+6,y:268,'text-anchor':'end','font-size':'10.5','font-style':'italic',fill:'#4A6355'},svg,POLES[2].en);
+  var p=now?bary2xy(now):null,q=next?bary2xy(next):null;
+  if(p&&q){var dx=q[0]-p[0],dy=q[1]-p[1],L=Math.hypot(dx,dy);if(L>26)el('line',{x1:p[0]+dx/L*13,y1:p[1]+dy/L*13,x2:q[0]-dx/L*13,y2:q[1]-dy/L*13,stroke:'#0B4D33','stroke-width':'2.5','marker-end':'url(#ar'+n+')'},svg);}
+  if(p)el('circle',{cx:p[0],cy:p[1],r:11,fill:'#C99A3B',stroke:'#FFFFF0','stroke-width':'3'},svg);
+  if(q&&next!==now)el('circle',{cx:q[0],cy:q[1],r:10,fill:'#0B4D33',stroke:'#FFFFF0','stroke-width':'3'},svg);
+  return svg;
+}
+function poleLine(w){return w?POLES.map(function(P,k){return P.n+' '+Math.round(w[k]*100)+'%';}).join(' · '):'–';}
+function vcat(v){if(!v||v.length<4||v.some(function(x){return x==null;}))return null;if(!v[0])return 0;if(!v[1])return 1;if(!v[2])return 2;if(!v[3])return 3;return 4;}
+function kuName(k){var f=KU.filter(function(x){return x[0]===k;})[0];return f?f[1]:k;}
+function inoName(k){var f=INO.filter(function(x){return x[0]===k;})[0];return f?f[1]:k;}
+function hambName(k){var f=HAMB.filter(function(x){return x[0]===k;})[0];return f?f[1]:k;}
+function dateStr(iso){if(!iso)return '–';var d=new Date(iso);return isNaN(d)?'–':d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});}
+function decode(rec){var g=(rec.g||[]).map(function(s){return String(s).split(',').map(function(x){var b=x.split('').map(Number);while(b.length<3)b.push(0);return b.slice(0,3);});});
+  while(g.length<6)g.push([[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]);g=g.map(function(r){while(r.length<5)r.push([0,0,0]);return r.slice(0,5);});
+  var tri=rec.tri||{};function w3(x){return x&&x.length===3&&x.every(function(v){return v!=null&&!isNaN(+v);})?x.map(Number):null;}
+  var ku=rec.ku||{};var ino=rec.ino||{};
+  return {g:g,lv:g.map(function(r){return r.map(function(b){return 1+b[0]+b[1]+b[2];});}),imp:(rec.imp||[]).map(function(v){return v==null||v===''?null:+v;}),
+    dilema:w3(tri.dilema),tuju:w3(tri.tuju)||w3(tri.dilema),ku:{s:(ku.s||[]).slice(0,3),v:ku.v||{}},ino:{arah:(ino.arah||[]).slice(0,2),frek:ino.frek==null||ino.frek===''?null:+ino.frek,hamb:(ino.hamb||[]).slice(0,2)},kp:rec.kp||{},tim:rec.tim==null||rec.tim===''?null:+rec.tim};}
+var SAMPLE={v:4,org:'LAZ Peduli Umat (contoh)',type:'Lembaga amil zakat',pName:'Contoh Pengisi',pRole:'Manajer Penghimpunan',pEmail:'contoh@lembaga.or.id',pWa:'',tim:1,
+  imp:[4,4,3,4,2,3],tri:{dilema:[.25,.5,.25],tuju:[.25,.25,.5]},ku:{s:['reputasi','komunitas','data'],v:{reputasi:[1,0,1,1],komunitas:[1,1,1,0],data:[1,0,0,0]}},ino:{arah:['produk','layanan'],frek:1,hamb:['sdm','dana']},
+  kp:{total:2,donor:2,avg:2,freq:1,ret:1,cac:2,cost:2,grow:3},dikirim:null,status:'contoh'};
+SAMPLE.g=[[3,2,1,1,2],[3,3,2,1,1],[3,1,3,2,1],[2,2,2,1,2],[4,3,3,2,2],[2,2,2,3,1]].map(function(r,d){return r.map(function(L,i){return (d===2&&i===4)?'011':[L>1?1:0,L>2?1:0,L>3?1:0].join('');}).join(',');});
+var db=null,user=null,uid=null,owner=false;
+
+/* ================= SCORING ================= */
+var HL={ok:'Sehat',warn:'Waspada',bad:'Perlu perhatian'};
+function compute(st){
+  var sc=st.lv.map(function(r){return mean(r);});var avg=mean(sc);var idx=avg==null?0:(avg-1)/3*100;var cat=idx<40?0:idx<70?1:idx<90?2:3;
+  var im=mean(st.imp);var gp=sc.map(function(v,d){return (st.imp[d]==null||v==null)?0:Math.max(0,st.imp[d]-v);});var gm=mean(gp);
+  var pri=[0,1,2,3,4,5].filter(function(d){return gp[d]>0&&gp[d]>=gm;}).sort(function(a,b){return gp[b]-gp[a]||sc[a]-sc[b];});
+  var rest=[0,1,2,3,4,5].filter(function(d){return pri.indexOf(d)<0;}).sort(function(a,b){return gp[b]-gp[a]||sc[a]-sc[b];});
+  var gov=(pri.indexOf(4)>=0)||sc[4]<2.5;
+  var ku=st.ku.s.map(function(k){var v=st.ku.v[k]||[];return {k:k,v:v,c:vcat(v)};});
+  return {sc:sc,gp:gp,idx:idx,cat:cat,pm:avg,im:im,gov:gov,pri:pri,order:pri.concat(rest),m:metrics(st.kp),w0:st.dilema,w1:st.tuju||st.dilema,ku:ku};}
+function guttman(st){var err=0,items=[];st.g.forEach(function(dim,d){dim.forEach(function(a,i){var n=a[0]+a[1]+a[2],ideal=[n>0?1:0,n>1?1:0,n>2?1:0],e=0;for(var k=0;k<3;k++)if(a[k]!==ideal[k])e++;if(e){err+=e;items.push({d:d,i:i,e:e});}});});return {err:err,cr:1-err/90,items:items};}
+/* ---------- fundraising metrics from ranges: CAC, CLV, retention ---------- */
+function kq(k){return KPQ.filter(function(x){return x.k===k;})[0];}
+function kval(kp,k){var v=kp&&kp[k];if(v==null||v==='x'||v==='')return null;var o=kq(k).o[+v];return o?o[1]:null;}
+function klab(kp,k){var v=kp&&kp[k];if(v==null||v==='')return null;if(v==='x')return 'Tidak tahu';var o=kq(k).o[+v];return o?o[0]:null;}
+function metrics(kp){kp=kp||{};var m={};KPQ.forEach(function(Q){m[Q.k]=kval(kp,Q.k);});
+  m.answered=KPQ.filter(function(Q){return kp[Q.k]!=null&&kp[Q.k]!=='';}).length;m.unknown=KPQ.filter(function(Q){return kp[Q.k]==='x';}).map(function(Q){return Q.s.toLowerCase();});
+  m.known=KPQ.filter(function(Q){return m[Q.k]!=null;}).length;
+  var pd1=(m.total!=null&&m.donor)?m.total/m.donor:null,pd2=(m.avg!=null&&m.freq!=null)?m.avg*m.freq:null;
+  m.perDonor=pd2!=null?pd2:pd1;m.check=[];
+  if(pd1!=null&&pd2!=null){var r=pd1/pd2;if(r>2.5||r<0.4)m.check.push('total terhimpun ÷ jumlah donatur ('+rp(pd1)+' per donatur) tidak sejalan dengan rata-rata donasi × frekuensi ('+rp(pd2)+')');}
+  m.life=m.ret==null?null:1/(1-Math.min(m.ret,.9));m.clv=(m.perDonor!=null&&m.life!=null)?m.perDonor*m.life:null;
+  m.ratio=(m.clv!=null&&m.cac)?m.clv/m.cac:null;m.payback=(m.cac!=null&&m.perDonor)?m.cac/(m.perDonor/12):null;
+  m.st={ratio:m.ratio==null?null:m.ratio>=3?'ok':m.ratio>=1?'warn':'bad',ret:m.ret==null?null:m.ret>=.45?'ok':m.ret>=.30?'warn':'bad',cost:m.cost==null?null:m.cost<=.125?'ok':m.cost<=.35?'warn':'bad'};
+  var v=[m.st.ratio,m.st.ret,m.st.cost].filter(Boolean);m.health=v.length?(v.indexOf('bad')>=0?'bad':v.indexOf('warn')>=0?'warn':'ok'):null;
+  m.lab={};KPQ.forEach(function(Q){m.lab[Q.k]=klab(kp,Q.k);});return m;}
+function trim1(v,d){return fmt(v,d).replace(/,0+$/,'');}
+function rp(v){if(v==null)return '–';var a=Math.abs(v);if(a>=1e9)return 'Rp'+trim1(v/1e9,a>=1e10?0:1)+' miliar';if(a>=1e6)return 'Rp'+trim1(v/1e6,a>=1e8?0:1)+' juta';if(a>=1e3)return 'Rp'+Math.round(v/1e3).toLocaleString('id-ID')+' ribu';return 'Rp'+Math.round(v);}
+function pc(v){return v==null?'–':Math.round(v*100)+'%';}
+/* ---------- charts ---------- */
+function radar(box,sc){
+  box.textContent='';var W=340,H=292,cx=W/2,cy=H/2+4,R=W*0.3;
+  var svg=el('svg',{viewBox:'-70 0 '+(W+140)+' '+H,role:'img','aria-label':'Radar chart skor enam dimensi'},box);
+  function pt(i,v){var a=-Math.PI/2+i*Math.PI/3;return [cx+Math.cos(a)*R*v/4,cy+Math.sin(a)*R*v/4];}
+  [1,2,3,4].forEach(function(l){el('polygon',{points:[0,1,2,3,4,5].map(function(i){return pt(i,l).join(',');}).join(' '),fill:l===4?'#F2F5E6':'none',stroke:'#DCE5D7'},svg);});
+  [0,1,2,3,4,5].forEach(function(i){var p=pt(i,4);el('line',{x1:cx,y1:cy,x2:p[0],y2:p[1],stroke:'#DCE5D7'},svg);});
+  el('polygon',{points:sc.map(function(v,i){return pt(i,v||1).join(',');}).join(' '),fill:'#6FAF78','fill-opacity':'.35',stroke:'#0B4D33','stroke-width':'2','stroke-linejoin':'round'},svg);
+  sc.forEach(function(v,i){var p=pt(i,v||1);el('circle',{cx:p[0],cy:p[1],r:3.5,fill:'#0B4D33'},svg);});
+  DIMS.forEach(function(D,i){var p=pt(i,4.75);var anc=Math.abs(p[0]-cx)<4?'middle':(p[0]>cx?'start':'end');
+    var t=el('text',{x:p[0],y:p[1]+(i===0?-2:i===3?10:4),'text-anchor':anc,'font-size':'11.5','font-weight':'600',fill:'#10291F'},svg,(i+1)+' '+D.short);el('tspan',{fill:'#8A6418','font-weight':'700'},t,' '+fmt(sc[i]));});
+}
+function ipa(box,st,r){
+  box.textContent='';var W=420,H=330,x0=58,x1=400,y0=18,y1=280;
+  var svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Importance-Performance Matrix'},box);
+  function X(v){return x0+(v-0.7)/3.6*(x1-x0);}function Y(v){return y1-(v-0.7)/3.6*(y1-y0);}
+  el('rect',{x:x0,y:y0,width:x1-x0,height:y1-y0,fill:'#FFFFFF',stroke:'#DCE5D7'},svg);
+  [1,2,3,4].forEach(function(v){el('text',{x:X(v),y:y1+16,'text-anchor':'middle','font-size':'11',fill:'#4A6355'},svg,String(v));el('text',{x:x0-8,y:Y(v)+4,'text-anchor':'end','font-size':'11',fill:'#4A6355'},svg,String(v));});
+  el('text',{x:(x0+x1)/2,y:H-8,'text-anchor':'middle','font-size':'12','font-weight':'600',fill:'#10291F'},svg,'Kinerja (tingkat saat ini)');
+  el('text',{x:16,y:(y0+y1)/2,'text-anchor':'middle','font-size':'12','font-weight':'600',fill:'#10291F',transform:'rotate(-90 16 '+((y0+y1)/2)+')'},svg,'Kepentingan (tingkat target)');
+  var mx=X(r.pm||1),my=Y(r.im||2.5);
+  el('rect',{x:x0,y:y0,width:mx-x0,height:my-y0,fill:'#C99A3B','fill-opacity':'.12'},svg);
+  el('line',{x1:mx,x2:mx,y1:y0,y2:y1,stroke:'#4A6355','stroke-dasharray':'4 4'},svg);el('line',{x1:x0,x2:x1,y1:my,y2:my,stroke:'#4A6355','stroke-dasharray':'4 4'},svg);
+  [['Prioritas utama',x0+8,y0+16,'start','#8A6418'],['Pertahankan',x1-8,y0+16,'end','#4A6355'],['Prioritas rendah',x0+8,y1-8,'start','#4A6355'],['Berlebihan',x1-8,y1-8,'end','#4A6355']].forEach(function(q){el('text',{x:q[1],y:q[2],'text-anchor':q[3],'font-size':'11.5','font-weight':'700',fill:q[4]},svg,q[0]);});
+  var placed=[];
+  r.sc.forEach(function(v,d){if(v==null||st.imp[d]==null)return;var px=X(v),py=Y(st.imp[d]);var J=[[0,0],[0,24],[24,0],[-24,0],[0,-24],[24,24],[-24,24],[24,-24],[-24,-24],[48,0]];var bx=px,by=py;for(var j=0;j<J.length;j++){var tx=bx+J[j][0],ty=by+J[j][1];if(!placed.some(function(q){return Math.hypot(q[0]-tx,q[1]-ty)<23;})){px=tx;py=ty;break;}}placed.push([px,py]);
+    var pri=r.pri.indexOf(d)>=0;el('circle',{cx:px,cy:py,r:11,fill:pri?'#C99A3B':'#0B4D33',stroke:'#FFFFF0','stroke-width':'2'},svg);
+    el('text',{x:px,y:py+4,'text-anchor':'middle','font-size':'11','font-weight':'700',fill:pri?'#10291F':'#FFFFF0'},svg,String(d+1));});
+  box.appendChild(h('p','note',DIMS.map(function(D,i){return (i+1)+' '+D.short;}).join(' · ')));
+}
+function gap(box,sc,tg){
+  box.textContent='';var W=420,rowH=40,H=DIMS.length*rowH+28,x0=128,x1=360;
+  var svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Gap analysis tingkat saat ini terhadap target'},box);
+  var defs=el('defs',{},svg);var pat=el('pattern',{id:'hatch',width:'6',height:'6',patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},defs);el('rect',{width:6,height:6,fill:'#FBF3E1'},pat);el('line',{x1:0,y1:0,x2:0,y2:6,stroke:'#C99A3B','stroke-width':'2'},pat);
+  function X(v){return x0+v/4*(x1-x0);}
+  [1,2,3,4].forEach(function(v){el('line',{x1:X(v),x2:X(v),y1:6,y2:H-22,stroke:'#DCE5D7'},svg);el('text',{x:X(v),y:H-6,'text-anchor':'middle','font-size':'11',fill:'#4A6355'},svg,String(v));});
+  DIMS.forEach(function(D,i){var y=12+i*rowH;el('text',{x:x0-10,y:y+15,'text-anchor':'end','font-size':'12','font-weight':'600',fill:'#10291F'},svg,(i+1)+' '+D.short);
+    var v=sc[i]||1,t=tg[i]==null?v:tg[i];if(t>v)el('rect',{x:X(v),y:y+2,width:X(t)-X(v),height:20,fill:'url(#hatch)'},svg);el('rect',{x:X(0),y:y+2,width:X(v)-X(0),height:20,rx:6,fill:'#0B4D33'},svg);
+    el('line',{x1:X(t),x2:X(t),y1:y-3,y2:y+27,stroke:'#C99A3B','stroke-width':'3','stroke-linecap':'round'},svg);
+    el('text',{x:x1+12,y:y+16,'font-size':'12','font-weight':'700',fill:t>v?'#8A6418':'#0B4D33'},svg,t>v?'gap '+fmt(t-v):'tercapai');});
+}
+function heat(box,st){
+  var G=guttman(st);box.textContent='';box.appendChild(h('span'));for(var i=1;i<=5;i++)box.appendChild(h('span','h','Ind. '+i));box.appendChild(h('span','h','Rata-rata'));
+  var cols=['#EEF3E4','#B9D9BE','#6FAF78','#0B4D33'],txt=['#4A6355','#10291F','#10291F','#FFFFF0'];
+  st.lv.forEach(function(row,d){box.appendChild(h('span','rowname',(d+1)+' '+DIMS[d].short));
+    row.forEach(function(v,ii){var c=h('span','cell',String(v));c.style.background=cols[v-1];c.style.color=txt[v-1];c.title=DIMS[d].inds[ii]+': '+LVN[v-1];
+      if(G.items.some(function(x){return x.d===d&&x.i===ii;})){c.style.outline='2px dashed #9A3B1F';c.style.outlineOffset='-3px';c.title+=' (jawaban tidak berurutan)';}box.appendChild(c);});
+    box.appendChild(h('span','avg',fmt(mean(row))));});
+  var gn=document.getElementById('gutNote');if(gn)gn.textContent='Konsistensi jawaban (skala Guttman): koefisien reprodusibilitas Cr = '+fmt(G.cr,2)+'. '+(G.items.length?G.items.length+' indikator tidak berurutan ('+G.items.map(function(x){return (x.d+1)+'.'+(x.i+1);}).join(', ')+'), perlu dikonfirmasi saat diskusi.':'Seluruh jawaban berurutan.');
+}
+function triResults(box,st,r){box.textContent='';var d=h('div','triad');triSvg(d,r.w0,r.w1);
+  var lg=h('p','pct');var b1=h('b',null,'● ');b1.style.color='#C99A3B';lg.appendChild(b1);lg.appendChild(document.createTextNode('Saat ini: '+poleLine(r.w0)));
+  var lg2=h('p','pct');var b2=h('b',null,'● ');b2.style.color='#0B4D33';lg2.appendChild(b2);lg2.appendChild(document.createTextNode('Ke depan: '+poleLine(r.w1)));
+  d.appendChild(lg);d.appendChild(lg2);box.appendChild(d);}
+function renderKu(box,st,r){box.textContent='';
+  if(!r.ku.length){box.appendChild(h('p','note','Lembaga tidak memilih keunggulan.'));return;}
+  var tw=h('div','tablewrap');var t=h('table','vtable');var th=h('tr');['Keunggulan'].concat(VRIO.map(function(q){return q[0];})).concat(['Kategori']).forEach(function(x){th.appendChild(h('th',null,x));});var thead=h('thead');thead.appendChild(th);t.appendChild(thead);
+  var tb=h('tbody');r.ku.forEach(function(x){var tr=h('tr');tr.appendChild(h('td',null,kuName(x.k)));x.v.forEach(function(b){var td=h('td','vc',b==null?'–':(b?'Ya':'Tidak'));if(b===1)td.classList.add('yes');tr.appendChild(td);});
+    var tc=h('td');tc.appendChild(x.c==null?document.createTextNode('–'):h('span','pill '+VCAT[x.c].c,VCAT[x.c].n));tr.appendChild(tc);tb.appendChild(tr);});t.appendChild(tb);tw.appendChild(t);box.appendChild(tw);
+  var info=h('div','explain');[['Arah inovasi',st.ino.arah.length?st.ino.arah.map(inoName).join(', '):'–'],['Uji coba cara baru',st.ino.frek==null?'–':FREK[st.ino.frek]],['Hambatan utama',st.ino.hamb.length?st.ino.hamb.map(hambName).join(', '):'Tidak disebutkan']].forEach(function(x){var d=h('div');d.appendChild(h('b',null,x[0]+': '));d.appendChild(document.createTextNode(x[1]));info.appendChild(d);});box.appendChild(info);
+}
+function renderKpi(box,m){box.textContent='';
+  var ex=h('div','explain');[['CAC','biaya untuk mendapatkan satu donatur baru.'],['CLV','perkiraan total donasi dari satu donatur selama ia bertahan.'],['CLV : CAC','sehat bila nilai donatur minimal 3 kali biaya mendapatkannya.']].forEach(function(x){var d=h('div');d.appendChild(h('b',null,x[0]+' '));d.appendChild(document.createTextNode('= '+x[1]));ex.appendChild(d);});box.appendChild(ex);
+  if(!m.answered){box.appendChild(h('p','note','Lembaga tidak menjawab bagian kinerja. Tanyakan saat sesi diskusi.'));return;}
+  var hd=h('div','health');hd.appendChild(h('b',null,'Kesehatan penghimpunan'));hd.appendChild(m.health?h('span','pill '+m.health,HL[m.health]):h('span','pill warn','Data belum cukup'));
+  hd.appendChild(h('span','note',m.known+' dari '+KPQ.length+' rentang diketahui'+(m.unknown.length?'; tidak tahu: '+m.unknown.join(', '):'')+'.'));box.appendChild(hd);
+  var g=h('div','kpis');
+  function tile(lbl,val,sub,st,key){var t=h('div','kpi'+(key?' key':''));t.appendChild(h('span',null,lbl));t.appendChild(h('b',null,val));if(sub)t.appendChild(h('small',null,sub));if(st)t.appendChild(h('span','pill '+st,HL[st]));g.appendChild(t);}
+  tile('Total terhimpun',m.lab.total||'–','setahun terakhir');
+  tile('Jumlah donatur',m.lab.donor||'–','setahun terakhir');
+  tile('Rata-rata donasi',m.lab.avg||'–','per satu kali donasi');
+  tile('Frekuensi',m.lab.freq||'–','per donatur per tahun');
+  tile('Retensi donatur',m.ret==null?(m.lab.ret||'–'):'± '+pc(m.ret),m.ret!=null?m.lab.ret+' dari 10 kembali · acuan sektor ±43%':null,m.st.ret,true);
+  tile('CAC',m.cac==null?(m.lab.cac||'–'):'± '+rp(m.cac),'biaya per donatur baru');
+  tile('CLV',m.clv==null?'–':'± '+rp(m.clv),m.life==null?'nilai donatur selama bertahan':'± '+rp(m.perDonor)+' per tahun × '+trim1(m.life,1)+' tahun');
+  tile('CLV : CAC',m.ratio==null?'–':trim1(m.ratio,1)+'×','sehat bila ≥ 3×',m.st.ratio,true);
+  tile('Biaya penghimpunan',m.lab.cost?(m.cost!=null?m.lab.cost+' per Rp100':m.lab.cost):'–','sehat bila ≤ Rp12,5 (batas hak amil)',m.st.cost,true);
+  tile('Target tahun depan',m.lab.grow||'–','dibandingkan tahun ini');
+  box.appendChild(g);
+  if(m.clv!=null&&m.cac!=null){var W=420,H=92,x0=56,x1=330,mx=Math.max(m.clv,m.cac)||1;var svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Perbandingan CLV dan CAC'});
+    [['CLV',m.clv,'#0B4D33',12],['CAC',m.cac,'#C99A3B',52]].forEach(function(b){var w=Math.max(3,(x1-x0)*b[1]/mx);el('text',{x:x0-10,y:b[3]+18,'text-anchor':'end','font-size':'13','font-weight':'700',fill:'#10291F'},svg,b[0]);el('rect',{x:x0,y:b[3],width:w,height:26,rx:6,fill:b[2]},svg);el('text',{x:x0+w+8,y:b[3]+18,'font-size':'12.5','font-weight':'700',fill:'#10291F'},svg,rp(b[1]));});
+    var c=h('div','chart');c.style.maxWidth='560px';c.appendChild(svg);box.appendChild(c);}
+  if(m.check.length)box.appendChild(h('p','alert','Periksa ulang: '+m.check.join('; ')+'.'));
+}
+/* ---------- detailed recommendations (admin only, not emailed) ---------- */
+var ACT=[
+ [['Lengkapi kolom wajib profil donatur (jenis, domisili, tanggal pertama memberi, kanal) pada setiap pencatatan.','persentase profil donatur yang lengkap'],['Kelompokkan donatur dengan analisis RFM (kebaruan, frekuensi, nilai) dari data transaksi.','perpindahan donatur antarsegmen RFM'],['Jalankan survei singkat atau wawancara donatur tentang motivasi dan preferensi kanal.','kepuasan dan preferensi donatur per segmen'],['Hubungi donatur yang berhenti memberi dan catat alasan utamanya.','sebaran alasan berhenti dan porsi yang dapat dicegah'],['Petakan potensi donatur per wilayah atau segmen sasaran dari data publik.','realisasi penghimpunan terhadap potensi per wilayah']],
+ [['Kirim pesan sambutan dalam tujuh hari setelah donasi pertama.','persentase donatur baru yang disambut dalam tujuh hari'],['Kirim ucapan terima kasih dan bukti setor dalam 1×24 jam, sebaiknya otomatis.','waktu rata-rata pengiriman bukti setor'],['Kirim laporan dampak berkala yang menautkan donasi dengan penerima manfaat.','tingkat baca laporan dampak dan donasi ulang sesudahnya'],['Tawarkan donasi rutin (autodebet atau langganan bulanan) kepada donatur yang sudah memberi dua kali.','persentase donatur berlangganan'],['Susun alur komunikasi ulang untuk donatur yang tidak memberi selama 6–12 bulan.','persentase donatur berhenti yang kembali memberi']],
+ [['Buat rekap bulanan per kanal: nilai, jumlah donatur, dan tren.','tren nilai dan donatur per kanal'],['Catat biaya per kanal agar biaya per rupiah terhimpun dan CAC per kanal dapat dihitung.','biaya per rupiah dan CAC per kanal'],['Susun kalender kampanye tahunan sejak awal tahun, termasuk Ramadan, Zulhijah, dan akhir tahun.','ketepatan pelaksanaan kalender kampanye'],['Tetapkan target untuk setiap kampanye dan tulis evaluasi singkat setelah selesai.','capaian kampanye terhadap target'],['Uji dua versi pesan atau materi pada kampanye berikutnya, lalu bandingkan hasilnya.','selisih konversi antarversi materi']],
+ [['Satukan data donatur dan transaksi dalam satu sistem (CRM) dengan ID donatur tunggal.','persentase transaksi yang tercatat di sistem utama'],['Tetapkan kolom wajib, aturan entri, dan pembersihan duplikasi berkala.','tingkat duplikasi dan kelengkapan data'],['Bangun dasbor penghimpunan sederhana yang dibaca pimpinan setiap bulan.','pemakaian dasbor dalam rapat pimpinan'],['Mulai analisis penyebab dan proyeksi, misalnya proyeksi Ramadan dari data tahun lalu.','akurasi proyeksi terhadap realisasi'],['Susun kebijakan pelindungan data pribadi: persetujuan donatur, hak akses, dan penanganan kebocoran.','kepatuhan terhadap kebijakan pelindungan data']],
+ [['Pastikan izin operasional dan dasar hukum lembaga berlaku dan dapat diperiksa publik.','masa berlaku izin dan rekomendasi'],['Jadwalkan audit laporan keuangan dan umumkan hasilnya kepada publik.','opini audit dan ketepatan waktu publikasi'],['Aktifkan dewan pengawas syariah dengan jadwal rapat dan audit syariah berkala.','temuan audit syariah dan tindak lanjutnya'],['Tuliskan kebijakan penghimpunan: jenis dana, hak amil, dan penanganan keluhan.','jumlah keluhan dan waktu penyelesaiannya'],['Petakan risiko reputasi dan penyalahgunaan dana beserta mitigasinya.','status mitigasi risiko utama']],
+ [['Susun target tahunan dari data tahun lalu, dipecah per kanal dan bulan.','selisih target dan realisasi per kanal'],['Tetapkan penanggung jawab peran penghimpunan, layanan donatur, dan pengelolaan data.','capaian per peran'],['Susun rencana pelatihan penghimpunan dan literasi data untuk staf.','jumlah staf terlatih dan penerapannya'],['Jadikan angka penghimpunan agenda tetap rapat evaluasi.','keputusan yang diambil berdasarkan angka'],['Dokumentasikan pelajaran setiap kampanye dalam satu catatan bersama.','pelajaran yang dipakai ulang pada kampanye berikutnya']]
+];
+var STEP=['Mulai','Rutinkan','Ukur'];
+var POLE_PLAN=['hitung biaya dan CAC per kanal, hentikan kanal yang mahal tetapi hasilnya kecil, dan otomatiskan layanan donatur','siapkan kalender kampanye, target per kanal, dan anggaran akuisisi pada kanal dengan CLV : CAC tertinggi','bangun ucapan terima kasih, laporan dampak, donasi rutin, dan komunikasi ulang bagi donatur yang berhenti'];
+function practiceRecs(st,r){var out=[];var dims=r.order.filter(function(d){return r.gp[d]>0;});var mode='gap';
+  if(!dims.length){mode='low';dims=r.order.slice().sort(function(a,b){return r.sc[a]-r.sc[b];}).slice(0,2);}
+  dims.forEach(function(d){var tgt=mode==='gap'?st.imp[d]:4;var items=[];st.lv[d].forEach(function(L,i){if(L<tgt&&L<4)items.push({i:i,L:L});});
+    items.sort(function(a,b){return a.L-b.L||a.i-b.i;});if(items.length)out.push({d:d,tgt:tgt,pri:r.pri.indexOf(d)>=0,items:items});});
+  return {mode:mode,list:out};}
+function actText(d,i,L){var a=ACT[d][i];if(L===1)return a[0];if(L===2)return a[0].replace(/\.$/,'')+'. Tuliskan sebagai prosedur dengan penanggung jawab dan jadwal tetap.';return 'Pantau '+a[1]+' secara berkala dan gunakan untuk keputusan.';}
+function metricRecs(st,r){var m=r.m,L=[];
+  if(!m.answered){L.push('Bagian kinerja tidak dijawab. Tanyakan total terhimpun, jumlah donatur, dan biaya; ketiadaan data ini sekaligus temuan pada dimensi Fondasi data dan analitik.');return L;}
+  if(m.ratio!=null){var R=trim1(m.ratio,1)+'×';
+    if(m.st.ratio==='bad')L.push('CLV : CAC '+R+': nilai seorang donatur baru belum menutup biaya mendapatkannya. Kurangi kanal akuisisi termahal dan alihkan anggaran ke program donasi ulang.');
+    else if(m.st.ratio==='warn')L.push('CLV : CAC '+R+': akuisisi masih menguntungkan tetapi tipis. Hitung CAC per kanal dan pertahankan kanal dengan CLV : CAC minimal 3×.');
+    else L.push('CLV : CAC '+R+': akuisisi sehat.'+(m.st.ret&&m.st.ret!=='ok'?' Namun retensi masih rendah; perbaiki retensi lebih dulu sebelum menambah anggaran akuisisi.':' Anggaran akuisisi dapat ditambah pada kanal terbaik selama retensi terjaga.'));}
+  if(m.ret!=null){if(m.ret<.45){var c2=m.perDonor!=null?m.perDonor/(1-Math.min(m.ret+.1,.9)):null;L.push('Retensi sekitar '+pc(m.ret)+': lebih dari separuh donatur tidak kembali.'+(c2!=null?' Kenaikan retensi 10 poin menaikkan CLV dari '+rp(m.clv)+' menjadi '+rp(c2)+' per donatur.':''));}
+    else L.push('Retensi sekitar '+pc(m.ret)+', di atas acuan sektor. Pertahankan dengan laporan dampak dan program donatur tetap.');}
+  if(m.freq!=null&&m.freq<2)L.push('Donatur umumnya berdonasi satu kali setahun. Dorong donasi rutin agar penghimpunan tidak bergantung pada musim Ramadan.');
+  if(m.st.cost==='bad')L.push('Biaya penghimpunan '+m.lab.cost+' per Rp100, di atas batas wajar Rp35. Tinjau kanal dan kegiatan berbiaya tinggi.');
+  else if(m.st.cost==='warn')L.push('Biaya penghimpunan '+m.lab.cost+' per Rp100 melampaui Rp12,5 (setara batas hak amil zakat). Pastikan sumber pembiayaannya sesuai ketentuan.');
+  if(m.payback!=null&&m.payback>12)L.push('Biaya akuisisi baru kembali setelah sekitar '+trim1(m.payback,0)+' bulan, sehingga donatur yang berhenti pada tahun pertama menjadi kerugian.');
+  if(m.grow!=null&&m.grow>=.375){var weak=[];if(m.st.ret&&m.st.ret!=='ok')weak.push('retensi');if(r.sc[5]<2.5)weak.push('kapasitas tim');if(r.sc[2]<2.5)weak.push('perencanaan kanal dan kampanye');
+    L.push('Target tahun depan '+m.lab.grow.toLowerCase()+'.'+(weak.length?' Target ini berisiko karena '+weak.join(', ')+' masih lemah; susun rencana pencapaian per kanal dan per bulan.':' Pecah target per kanal dan per bulan agar dapat dipantau.'));}
+  var w=r.w0;if(w){var k=w.indexOf(Math.max.apply(null,w));if(w[k]>=.45){if(k===0&&m.st.cost&&m.st.cost!=='ok')L.push('Ketegangan: lembaga mengutamakan efisiensi biaya, tetapi biaya penghimpunan masih '+m.lab.cost+' per Rp100.');
+    if(k===1&&m.st.ratio&&m.st.ratio!=='ok')L.push('Ketegangan: lembaga mengejar penghimpunan tinggi dengan CLV : CAC '+trim1(m.ratio,1)+'×; menambah belanja akuisisi berisiko merugi.');
+    if(k===2&&m.st.ret&&m.st.ret!=='ok')L.push('Ketegangan: lembaga mengutamakan retensi, tetapi retensinya baru sekitar '+pc(m.ret)+'.');}}
+  return L;}
+function strategyRecs(st,r){var L=[],P=POLES.map(function(x){return x.n;}),w=r.w0,b=r.w1;
+  if(w&&b){var dl=[0,1,2].map(function(i){return b[i]-w[i];}),mag=Math.max.apply(null,dl.map(Math.abs))*100,up=dl.indexOf(Math.max.apply(null,dl)),tk=b.indexOf(Math.max.apply(null,b));
+    if(mag>=15)L.push('Untuk bergeser ke '+P[up].toLowerCase()+': '+POLE_PLAN[up]+'. Konsekuensi yang perlu diterima: '+DIL[up].loss+'.');
+    else if(b[tk]<.45)L.push('Strategi belum tegas, baik saat ini maupun ke depan. Sepakati satu titik berat bersama pimpinan agar anggaran tidak tersebar tipis ke tiga arah.');
+    else L.push('Strategi relatif tetap dengan titik berat '+P[tk].toLowerCase()+': '+POLE_PLAN[tk]+'.');
+    if(mag>35&&r.sc[5]<2.5)L.push('Pergeseran strategi besar, sementara kapasitas tim rendah: mulai dari satu kanal atau satu segmen sebagai uji coba.');}
+  if(r.gov)L.push('Benahi tata kelola lebih dulu (izin, audit, kebijakan penghimpunan) sebelum memperluas kampanye, agar kepercayaan donatur terjaga.');
+  return L;}
+function innovationRecs(st,r){var L=[];
+  var unused=r.ku.filter(function(x){return x.c===3;}),sus=r.ku.filter(function(x){return x.c===4;}),temp=r.ku.filter(function(x){return x.c===2;}),par=r.ku.filter(function(x){return x.c===1;}),none=r.ku.filter(function(x){return x.c===0;});
+  unused.forEach(function(x){L.push('Modal inovasi utama, '+kuName(x.k).toLowerCase()+': bernilai, langka, dan sulit ditiru, tetapi belum dimanfaatkan secara terencana. Langkah: '+KU_USE[x.k]+'.');});
+  sus.forEach(function(x){L.push('Keunggulan berkelanjutan, '+kuName(x.k).toLowerCase()+': pertahankan dan jadikan pembeda utama dalam pesan penghimpunan.');});
+  temp.forEach(function(x){L.push('Keunggulan sementara, '+kuName(x.k).toLowerCase()+': mudah ditiru lembaga lain. Lindungi dengan menjadikannya sistem, misalnya prosedur, data, atau kemitraan jangka panjang.');});
+  par.forEach(function(x){L.push(kuName(x.k)+' bernilai tetapi dimiliki banyak lembaga lain, sehingga tidak cukup menjadi pembeda.');});
+  none.forEach(function(x){L.push(kuName(x.k)+' belum dirasakan donatur sebagai alasan memilih lembaga. Konfirmasi saat diskusi.');});
+  var base=(unused[0]||sus[0]||temp[0]);
+  st.ino.arah.forEach(function(a){L.push('Arah inovasi '+inoName(a).toLowerCase()+': '+INO_IDEA[a]+(base?', dengan memanfaatkan '+kuName(base.k).toLowerCase():'')+'.');});
+  if(st.ino.frek!=null&&st.ino.frek<=1)L.push('Uji coba cara baru '+(st.ino.frek===0?'belum pernah dilakukan':'masih sesekali dan tanpa rencana')+'. Tetapkan uji coba kecil yang terjadwal dengan ukuran keberhasilan yang jelas.');
+  st.ino.hamb.forEach(function(k){L.push('Hambatan “'+hambName(k)+'”: '+HAMB_FIX[k]+'.');});
+  return L;}
+function confirmRecs(st,r){var L=[],G=guttman(st),m=r.m;
+  if(G.items.length)L.push('Jawaban tidak berurutan pada indikator '+G.items.map(function(x){return (x.d+1)+'.'+(x.i+1);}).join(', ')+'. Tanyakan praktik yang sebenarnya berjalan.');
+  if(m.unknown.length)L.push('Lembaga tidak mengetahui: '+m.unknown.join(', ')+'. Ketiadaan data ini merupakan temuan pada dimensi Fondasi data dan analitik.');
+  if(m.check.length)L.push('Angka tidak sejalan: '+m.check.join('; ')+'.');
+  if(st.tim===0)L.push('Belum ada personel khusus penghimpunan: tanyakan siapa yang menjalankannya saat ini.');
+  return L;}
+function renderReco(box,st,r){box.textContent='';
+  function list(title,lines){if(!lines.length)return;box.appendChild(h('h3',null,title));var ul=h('ul');lines.forEach(function(t){ul.appendChild(h('li',null,t));});box.appendChild(ul);}
+  var pr=practiceRecs(st,r);box.appendChild(h('h3',null,'1. Praktik yang perlu dibangun'));
+  if(pr.mode==='low')box.appendChild(h('p','note','Semua dimensi sudah mencapai target lembaga. Langkah diarahkan ke dua dimensi dengan skor terendah.'));
+  pr.list.forEach(function(x){var h4=h('h4',null,'Dimensi '+(x.d+1)+' · '+DIMS[x.d].name);h4.appendChild(h('span','pill '+(x.pri?'warn':'ok'),(x.pri?'Prioritas utama · ':'')+'skor '+fmt(r.sc[x.d])+' → target '+x.tgt));box.appendChild(h4);
+    var ol=h('ol');x.items.forEach(function(it){var li=h('li');li.appendChild(h('span','step',STEP[it.L-1]));li.appendChild(document.createTextNode(actText(x.d,it.i,it.L)));
+      li.appendChild(h('small',null,(x.d+1)+'.'+(it.i+1)+' '+DIMS[x.d].inds[it.i]+' · saat ini: tingkat '+it.L+' ('+LVN[it.L-1]+')'));ol.appendChild(li);});box.appendChild(ol);});
+  list('2. Keunggulan dan inovasi',innovationRecs(st,r));
+  list('3. Kinerja penghimpunan',metricRecs(st,r));
+  list('4. Strategi',strategyRecs(st,r));
+  list('5. Dikonfirmasi saat diskusi',confirmRecs(st,r));
+}
+function storyLines(st,r){
+  var L=[];var srt=[0,1,2,3,4,5].sort(function(a,b){return r.sc[b]-r.sc[a];});
+  L.push('Kekuatan: '+DIMS[srt[0]].name+' ('+fmt(r.sc[srt[0]])+') dan '+DIMS[srt[1]].name+' ('+fmt(r.sc[srt[1]])+').');
+  var m=r.m;if(m&&m.health)L.push('Kesehatan penghimpunan: '+HL[m.health].toLowerCase()+' ('+[m.ratio!=null?'CLV : CAC sekitar '+trim1(m.ratio,1)+'×':null,m.ret!=null?'retensi sekitar '+pc(m.ret):null,m.cost!=null?'biaya penghimpunan '+m.lab.cost+' per Rp100':null].filter(Boolean).join(', ')+').');
+  L.push(r.pri.length?'Kesenjangan terbesar: '+r.pri.map(function(d){return DIMS[d].name+' (saat ini '+fmt(r.sc[d])+', target '+st.imp[d]+')';}).join('; ')+'.':'Semua dimensi sudah mencapai target yang ditetapkan lembaga.');
+  var P=POLES.map(function(x){return x.n;}),w=r.w0;
+  if(w){var k=w.indexOf(Math.max.apply(null,w));
+    if(w[k]<0.45)L.push('Prioritas strategi saat ini relatif seimbang ('+poleLine(w)+'). Arah strategi belum tegas, padahal ketiganya tidak dapat dikejar penuh sekaligus.');
+    else L.push('Prioritas strategi saat ini condong ke '+P[k].toLowerCase()+' ('+Math.round(w[k]*100)+'%). Yang dikejar: '+DIL[k].gain+'. Konsekuensinya: '+DIL[k].loss+'.');
+    if(w[0]>=.45&&st.lv[2][1]<3)L.push('Ketegangan: lembaga mengutamakan efisiensi biaya, tetapi biaya penghimpunan per kanal belum dihitung secara rutin.');
+    if(w[1]>=.45&&r.sc[2]<2.5)L.push('Ketegangan: lembaga mengejar penghimpunan tinggi, tetapi kanal dan kampanye belum terukur.');
+    if(w[2]>=.45&&r.sc[1]<2.5)L.push('Ketegangan: lembaga mengutamakan retensi donatur, tetapi perjalanan donatur belum berjalan rutin.');
+    var b=r.w1||w,dl=[0,1,2].map(function(i){return b[i]-w[i];}),mag=Math.max.apply(null,dl.map(Math.abs))*100,up=dl.indexOf(Math.max.apply(null,dl)),dn=dl.indexOf(Math.min.apply(null,dl));
+    if(mag<15)L.push('Arah ke depan: strategi relatif tetap.');
+    else L.push('Arah ke depan: '+(mag>35?'berbalik arah':'bergeser')+' menuju '+P[up].toLowerCase()+' ('+Math.round(w[up]*100)+'% menjadi '+Math.round(b[up]*100)+'%), dengan '+P[dn].toLowerCase()+' turun dari '+Math.round(w[dn]*100)+'% menjadi '+Math.round(b[dn]*100)+'%.');}
+  var cap=r.ku.filter(function(x){return x.c===3||x.c===4;});
+  if(r.ku.length)L.push(cap.length?'Keunggulan yang dapat menjadi modal inovasi: '+cap.map(function(x){return kuName(x.k).toLowerCase()+' ('+VCAT[x.c].n.toLowerCase()+')';}).join('; ')+'.':'Keunggulan yang dipilih belum memenuhi kriteria bernilai, langka, dan sulit ditiru.');
+  if(st.ino.arah.length)L.push('Arah inovasi pilihan lembaga: '+st.ino.arah.map(inoName).join(' dan ').toLowerCase()+'.');
+  if(r.gov)L.push('Tata kelola dan kepercayaan perlu dibenahi lebih dulu sebelum memperluas penghimpunan.');
+  return L;
+}
+function emailText(rec,st,r){
+  var lines=[];
+  lines.push("Assalamu'alaikum "+(rec.pName||'Bapak/Ibu')+',','');
+  lines.push('Terima kasih telah mengisi Asesmen Kesiapan Penghimpunan Zakademia. Berikut ringkasan hasil untuk '+rec.org+'.','');
+  lines.push('Indeks Kesiapan Penghimpunan: '+Math.round(r.idx)+'% (kategori '+CATS[r.cat]+')');
+  lines.push(CATTXT[r.cat],'');
+  lines.push('Skor per dimensi (skala 1–4) dan target lembaga:');
+  DIMS.forEach(function(D,i){lines.push('- '+D.name+': '+fmt(r.sc[i])+' (target '+(st.imp[i]==null?'–':st.imp[i])+(r.gp[i]>0?', gap '+fmt(r.gp[i]):', tercapai')+')');});
+  var m=r.m;if(m&&m.known){lines.push('','Perkiraan kinerja penghimpunan:');
+    [['Retensi donatur',m.ret!=null?'sekitar '+pc(m.ret):null],['Biaya mendapatkan satu donatur baru (CAC)',m.cac!=null?'sekitar '+rp(m.cac):null],['Nilai seorang donatur selama bertahan (CLV)',m.clv!=null?'sekitar '+rp(m.clv):null],['Perbandingan CLV : CAC',m.ratio!=null?trim1(m.ratio,1)+'× (sehat bila minimal 3×)':null],['Biaya penghimpunan',m.cost!=null?m.lab.cost+' dari setiap Rp100 terhimpun':null]]
+     .forEach(function(x){if(x[1])lines.push('- '+x[0]+': '+x[1]);});
+    if(m.health)lines.push('Status kesehatan penghimpunan: '+HL[m.health]+'.');}
+  lines.push('','Temuan utama:');storyLines(st,r).forEach(function(l){lines.push('- '+l);});
+  lines.push('','Rekomendasi rinci dan langkah prioritas akan kami paparkan dalam sesi diskusi bersama tim '+rec.org+'. Silakan balas email ini untuk menentukan waktunya.','');
+  lines.push('Salam,','Tim Zakademia','info@zakademia.com · +62 856-9209-0699');
+  return lines.join('\n');
+}
+function fillResult(rec){var st=decode(rec),r=compute(st);
+  document.getElementById('resOrg').textContent=rec.org||'Tanpa nama';
+  var meta=document.getElementById('resMeta');meta.textContent='';[rec.type,(rec.pName||'')+(rec.pRole?', '+rec.pRole:''),rec.pEmail,rec.pWa,st.tim!=null?'Personel penghimpunan: '+TIM[st.tim]:null,rec.dikirim?'Dikirim '+dateStr(rec.dikirim):'Contoh'].filter(Boolean).forEach(function(t){meta.appendChild(h('span',null,t));});
+  var ic=document.getElementById('idxCard');ic.textContent='';ic.appendChild(h('span','label','Indeks Kesiapan Penghimpunan'));var row=h('div','idx-row');row.appendChild(h('span','idx-num',Math.round(r.idx)+'%'));row.appendChild(h('span','idx-cat',CATS[r.cat]));ic.appendChild(row);
+  var stg=h('div','stages');for(var i=0;i<4;i++)stg.appendChild(h('i',i<=r.cat?'on':null));ic.appendChild(stg);ic.appendChild(h('p',null,CATTXT[r.cat]));
+  var sb=document.getElementById('story');sb.textContent='';sb.appendChild(h('h2',null,'Temuan utama'));var ul=h('ul');storyLines(st,r).forEach(function(l){ul.appendChild(h('li',null,l));});sb.appendChild(ul);
+  renderKpi(document.getElementById('kpi'),r.m);radar(document.getElementById('radar'),r.sc);ipa(document.getElementById('ipa'),st,r);gap(document.getElementById('gap'),r.sc,st.imp);triResults(document.getElementById('triRes'),st,r);
+  renderKu(document.getElementById('kuBox'),st,r);heat(document.getElementById('heat'),st);renderReco(document.getElementById('reco'),st,r);
+  return {st:st,r:r};}
+
+var LIST=[],current=null,SKIPPED=0;
+var views={inbox:document.getElementById('viewInbox'),result:document.getElementById('viewResult')};
+function show(v){Object.keys(views).forEach(function(k){views[k].hidden=(k!==v);});window.scrollTo(0,0);}
+document.getElementById('resBack').addEventListener('click',function(){show('inbox');});
+function load(){document.getElementById('inboxNote').textContent='Memuat kiriman…';
+  BACKEND.list().then(function(list){list=list||[];LIST=list.filter(function(x){return x&&x.v===4;});SKIPPED=list.length-LIST.length;renderInbox();},function(err){document.getElementById('inboxNote').textContent='Kiriman belum dapat dimuat: '+(err&&err.message||err);});}
+function renderInbox(){
+  var tb=document.getElementById('inboxBody');tb.textContent='';document.getElementById('inboxEmpty').hidden=LIST.length>0;
+  var nNew=LIST.filter(function(x){return x.status!=='terkirim';}).length,errs=0,cnt=0;
+  LIST.forEach(function(rec){var st=decode(rec),r=compute(st),G=guttman(st);errs+=G.err;cnt++;var tr=document.createElement('tr');
+    function td(t,cls){tr.appendChild(h('td',cls,t));}
+    td(dateStr(rec.dikirim));td(rec.org||'–');td(rec.pName||'–');td(rec.pEmail||'–');td(Math.round(r.idx)+'%','num');
+    var hc=h('td');hc.appendChild(r.m.health?h('span','pill '+r.m.health,HL[r.m.health]):document.createTextNode('–'));tr.appendChild(hc);
+    td('Cr '+fmt(G.cr,2));
+    var sc=h('td');sc.appendChild(h('span','status '+(rec.status==='terkirim'?'terkirim':'baru'),rec.status==='terkirim'?'Terkirim':'Baru'));tr.appendChild(sc);
+    var ac=h('td');var b=h('button','linkbtn','Lihat hasil');b.type='button';b.addEventListener('click',function(){openResult(rec);});ac.appendChild(b);tr.appendChild(ac);tb.appendChild(tr);});
+  var note=LIST.length+' kiriman, '+nNew+' belum dikirimi hasil.';
+  if(cnt)note+=' Reprodusibilitas Guttman seluruh kiriman: Cr = '+fmt(1-errs/(cnt*90),2)+(cnt<20?' (kiriman masih sedikit, belum dapat dijadikan uji validitas).':' (layak bila ≥ 0,90).');
+  if(SKIPPED)note+=' '+SKIPPED+' kiriman uji dari versi formulir lama tidak ditampilkan.';
+  document.getElementById('inboxNote').textContent=note;
+}
+function openResult(rec){
+  current=rec;var o=fillResult(rec);
+  document.getElementById('mTo').value=rec.pEmail||'';document.getElementById('mSubj').value='Hasil Asesmen Kesiapan Penghimpunan · '+(rec.org||'');document.getElementById('mBody').value=emailText(rec,o.st,o.r);
+  var sent=rec.status==='terkirim',sample=!rec.id;
+  var sb2=document.getElementById('sendBtn'),mk=document.getElementById('markBtn');sb2.disabled=sample;mk.disabled=sample||sent;sb2.textContent=sent?'Kirim ulang email':'Kirim email';
+  document.getElementById('emailToast').textContent=sample?'Ini contoh; email tidak dapat dikirim.':(sent?'Hasil sudah dikirim'+(rec.terkirimPada?' pada '+dateStr(rec.terkirimPada):'')+'.':'');
+  show('result');
+}
+function setSent(){current.status='terkirim';current.terkirimPada=new Date().toISOString();document.getElementById('markBtn').disabled=true;document.getElementById('sendBtn').textContent='Kirim ulang email';renderInbox();}
+document.getElementById('sendBtn').addEventListener('click',function(){
+  if(!current||!current.id)return;var b=this,t=document.getElementById('emailToast');var to=document.getElementById('mTo').value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)){t.textContent='Alamat email tujuan belum benar.';return;}
+  if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='Yakin kirim ke '+to+'?';setTimeout(function(){b.dataset.sure='';b.textContent=current.status==='terkirim'?'Kirim ulang email':'Kirim email';},5000);return;}
+  b.dataset.sure='';b.disabled=true;t.textContent='Mengirim…';
+  BACKEND.send(current.id,to,document.getElementById('mSubj').value,document.getElementById('mBody').value)
+    .then(function(){b.disabled=false;t.textContent='Email terkirim ke '+to+'.';setSent();},function(err){b.disabled=false;b.textContent='Kirim email';t.textContent='Email belum terkirim: '+(err&&err.message||err);});
+});
+document.getElementById('markBtn').addEventListener('click',function(){if(!current||!current.id)return;var b=this,t=document.getElementById('emailToast');b.disabled=true;
+  BACKEND.mark(current.id).then(function(){t.textContent='Ditandai terkirim.';setSent();},function(err){b.disabled=false;t.textContent='Status belum tersimpan: '+(err&&err.message||err);});});
+document.getElementById('refreshBtn').addEventListener('click',load);
+document.getElementById('sampleView').addEventListener('click',function(){openResult(Object.assign({},SAMPLE,{id:null}));});
+load();
+})();
+</script>
+</body>
+</html>
