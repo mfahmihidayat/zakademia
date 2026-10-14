@@ -23,7 +23,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ vars.FTP_DIR || './' }}
+          server-dir: ${{ vars.FTP_DIR || 'domains/zakademia.com/public_html/' }}
           timeout: 120000
           # Folder data asesmen (database dan kata sandi admin) tidak pernah diunggah atau ditimpa.
           exclude: |
@@ -44,7 +44,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ vars.FTP_DIR || './' }}
+          server-dir: ${{ vars.FTP_DIR || 'domains/zakademia.com/public_html/' }}
           timeout: 120000
           # Folder data asesmen (database dan kata sandi admin) tidak pernah diunggah atau ditimpa.
           exclude: |
@@ -62,7 +62,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ vars.FTP_DIR || './' }}
+          server-dir: ${{ vars.FTP_DIR || 'domains/zakademia.com/public_html/' }}
           timeout: 120000
           # Folder data asesmen (database dan kata sandi admin) tidak pernah diunggah atau ditimpa.
           exclude: |

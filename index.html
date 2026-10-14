@@ -1,400 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport"/>
+<meta content="telephone=no" name="format-detection"/>
+
+<!-- Primary Meta Tags -->
+<meta content="Zakademia | Riset, Data, dan Literasi Filantropi Islam" name="title"/>
+<meta content="Zakademia adalah Ruang untuk Bertumbuh, dan Bermanfaat bagi Sesama. Flourish Together, Uplift Others" name="description"/>
+
+<!-- Open Graph / Facebook -->
+<meta content="website" property="og:type"/>
+<meta content="Zakademia | Riset, Data, dan Literasi Filantropi Islam" property="og:site_name"/>
+<meta content="https://www.zakademia.com/" property="og:url"/>
+<meta content="Zakademia | Riset, Data, dan Literasi Filantropi Islam" property="og:title"/>
+<meta content="Ruang untuk Bertumbuh, dan Bermanfaat bagi Sesama. Flourish Together, Uplift Others" property="og:description"/>
+<meta content="https://www.zakademia.com/assets/images/og-image.png" property="og:image"/>
+<meta content="id_ID" property="og:locale"/>
+
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://www.zakademia.com/" name="twitter:url"/>
+<meta content="Zakademia | Riset, Data, dan Literasi Filantropi Islam" name="twitter:title"/>
+<meta content="Ruang untuk Bertumbuh, dan Bermanfaat bagi Sesama. Flourish Together, Uplift Others" name="twitter:description"/>
+<meta content="https://www.zakademia.com/assets/images/og-image.png" name="twitter:image"/>
+
+<!-- Favicon -->
+<link href="/assets/images/favicon.png" rel="apple-touch-icon" sizes="120x120"/>
+<link href="/assets/images/favicon.png" rel="icon" type="image/png"/>
+</head>
+<body>
 <title>Zakademia | Riset, Data, dan Literasi Filantropi Islam</title>
-<meta name="description" content="Ruang untuk bertumbuh dan bermanfaat bagi sesama.">
-<meta property="og:title" content="Zakademia | Riset, Data, dan Literasi Filantropi Islam">
-<meta property="og:description" content="Ruang untuk bertumbuh dan bermanfaat bagi sesama.">
-<meta property="og:image" content="og-zakademia.png">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
-<style>
-/* Layout: a garden of knowledge on ivory; each section borrows a part of the Zakademia emblem; Jakarta sans voice, mono for quiet labels */
-:root{
-  --bg:#FFFFF0; --paper:#FFFFFF; --mist:#F2F5E6; --ink:#10291F; --mute:#4A6355; --line:#DCE5D7;
-  --deep:#0B4D33; --deep-ink:#F7F5EE; --deep-mute:#C9DECE; --leaf:#6FAF78; --leaf-soft:#B9D9BE;
-  --gold:#C99A3B; --gold-text:#8A6418; --danger:#B3261E;
-  --sans:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;
-  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
-  --s0:17px; --s1:20px; --s2:25px; --s3:clamp(30px,3.6vw,44px); --s4:clamp(40px,5.6vw,70px);
-  --shadow:0 1px 2px rgba(11,77,51,.05),0 22px 44px -28px rgba(11,77,51,.32);
-  --shadow-lift:0 2px 4px rgba(11,77,51,.06),0 30px 60px -30px rgba(11,77,51,.42);
-  --deep-2:#14613F; --deep-3:#083A26;
-  color-scheme:light;
-}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--s0);line-height:1.7}
-h1,h2,h3{font-family:var(--sans);font-weight:700;margin:0;line-height:1.14;letter-spacing:-.025em;text-wrap:balance}
-h1 em,h2 em{font-style:normal;color:var(--gold-text)}
-p{margin:0}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:6px}
-.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
-.kicker{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-.lede{font-size:var(--s1);color:var(--mute);max-width:46ch}
-.link{font-weight:600;text-decoration:none;background:linear-gradient(var(--gold),var(--gold)) 0 100%/100% 2px no-repeat;padding-bottom:3px}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:12px 26px;border-radius:999px;font:600 16px var(--sans);text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .2s ease}
-.btn:hover{transform:translateY(-1px)}
-.btn-deep{background:linear-gradient(135deg,var(--deep-2),var(--deep));color:var(--deep-ink);box-shadow:0 10px 24px -14px rgba(11,77,51,.7)}
-.btn-gold{background:linear-gradient(135deg,#E2BC67,var(--gold));color:#1E1606;box-shadow:0 10px 26px -12px color-mix(in srgb,var(--gold) 80%,transparent)}
-.btn-ghost{border-color:var(--line);color:var(--ink);background:transparent}
-.btn[disabled]{opacity:.6;cursor:progress;transform:none}
-svg.leaf{display:block;width:32px;height:32px}
-
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.brand img{width:30px}
-.brand span{font:800 22px var(--sans);letter-spacing:-.02em;color:var(--deep)}
-.menu{display:flex;align-items:center;gap:2px}
-.menu a{padding:9px 14px;border-radius:999px;text-decoration:none;color:var(--mute);font-weight:500;font-size:16px}
-.menu a:hover{color:var(--ink)}
-.menu a[aria-current="page"]{color:var(--ink);background:var(--mist)}
-.menu .btn{margin-left:10px;min-height:44px;padding:10px 20px;color:var(--deep-ink)}
-.menu-toggle{display:none;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font:600 15px var(--sans)}
-@media (max-width:880px){
-  .menu-toggle{display:inline-flex;align-items:center}
-  .menu{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;padding:10px 20px 22px;background:var(--bg);border-bottom:1px solid var(--line)}
-  .menu.open{display:flex}
-  .menu .btn{margin:10px 0 0}
-}
-
-.hero{position:relative;overflow:hidden;background:radial-gradient(900px 520px at 88% 8%,color-mix(in srgb,var(--gold) 14%,transparent),transparent 65%),radial-gradient(760px 480px at -6% 90%,color-mix(in srgb,var(--leaf) 16%,transparent),transparent 65%)}
-.hero .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:56px;padding-block:72px 88px}
-.hero-copy{flex:999 1 500px;min-width:0;display:flex;flex-direction:column;gap:26px}
-.hero h1{font-size:var(--s4)}
-.cta-row{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center}
-.hero-art{flex:1 1 320px;display:flex;justify-content:center}
-.emblem{position:relative;width:min(400px,100%);aspect-ratio:1/1;display:grid;place-items:center}
-.emblem::before{content:"";position:absolute;inset:6%;border-radius:47% 53% 44% 56%/55% 45% 55% 45%;background:radial-gradient(circle at 35% 30%,#FFFFFF 0,var(--mist) 55%,color-mix(in srgb,var(--leaf-soft) 70%,var(--mist)) 100%);box-shadow:var(--shadow-lift)}
-.emblem::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px dashed var(--leaf-soft)}
-.emblem img{position:relative;width:52%}
-.hero-bg{position:absolute;right:-140px;bottom:-180px;width:560px;pointer-events:none}
-.hero-bg path{fill:var(--mist)}
-
-.sec{padding-block:88px}
-.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px 40px;margin-bottom:44px}
-.sec-head h2{font-size:var(--s3);max-width:20ch}
-.sec-head p{color:var(--mute);max-width:42ch}
-.curve{display:block;width:100%;height:70px}
-.curve path{fill:var(--deep)}
-.deep{background:radial-gradient(900px 480px at 85% 0%,var(--deep-2),transparent 70%),radial-gradient(700px 420px at 0% 100%,var(--deep-3),transparent 70%),var(--deep);color:var(--deep-ink);position:relative}
-.deep .kicker,.deep .sec-head p{color:var(--deep-mute)}
-.deep h2 em{color:var(--gold)}
-
-.pillars{background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--mist) 60%,var(--paper)));border-radius:28px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border:1px solid var(--line);overflow:hidden}
-.pillars div{padding:26px 24px;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--line)}
-.pillars div:last-child{border-right:none}
-.pillars b{font-size:20px;letter-spacing:-.02em;color:var(--deep)}
-.pillars span{color:var(--mute);font-size:15px}
-@media (max-width:700px){.pillars div{border-right:none;border-bottom:1px solid var(--line)}.pillars div:last-child{border-bottom:none}}
-
-.scope{display:flex;flex-wrap:wrap;gap:48px;align-items:center}
-.scope-copy{flex:1 1 340px;display:flex;flex-direction:column;gap:20px}
-.scope-copy h2{font-size:var(--s3)}
-.ring-key{display:grid;gap:12px}
-.ring-key div{display:flex;gap:14px;align-items:baseline}
-.ring-key i{width:12px;height:12px;border-radius:50%;flex:none;transform:translateY(2px)}
-.ring-key b{font-weight:600}
-.ring-key span{color:var(--deep-mute)}
-.rings{flex:1 1 420px;display:flex;justify-content:center}
-.rings svg{width:min(440px,100%);height:auto}
-.rings text{font-family:var(--sans);font-size:13px;font-weight:600;fill:var(--deep-ink)}
-.rings .soft{fill:var(--deep-mute);font-weight:500}
-
-.svc-list{border-top:1px solid var(--line)}
-.svc-item{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) auto;gap:16px 40px;align-items:baseline;padding-block:30px;border-bottom:1px solid var(--line)}
-.svc-item h3{font-size:var(--s2)}
-.svc-item p{color:var(--mute)}
-.svc-item .tag{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
-@media (max-width:760px){.svc-item{grid-template-columns:1fr}}
-
-.steps{display:grid;gap:30px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.steps div{display:flex;flex-direction:column;gap:10px;padding-top:18px;border-top:2px solid var(--leaf-soft)}
-.steps div:first-child{border-color:var(--gold)}
-.steps div:last-child{border-color:var(--deep)}
-.steps .n{font:500 13px var(--mono);color:var(--gold-text)}
-.steps h3{font-size:21px}
-.steps p{color:var(--mute)}
-
-.themes{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.themes div{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:28px 28px 28px 8px;padding:26px;display:flex;flex-direction:column;gap:10px}
-.themes h3{font-size:21px}
-.themes p{color:var(--mute);font-size:16px}
-
-.trio{display:grid;gap:36px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.trio div{display:flex;flex-direction:column;gap:10px}
-.trio h3{font-size:22px}
-.trio p{color:var(--mute)}
-
-.closing{overflow:hidden}
-.closing::before{content:"";position:absolute;right:-60px;top:-40px;width:320px;height:320px;background:radial-gradient(circle,color-mix(in srgb,var(--gold) 26%,transparent),transparent 65%);pointer-events:none}
-.closing .wrap{position:relative;padding-block:80px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:28px}
-.closing h2{font-size:var(--s3);max-width:18ch}
-
-.page-head{padding-block:64px 44px;display:flex;flex-direction:column;gap:18px;position:relative}
-.page-head::after{content:"";position:absolute;right:0;top:20px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--gold) 16%,transparent),transparent 70%);pointer-events:none}
-.page-head h1{font-size:clamp(36px,5vw,60px);max-width:18ch}
-
-.detail{display:grid;gap:22px}
-.detail article{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:32px 32px 32px 8px;padding:32px clamp(20px,4vw,40px);display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.detail h2{font-size:var(--s2)}
-.detail p{color:var(--mute)}
-.detail h3{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
-.detail ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
-
-.rub{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.rub div{border-top:1px solid color-mix(in srgb,var(--deep-ink) 22%,transparent);padding-top:18px;display:flex;flex-direction:column;gap:6px}
-.rub h3{font-size:23px}
-.rub .q{font-weight:600;color:var(--gold)}
-.rub p{color:var(--deep-mute)}
-
-.about{display:flex;flex-wrap:wrap;gap:48px;align-items:center}
-.about > div{flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:18px}
-.about img{width:min(260px,70%);margin:0 auto}
-.meaning{display:grid;gap:28px 40px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.meaning div{display:flex;flex-direction:column;gap:6px;padding-top:16px;border-top:1px solid var(--line)}
-.meaning h3{font-size:20px}
-.meaning p{color:var(--mute)}
-
-.contact{display:flex;flex-wrap:wrap;gap:48px}
-.contact aside{flex:1 1 280px;display:flex;flex-direction:column;gap:22px}
-.formbox{flex:999 1 520px;min-width:0;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:36px 36px 36px 10px;padding:34px clamp(18px,4vw,40px)}
-form{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
-.field{display:flex;flex-direction:column;gap:6px}
-.full{grid-column:1/-1}
-label{font-weight:600;font-size:14px}
-input,select,textarea{font:400 16px var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:13px 16px;min-height:50px;width:100%}
-textarea{min-height:140px;resize:vertical}
-.err{color:var(--danger);font-size:13px;min-height:1em}
-[aria-invalid="true"]{border-color:var(--danger)}
-@media (max-width:640px){form{grid-template-columns:1fr}}
-.notice{font-size:15px;color:var(--mute)}
-.ok{display:flex;flex-direction:column;gap:14px}
-.ok h2{font-size:28px}
-
-.layers{position:relative;width:52%;aspect-ratio:770/965}
-.ly{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .45s ease,filter .45s ease}
-.rubrics{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
-.rubric{background:var(--paper);border:1px solid var(--line);border-radius:28px 28px 28px 8px;padding:24px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;box-shadow:var(--shadow);transition:transform .3s ease,box-shadow .3s ease;text-decoration:none}
-.rubric:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift)}
-.rubric img{width:76px;height:76px;border-radius:50%;box-shadow:0 0 0 5px var(--mist),0 12px 24px -12px rgba(11,77,51,.55)}
-.rubric b{font-size:19px;letter-spacing:-.02em;color:var(--deep)}
-.rubric span{font-weight:600;color:var(--gold-text);font-size:15px}
-.rubric p{color:var(--mute);font-size:15px;line-height:1.55}
-.deep .rubric{background:var(--bg);border-color:transparent;box-shadow:0 18px 40px -26px rgba(0,0,0,.55)}
-.deep .rubric b{color:var(--deep)} .deep .rubric span{color:var(--gold-text)} .deep .rubric p{color:var(--mute)}
-.deep .rubric img{box-shadow:0 0 0 5px var(--mist),0 12px 24px -12px rgba(11,77,51,.55)}
-.philo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:start}
-@media (max-width:820px){.philo{grid-template-columns:1fr}}
-.ph-stage{position:sticky;top:96px;display:flex;flex-direction:column;align-items:center;gap:18px}
-.ph-emblem{width:min(380px,100%);aspect-ratio:1;border-radius:47% 53% 44% 56%/55% 45% 55% 45%;background:radial-gradient(circle at 35% 30%,#FFFFFF 0,var(--mist) 55%,color-mix(in srgb,var(--leaf-soft) 70%,var(--mist)) 100%);box-shadow:var(--shadow-lift);display:grid;place-items:center}
-.ph-emblem .layers{width:56%}
-.ph-emblem .ly{transition:filter .5s ease,opacity .5s ease}
-.ly.dim{filter:grayscale(1) brightness(1.15);opacity:.22}
-.ly-gold.lit{filter:drop-shadow(0 0 16px color-mix(in srgb,var(--gold) 75%,transparent))}
-.ph-caption{font:500 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
-.ph-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-.ph-list button{all:unset;cursor:pointer;display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 12px;padding:18px 16px;border-bottom:1px solid var(--line);position:relative;transition:background .25s}
-.ph-list button:hover{background:var(--mist)}
-.ph-list button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
-.ph-list button::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:var(--gold);transform:scaleY(0);transition:transform .35s ease}
-.ph-list button[aria-selected="true"]::before{transform:scaleY(1)}
-.ph-list button[aria-selected="true"]{background:linear-gradient(90deg,color-mix(in srgb,var(--gold) 10%,transparent),transparent 70%)}
-.ph-n{font:500 13px var(--mono);color:var(--gold-text);padding-top:5px}
-.ph-t{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
-.ph-t b{font-size:20px;letter-spacing:-.02em;color:var(--mute);transition:color .25s}
-.ph-t em{font-style:normal;font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-.ph-list button[aria-selected="true"] b{color:var(--deep)}
-.ph-d{grid-column:2;color:var(--mute);font-size:16px;line-height:1.6;max-height:0;overflow:hidden;opacity:.0;transition:max-height .45s ease,opacity .35s ease,margin .35s}
-.ph-list button[aria-selected="true"] .ph-d{max-height:160px;opacity:1;margin-top:4px}
-.buddies{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
-.buddy{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:24px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:36px 36px 36px 10px;padding:20px;box-shadow:var(--shadow)}
-@media (max-width:520px){.buddy{grid-template-columns:1fr}}
-.buddy-media{position:relative;aspect-ratio:9/16;border-radius:120px 24px 24px 24px;overflow:hidden;background:var(--mist);box-shadow:var(--shadow-lift)}
-.buddy-media video{width:100%;height:100%;object-fit:cover;display:block}
-.sound{position:absolute;left:10px;right:10px;bottom:10px;min-height:40px;border:0;border-radius:999px;background:rgba(255,255,240,.92);color:var(--deep);font:600 13px var(--sans);cursor:pointer;box-shadow:0 8px 20px -10px rgba(0,0,0,.4)}
-.sound[aria-pressed="true"]{background:var(--deep);color:var(--deep-ink)}
-.buddy-body{display:flex;flex-direction:column;gap:8px;min-width:0}
-.buddy-body h3{font-size:30px;color:var(--deep)}
-.buddy-role{font-weight:600;color:var(--gold-text)}
-.buddy-body p{color:var(--mute)}
-.buddy-where{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase}
-.rchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.rchip{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:999px;background:var(--mist);font-weight:600;font-size:14px;color:var(--deep)}
-.rchip img{width:26px;height:26px;border-radius:50%}
-.emb{width:var(--ew,128px);aspect-ratio:1;flex:none;border-radius:47% 53% 44% 56%/55% 45% 55% 45%;background:radial-gradient(circle at 35% 30%,#FFFFFF 0,var(--mist) 55%,color-mix(in srgb,var(--leaf-soft) 70%,var(--mist)) 100%);box-shadow:var(--shadow);display:grid;place-items:center}
-.emb .layers{width:58%}
-.emb.sm{--ew:96px}
-.emb.xs{--ew:56px}
-.emb.bare{background:none;box-shadow:none;margin:-6px 0 2px -8px}
-.emb.bare .layers{width:76%}
-.emb .ly.dim{opacity:.16}
-.emb-tag{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
-.site-foot{background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--mist) 70%,var(--bg)));color:var(--deep);border-top:1px solid var(--line)}
-.site-foot .wrap{padding-block:64px 32px}
-.foot-top{display:flex;flex-wrap:wrap;gap:28px 48px;align-items:flex-start}
-.foot-brand{display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-decoration:none;flex:none}
-.foot-brand img{width:72px}
-.foot-brand span{font:800 24px var(--sans);letter-spacing:-.02em;color:var(--ink)}
-.foot-statement{flex:1 1 380px;font-size:clamp(19px,2vw,24px);line-height:1.45;color:var(--deep);max-width:34ch;letter-spacing:-.01em}
-.foot-social{display:grid;grid-template-columns:repeat(3,64px);gap:14px;margin-left:auto}
-@media (max-width:700px){.foot-social{grid-template-columns:repeat(5,52px);margin-left:0}.foot-social a{width:52px;height:52px}}
-.foot-social a{width:64px;height:64px;border-radius:50%;border:1.5px solid var(--deep);display:grid;place-items:center;color:var(--deep);transition:background .25s,color .25s}
-.foot-social a:hover{background:var(--deep);color:var(--deep-ink)}
-.foot-social svg{width:28px;height:28px}
-.site-foot hr{border:0;border-top:1.5px solid var(--deep);opacity:.8;margin:48px 0 44px}
-.foot-cols{display:grid;gap:32px 28px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
-.foot-cols h2{font:800 15px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin-bottom:14px}
-.foot-cols nav{display:flex;flex-direction:column;gap:10px}
-.foot-cols nav a{color:var(--deep);text-decoration:none;font-weight:500}
-.foot-cols nav a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--gold)}
-.foot-find{display:flex;flex-direction:column;gap:12px}
-.foot-find p{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;color:var(--deep);font-weight:500}
-.foot-find svg{width:20px;height:20px;margin-top:3px}
-.foot-find a{color:var(--deep);text-decoration:none}
-.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:48px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--mute)}
-.books{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
-.book{display:grid;grid-template-columns:132px minmax(0,1fr);gap:22px;align-items:start;background:var(--paper);border:1px solid var(--line);border-radius:28px 28px 28px 8px;padding:22px;box-shadow:var(--shadow);transition:transform .3s ease,box-shadow .3s ease}
-.book:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
-.cover{position:relative;aspect-ratio:2/3;border-radius:6px 14px 14px 6px;padding:14px 12px;display:flex;flex-direction:column;gap:6px;color:#FFFFF0;overflow:hidden;box-shadow:inset 6px 0 0 rgba(0,0,0,.18),0 18px 30px -18px rgba(11,77,51,.6)}
-.cover img{width:22px;margin-bottom:auto}
-.cover.real{padding:0;background:var(--mist)}
-.cover.real img{width:100%;height:100%;object-fit:cover;margin:0;display:block}
-.cover b{font-size:13px;line-height:1.2;letter-spacing:-.01em}
-.cover span{font-size:9.5px;line-height:1.3;opacity:.85}
-.cover i{font-style:normal;font:500 8.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-top:6px}
-.cover.c1{background:radial-gradient(circle at 80% 10%,#1C6E4A,transparent 60%),linear-gradient(160deg,#0B4D33,#083A26)}
-.cover.c2{background:radial-gradient(circle at 80% 10%,#F0D08A,transparent 60%),linear-gradient(160deg,#C99A3B,#8A6418)}
-.cover.c3{background:radial-gradient(circle at 80% 10%,#A7D3AE,transparent 60%),linear-gradient(160deg,#4E9A5C,#2D6B3C)}
-.book-body{display:flex;flex-direction:column;gap:8px;min-width:0}
-.book-body h3{font-size:21px;color:var(--deep)}
-.book-sub{color:var(--ink);font-weight:500}
-.book-au{color:var(--gold-text);font-weight:600;font-size:15px}
-.book-meta{font:500 12px var(--mono);letter-spacing:.04em;color:var(--mute)}
-.book-body p{color:var(--mute);font-size:15px}
-.books.compact .book{grid-template-columns:96px minmax(0,1fr)}
-
-.scholar-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 32px;padding:20px 24px;margin-bottom:24px;border-radius:24px;background:linear-gradient(135deg,var(--paper),color-mix(in srgb,var(--mist) 70%,var(--paper)));border:1px solid var(--line);box-shadow:var(--shadow)}
-.scholar-bar div{display:flex;align-items:baseline;gap:8px}
-.scholar-bar b{font-size:30px;letter-spacing:-.03em;color:var(--deep);font-variant-numeric:tabular-nums}
-.scholar-bar span{color:var(--mute);font-size:15px}
-.scholar-bar .link{margin-left:auto}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.filters button{min-height:44px;padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:500 15px var(--sans);cursor:pointer}
-.filters button[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:var(--deep-ink)}
-.papers{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
-.paper{background:var(--paper);border:1px solid var(--line);border-radius:24px 24px 24px 8px;padding:22px 24px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow);min-width:0}
-.paper-meta{display:flex;flex-wrap:wrap;gap:8px 14px;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase}
-.paper-year{color:var(--deep)}.paper-topic{color:var(--gold-text)}.paper-cite{color:var(--mute)}
-.paper h3{font-size:19px;line-height:1.3}
-.paper h3 a{text-decoration:none;color:var(--deep)}
-.paper h3 a:hover{text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
-.paper-au{color:var(--gold-text);font-weight:600;font-size:14px}
-.paper-jr{color:var(--mute);font-size:14px;font-style:normal}
-.paper-sum{color:var(--ink);font-size:16px}
-.studies{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr))}
-.study{background:var(--paper);border:1px solid var(--line);border-radius:32px 32px 32px 8px;padding:28px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);min-width:0}
-.study-head{display:flex;flex-direction:column;gap:6px}
-.study-tag{align-self:flex-start;font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--deep-ink);background:linear-gradient(135deg,var(--deep-2),var(--deep));padding:5px 12px;border-radius:999px}
-.study h3{font-size:24px;color:var(--deep)}
-.study-sub{font-weight:600;color:var(--gold-text);font-size:15px}
-.study-lead{color:var(--ink)}
-.study-pts{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;color:var(--mute);font-size:16px}
-.study-pts li::marker{color:var(--leaf)}
-.study-refs{display:flex;flex-direction:column;gap:8px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
-.study-refs a{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;text-decoration:none;color:var(--deep);font-weight:500;font-size:15px;line-height:1.4}
-.study-refs a span{font:500 12px var(--mono);color:var(--gold-text);padding-top:2px}
-.study-refs a:hover{text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
-@media (prefers-reduced-motion:no-preference){
-  .ring.core{transform-origin:230px 230px;animation:breathe 5s ease-in-out infinite}
-  [data-reveal].pre{transform:translateY(28px)}
-  [data-reveal]{transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-  .frame img{animation:kenburns 12s ease-out both}
-}
-@keyframes kenburns{from{transform:scale(1.08)}to{transform:scale(1)}}
-.gallery{position:relative;width:min(440px,100%);aspect-ratio:4/5}
-.gallery .emblem{position:absolute;inset:0;width:100%}
-.emblem img{position:relative;width:52%}
-.frames{position:absolute;inset:0;border-radius:180px 40px 40px 40px;overflow:hidden;box-shadow:var(--shadow-lift);background:var(--mist)}
-.frame{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
-.frame.on{opacity:1}
-.frame img{width:100%;height:100%;object-fit:cover;display:block}
-.frame figcaption{position:absolute;left:0;right:0;bottom:0;padding:48px 24px 22px;color:#FFFFFF;font-weight:500;font-size:16px;background:linear-gradient(transparent,rgba(8,40,27,.78))}
-.dots{position:absolute;left:24px;bottom:-34px;display:flex;gap:8px}
-.dots button{width:10px;height:10px;padding:0;border-radius:999px;border:0;background:var(--line);cursor:pointer;transition:width .3s,background .3s}
-.dots button[aria-current="true"]{width:28px;background:var(--gold)}
-.gallery::after{content:"";position:absolute;width:84px;height:84px;border-radius:50%;right:-18px;top:-22px;background:radial-gradient(circle at 35% 35%,#EBC879,var(--gold));box-shadow:0 0 0 12px color-mix(in srgb,var(--gold) 16%,transparent);pointer-events:none}
-[hidden]{display:none!important}
-.adm-gate{padding:28px;border:1px solid var(--line);border-radius:24px;background:var(--paper);max-width:640px}
-.adm-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
-.adm-tabs button{min-height:44px;padding:10px 20px;border-radius:999px;border:1px solid var(--line);background:var(--paper);font:600 15px var(--sans);color:var(--ink);cursor:pointer}
-.adm-tabs button[aria-selected="true"]{background:var(--deep);border-color:var(--deep);color:#FFFFF0}
-.adm-panel{display:flex;flex-direction:column;gap:20px}
-.adm-group{border:1px solid var(--line);border-radius:24px;background:var(--paper);padding:22px;display:flex;flex-direction:column;gap:16px}
-.adm-group h2{font-size:20px}
-.adm-group textarea{min-height:76px;background:var(--bg)}
-.adm-field{display:flex;flex-direction:column;gap:6px}
-.adm-field label{font-weight:600;font-size:15px}
-.adm-field .orig{font-size:13px;color:var(--mute)}
-.adm-bar{position:sticky;bottom:16px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:14px 18px;border-radius:999px;background:color-mix(in srgb,var(--paper) 92%,transparent);box-shadow:var(--shadow-lift);align-self:flex-start}
-.inbox{display:grid;gap:14px}
-.msg{border:1px solid var(--line);border-radius:20px;background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;gap:6px}
-.msg b{font-size:17px}.msg small{color:var(--mute);font-size:14px}.msg p{white-space:pre-wrap}
-.foot-base a{color:inherit}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.manager{margin-bottom:56px;padding:28px;border:1.5px dashed var(--leaf);border-radius:28px;background:color-mix(in srgb,var(--mist) 70%,var(--paper));display:flex;flex-direction:column;gap:18px}
-.mgr-head h2{font-size:22px}.mgr-head p{color:var(--mute);font-size:15px}
-.mgr-add{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.mgr-add .btn:focus-within{outline:2px solid var(--gold)}
-.mgr-list{list-style:none;margin:0;padding:0;display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-.mgr-list li{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px}
-.mgr-list img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
-.mgr-list input{min-height:44px;font-size:15px}
-.mgr-row{display:flex;gap:8px}
-.mgr-row button{flex:1;min-height:40px;border-radius:999px;border:1px solid var(--line);background:transparent;font:600 14px var(--sans);color:var(--ink);cursor:pointer}
-.mgr-row .del{color:var(--danger)}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-.ring{transition:opacity .35s ease}
-.rings.focus .ring{opacity:.18}
-.rings.focus .ring.on{opacity:1}
-.ring-key div{cursor:default;border-radius:12px;padding:4px 8px;margin:-4px -8px;transition:background .25s}
-.ring-key div:hover,.ring-key div:focus-visible,.ring-key div.on{background:color-mix(in srgb,var(--deep-ink) 10%,transparent)}
-.svc-switch{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:32px;align-items:stretch}
-@media (max-width:820px){.svc-switch{grid-template-columns:1fr}}
-.svc-tabs{display:flex;flex-direction:column;border-top:1px solid var(--line)}
-.svc-tabs button{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:4px;padding:20px 18px;border-bottom:1px solid var(--line);position:relative;transition:background .25s}
-.svc-tabs button b{font-size:22px;letter-spacing:-.02em;color:var(--mute);transition:color .25s}
-.svc-tabs button::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:var(--gold);transform:scaleY(0);transition:transform .35s ease}
-.svc-tabs button[aria-selected="true"] b{color:var(--deep)}
-.svc-tabs button[aria-selected="true"]::before{transform:scaleY(1)}
-.svc-tabs button:hover{background:var(--mist)}
-.svc-tabs button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
-.svc-tabs .tag,.svc-text .tag{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
-.svc-panel{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:40px 40px 40px 10px;padding:32px;display:flex;flex-wrap:wrap;gap:28px;align-items:center}
-.mini-emblem{flex:1 1 160px;display:flex;justify-content:center}
-.ph-emblem.mini{width:min(220px,100%)}
-.svc-text{flex:2 1 260px;display:flex;flex-direction:column;gap:12px;min-width:0}
-.svc-text h3{font-size:var(--s2)}
-.svc-text p{color:var(--mute)}
-.svc-text .svc-meaning{color:var(--deep);font-weight:500}
-.svc-text.swap{animation:swapin .45s ease both}
-@keyframes swapin{from{transform:translateX(10px)}to{transform:none}}
-.growth{position:relative;height:2px;background:var(--line);border-radius:2px;margin-bottom:-2px}
-.growth i{position:absolute;left:0;top:0;height:2px;width:var(--g,100%);background:linear-gradient(90deg,var(--gold),var(--leaf),var(--deep));border-radius:2px;transition:width .2s linear}
-.growth i::after{content:"";position:absolute;right:-6px;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px color-mix(in srgb,var(--gold) 20%,transparent)}
-.steps div{border-top-color:transparent !important;transition:opacity .4s}
-header{transition:box-shadow .3s}
-header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,transparent)}
-@media (prefers-reduced-motion:no-preference){main > [data-page]:not([hidden]){animation:rise .4s ease both}}
-@keyframes rise{from{transform:translateY(6px)}to{transform:none}}
-</style>
-
+<link href="css/style.css" rel="stylesheet"/>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="leaf" viewBox="0 0 300 300"><path d="M10 290 C 40 150 160 40 295 10 C 285 150 220 250 10 290 Z"/></symbol>
 </svg>
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#beranda"><img src="logo-color.png" alt=""><span>Zakademia</span></a>
+    <a class="brand" href="#beranda"><img src="assets/images/logo-color.png" alt=""><span>Zakademia</span></a>
     <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="menu">Menu</button>
     <nav class="menu" id="menu" aria-label="Utama">
       <a href="#beranda">Beranda</a>
@@ -423,7 +70,7 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
       </div>
       <div class="hero-art">
         <div class="gallery" id="gallery" aria-roledescription="carousel" aria-label="Galeri Zakademia">
-          <div class="frames" id="frames"><figure class="frame on" style="margin:0"><img src="foto-1.jpg" alt="Sosok yang berlari menyongsong matahari terbit"></figure><figure class="frame" style="margin:0"><img src="foto-2.jpg" alt="Lengkung batu yang kokoh sebagai fondasi" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="foto-3.jpg" alt="Tunas muda tumbuh dari tanah" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="foto-4.jpg" alt="Kanopi teduh di antara pepohonan" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="foto-5.jpg" alt="Kitab yang terbuka" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="foto-6.jpg" alt="Wisudawati tersenyum menatap masa depan" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="foto-7.jpg" alt="Uluran tangan membantu sesama naik" loading="lazy"></figure></div>
+          <div class="frames" id="frames"><figure class="frame on" style="margin:0"><img src="assets/images/foto-1.jpg" alt="Sosok yang berlari menyongsong matahari terbit"></figure><figure class="frame" style="margin:0"><img src="assets/images/foto-2.jpg" alt="Lengkung batu yang kokoh sebagai fondasi" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="assets/images/foto-3.jpg" alt="Tunas muda tumbuh dari tanah" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="assets/images/foto-4.jpg" alt="Kanopi teduh di antara pepohonan" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="assets/images/foto-5.jpg" alt="Kitab yang terbuka" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="assets/images/foto-6.jpg" alt="Wisudawati tersenyum menatap masa depan" loading="lazy"></figure><figure class="frame" style="margin:0"><img src="assets/images/foto-7.jpg" alt="Uluran tangan membantu sesama naik" loading="lazy"></figure></div>
           <div class="dots" id="dots"></div>
         </div>
       </div>
@@ -432,9 +79,10 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 
   <section class="wrap" style="padding-bottom:88px">
     <div data-reveal class="pillars">
-      <div><div class="emb xs bare" data-parts="gold top leaf band" role="img" aria-label="Lambang Zakademia, figur yang berlari"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><b>Ilmu</b><span>Kajian yang terbuka dan dapat dipertanggungjawabkan</span></div>
-      <div><div class="emb xs bare" data-parts="base" role="img" aria-label="Lambang Zakademia, lengkung dasar"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><b>Data</b><span>Fondasi yang kokoh untuk setiap langkah</span></div>
-      <div><div class="emb xs bare" data-parts="top leaf" role="img" aria-label="Lambang Zakademia, daun terbuka"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><b>Literasi</b><span>Pengetahuan yang sampai kepada semua</span></div>
+      <div><div class="emb xs bare" data-parts="gold top leaf band" role="img" aria-label="Lambang Zakademia, figur yang berlari"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><b>Ilmu</b><span>Kajian yang terbuka dan dapat dipertanggungjawabkan</span></div>
+      <div><div class="emb xs bare" data-parts="base" role="img" aria-label="Lambang Zakademia, lengkung dasar"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><b>Data</b><span>Fondasi yang kokoh untuk setiap langkah</span></div>
+      <div><div class="emb xs bare" data-parts="leaf" role="img" aria-label="Lambang Zakademia, daun muda"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><b>Pendampingan</b><span>Berjalan bersama sampai manfaat terasa</span></div>
+      <div><div class="emb xs bare" data-parts="top leaf" role="img" aria-label="Lambang Zakademia, daun terbuka"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><b>Literasi</b><span>Pengetahuan yang sampai kepada semua</span></div>
     </div>
   </section>
 
@@ -473,10 +121,11 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
       <div class="svc-tabs" role="tablist" aria-label="Layanan Zakademia">
         <button type="button" role="tab" id="tab-0" aria-selected="true" aria-controls="svcPanel" data-i="0"><span class="tag">Figur yang berlari</span><b>Riset Kebutuhan</b></button>
         <button type="button" role="tab" id="tab-1" aria-selected="false" aria-controls="svcPanel" data-i="1"><span class="tag">Lengkung dasar</span><b>Data &amp; Analitik</b></button>
-        <button type="button" role="tab" id="tab-2" aria-selected="false" aria-controls="svcPanel" data-i="2"><span class="tag">Daun terbuka</span><b>Ruang Belajar</b></button>
+        <button type="button" role="tab" id="tab-2" aria-selected="false" aria-controls="svcPanel" data-i="2"><span class="tag">Daun muda</span><b>Pendampingan Strategi</b></button>
+        <button type="button" role="tab" id="tab-3" aria-selected="false" aria-controls="svcPanel" data-i="3"><span class="tag">Daun terbuka</span><b>Ruang Belajar</b></button>
       </div>
       <div class="svc-panel" id="svcPanel" role="tabpanel" aria-labelledby="tab-0">
-        <div class="mini-emblem"><div class="ph-emblem mini" id="miniEmblem"><div class="layers" role="img" aria-label="Lambang Zakademia"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div></div>
+        <div class="mini-emblem"><div class="ph-emblem mini" id="miniEmblem"><div class="layers" role="img" aria-label="Lambang Zakademia"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div></div>
         <div class="svc-text">
           <span class="tag" id="svcTag">Figur yang berlari</span>
           <h3 id="svcName">Riset Kebutuhan</h3>
@@ -491,11 +140,11 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
   <section class="wrap" style="padding-bottom:88px">
     <div class="sec-head"><h2 data-edit="t13">Karya <em>yang telah terbit</em></h2><a class="link" href="#kajian">Lihat semua kajian</a></div>
     <div class="books compact">
-      <article class="book"><div class="cover real"><img src="cover-c1.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Basapta Press · 2026</span><h3>Data-Driven Fundraising</h3><p class="book-sub">Berhenti Mengira-ngira, Mulai Fundraising dengan Data</p><p class="book-au">Ruli Kurniawan, M. Fahmi Hidayat, Dwi Nurani</p><a class="link" href="https://basaptapress.com/buku/data-driven-fundraising-berhenti-mengira-ngira-mulai-fundraising-dengan-data/" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c2.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Deepublish · 2025</span><h3>Zakat dan Pembangunan Manusia</h3><p class="book-sub">Strategi Penanganan Stunting Berbasis Islam</p><p class="book-au">M. Fahmi Hidayat, Nur Hidayah</p><a class="link" href="https://deepublishstore.com/produk/buku-zakat-dan-pembangunan-manusia-strategi-penanganan-stunting-berbasis-islam/" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c3.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Madza</span><h3>Pengelolaan Wakaf Digital di Indonesia</h3><p class="book-sub">Akuntabilitas dan Transparansi dalam Optimalisasi Instrumen Fundraising</p><p class="book-au">Fauziyah Latiefa Salsabila</p><a class="link" href="https://penerbitmadza.com/product/pengelolaan-wakaf-digital-di-indonesia-akuntabilitas-dan-transparansi-dalam-optimalisasi-instrumen-fundraising/" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c5.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Pusat Kajian Strategis BAZNAS · 2025</span><h3>Jejak Inklusivitas Zakat Menuju Indonesia Emas 2045</h3><p class="book-sub">Bab: Membangun Manusia Melalui Zakat: Penanganan Stunting pada Masyarakat Adat Bunda Tanah Melayu</p><p class="book-au">M. Fahmi Hidayat, Ilman Faqih Shibgotullah</p><a class="link" href="https://puskasbaznas.com/publications/books/2072-jejak-inklusivitas-zakat-menuju-indonesia-emas-20245" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c4.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Litnus · 2026</span><h3>Jejak Perjuangan di Peta Pendidikan Indonesia</h3><p class="book-sub">Bab: Perbendaharaan Masa Depan: Penanganan Stunting di Bunda Tanah Melayu</p><p class="book-au">Eogenie Lakilaki, Artamananda, Amaliah Sobli, Achmad Soediro, Annisa Fatihah Salsabila, M. Fahmi Hidayat, dkk.</p><a class="link" href="https://penerbitlitnus.co.id/portfolio/jejak-perjuangan-di-peta-pendidikan-indonesia-membangun-sokoguru-bangsa/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c1.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Basapta Press · 2026</span><h3>Data-Driven Fundraising</h3><p class="book-sub">Berhenti Mengira-ngira, Mulai Fundraising dengan Data</p><p class="book-au">Ruli Kurniawan, M. Fahmi Hidayat, Dwi Nurani</p><a class="link" href="https://basaptapress.com/buku/data-driven-fundraising-berhenti-mengira-ngira-mulai-fundraising-dengan-data/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c2.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Deepublish · 2025</span><h3>Zakat dan Pembangunan Manusia</h3><p class="book-sub">Strategi Penanganan Stunting Berbasis Islam</p><p class="book-au">M. Fahmi Hidayat, Nur Hidayah</p><a class="link" href="https://deepublishstore.com/produk/buku-zakat-dan-pembangunan-manusia-strategi-penanganan-stunting-berbasis-islam/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c3.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Madza</span><h3>Pengelolaan Wakaf Digital di Indonesia</h3><p class="book-sub">Akuntabilitas dan Transparansi dalam Optimalisasi Instrumen Fundraising</p><p class="book-au">Fauziyah Latiefa Salsabila</p><a class="link" href="https://penerbitmadza.com/product/pengelolaan-wakaf-digital-di-indonesia-akuntabilitas-dan-transparansi-dalam-optimalisasi-instrumen-fundraising/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c5.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Pusat Kajian Strategis BAZNAS · 2025</span><h3>Jejak Inklusivitas Zakat Menuju Indonesia Emas 2045</h3><p class="book-sub">Bab: Membangun Manusia Melalui Zakat: Penanganan Stunting pada Masyarakat Adat Bunda Tanah Melayu</p><p class="book-au">M. Fahmi Hidayat, Ilman Faqih Shibgotullah</p><a class="link" href="https://puskasbaznas.com/publications/books/2072-jejak-inklusivitas-zakat-menuju-indonesia-emas-20245" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c4.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Litnus · 2026</span><h3>Jejak Perjuangan di Peta Pendidikan Indonesia</h3><p class="book-sub">Bab: Perbendaharaan Masa Depan: Penanganan Stunting di Bunda Tanah Melayu</p><p class="book-au">Eogenie Lakilaki, Artamananda, Amaliah Sobli, Achmad Soediro, Annisa Fatihah Salsabila, M. Fahmi Hidayat, dkk.</p><a class="link" href="https://penerbitlitnus.co.id/portfolio/jejak-perjuangan-di-peta-pendidikan-indonesia-membangun-sokoguru-bangsa/" target="_blank" rel="noopener">Lihat buku</a></div></article>
     </div>
   </section>
 
@@ -506,19 +155,19 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
       <div><span class="n">Menyemai</span><h3>Mendengarkan</h3><p>Memahami cerita lembaga dan pertanyaan yang ingin dijawab.</p></div>
       <div><span class="n">Merawat</span><h3>Merancang</h3><p>Menyusun cara meneliti yang sesuai dengan konteks dan nilai lembaga.</p></div>
       <div><span class="n">Menumbuhkan</span><h3>Menelaah</h3><p>Mengolah data dengan teliti hingga menemukan makna di baliknya.</p></div>
-      <div><span class="n">Memetik</span><h3>Membagikan</h3><p>Menyampaikan temuan dengan bahasa yang jernih agar manfaatnya terasa.</p></div>
+      <div><span class="n">Memetik</span><h3>Menemani</h3><p>Mengubah temuan menjadi langkah dan berjalan bersama sampai manfaatnya terasa.</p></div>
     </div>
   </section>
 
   <section class="wrap" style="padding-bottom:88px">
     <div class="sec-head"><h2 data-edit="t15">Ruang <em>literasi</em></h2><p data-edit="t23">Enam rubrik untuk belajar kebaikan bersama, terbit setiap pekan di Instagram.</p></div>
     <div data-reveal class="rubrics">
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-flash.png" alt="Logo ZakaFlash"><b>ZakaFlash</b><span>Apa yang baru?</span><p>Kabar dan momen penting.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-pedia.png" alt="Logo ZakaPedia"><b>ZakaPedia</b><span>Apa artinya?</span><p>Istilah dan konsep, sampai paham.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-story.png" alt="Logo ZakaStory"><b>ZakaStory</b><span>Siapa yang merasakan?</span><p>Kisah mereka yang tumbuh lewat kebaikan.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-tips.png" alt="Logo ZakaTips"><b>ZakaTips</b><span>Bagaimana caranya?</span><p>Panduan untuk mulai berbuat.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-stat.png" alt="Logo ZakaStat"><b>ZakaStat</b><span>Berapa besarnya?</span><p>Angka yang bercerita.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-talk.png" alt="Logo ZakaTalk"><b>ZakaTalk</b><span>Apa kata kamu?</span><p>Ruang berbincang dan bertanya.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-flash.png" alt="Logo ZakaFlash"><b>ZakaFlash</b><span>Apa yang baru?</span><p>Kabar dan momen penting.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-pedia.png" alt="Logo ZakaPedia"><b>ZakaPedia</b><span>Apa artinya?</span><p>Istilah dan konsep, sampai paham.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-story.png" alt="Logo ZakaStory"><b>ZakaStory</b><span>Siapa yang merasakan?</span><p>Kisah mereka yang tumbuh lewat kebaikan.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-tips.png" alt="Logo ZakaTips"><b>ZakaTips</b><span>Bagaimana caranya?</span><p>Panduan untuk mulai berbuat.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-stat.png" alt="Logo ZakaStat"><b>ZakaStat</b><span>Berapa besarnya?</span><p>Angka yang bercerita.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-talk.png" alt="Logo ZakaTalk"><b>ZakaTalk</b><span>Apa kata kamu?</span><p>Ruang berbincang dan bertanya.</p></a>
     </div>
   </section>
 
@@ -527,7 +176,7 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
     <div class="buddies">
       <article class="buddy">
         <div class="buddy-media">
-          <video id="v-zaida" src="zaida.mp4" poster="zaida.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Zaida"></video>
+          <video id="v-zaida" src="assets/videos/zaida.mp4" poster="assets/images/zaida.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Zaida"></video>
           <button type="button" class="sound" data-v="v-zaida" aria-pressed="false">Dengarkan Zaida</button>
         </div>
         <div class="buddy-body">
@@ -536,12 +185,12 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
           <p class="buddy-role">Teman belajar zakat, infak, dan sedekah.</p>
           <p>Ramah dan pendengar yang baik. Zaida menemani belajar dengan tenang, menjawab pertanyaan satu per satu sampai paham.</p>
           <p class="buddy-where">Menyapa dari ruang belajar Zakademia</p>
-          <div class="rchips"><span class="rchip"><img src="rb-pedia.png" alt="">ZakaPedia</span><span class="rchip"><img src="rb-talk.png" alt="">ZakaTalk</span><span class="rchip"><img src="rb-tips.png" alt="">ZakaTips</span></div>
+          <div class="rchips"><span class="rchip"><img src="assets/images/rb-pedia.png" alt="">ZakaPedia</span><span class="rchip"><img src="assets/images/rb-talk.png" alt="">ZakaTalk</span><span class="rchip"><img src="assets/images/rb-tips.png" alt="">ZakaTips</span></div>
         </div>
       </article>
       <article class="buddy">
         <div class="buddy-media">
-          <video id="v-wafiy" src="wafiy.mp4" poster="wafiy.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Wafiy"></video>
+          <video id="v-wafiy" src="assets/videos/wafiy.mp4" poster="assets/images/wafiy.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Wafiy"></video>
           <button type="button" class="sound" data-v="v-wafiy" aria-pressed="false">Dengarkan Wafiy</button>
         </div>
         <div class="buddy-body">
@@ -550,7 +199,7 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
           <p class="buddy-role">Teman belajar wakaf dan filantropi Islam.</p>
           <p>Murah senyum dan penuh semangat. Wafiy mengajak turun ke lapangan, melihat langsung bagaimana kebaikan bekerja.</p>
           <p class="buddy-where">Menyapa dari lapangan</p>
-          <div class="rchips"><span class="rchip"><img src="rb-story.png" alt="">ZakaStory</span><span class="rchip"><img src="rb-flash.png" alt="">ZakaFlash</span><span class="rchip"><img src="rb-tips.png" alt="">ZakaTips</span></div>
+          <div class="rchips"><span class="rchip"><img src="assets/images/rb-story.png" alt="">ZakaStory</span><span class="rchip"><img src="assets/images/rb-flash.png" alt="">ZakaFlash</span><span class="rchip"><img src="assets/images/rb-tips.png" alt="">ZakaTips</span></div>
         </div>
       </article>
     </div>
@@ -558,9 +207,9 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 
   <section class="wrap" style="padding-bottom:88px">
     <div data-reveal class="trio">
-      <div><div class="emb sm" data-parts="gold" role="img" aria-label="Lambang Zakademia, titik emas"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><span class="emb-tag">Titik emas</span><h3>Bermartabat</h3><p>Setiap angka adalah manusia. Kami menjaga martabat donatur dan penerima manfaat di setiap langkah.</p></div>
-      <div><div class="emb sm" data-parts="top leaf" role="img" aria-label="Lambang Zakademia, daun terbuka"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><span class="emb-tag">Daun terbuka</span><h3>Ilmu yang terbuka</h3><p>Pengetahuan baru bermakna ketika dapat dipahami dan dipakai bersama.</p></div>
-      <div><div class="emb sm" data-parts="top band" role="img" aria-label="Lambang Zakademia, kanopi"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><span class="emb-tag">Kanopi</span><h3>Amanah</h3><p>Apa yang dititipkan kepada kami, kami jaga sebaik-baiknya.</p></div>
+      <div><div class="emb sm" data-parts="gold" role="img" aria-label="Lambang Zakademia, titik emas"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><span class="emb-tag">Titik emas</span><h3>Bermartabat</h3><p>Setiap angka adalah manusia. Kami menjaga martabat donatur dan penerima manfaat di setiap langkah.</p></div>
+      <div><div class="emb sm" data-parts="top leaf" role="img" aria-label="Lambang Zakademia, daun terbuka"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><span class="emb-tag">Daun terbuka</span><h3>Ilmu yang terbuka</h3><p>Pengetahuan baru bermakna ketika dapat dipahami dan dipakai bersama.</p></div>
+      <div><div class="emb sm" data-parts="top band" role="img" aria-label="Lambang Zakademia, kanopi"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><span class="emb-tag">Kanopi</span><h3>Amanah</h3><p>Apa yang dititipkan kepada kami, kami jaga sebaik-baiknya.</p></div>
     </div>
   </section>
 
@@ -569,22 +218,27 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 
 <!-- LAYANAN -->
 <div data-page="layanan" hidden>
-  <div class="wrap page-head"><h1 data-edit="t2">Hadir di setiap <em>musim pertumbuhan.</em></h1><p class="lede" data-edit="t8">Tiga layanan berbasis penelitian untuk mendukung pengambilan keputusan lembaga filantropi Islam, dapat dipilih secara terpisah maupun terintegrasi.</p></div>
+  <div class="wrap page-head"><h1 data-edit="t2">Hadir di setiap <em>musim pertumbuhan.</em></h1><p class="lede" data-edit="t8">Empat layanan berbasis penelitian untuk mendukung pengambilan keputusan lembaga filantropi Islam, dapat dipilih secara terpisah maupun terintegrasi.</p></div>
   <section class="wrap detail" style="padding-bottom:88px">
     <article>
-      <div style="display:flex;flex-direction:column;gap:12px"><div class="emb" data-parts="gold top leaf band" role="img" aria-label="Lambang Zakademia, figur yang berlari"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><span class="emb-tag">Figur yang berlari</span><h2>Riset Kebutuhan</h2><p>Penelitian terapan yang dirancang berdasarkan kebutuhan informasi lembaga, mencakup perilaku donatur, evaluasi program, dan pemetaan potensi.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><div class="emb" data-parts="gold top leaf band" role="img" aria-label="Lambang Zakademia, figur yang berlari"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><span class="emb-tag">Figur yang berlari</span><h2>Riset Kebutuhan</h2><p>Penelitian terapan yang dirancang berdasarkan kebutuhan informasi lembaga, mencakup perilaku donatur, evaluasi program, dan pemetaan potensi.</p></div>
       <div><h3>Contoh pertanyaan penelitian</h3><ul><li>Siapa yang setia memberi, dan apa yang membuat mereka bertahan?</li><li>Sejauh mana program telah mengubah kehidupan penerima manfaat?</li><li>Di mana kebaikan yang belum tersentuh?</li></ul></div>
       <div><h3>Luaran</h3><ul><li>Rancangan kajian yang sesuai konteks</li><li>Laporan temuan dan ringkasan bagi pimpinan</li><li>Diskusi hasil bersama tim</li></ul></div>
     </article>
     <article>
-      <div style="display:flex;flex-direction:column;gap:12px"><div class="emb" data-parts="base" role="img" aria-label="Lambang Zakademia, lengkung dasar"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><span class="emb-tag">Lengkung dasar</span><h2>Data &amp; Analitik</h2><p>Pengelolaan, standardisasi, dan analisis data kelembagaan sebagai dasar pemantauan kinerja.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><div class="emb" data-parts="base" role="img" aria-label="Lambang Zakademia, lengkung dasar"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><span class="emb-tag">Lengkung dasar</span><h2>Data &amp; Analitik</h2><p>Pengelolaan, standardisasi, dan analisis data kelembagaan sebagai dasar pemantauan kinerja.</p></div>
       <div><h3>Lingkup</h3><ul><li>Catatan penghimpunan dan penyaluran</li><li>Ukuran keberhasilan yang disepakati bersama</li><li>Pemahaman tentang beragam donatur</li></ul></div>
-      <div><h3>Yang tumbuh bersama Anda</h3><ul><li>Kamus data lembaga</li><li>Panel pemantauan yang dirawat tim sendiri</li><li>Panduan penggunaan</li></ul></div>
+      <div><h3>Yang tumbuh bersama Anda</h3><ul><li>Kamus data lembaga</li><li>Panel pemantauan yang dirawat tim sendiri</li><li>Pendampingan penggunaan</li></ul></div>
     </article>
     <article>
-      <div style="display:flex;flex-direction:column;gap:12px"><div class="emb" data-parts="top leaf" role="img" aria-label="Lambang Zakademia, daun terbuka"><div class="layers"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div><span class="emb-tag">Daun terbuka</span><h2>Ruang Belajar</h2><p>Penguatan kapasitas metodologi penelitian bagi pengelola dan pemerhati filantropi Islam.</p></div>
+      <div style="display:flex;flex-direction:column;gap:12px"><div class="emb" data-parts="leaf" role="img" aria-label="Lambang Zakademia, daun muda"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><span class="emb-tag">Daun muda</span><h2>Pendampingan Strategi</h2><p>Pendampingan penyusunan dan implementasi strategi kelembagaan berbasis temuan penelitian.</p></div>
+      <div><h3>Fokus</h3><ul><li>Arah penghimpunan dan layanan bagi donatur</li><li>Rancangan program yang memberdayakan</li><li>Tata kelola pengetahuan lembaga</li></ul></div>
+      <div><h3>Yang tumbuh bersama Anda</h3><ul><li>Peta jalan dan prioritas</li><li>Pendampingan berkala</li><li>Refleksi di akhir perjalanan</li></ul></div>
+    </article>
+    <article>
+      <div style="display:flex;flex-direction:column;gap:12px"><div class="emb" data-parts="top leaf" role="img" aria-label="Lambang Zakademia, daun terbuka"><div class="layers"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div><span class="emb-tag">Daun terbuka</span><h2>Ruang Belajar</h2><p>Penguatan kapasitas metodologi penelitian bagi pengelola dan pemerhati filantropi Islam.</p></div>
       <div><h3>Sasaran</h3><ul><li>Amil, nazhir, dan pengelola lembaga</li><li>Pengurus masjid dan pesantren</li><li>Mahasiswa, pengajar, dan peneliti</li></ul></div>
-      <div><h3>Format</h3><ul><li>Kelas terbuka</li><li>Belajar bersama di lembaga</li><li>Bimbingan penelitian</li></ul></div>
+      <div><h3>Format</h3><ul><li>Kelas terbuka</li><li>Belajar bersama di lembaga</li><li>Pendampingan penelitian</li></ul></div>
     </article>
   </section>
   <div class="deep closing"><div class="wrap"><h2>Konsultasikan kebutuhan penelitian <em>lembaga Anda.</em></h2><a class="btn btn-gold" href="#kontak">Mari berbincang</a></div></div>
@@ -636,11 +290,11 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
   <section class="wrap" style="padding-bottom:88px">
     <div class="sec-head"><h2 data-edit="t17">Publikasi <em>buku</em></h2><p data-edit="t25">Buku dan bab buku tim Zakademia di bidang zakat, wakaf, dan pembangunan manusia.</p></div>
     <div class="books">
-      <article class="book"><div class="cover real"><img src="cover-c1.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Basapta Press · 2026</span><h3>Data-Driven Fundraising</h3><p class="book-sub">Berhenti Mengira-ngira, Mulai Fundraising dengan Data</p><p class="book-au">Ruli Kurniawan, M. Fahmi Hidayat, Dwi Nurani</p><p class="book-meta">ISBN 978-634-04-9338-2 · 200 hlm.</p><p>Panduan bagi pengelola zakat dan fundraiser untuk beralih ke penghimpunan yang terukur: dari pengelolaan dan segmentasi data donatur hingga analisis deskriptif, diagnostik, prediktif, dan preskriptif.</p><a class="link" href="https://basaptapress.com/buku/data-driven-fundraising-berhenti-mengira-ngira-mulai-fundraising-dengan-data/" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c2.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Deepublish · 2025</span><h3>Zakat dan Pembangunan Manusia</h3><p class="book-sub">Strategi Penanganan Stunting Berbasis Islam</p><p class="book-au">M. Fahmi Hidayat, Nur Hidayah</p><p class="book-meta">ISBN 978-634-01-0720-3 · xx + 230 hlm.</p><p>Mengkaji peran zakat dan lembaga zakat dalam penanganan stunting di Indonesia, serta dampaknya bagi kualitas sumber daya manusia menuju Indonesia Emas 2045.</p><a class="link" href="https://deepublishstore.com/produk/buku-zakat-dan-pembangunan-manusia-strategi-penanganan-stunting-berbasis-islam/" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c3.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Madza</span><h3>Pengelolaan Wakaf Digital di Indonesia</h3><p class="book-sub">Akuntabilitas dan Transparansi dalam Optimalisasi Instrumen Fundraising</p><p class="book-au">Fauziyah Latiefa Salsabila</p><p>Menelaah akuntabilitas dan transparansi dua lembaga wakaf digital di bawah perbankan syariah, termasuk akuntansi wakaf dan pengelolaan wakaf uang melalui platform digital.</p><a class="link" href="https://penerbitmadza.com/product/pengelolaan-wakaf-digital-di-indonesia-akuntabilitas-dan-transparansi-dalam-optimalisasi-instrumen-fundraising/" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c5.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Pusat Kajian Strategis BAZNAS · 2025</span><h3>Jejak Inklusivitas Zakat Menuju Indonesia Emas 2045</h3><p class="book-sub">Bab: Membangun Manusia Melalui Zakat: Penanganan Stunting pada Masyarakat Adat Bunda Tanah Melayu</p><p class="book-au">M. Fahmi Hidayat, Ilman Faqih Shibgotullah</p><p class="book-meta">ISBN 978-623-5858-34-0 · hlm. 421–452</p><p>Bunga rampai tentang zakat yang inklusif bagi pendidikan, penyandang disabilitas, masyarakat adat, dan anak-anak di daerah 3T.</p><a class="link" href="https://puskasbaznas.com/publications/books/2072-jejak-inklusivitas-zakat-menuju-indonesia-emas-20245" target="_blank" rel="noopener">Lihat buku</a></div></article>
-      <article class="book"><div class="cover real"><img src="cover-c4.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Litnus · 2026</span><h3>Jejak Perjuangan di Peta Pendidikan Indonesia</h3><p class="book-sub">Bab: Perbendaharaan Masa Depan: Penanganan Stunting di Bunda Tanah Melayu</p><p class="book-au">Eogenie Lakilaki, Artamananda, Amaliah Sobli, Achmad Soediro, Annisa Fatihah Salsabila, M. Fahmi Hidayat, dkk.</p><p class="book-meta">viii + 88 hlm. · hlm. 47–56</p><p>Refleksi sembilan penulis tentang jarak antara kebijakan pendidikan dan dampaknya di ruang kelas hingga daerah terpencil.</p><a class="link" href="https://penerbitlitnus.co.id/portfolio/jejak-perjuangan-di-peta-pendidikan-indonesia-membangun-sokoguru-bangsa/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c1.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Basapta Press · 2026</span><h3>Data-Driven Fundraising</h3><p class="book-sub">Berhenti Mengira-ngira, Mulai Fundraising dengan Data</p><p class="book-au">Ruli Kurniawan, M. Fahmi Hidayat, Dwi Nurani</p><p class="book-meta">ISBN 978-634-04-9338-2 · 200 hlm.</p><p>Panduan bagi pengelola zakat dan fundraiser untuk beralih ke penghimpunan yang terukur: dari pengelolaan dan segmentasi data donatur hingga analisis deskriptif, diagnostik, prediktif, dan preskriptif.</p><a class="link" href="https://basaptapress.com/buku/data-driven-fundraising-berhenti-mengira-ngira-mulai-fundraising-dengan-data/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c2.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Deepublish · 2025</span><h3>Zakat dan Pembangunan Manusia</h3><p class="book-sub">Strategi Penanganan Stunting Berbasis Islam</p><p class="book-au">M. Fahmi Hidayat, Nur Hidayah</p><p class="book-meta">ISBN 978-634-01-0720-3 · xx + 230 hlm.</p><p>Mengkaji peran zakat dan lembaga zakat dalam penanganan stunting di Indonesia, serta dampaknya bagi kualitas sumber daya manusia menuju Indonesia Emas 2045.</p><a class="link" href="https://deepublishstore.com/produk/buku-zakat-dan-pembangunan-manusia-strategi-penanganan-stunting-berbasis-islam/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c3.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Madza</span><h3>Pengelolaan Wakaf Digital di Indonesia</h3><p class="book-sub">Akuntabilitas dan Transparansi dalam Optimalisasi Instrumen Fundraising</p><p class="book-au">Fauziyah Latiefa Salsabila</p><p>Menelaah akuntabilitas dan transparansi dua lembaga wakaf digital di bawah perbankan syariah, termasuk akuntansi wakaf dan pengelolaan wakaf uang melalui platform digital.</p><a class="link" href="https://penerbitmadza.com/product/pengelolaan-wakaf-digital-di-indonesia-akuntabilitas-dan-transparansi-dalam-optimalisasi-instrumen-fundraising/" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c5.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Pusat Kajian Strategis BAZNAS · 2025</span><h3>Jejak Inklusivitas Zakat Menuju Indonesia Emas 2045</h3><p class="book-sub">Bab: Membangun Manusia Melalui Zakat: Penanganan Stunting pada Masyarakat Adat Bunda Tanah Melayu</p><p class="book-au">M. Fahmi Hidayat, Ilman Faqih Shibgotullah</p><p class="book-meta">ISBN 978-623-5858-34-0 · hlm. 421–452</p><p>Bunga rampai tentang zakat yang inklusif bagi pendidikan, penyandang disabilitas, masyarakat adat, dan anak-anak di daerah 3T.</p><a class="link" href="https://puskasbaznas.com/publications/books/2072-jejak-inklusivitas-zakat-menuju-indonesia-emas-20245" target="_blank" rel="noopener">Lihat buku</a></div></article>
+      <article class="book"><div class="cover real"><img src="assets/images/cover-c4.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Penerbit Litnus · 2026</span><h3>Jejak Perjuangan di Peta Pendidikan Indonesia</h3><p class="book-sub">Bab: Perbendaharaan Masa Depan: Penanganan Stunting di Bunda Tanah Melayu</p><p class="book-au">Eogenie Lakilaki, Artamananda, Amaliah Sobli, Achmad Soediro, Annisa Fatihah Salsabila, M. Fahmi Hidayat, dkk.</p><p class="book-meta">viii + 88 hlm. · hlm. 47–56</p><p>Refleksi sembilan penulis tentang jarak antara kebijakan pendidikan dan dampaknya di ruang kelas hingga daerah terpencil.</p><a class="link" href="https://penerbitlitnus.co.id/portfolio/jejak-perjuangan-di-peta-pendidikan-indonesia-membangun-sokoguru-bangsa/" target="_blank" rel="noopener">Lihat buku</a></div></article>
     </div>
   </section>
   <section class="wrap" style="padding-bottom:88px">
@@ -744,7 +398,7 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
     <div class="buddies">
       <article class="buddy">
         <div class="buddy-media">
-          <video id="v2-zaida" src="zaida.mp4" poster="zaida.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Zaida"></video>
+          <video id="v2-zaida" src="assets/videos/zaida.mp4" poster="assets/images/zaida.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Zaida"></video>
           <button type="button" class="sound" data-v="v2-zaida" aria-pressed="false">Dengarkan Zaida</button>
         </div>
         <div class="buddy-body">
@@ -753,12 +407,12 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
           <p class="buddy-role">Teman belajar zakat, infak, dan sedekah.</p>
           <p>Ramah dan pendengar yang baik. Zaida menemani belajar dengan tenang, menjawab pertanyaan satu per satu sampai paham.</p>
           <p class="buddy-where">Menyapa dari ruang belajar Zakademia</p>
-          <div class="rchips"><span class="rchip"><img src="rb-pedia.png" alt="">ZakaPedia</span><span class="rchip"><img src="rb-talk.png" alt="">ZakaTalk</span><span class="rchip"><img src="rb-tips.png" alt="">ZakaTips</span></div>
+          <div class="rchips"><span class="rchip"><img src="assets/images/rb-pedia.png" alt="">ZakaPedia</span><span class="rchip"><img src="assets/images/rb-talk.png" alt="">ZakaTalk</span><span class="rchip"><img src="assets/images/rb-tips.png" alt="">ZakaTips</span></div>
         </div>
       </article>
       <article class="buddy">
         <div class="buddy-media">
-          <video id="v2-wafiy" src="wafiy.mp4" poster="wafiy.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Wafiy"></video>
+          <video id="v2-wafiy" src="assets/videos/wafiy.mp4" poster="assets/images/wafiy.jpg" muted loop playsinline preload="metadata" aria-label="Video perkenalan Wafiy"></video>
           <button type="button" class="sound" data-v="v2-wafiy" aria-pressed="false">Dengarkan Wafiy</button>
         </div>
         <div class="buddy-body">
@@ -767,7 +421,7 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
           <p class="buddy-role">Teman belajar wakaf dan filantropi Islam.</p>
           <p>Murah senyum dan penuh semangat. Wafiy mengajak turun ke lapangan, melihat langsung bagaimana kebaikan bekerja.</p>
           <p class="buddy-where">Menyapa dari lapangan</p>
-          <div class="rchips"><span class="rchip"><img src="rb-story.png" alt="">ZakaStory</span><span class="rchip"><img src="rb-flash.png" alt="">ZakaFlash</span><span class="rchip"><img src="rb-tips.png" alt="">ZakaTips</span></div>
+          <div class="rchips"><span class="rchip"><img src="assets/images/rb-story.png" alt="">ZakaStory</span><span class="rchip"><img src="assets/images/rb-flash.png" alt="">ZakaFlash</span><span class="rchip"><img src="assets/images/rb-tips.png" alt="">ZakaTips</span></div>
         </div>
       </article>
     </div>
@@ -776,12 +430,12 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
   <svg class="curve" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 C 360 0 900 0 1440 50 L1440 70 Z"/></svg>
   <section class="deep"><div class="wrap sec">
     <div data-reveal class="rubrics">
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-flash.png" alt="Logo ZakaFlash"><b>ZakaFlash</b><span>Apa yang baru?</span><p>Kabar dan momen penting.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-pedia.png" alt="Logo ZakaPedia"><b>ZakaPedia</b><span>Apa artinya?</span><p>Istilah dan konsep, sampai paham.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-story.png" alt="Logo ZakaStory"><b>ZakaStory</b><span>Siapa yang merasakan?</span><p>Kisah mereka yang tumbuh lewat kebaikan.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-tips.png" alt="Logo ZakaTips"><b>ZakaTips</b><span>Bagaimana caranya?</span><p>Panduan untuk mulai berbuat.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-stat.png" alt="Logo ZakaStat"><b>ZakaStat</b><span>Berapa besarnya?</span><p>Angka yang bercerita.</p></a>
-      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="rb-talk.png" alt="Logo ZakaTalk"><b>ZakaTalk</b><span>Apa kata kamu?</span><p>Ruang berbincang dan bertanya.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-flash.png" alt="Logo ZakaFlash"><b>ZakaFlash</b><span>Apa yang baru?</span><p>Kabar dan momen penting.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-pedia.png" alt="Logo ZakaPedia"><b>ZakaPedia</b><span>Apa artinya?</span><p>Istilah dan konsep, sampai paham.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-story.png" alt="Logo ZakaStory"><b>ZakaStory</b><span>Siapa yang merasakan?</span><p>Kisah mereka yang tumbuh lewat kebaikan.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-tips.png" alt="Logo ZakaTips"><b>ZakaTips</b><span>Bagaimana caranya?</span><p>Panduan untuk mulai berbuat.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-stat.png" alt="Logo ZakaStat"><b>ZakaStat</b><span>Berapa besarnya?</span><p>Angka yang bercerita.</p></a>
+      <a class="rubric" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener"><img src="assets/images/rb-talk.png" alt="Logo ZakaTalk"><b>ZakaTalk</b><span>Apa kata kamu?</span><p>Ruang berbincang dan bertanya.</p></a>
     </div>
     <p style="margin-top:44px"><a class="btn btn-gold" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener">Ikuti @zakademia.official</a></p>
   </div></section>
@@ -795,13 +449,13 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
       <p class="lede" style="max-width:none">Zakademia lahir dari keyakinan sederhana: kebaikan akan tumbuh lebih jauh ketika dirawat dengan ilmu. Kami hadir sebagai ruang belajar dan teman berjalan bagi siapa saja yang mengelola amanah umat, agar setiap titipan kebaikan sampai, berbuah, dan mengangkat sesama.</p>
       <p style="font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--gold-text)">Bertumbuh bersama, bermanfaat bagi sesama.</p>
     </div>
-    <div><img src="logo-color.png" alt="Lambang Zakademia"></div>
+    <div><img src="assets/images/logo-color.png" alt="Lambang Zakademia"></div>
   </section>
   <section class="wrap" style="padding-bottom:88px">
     <div class="sec-head"><h2 data-edit="t21">Makna <em>lambang Zakademia</em></h2><p data-edit="t29">Setiap unsur lambang mewakili satu nilai kelembagaan. Pilih salah satu untuk melihat unsurnya.</p></div>
     <div class="philo">
       <div class="ph-stage" id="phStage" role="tabpanel" aria-labelledby="ph-0">
-        <div class="ph-emblem" id="phEmblem" data-on="gold"><div class="layers" role="img" aria-label="Lambang Zakademia"><img class="ly ly-base" src="em-base.png" alt=""><img class="ly ly-band" src="em-band.png" alt=""><img class="ly ly-top" src="em-top.png" alt=""><img class="ly ly-leaf" src="em-leaf.png" alt=""><img class="ly ly-gold" src="em-gold.png" alt=""></div></div>
+        <div class="ph-emblem" id="phEmblem" data-on="gold"><div class="layers" role="img" aria-label="Lambang Zakademia"><img class="ly ly-base" src="assets/images/em-base.png" alt=""><img class="ly ly-band" src="assets/images/em-band.png" alt=""><img class="ly ly-top" src="assets/images/em-top.png" alt=""><img class="ly ly-leaf" src="assets/images/em-leaf.png" alt=""><img class="ly ly-gold" src="assets/images/em-gold.png" alt=""></div></div>
         <p class="ph-caption" id="phCaption">Titik emas · Bermartabat</p>
       </div>
       <div class="ph-list" role="tablist" aria-label="Makna lambang Zakademia" aria-orientation="vertical">
@@ -840,10 +494,10 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 
 <!-- KONTAK -->
 <div data-page="kontak" hidden>
-  <div class="wrap page-head"><h1 data-edit="t6">Setiap pertumbuhan <em>dimulai dari percakapan.</em></h1><p class="lede" data-edit="t11">Sampaikan kebutuhan penelitian atau pengembangan data lembaga Anda. Tim kami akan menindaklanjuti untuk diskusi awal.</p></div>
+  <div class="wrap page-head"><h1 data-edit="t6">Setiap pertumbuhan <em>dimulai dari percakapan.</em></h1><p class="lede" data-edit="t11">Sampaikan kebutuhan penelitian atau pendampingan lembaga Anda. Tim kami akan menindaklanjuti untuk diskusi awal.</p></div>
   <section class="wrap contact" style="padding-bottom:88px">
     <aside>
-      <div><div class="kicker">Email</div><p>info@zakademia.com</p></div>
+      <div><div class="kicker">Email</div><p><a class="link" href="mailto:info@zakademia.com">info@zakademia.com</a></p></div>
       <div><div class="kicker">WhatsApp</div><p><a class="link" href="https://wa.me/6285692090699" target="_blank" rel="noopener">+62 856-9209-0699</a></p></div>
       <div><div class="kicker">Instagram</div><p><a class="link" href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener">@zakademia.official</a></p></div>
       <div><div class="kicker">Alamat</div><p>Wismamas C2/15, Kel. Cinangka, Kec. Sawangan, Kota Depok, Jawa Barat 16516</p></div>
@@ -853,14 +507,23 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
         <div class="field"><label for="c-nama">Nama</label><input id="c-nama" autocomplete="name"><span class="err" id="c-nama-err"></span></div>
         <div class="field"><label for="c-lembaga">Lembaga</label><input id="c-lembaga" autocomplete="organization"><span class="err" id="c-lembaga-err"></span></div>
         <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" autocomplete="email"><span class="err" id="c-email-err"></span></div>
-        <div class="field"><label for="c-jenis">Yang ingin dibincangkan</label><select id="c-jenis"><option value="">Pilih salah satu</option><option>Riset Kebutuhan</option><option>Data &amp; Analitik</option><option>Ruang Belajar</option><option>Hal lain</option></select><span class="err" id="c-jenis-err"></span></div>
-        <div class="field full"><label for="c-pesan">Ceritakan sedikit tentang kebutuhan Anda</label><textarea id="c-pesan"></textarea><span class="err" id="c-pesan-err"></span></div>
-        <div class="field full" style="gap:12px"><button class="btn btn-deep" type="submit" id="sendBtn" style="justify-self:start">Kirim</button><p class="notice" id="formNotice" role="status"></p></div>
+        <div class="field"><label for="c-jenis">Yang ingin dibincangkan</label><select id="c-jenis"><option value="">Pilih salah satu</option><option>Riset Kebutuhan</option><option>Data &amp; Analitik</option><option>Pendampingan Strategi</option><option>Ruang Belajar</option><option>Hal lain</option></select><span class="err" id="c-jenis-err"></span></div>
+        <div class="field full"><label for="c-pesan">Ceritakan sedikit tentang kebutuhan Anda</label><textarea id="c-pesan" maxlength="1500"></textarea><span class="err" id="c-pesan-err"></span></div>
+        <div class="field full" style="gap:12px">
+          <button class="btn btn-deep" type="submit" id="sendBtn" style="justify-self:start">Kirim melalui Gmail</button>
+          <p class="notice">Pesan Anda akan terbuka di Gmail, siap dikirim ke info@zakademia.com.</p>
+          <p class="notice" id="formNotice" role="status"></p>
+        </div>
       </form>
       <div class="ok" id="contactOk" hidden>
-        <h2>Terima kasih.</h2>
+        <h2>Satu langkah lagi.</h2>
         <p style="color:var(--mute)" id="okText"></p>
-        <button class="btn btn-ghost" type="button" id="againBtn" style="align-self:flex-start">Kirim pesan lain</button>
+        <p style="color:var(--mute)">Tab Gmail tidak terbuka, atau Anda memakai layanan email lain?</p>
+        <div class="cta-row">
+          <a class="btn btn-deep" id="gmailLink" href="#" target="_blank" rel="noopener">Buka Gmail</a>
+          <a class="btn btn-ghost" id="mailtoLink" href="#">Aplikasi email lain</a>
+        </div>
+        <button class="btn btn-ghost" type="button" id="againBtn" style="align-self:flex-start">Ubah pesan</button>
       </div>
     </div>
   </section>
@@ -903,8 +566,8 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-top">
-      <a class="foot-brand" href="#beranda"><img src="logo-color.png" alt=""><span>Zakademia</span></a>
-      <p class="foot-statement" data-edit="footer">Zakademia adalah ruang ilmu, riset, dan data bagi lembaga filantropi Islam, merawat setiap keputusan dengan ilmu agar kebaikan tumbuh dan sampai kepada yang berhak.</p>
+      <a class="foot-brand" href="#beranda"><img src="assets/images/logo-color.png" alt=""><span>Zakademia</span></a>
+      <p class="foot-statement" data-edit="footer">Zakademia adalah ruang ilmu dan pendampingan bagi lembaga filantropi Islam, merawat setiap keputusan dengan ilmu agar kebaikan tumbuh dan sampai kepada yang berhak.</p>
       <div class="foot-social">
         <a href="https://www.instagram.com/zakademia.official/" target="_blank" rel="noopener" aria-label="Instagram Zakademia"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
       
@@ -916,7 +579,7 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
     </div>
     <hr>
     <div class="foot-cols">
-      <nav aria-labelledby="f-layanan"><h2 id="f-layanan">Layanan</h2><a href="#layanan">Riset Kebutuhan</a><a href="#layanan">Data &amp; Analitik</a><a href="#layanan">Ruang Belajar</a></nav>
+      <nav aria-labelledby="f-layanan"><h2 id="f-layanan">Layanan</h2><a href="#layanan">Riset Kebutuhan</a><a href="#layanan">Data &amp; Analitik</a><a href="#layanan">Pendampingan Strategi</a><a href="#layanan">Ruang Belajar</a></nav>
       <nav aria-labelledby="f-kajian"><h2 id="f-kajian">Kajian</h2><a href="#kajian">Zakat, Ketahanan Pangan, dan Penanganan Stunting</a><a href="#kajian">Penghimpunan Zakat dan Transformasi Digital</a><a href="#kajian">Efisiensi dan Tata Kelola Organisasi Pengelola Zakat</a><a href="#kajian">Akuntabilitas dan Transparansi Lembaga Wakaf</a><a href="#kajian">Analitik Data untuk Pemberdayaan Mustahik</a><a href="#kajian">Dimensi Spiritual Zakat dan Ketenangan Batin Muzaki</a><a href="#kajian">Buku &amp; karya ilmiah</a></nav>
       <nav aria-labelledby="f-literasi"><h2 id="f-literasi">Literasi</h2><a href="#literasi">ZakaFlash</a><a href="#literasi">ZakaPedia</a><a href="#literasi">ZakaStory</a><a href="#literasi">ZakaTips</a><a href="#literasi">ZakaStat</a><a href="#literasi">ZakaTalk</a></nav>
       <nav aria-labelledby="f-tentang"><h2 id="f-tentang">Tentang</h2><a href="#tentang">Makna lambang</a><a href="#literasi">Zaida &amp; Wafiy</a><a href="#kontak">Mari berbincang</a></nav>
@@ -931,334 +594,6 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
   </div>
 </footer>
 
-<script>
-function zkLight(el,parts){var ps=parts.split(' ');el.querySelectorAll('.ly').forEach(function(l){var m=l.className.match(/ly-(\w+)/),n=m?m[1]:'',on=ps.indexOf(n)>-1;l.classList.toggle('dim',!on);l.classList.toggle('lit',on&&n==='gold');});}
-document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el.getAttribute('data-parts'));});
-(function(){
-  var pages=['beranda','layanan','kajian','literasi','tentang','kontak','admin'];
-  var menu=document.getElementById('menu'),toggle=document.getElementById('menuToggle');
-  function route(){
-    var h=(location.hash||'#beranda').slice(1); if(pages.indexOf(h)<0) h='beranda';
-    document.querySelectorAll('[data-page]').forEach(function(p){p.hidden=p.getAttribute('data-page')!==h;});
-    document.querySelectorAll('.menu a').forEach(function(a){ if(a.getAttribute('href')==='#'+h) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
-    menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); window.scrollTo(0,0);
-    if(h==='admin' && window.zkAdminStart) window.zkAdminStart();
-  }
-  window.addEventListener('hashchange',route);
-  toggle.addEventListener('click',function(){var o=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',o?'true':'false');});
-  route();
+<script src="js/script.js"></script>
 
-  // header shadow on scroll
-  var head=document.querySelector('header');
-  window.addEventListener('scroll',function(){head.classList.toggle('scrolled',window.scrollY>8);},{passive:true});
-  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // gallery
-  var gal={frames:document.getElementById('frames'),dots:document.getElementById('dots'),timer:null,idx:0};
-  var GAL_DEFAULT=[].slice.call(gal.frames.querySelectorAll('img')).map(function(im){return {src:im.getAttribute('src'),alt:im.alt};});
-  function galShow(i){
-    var fs=gal.frames.children,ds=gal.dots.children; if(!fs.length) return;
-    if(fs[gal.idx]) fs[gal.idx].classList.remove('on'); if(ds[gal.idx]) ds[gal.idx].removeAttribute('aria-current');
-    gal.idx=i; fs[i].classList.add('on'); if(ds[i]) ds[i].setAttribute('aria-current','true');
-    var img=fs[i].querySelector('img'); if(img){img.style.animation='none';void img.offsetWidth;img.style.animation='';}
-  }
-  function galRender(items){
-    clearInterval(gal.timer); gal.frames.innerHTML=''; gal.dots.innerHTML=''; gal.idx=0;
-    items.forEach(function(it,i){
-      var f=document.createElement('figure');f.className='frame'+(i===0?' on':'');f.style.margin='0';
-      var im=document.createElement('img');im.src=it.src;im.alt=it.alt||'Foto Zakademia';if(i)im.loading='lazy';f.appendChild(im);gal.frames.appendChild(f);
-      var d=document.createElement('button');d.type='button';d.setAttribute('aria-label','Foto '+(i+1));if(i===0)d.setAttribute('aria-current','true');
-      d.addEventListener('click',function(){clearInterval(gal.timer);galShow(i);});gal.dots.appendChild(d);
-    });
-    gal.dots.hidden=items.length<2;
-    if(items.length>1 && !still) gal.timer=setInterval(function(){galShow((gal.idx+1)%items.length);},5500);
-  }
-  galRender(GAL_DEFAULT);
-
-  // editable text: [word] marks the green emphasis
-  var editEls=[].slice.call(document.querySelectorAll('[data-edit]'));
-  var TXT_DEFAULT={};
-  function toMark(el){var t='';el.childNodes.forEach(function(c){t+=c.nodeType===1&&c.tagName==='EM'?'['+c.textContent+']':c.textContent;});return t.replace(/\s+/g,' ').trim();}
-  function paint(el,val){
-    el.textContent='';
-    val.split(/(\[[^\]]*\])/).forEach(function(part){
-      if(!part) return;
-      if(part[0]==='['&&part[part.length-1]===']'){var e=document.createElement('em');e.textContent=part.slice(1,-1);el.appendChild(e);}
-      else el.appendChild(document.createTextNode(part));
-    });
-  }
-  editEls.forEach(function(el){var k=el.getAttribute('data-edit');if(!(k in TXT_DEFAULT))TXT_DEFAULT[k]=toMark(el);});
-  var txtNow={};
-  function applyText(map){
-    txtNow=map||{};
-    editEls.forEach(function(el){var k=el.getAttribute('data-edit');var v=txtNow[k];paint(el,typeof v==='string'&&v.trim()?v.trim():TXT_DEFAULT[k]);});
-  }
-
-  // shared content from the site's managers
-  var galNow=null;
-  (async function(){
-    var db=null; try{db=await window.claude.use('db');}catch(e){}
-    if(!db) return;
-    db.doc('konten/teks').onSnapshot(function(d){var x=d.data();applyText(x&&x.fields||{});if(window.zkAdminText)window.zkAdminText();},function(){});
-    db.doc('konten/galeri').onSnapshot(function(d){var x=d.data();galNow=x&&Array.isArray(x.items)&&x.items.length?x.items:null;galRender(galNow||GAL_DEFAULT);if(window.zkAdminGal)window.zkAdminGal();},function(){});
-  })();
-
-  // admin room
-  (function(){
-    var gate=document.getElementById('admGate'),gateT=document.getElementById('admGateText'),main=document.getElementById('admMain');
-    var started=false;
-    var pageNames={beranda:'Beranda',layanan:'Layanan',kajian:'Kajian',literasi:'Literasi',tentang:'Tentang',kontak:'Mari berbincang',admin:null};
-    async function start(){
-      if(started) return; started=true;
-      var db=null,user=null,can=false,owner=false,assets=null;
-      try{db=await window.claude.use('db');user=await window.claude.use('user');}catch(e){}
-      if(user){try{can=await user.canEdit();owner=await user.isOwner();}catch(e){}}
-      if(!db||!user){gateT.textContent='Silakan masuk dengan akun yang telah diberi akses pengelola situs ini, lalu buka halaman ini kembali.';return;}
-      if(!can){gateT.textContent='Akun Anda belum memiliki akses pengelola. Minta pemilik situs memberikan akses edit kepada akun Anda.';return;}
-      gate.hidden=true; main.hidden=false;
-      try{assets=await window.claude.use('assets');}catch(e){}
-
-      // tabs
-      var tabs=[].slice.call(document.querySelectorAll('.adm-tabs [role="tab"]'));
-      if(owner) tabs[2].hidden=false;
-      function sel(i){tabs.forEach(function(t,k){t.setAttribute('aria-selected',k===i?'true':'false');t.tabIndex=k===i?0:-1;document.getElementById('ap-'+k).hidden=k!==i;});}
-      tabs.forEach(function(t,k){t.addEventListener('click',function(){sel(k);if(k===2)loadInbox();});});
-
-      // text fields
-      var box=document.getElementById('admFields'),inputs={};
-      var groups={};
-      editEls.forEach(function(el){
-        var k=el.getAttribute('data-edit'); if(inputs[k]) return;
-        var pg=el.closest('[data-page]'),pn=pg?pageNames[pg.getAttribute('data-page')]:'Kaki halaman';
-        if(pn===null) return;
-        if(!groups[pn]){var g=document.createElement('div');g.className='adm-group';var h=document.createElement('h2');h.textContent=pn;g.appendChild(h);box.appendChild(g);groups[pn]=g;}
-        var kind=el.tagName==='H1'?'Judul halaman':el.tagName==='H2'?'Judul bagian':'Paragraf';
-        var f=document.createElement('div');f.className='adm-field';
-        var lb=document.createElement('label');lb.htmlFor='ed-'+k;lb.textContent=kind;
-        var ta=document.createElement('textarea');ta.id='ed-'+k;ta.placeholder=TXT_DEFAULT[k];
-        var o=document.createElement('span');o.className='orig';o.textContent='Teks asli: '+TXT_DEFAULT[k];
-        f.appendChild(lb);f.appendChild(ta);f.appendChild(o);groups[pn].appendChild(f);inputs[k]=ta;
-      });
-      var dirty=false;
-      Object.keys(inputs).forEach(function(k){inputs[k].addEventListener('input',function(){dirty=true;st.textContent='Ada perubahan yang belum disimpan.';});});
-      window.zkAdminText=function(){ if(dirty) return; Object.keys(inputs).forEach(function(k){inputs[k].value=typeof txtNow[k]==='string'?txtNow[k]:'';}); };
-      window.zkAdminText();
-      var st=document.getElementById('admSaveSt'),save=document.getElementById('admSave');
-      save.addEventListener('click',async function(){
-        var fields={};Object.keys(inputs).forEach(function(k){var v=inputs[k].value.trim();if(v&&v!==TXT_DEFAULT[k])fields[k]=v;});
-        save.disabled=true;st.textContent='Menyimpan…';
-        try{await db.doc('konten/teks').set({fields:fields,diperbarui:new Date().toISOString()});dirty=false;st.textContent='Tersimpan. Perubahan langsung tampil di situs.';}
-        catch(e){st.textContent='Belum tersimpan ('+(e&&e.code||'galat')+'). Coba lagi.';}
-        finally{save.disabled=false;}
-      });
-
-      // gallery manager
-      var mlist=document.getElementById('mgrList'),mst=document.getElementById('mgrStatus'),inp=document.getElementById('photoInput');
-      function current(){return (galNow||GAL_DEFAULT).map(function(x){return {src:x.src,alt:x.alt||''};});}
-      async function saveGal(items,msg){
-        try{await db.doc('konten/galeri').set({items:items,diperbarui:new Date().toISOString()});if(msg)mst.textContent=msg;}
-        catch(e){mst.textContent='Galeri belum tersimpan ('+(e&&e.code||'galat')+'). Coba lagi.';}
-      }
-      window.zkAdminGal=function(){
-        var list=current();mlist.innerHTML='';
-        list.forEach(function(it,i){
-          var li=document.createElement('li');
-          var im=document.createElement('img');im.src=it.src;im.alt='';li.appendChild(im);
-          var lab=document.createElement('label');lab.textContent='Deskripsi foto';lab.htmlFor='alt-'+i;
-          var cap=document.createElement('input');cap.id='alt-'+i;cap.value=it.alt;cap.placeholder='Mis. Diskusi kajian wakaf bersama nazhir';
-          cap.addEventListener('change',function(){var l=current();l[i].alt=cap.value.trim();saveGal(l,'Deskripsi tersimpan.');});
-          var row=document.createElement('div');row.className='mgr-row';
-          var up=document.createElement('button');up.type='button';up.textContent='Naikkan';up.disabled=i===0;
-          up.addEventListener('click',function(){var l=current();var t=l[i-1];l[i-1]=l[i];l[i]=t;saveGal(l,'Urutan diperbarui.');});
-          var del=document.createElement('button');del.type='button';del.className='del';del.textContent='Hapus';del.disabled=list.length<2;
-          del.addEventListener('click',function(){
-            if(del.dataset.sure!=='1'){del.dataset.sure='1';del.textContent='Yakin hapus?';setTimeout(function(){del.dataset.sure='';del.textContent='Hapus';},4000);return;}
-            var l=current();l.splice(i,1);saveGal(l,'Foto dihapus dari galeri.');
-          });
-          row.appendChild(up);row.appendChild(del);li.appendChild(lab);li.appendChild(cap);li.appendChild(row);mlist.appendChild(li);
-        });
-      };
-      window.zkAdminGal();
-      document.getElementById('galReset').addEventListener('click',function(){
-        var b=this; if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='Yakin kembalikan?';setTimeout(function(){b.dataset.sure='';b.textContent='Kembalikan galeri asli';},4000);return;}
-        b.dataset.sure='';b.textContent='Kembalikan galeri asli';saveGal([], 'Galeri kembali ke foto asli.');
-      });
-      if(!assets){document.getElementById('photoLabel').hidden=true;mst.textContent='Unggah foto tidak tersedia di tampilan ini.';}
-      inp.addEventListener('change',async function(){
-        var files=[].slice.call(inp.files||[]); if(!files.length||!assets) return;
-        var l=current(),done=0; mst.textContent='Mengunggah '+files.length+' foto…';
-        for(var k=0;k<files.length;k++){
-          try{var r=await assets.upload(files[k]);l.push({src:r.url,alt:''});done++;}
-          catch(e){mst.textContent='Ada foto yang belum terunggah ('+(e&&e.code||'galat')+'). Gunakan JPG, PNG, atau WebP di bawah 20 MB.';}
-        }
-        if(done) await saveGal(l,done+' foto ditambahkan ke galeri.');
-        inp.value='';
-      });
-
-      // inbox (owner only)
-      var inboxLoaded=false;
-      async function loadInbox(){
-        if(inboxLoaded||!owner) return; inboxLoaded=true;
-        var ib=document.getElementById('inbox');ib.textContent='Memuat pesan…';
-        try{
-          var people=await db.collection('permintaan').get(),all=[];
-          for(var p of people.docs){var ks=await db.collection('permintaan/'+p.id+'/kiriman').get();ks.docs.forEach(function(d){all.push(d.data());});}
-          all.sort(function(a,b){return String(b.dikirim||'').localeCompare(String(a.dikirim||''));});
-          ib.textContent='';
-          if(!all.length){ib.textContent='Belum ada pesan masuk.';return;}
-          all.forEach(function(m){
-            var c=document.createElement('article');c.className='msg';
-            var b=document.createElement('b');b.textContent=(m.nama||'Tanpa nama')+' · '+(m.lembaga||'');
-            var sm=document.createElement('small');var dt=m.dikirim?new Date(m.dikirim):null;
-            sm.textContent=(m.kebutuhan||'')+' · '+(m.email||'')+(dt&&!isNaN(dt)?' · '+dt.toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'}):'');
-            var pp=document.createElement('p');pp.textContent=m.pesan||'';
-            c.appendChild(b);c.appendChild(sm);c.appendChild(pp);ib.appendChild(c);
-          });
-        }catch(e){ib.textContent='Pesan belum dapat dimuat. Coba buka ulang halaman.';inboxLoaded=false;}
-      }
-    }
-    window.zkAdminStart=start;
-  })();
-
-  if((location.hash||'')==='#admin') window.zkAdminStart();
-
-  // philosophy explorer: highlight the emblem parts behind each meaning
-  (function(){
-    var btns=[].slice.call(document.querySelectorAll('.ph-list [role="tab"]')); if(!btns.length) return;
-    var em=document.getElementById('phEmblem'),cap=document.getElementById('phCaption'),stage=document.getElementById('phStage'),auto=null,cur=0;
-    function sel(i,focus){
-      cur=i;
-      btns.forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');b.tabIndex=k===i?0:-1;});
-      var parts=btns[i].getAttribute('data-parts').split(' ');
-      em.querySelectorAll('.ly').forEach(function(l){
-        var name=l.className.match(/ly-(\w+)/)[1],on=parts.indexOf(name)>-1;
-        l.classList.toggle('dim',!on); l.classList.toggle('lit',on&&name==='gold');
-      });
-      cap.textContent=btns[i].querySelector('b').textContent+' · '+btns[i].querySelector('em').textContent;
-      stage.setAttribute('aria-labelledby',btns[i].id);
-      if(focus) btns[i].focus();
-    }
-    btns.forEach(function(b,k){
-      b.addEventListener('click',function(){clearInterval(auto);sel(k);});
-      b.addEventListener('keydown',function(e){var n=null,L=btns.length;if(e.key==='ArrowDown'||e.key==='ArrowRight')n=(k+1)%L;if(e.key==='ArrowUp'||e.key==='ArrowLeft')n=(k+L-1)%L;if(n!==null){e.preventDefault();clearInterval(auto);sel(n,true);}});
-    });
-    sel(0);
-    if(!still){auto=setInterval(function(){ if(document.querySelector('[data-page="tentang"]').hidden) return; sel((cur+1)%btns.length);},5000);}
-  })();
-
-  // learning buddies: play quietly when visible, sound on request
-  (function(){
-    var vids=[].slice.call(document.querySelectorAll('.buddy video'));
-    if('IntersectionObserver' in window && !still){
-      var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ var p=e.target.play(); if(p&&p.catch) p.catch(function(){}); } else e.target.pause(); });},{threshold:.4});
-      vids.forEach(function(v){io.observe(v);});
-    }
-    document.querySelectorAll('.sound').forEach(function(b){
-      b.addEventListener('click',function(){
-        var v=document.getElementById(b.getAttribute('data-v')),on=b.getAttribute('aria-pressed')!=='true';
-        vids.forEach(function(o){ if(o!==v){o.muted=true;} });
-        document.querySelectorAll('.sound').forEach(function(x){ if(x!==b){x.setAttribute('aria-pressed','false');x.textContent=x.textContent.replace('Matikan suara','Dengarkan '+x.closest('.buddy').querySelector('h3').textContent);} });
-        v.muted=!on; if(on){v.currentTime=0;} var p=v.play(); if(p&&p.catch) p.catch(function(){});
-        b.setAttribute('aria-pressed',on?'true':'false');
-        b.textContent=on?'Matikan suara':'Dengarkan '+b.closest('.buddy').querySelector('h3').textContent;
-      });
-    });
-  })();
-
-  // paper filter
-  document.querySelectorAll('[data-t]').forEach(function(b){
-    b.addEventListener('click',function(){
-      var t=b.getAttribute('data-t');
-      document.querySelectorAll('[data-t]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
-      document.querySelectorAll('#papers .paper').forEach(function(p){p.hidden=!(t==='semua'||p.getAttribute('data-topic')===t);});
-    });
-  });
-
-  // services switcher
-  var svc=[
-    {tag:'Figur yang berlari',name:'Riset Kebutuhan',parts:'gold top leaf band',desc:'Mendengar pertanyaan yang paling penting bagi lembaga Anda, lalu mencarikan jawabannya dengan cermat.',m:'Seperti sosok yang berlari, riset menjaga lembaga terus bergerak maju dengan arah yang jelas.'},
-    {tag:'Lengkung dasar',name:'Data & Analitik',parts:'base',desc:'Merapikan catatan kebaikan menjadi pijakan yang kokoh untuk melangkah.',m:'Fondasi yang kokoh membuat setiap langkah lebih mantap.'},
-    {tag:'Daun terbuka',name:'Ruang Belajar',parts:'top leaf',desc:'Menumbuhkan kemampuan meneliti di tangan para pengelola kebaikan.',m:'Seperti dua daun yang terbuka, ilmu dibuka untuk siapa saja yang ingin belajar.'}
-  ];
-  var light=zkLight;
-  var tabs=[].slice.call(document.querySelectorAll('.svc-tabs [role="tab"]')),mini=document.getElementById('miniEmblem'),txt=document.querySelector('.svc-text'),cycle=null;
-  function pick(i,focusTab){
-    tabs.forEach(function(t,k){t.setAttribute('aria-selected',k===i?'true':'false');t.tabIndex=k===i?0:-1;});
-    document.getElementById('svcPanel').setAttribute('aria-labelledby','tab-'+i);
-    light(mini,svc[i].parts);
-    document.getElementById('svcTag').textContent=svc[i].tag;document.getElementById('svcName').textContent=svc[i].name;
-    document.getElementById('svcDesc').textContent=svc[i].desc;document.getElementById('svcMeaning').textContent=svc[i].m;
-    txt.classList.remove('swap');void txt.offsetWidth;txt.classList.add('swap');
-    if(focusTab) tabs[i].focus();
-  }
-  tabs.forEach(function(t,k){
-    t.addEventListener('click',function(){clearInterval(cycle);pick(k);});
-    t.addEventListener('keydown',function(e){var n=null;if(e.key==='ArrowDown'||e.key==='ArrowRight')n=(k+1)%tabs.length;if(e.key==='ArrowUp'||e.key==='ArrowLeft')n=(k+tabs.length-1)%tabs.length;if(n!==null){e.preventDefault();clearInterval(cycle);pick(n,true);}});
-  });
-  tabs.forEach(function(t,k){t.tabIndex=k===0?0:-1;});
-  light(mini,svc[0].parts);
-  if(!still){var cur=0;cycle=setInterval(function(){cur=(cur+1)%tabs.length;pick(cur);},6000);}
-
-  // rings legend focus
-  var rings=document.querySelector('.rings');
-  document.querySelectorAll('[data-ring]').forEach(function(d){
-    var n=d.getAttribute('data-ring');
-    function on(){rings.classList.add('focus');rings.querySelectorAll('.ring').forEach(function(c){c.classList.toggle('on',c.classList.contains('r'+n));});d.classList.add('on');}
-    function off(){rings.classList.remove('focus');d.classList.remove('on');}
-    d.addEventListener('mouseenter',on);d.addEventListener('mouseleave',off);d.addEventListener('focus',on);d.addEventListener('blur',off);
-  });
-
-  // growth line and reveal on scroll
-  var growth=document.getElementById('growth'),steps=document.getElementById('steps');
-  var reveals=[].slice.call(document.querySelectorAll('[data-reveal]'));
-  if(!still){
-    reveals.forEach(function(el){ if(el.getBoundingClientRect().top>window.innerHeight) el.classList.add('pre'); });
-    var tick=function(){
-      var vh=window.innerHeight;
-      reveals.forEach(function(el){ if(el.classList.contains('pre') && el.getBoundingClientRect().top<vh*0.9) el.classList.remove('pre'); });
-      if(growth && growth.offsetParent){
-        var r=steps.getBoundingClientRect();var p=Math.min(1,Math.max(0,(vh*0.85-r.top)/(r.height+vh*0.3)));
-        growth.querySelector('i').style.setProperty('--g',(Math.max(.04,p)*100).toFixed(1)+'%');
-      }
-    };
-    window.addEventListener('scroll',function(){requestAnimationFrame(tick);},{passive:true});
-    window.addEventListener('hashchange',function(){setTimeout(function(){reveals.forEach(function(el){el.classList.remove('pre');});tick();},50);});
-    tick();
-  }
-
-  // contact form: stored privately for the Zakademia team
-  var store=null, uid=null;
-  (async function(){
-    try{
-      var db=await window.claude?.use?.('db'); var user=await window.claude?.use?.('user');
-      var id=user ? await user.id() : null;
-      if(db && id){ store=db; uid=id; }
-    }catch(e){}
-  })();
-  var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  function check(id,ok,msg){var el=document.getElementById(id),er=document.getElementById(id+'-err');if(ok){el.removeAttribute('aria-invalid');er.textContent='';}else{el.setAttribute('aria-invalid','true');er.textContent=msg;}return ok;}
-  ['c-nama','c-lembaga','c-email','c-jenis','c-pesan'].forEach(function(id){var el=document.getElementById(id);el.addEventListener('input',function(){el.removeAttribute('aria-invalid');document.getElementById(id+'-err').textContent='';});});
-  var form=document.getElementById('contactForm'),ok=document.getElementById('contactOk'),note=document.getElementById('formNotice'),btn=document.getElementById('sendBtn');
-  form.addEventListener('submit',async function(e){
-    e.preventDefault(); note.textContent='';
-    var g=function(id){return document.getElementById(id).value.trim();};
-    var a=check('c-nama',g('c-nama').length>1,'Tulis nama Anda.');
-    var b=check('c-lembaga',g('c-lembaga').length>1,'Tulis nama lembaga, atau "Perorangan".');
-    var c=check('c-email',emailRe.test(g('c-email')),'Tulis alamat email yang lengkap.');
-    var d=check('c-jenis',g('c-jenis')!=='','Pilih yang ingin dibincangkan.');
-    var f=check('c-pesan',g('c-pesan').length>=15,'Ceritakan kebutuhan Anda dalam satu atau dua kalimat.');
-    if(!(a&&b&&c&&d&&f)){var bad=form.querySelector('[aria-invalid="true"]');if(bad)bad.focus();return;}
-    if(!store){ note.textContent='Formulir sedang tidak dapat digunakan. Silakan hubungi kami melalui Instagram @zakademia.official.'; return; }
-    btn.disabled=true; btn.textContent='Mengirim…';
-    try{
-      await store.doc('permintaan/'+uid).set({terakhir:new Date().toISOString()});
-      await store.collection('permintaan/'+uid+'/kiriman').add({nama:g('c-nama'),lembaga:g('c-lembaga'),email:g('c-email'),kebutuhan:g('c-jenis'),pesan:g('c-pesan'),dikirim:new Date().toISOString()});
-      document.getElementById('okText').textContent='Pesan Anda sudah kami terima. Tim Zakademia akan menghubungi '+g('c-email')+' untuk berbincang lebih jauh.';
-      form.reset(); form.hidden=true; ok.hidden=false;
-    }catch(err){
-      note.textContent='Pesan belum terkirim. Periksa koneksi Anda lalu coba sekali lagi.';
-    }finally{ btn.disabled=false; btn.textContent='Kirim'; }
-  });
-  document.getElementById('againBtn').addEventListener('click',function(){ok.hidden=true;form.hidden=false;});
-})();
-</script>
+</body></html>

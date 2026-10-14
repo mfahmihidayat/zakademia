@@ -1,4 +1,4 @@
-name: Salin situs aktif dan rapikan unggahan salah tempat
+name: Salin situs aktif ke cabang situs-aktif
 
 on:
   workflow_dispatch:
@@ -35,16 +35,3 @@ jobs:
           git add -A
           git commit -qm "Salinan situs aktif zakademia.com ($(date -u +%F))"
           git push -f origin situs-aktif
-      - name: Hapus unggahan yang salah tempat (hanya berkas dari repositori ini)
-        env:
-          S: ${{ secrets.FTP_SERVER }}
-          U: ${{ secrets.FTP_USERNAME }}
-          P: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          git checkout -q main
-          files=$(git ls-files | grep -v '^\.github/' | grep -v '^README.md$' | grep -v '^\.gitignore$' | grep -v '^asesmen/')
-          cmds="set ftp:ssl-allow no; set net:max-retries 3; set net:timeout 30;"
-          for f in $files; do cmds="$cmds rm -f $f;"; done
-          cmds="$cmds rm -rf asesmen; rm -f .ftp-deploy-sync-state.json; rm -rf domains/zakademia.com/domains; cls -1; bye"
-          lftp -u "$U,$P" "$S" -e "$cmds" > sisa.txt 2>&1 || true
-          echo "::notice::Isi folder awal FTP setelah dirapikan: $(tr '\n' ' ' < sisa.txt | sed 's#/home/[^/ ]*#/home/USER#g')"

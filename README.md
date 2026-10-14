@@ -4,7 +4,8 @@ Website Zakademia dan formulir Asesmen Kesiapan Penghimpunan.
 
 | Bagian | Lokasi | Alamat |
 | --- | --- | --- |
-| Website | `index.html` dan berkas gambar di folder utama | https://zakademia.com |
+| Website | `index.html`, `css/`, `js/`, `assets/` | https://zakademia.com |
+| Formulir asesmen lama (Apps Script) | `asesmen.html` | https://zakademia.com/asesmen.html |
 | Formulir asesmen | `asesmen/index.html` | https://zakademia.com/asesmen/ |
 | Dashboard admin asesmen | `asesmen/admin.php` | https://zakademia.com/asesmen/admin.php |
 
@@ -24,3 +25,5 @@ Pengaturan yang diperlukan di **Settings → Secrets and variables → Actions**
 Folder `asesmen/data/` berisi database kiriman dan kata sandi admin. Folder ini dibuat otomatis di server, dilindungi `.htaccess`, dan tidak pernah diunggah atau ditimpa oleh penerbitan.
 
 Panduan pemakaian dashboard asesmen ada di `asesmen/PANDUAN.md`.
+
+Alur **Salin situs aktif** (dijalankan manual dari tab Actions) menyimpan isi situs yang sedang tayang ke cabang `situs-aktif`, misalnya sebelum perubahan besar.
