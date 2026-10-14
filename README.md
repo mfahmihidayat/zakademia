@@ -8,6 +8,8 @@ Website Zakademia dan formulir Asesmen Kesiapan Penghimpunan.
 | Formulir asesmen lama (Apps Script) | `asesmen.html` | https://zakademia.com/asesmen.html |
 | Formulir asesmen | `asesmen/index.html` | https://zakademia.com/asesmen/ |
 | Dashboard admin asesmen | `asesmen/admin.php` | https://zakademia.com/asesmen/admin.php |
+| Survei (Riset Kebutuhan) | `survei/` | https://zakademia.com/survei/ |
+| Tautan survei untuk responden | `s/` | https://zakademia.com/s/nama-survei |
 | Masuk / daftar akun | `asesmen/masuk.php`, `asesmen/daftar.php` | https://zakademia.com/asesmen/masuk.php |
 
 ## Penerbitan otomatis

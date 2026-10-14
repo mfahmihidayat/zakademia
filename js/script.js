@@ -242,10 +242,10 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
 
   // services switcher
   var svc=[
-    {tag:'Figur yang berlari',name:'Riset Kebutuhan',parts:'gold top leaf band',desc:'Mendengar pertanyaan yang paling penting bagi lembaga Anda, lalu mencarikan jawabannya dengan cermat.',m:'Seperti sosok yang berlari, riset menjaga lembaga terus bergerak maju dengan arah yang jelas.'},
-    {tag:'Lengkung dasar',name:'Data & Analitik',parts:'base',desc:'Merapikan catatan kebaikan menjadi pijakan yang kokoh untuk melangkah.',m:'Fondasi yang kokoh membuat setiap langkah lebih mantap.'},
-    {tag:'Daun muda',name:'Pendampingan Strategi',parts:'leaf',desc:'Berjalan bersama menyusun arah, dari temuan menjadi langkah yang dijalankan.',m:'Seperti daun muda, lembaga ditemani tumbuh dan berbuah secara berkelanjutan.'},
-    {tag:'Daun terbuka',name:'Ruang Belajar',parts:'top leaf',desc:'Menumbuhkan kemampuan meneliti di tangan para pengelola kebaikan.',m:'Seperti dua daun yang terbuka, ilmu dibuka untuk siapa saja yang ingin belajar.'}
+    {tag:'Figur yang berlari',name:'Riset Kebutuhan',cta:'Buat Survei',href:'/survei/',parts:'gold top leaf band',desc:'Mendengar pertanyaan yang paling penting bagi lembaga Anda, lalu mencarikan jawabannya dengan cermat.',m:'Seperti sosok yang berlari, riset menjaga lembaga terus bergerak maju dengan arah yang jelas.'},
+    {tag:'Lengkung dasar',name:'Data & Analitik',cta:'Analisis Data',href:'/asesmen/akun.php#data',parts:'base',desc:'Merapikan catatan kebaikan menjadi pijakan yang kokoh untuk melangkah.',m:'Fondasi yang kokoh membuat setiap langkah lebih mantap.'},
+    {tag:'Daun muda',name:'Pendampingan Strategi',cta:'Mulai Asesmen',href:'/asesmen/',parts:'leaf',desc:'Berjalan bersama menyusun arah, dari temuan menjadi langkah yang dijalankan.',m:'Seperti daun muda, lembaga ditemani tumbuh dan berbuah secara berkelanjutan.'},
+    {tag:'Daun terbuka',name:'Ruang Belajar',cta:'Masuk Ruang Belajar',href:'/asesmen/akun.php#belajar',parts:'top leaf',desc:'Menumbuhkan kemampuan meneliti di tangan para pengelola kebaikan.',m:'Seperti dua daun yang terbuka, ilmu dibuka untuk siapa saja yang ingin belajar.'}
   ];
   var light=zkLight;
   var tabs=[].slice.call(document.querySelectorAll('.svc-tabs [role="tab"]')),mini=document.getElementById('miniEmblem'),txt=document.querySelector('.svc-text'),cycle=null;
@@ -254,7 +254,7 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
     document.getElementById('svcPanel').setAttribute('aria-labelledby','tab-'+i);
     light(mini,svc[i].parts);
     document.getElementById('svcTag').textContent=svc[i].tag;document.getElementById('svcName').textContent=svc[i].name;
-    document.getElementById('svcDesc').textContent=svc[i].desc;document.getElementById('svcMeaning').textContent=svc[i].m;
+    var cta=document.getElementById('svcCta');if(cta){cta.textContent=svc[i].cta;cta.href=svc[i].href;}document.getElementById('svcDesc').textContent=svc[i].desc;document.getElementById('svcMeaning').textContent=svc[i].m;
     txt.classList.remove('swap');void txt.offsetWidth;txt.classList.add('swap');
     if(focusTab) tabs[i].focus();
   }

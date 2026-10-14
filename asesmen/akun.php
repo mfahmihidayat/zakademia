@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require __DIR__ . '/lib.php';
+require_once __DIR__ . '/../survei/lib_survei.php';
 start_session();
 $u = current_user();
 
@@ -53,6 +54,22 @@ $fmt = function (?string $iso): string {
     $t = (new DateTime($iso))->setTimezone(new DateTimeZone('Asia/Jakarta'));
     return $t->format('j') . ' ' . $b[(int)$t->format('n') - 1] . ' ' . $t->format('Y, H.i');
 };
+$q = sv_db()->prepare('SELECT COUNT(*), SUM(status = "aktif"), (SELECT COUNT(*) FROM responses r JOIN surveys x ON x.id = r.survey_id WHERE x.user_id = ?) FROM surveys WHERE user_id = ?');
+$q->execute([$u['id'], $u['id']]);
+[$nSv, $nAktif, $nJwb] = array_map('intval', $q->fetch(PDO::FETCH_NUM));
+$svc = function (string $id, string $tag, string $name, string $info, array $btns) {
+    $b = '';
+    foreach ($btns as $i => [$label, $href]) $b .= '<a class="btn' . ($i ? ' ghost' : '') . '" href="' . e($href) . '" style="min-height:40px;padding:8px 16px;font-size:14px">' . e($label) . '</a>';
+    return '<div id="' . $id . '" style="border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;background:var(--bg)">'
+        . '<span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700">' . e($tag) . '</span><b style="font-size:17px">' . e($name) . '</b>'
+        . '<p class="mute" style="flex:1">' . $info . '</p><div style="display:flex;gap:8px;flex-wrap:wrap">' . $b . '</div></div>';
+};
+$services = '<h2>Layanan Anda</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">'
+    . $svc('riset', 'Figur yang berlari', 'Riset Kebutuhan', $nSv ? e("$nSv survei ($nAktif aktif), $nJwb jawaban masuk.") : 'Susun kuesioner dengan 15 jenis pertanyaan, bagikan tautan pendek dan kode QR.', [['Buat Survei', '/survei/']])
+    . $svc('data', 'Lengkung dasar', 'Data & Analitik', 'Ringkasan otomatis setiap survei: grafik jawaban, rata-rata Likert, skor NPS, dan unduhan CSV untuk Excel.', [['Lihat hasil survei', '/survei/'], ['Konsultasi analisis', '/#kontak']])
+    . $svc('strategi', 'Daun muda', 'Pendampingan Strategi', 'Pendampingan dimulai dengan Asesmen Kesiapan Penghimpunan (sekitar 15 menit).', [[ 'Mulai Asesmen', '/asesmen/']])
+    . $svc('belajar', 'Daun terbuka', 'Ruang Belajar', 'Kelas dan materi metodologi sedang kami siapkan. Sementara itu, baca bahan literasi Zakademia.', [['Baca literasi', '/#literasi']])
+    . '</div>';
 $list = '';
 foreach ($rows as $r) {
     $done = $r['status'] === 'terkirim';
@@ -66,10 +83,7 @@ page('Akun saya', '
 <h1>Assalamu\'alaikum, ' . e($u['name']) . '</h1>
 <p class="mute">' . e($u['email']) . ($u['org'] ? ' · ' . e($u['org']) : '') . '</p>
 ' . ($ok ? '<p class="ok" role="status">' . e($ok) . '</p>' : '') . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
-<div class="row" style="justify-content:flex-start">
-  <a class="btn" href="/asesmen/">' . ($rows ? 'Isi asesmen lagi' : 'Mulai asesmen') . '</a>'
-  . ($u['role'] === 'admin' ? '<a class="btn gold" href="admin.php">Dashboard admin</a>' : '') . '
-</div>
+' . ($u['role'] === 'admin' ? '<div class="row" style="justify-content:flex-start"><a class="btn gold" href="admin.php">Dashboard admin asesmen</a></div>' : '') . $services . '
 <h2>Riwayat asesmen</h2>
 ' . ($rows ? '<div style="overflow-x:auto"><table><thead><tr><th>Dikirim</th><th>Lembaga</th><th>Status</th></tr></thead><tbody>' . $list . '</tbody></table></div>
 <p class="mute">Hasil asesmen ditelaah tim Zakademia dan dikirim ke email Anda.</p>'
@@ -90,4 +104,4 @@ page('Akun saya', '
   <label>Ulangi kata sandi baru<input type="password" name="password2" required minlength="8" autocomplete="new-password"></label>
   <button class="btn ghost" type="submit">Ganti kata sandi</button>
 </form>
-<p class="mute" style="text-align:center"><a href="keluar.php">Keluar</a></p>', '640px');
+<p class="mute" style="text-align:center"><a href="keluar.php">Keluar</a></p>', '880px');

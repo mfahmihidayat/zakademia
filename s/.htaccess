@@ -1,0 +1,13 @@
+# Tautan pendek survei: zakademia.com/s/nama-survei
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /s/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^([A-Za-z0-9-]+)/?$ index.php?slug=$1 [L,QSA]
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.php$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
