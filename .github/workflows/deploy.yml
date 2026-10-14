@@ -1,0 +1,32 @@
+name: Terbitkan ke zakademia.com
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unggah ke Hostinger lewat FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ vars.FTP_DIR || 'public_html/' }}
+          # Folder data asesmen (database dan kata sandi admin) tidak pernah diunggah atau ditimpa.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            README.md
+            asesmen/PANDUAN.md
+            asesmen/data/**
