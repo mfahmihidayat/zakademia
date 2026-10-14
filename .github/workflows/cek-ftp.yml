@@ -1,0 +1,18 @@
+name: Cek struktur folder FTP
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cek:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Daftar folder di server
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get -qq install -y lftp >/dev/null
+          lftp -u "$U,$P" "$S" -e "set ftp:ssl-allow no; set net:max-retries 2; set net:timeout 20; pwd; cls -1 --sort=name -a; echo ---public_html; cls -1 -a public_html; echo ---domains; cls -1 domains; echo ---domains/zakademia.com; cls -1 -a domains/zakademia.com; echo ---domains/zakademia.com/public_html; cls -1 -a domains/zakademia.com/public_html; echo ---public_html/domains; cls -1 public_html/domains; bye" > daftar.txt 2>&1 || true
+          while IFS= read -r line; do echo "::notice::$line"; done < daftar.txt
