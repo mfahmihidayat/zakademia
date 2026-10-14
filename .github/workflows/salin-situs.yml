@@ -1,0 +1,50 @@
+name: Salin situs aktif dan rapikan unggahan salah tempat
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  salin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Salin isi public_html yang sedang aktif
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get -qq install -y lftp >/dev/null
+          mkdir -p /tmp/live
+          for n in 1 2 3; do
+            lftp -u "$U,$P" "$S" -e "set ftp:ssl-allow no; set net:max-retries 3; set net:timeout 30; mirror --verbose=0 --exclude-glob asesmen/data/ domains/zakademia.com/public_html /tmp/live; bye" && break
+            sleep 5
+          done
+          echo "::notice::Isi situs aktif: $(cd /tmp/live && find . -type f | sort | tr '\n' ' ')"
+      - name: Simpan salinan ke cabang situs-aktif
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git checkout --orphan situs-aktif
+          git rm -rq --cached .
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a /tmp/live/. .
+          git add -A
+          git commit -qm "Salinan situs aktif zakademia.com ($(date -u +%F))"
+          git push -f origin situs-aktif
+      - name: Hapus unggahan yang salah tempat (hanya berkas dari repositori ini)
+        env:
+          S: ${{ secrets.FTP_SERVER }}
+          U: ${{ secrets.FTP_USERNAME }}
+          P: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          git checkout -q main
+          files=$(git ls-files | grep -v '^\.github/' | grep -v '^README.md$' | grep -v '^\.gitignore$' | grep -v '^asesmen/')
+          cmds="set ftp:ssl-allow no; set net:max-retries 3; set net:timeout 30;"
+          for f in $files; do cmds="$cmds rm -f $f;"; done
+          cmds="$cmds rm -rf asesmen; rm -f .ftp-deploy-sync-state.json; rm -rf domains/zakademia.com/domains; cls -1; bye"
+          lftp -u "$U,$P" "$S" -e "$cmds" > sisa.txt 2>&1 || true
+          echo "::notice::Isi folder awal FTP setelah dirapikan: $(tr '\n' ' ' < sisa.txt | sed 's#/home/[^/ ]*#/home/USER#g')"
