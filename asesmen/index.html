@@ -253,6 +253,8 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--deep)}
 .reco li.next{background:#FFF8E6;border-radius:10px;padding:6px 8px}
 .emailbox{white-space:pre-wrap;font:400 13.5px/1.6 var(--sans);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;max-height:280px;overflow:auto}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.zk-userbar{max-width:880px;margin:0 auto;padding:10px 20px 0;display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--mute)}.zk-userbar .sp{flex:1}.zk-userbar a{color:var(--deep);font-weight:600}
+.zk-gate{display:flex;flex-direction:column;gap:14px;padding:8px 0}.zk-gate h1{margin:0}.zk-acts{display:flex;gap:10px;flex-wrap:wrap}.zk-note{color:var(--warn)}
 </style>
 </head>
 <body>
@@ -276,7 +278,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--deep)}
 </main>
 
 <script>
-(function(){
+function zkStart(){
 var SCRIPT_URL='simpan.php';
 var DIMS=[
  {name:'Pemahaman donatur',short:'Pemahaman',q:'Seberapa baik lembaga mengenal siapa yang memberi, mengapa memberi, dan mengapa berhenti.',inds:['Profil donatur tercatat lengkap: jenis, domisili, tanggal pertama memberi, dan kanal','Donatur dikelompokkan menurut nilai, frekuensi, dan kebaruan donasi','Motivasi dan preferensi donatur digali melalui survei atau wawancara','Alasan donatur berhenti memberi diketahui','Potensi donatur di wilayah atau segmen sasaran dipetakan']},
@@ -360,11 +362,11 @@ var db=null,user=null,uid=null,owner=false;
 /* ================= RESPONDENT FORM ================= */
 var SCREENS=['intro','profil','d0','d1','d2','d3','d4','d5','strategi','keunggulan','kinerja','kirim'];
 var STEPS=[{n:'Profil',s:['profil']},{n:'Kondisi',s:['d0','d1','d2','d3','d4','d5']},{n:'Prioritas',s:['strategi']},{n:'Keunggulan',s:['keunggulan']},{n:'Kinerja',s:['kinerja']},{n:'Kirim',s:['kirim']}];
-function blank(){return {p:{org:'',type:TYPES[0],pName:'',pRole:'',pEmail:'',pWa:'',tim:null},g:DIMS.map(function(){return [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];}),imp:[null,null,null,null,null,null],tri:{dilema:null,tuju:null},ku:{s:[],v:{}},ino:{arah:[],frek:null,hamb:[]},kp:{},consent:false};}
+function blank(){var U=window.ZK_USER||{};return {p:{org:U.org||'',type:(U.type&&TYPES.indexOf(U.type)>=0)?U.type:TYPES[0],pName:U.name||'',pRole:'',pEmail:U.email||'',pWa:'',tim:null},g:DIMS.map(function(){return [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];}),imp:[null,null,null,null,null,null],tri:{dilema:null,tuju:null},ku:{s:[],v:{}},ino:{arah:[],frek:null,hamb:[]},kp:{},consent:false};}
 var S=blank(),cur=0,sent=null;
 var scr=document.getElementById('screen'),form=document.getElementById('form'),navErr=document.getElementById('navErr');
 var emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-var DKEY='zakademia-asesmen-v4';
+var DKEY='zakademia-asesmen-v4'+(window.ZK_USER?'-u'+window.ZK_USER.id:'');
 function saveDraft(){try{localStorage.setItem(DKEY,JSON.stringify({S:S,cur:cur}));}catch(_){}}
 function clearDraft(){try{localStorage.removeItem(DKEY);}catch(_){}}
 function loadDraft(){try{var d=JSON.parse(localStorage.getItem(DKEY)||'null');if(!d||!d.S||!d.S.g||!d.S.ku)return false;S=Object.assign(blank(),d.S);cur=Math.min(d.cur||0,SCREENS.length-1);return true;}catch(_){return false;}}
@@ -520,13 +522,30 @@ form.addEventListener('submit',async function(e){e.preventDefault();var k=SCREEN
   catch(err){navErr.textContent='Asesmen belum terkirim ('+(err&&err.code||'galat')+'). Periksa koneksi lalu coba lagi, atau hubungi info@zakademia.com.';}
   finally{nb.disabled=false;if(!sent)nb.textContent='Kirim asesmen';}});
 async function saveRecord(rec){var res=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
-  var out=await res.json().catch(function(){return null;});if(!out||!out.ok)throw {code:(out&&out.error)||('http '+res.status)};}
+  var out=await res.json().catch(function(){return null;});if(out&&out.error==='perlu_masuk'){saveDraft();location.href='masuk.php?next='+encodeURIComponent('/asesmen/');throw {code:'perlu masuk'};}if(!out||!out.ok)throw {code:(out&&out.error)||('http '+res.status)};}
 if(loadDraft()){var nt=document.getElementById('notice');nt.hidden=false;nt.textContent='Isian sebelumnya dipulihkan. Lanjutkan dari bagian terakhir.';}
 function stateFromRecord(d){var st=decode(d);var s=blank();s.p={org:d.org||'',type:d.type||TYPES[0],pName:d.pName||'',pRole:d.pRole||'',pEmail:d.pEmail||'',pWa:d.pWa||'',tim:st.tim};s.g=st.g;s.imp=st.imp.concat([null,null,null,null,null,null]).slice(0,6);
   s.tri={dilema:st.dilema,tuju:st.tuju};s.ku={s:st.ku.s.slice(),v:JSON.parse(JSON.stringify(st.ku.v))};s.ino={arah:st.ino.arah.slice(),frek:st.ino.frek,hamb:st.ino.hamb.slice()};s.kp=Object.assign({},st.kp);s.consent=true;return s;}
 
 render();
+}
+/* ===== akun: formulir hanya untuk pengguna yang sudah masuk ===== */
+(function(){
+  var scr=document.getElementById('screen');
+  function bar(u){var b=document.createElement('div');b.className='zk-userbar';
+    b.innerHTML='<span>Masuk sebagai <b></b></span><span class="sp"></span><a href="akun.php">Akun saya</a>'+(u.role==='admin'?'<a href="admin.php">Dashboard admin</a>':'')+'<a href="keluar.php">Keluar</a>';
+    b.querySelector('b').textContent=u.name+(u.org?' · '+u.org:'');var m=document.querySelector('main');m.parentNode.insertBefore(b,m);}
+  function gate(msg){var f=document.getElementById('form');if(f)f.querySelectorAll('.navbar,.nav,#backBtn,#nextBtn').forEach(function(x){x.hidden=true;});
+    var nx=encodeURIComponent('/asesmen/');
+    scr.innerHTML='<div class="zk-gate"><p class="eyebrow">Asesmen Kesiapan Penghimpunan</p><h1>Masuk untuk mengisi asesmen</h1>'+
+      '<p>Asesmen diisi melalui akun lembaga agar isian dapat dilanjutkan kapan saja dan riwayat hasil tersimpan di halaman Akun saya. Pengisian memerlukan sekitar 15 menit.</p>'+
+      '<div class="zk-acts"><a class="btn btn-deep" href="masuk.php?next='+nx+'">Masuk</a><a class="btn btn-ghost" href="daftar.php?next='+nx+'">Daftar akun baru</a></div>'+
+      (msg?'<p class="zk-note"></p>':'')+'</div>';if(msg)scr.querySelector('.zk-note').textContent=msg;}
+  fetch('akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+    if(j&&j.user){window.ZK_USER=j.user;bar(j.user);zkStart();}else gate();
+  }).catch(function(){gate('Status akun belum dapat diperiksa. Muat ulang halaman ini.');});
 })();
+
 </script>
 </body>
 </html>

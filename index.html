@@ -49,6 +49,8 @@
       <a href="#kajian">Kajian</a>
       <a href="#literasi">Literasi</a>
       <a href="#tentang">Tentang</a>
+      <a href="/asesmen/">Asesmen</a>
+      <a class="btn btn-ghost" href="/asesmen/masuk.php" id="navAkun">Masuk</a>
       <a class="btn btn-deep" href="#kontak">Mari berbincang</a>
     </nav>
   </div>
@@ -595,5 +597,10 @@
 </footer>
 
 <script src="js/script.js"></script>
+<script>
+fetch('/asesmen/akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  var a=document.getElementById('navAkun');if(a&&j&&j.user){a.textContent='Akun saya';a.href='/asesmen/akun.php';}
+}).catch(function(){});
+</script>
 
 </body></html>

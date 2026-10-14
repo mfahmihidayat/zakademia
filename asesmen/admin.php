@@ -21,12 +21,7 @@ header('X-Frame-Options: DENY');
 header('Referrer-Policy: same-origin');
 
 /* ---------- keluar ---------- */
-if (isset($_GET['logout'])) {
-    $_SESSION = [];
-    session_destroy();
-    header('Location: admin.php');
-    exit;
-}
+if (isset($_GET['logout'])) redirect('keluar.php');
 
 /* ---------- API (hanya untuk admin yang sudah masuk) ---------- */
 if (isset($_GET['api'])) {
@@ -66,83 +61,55 @@ if (isset($_GET['api'])) {
     }
 }
 
-/* ---------- buat kata sandi pertama / masuk ---------- */
-$error = '';
-$hash = admin_hash();
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!hash_equals($_SESSION['csrf'], (string)($_POST['csrf'] ?? ''))) {
-        $error = 'Sesi kedaluwarsa. Coba lagi.';
-    } elseif ($hash === null) {
-        $p1 = (string)($_POST['pw'] ?? '');
-        $p2 = (string)($_POST['pw2'] ?? '');
-        if (mb_strlen($p1) < 10) $error = 'Kata sandi minimal 10 karakter.';
-        elseif ($p1 !== $p2) $error = 'Kedua kata sandi tidak sama.';
-        else {
-            set_admin_password($p1);
-            session_regenerate_id(true);
-            $_SESSION['admin'] = true;
-            header('Location: admin.php');
-            exit;
-        }
-    } else {
-        $fails = (int)($_SESSION['fails'] ?? 0);
-        if ($fails >= 3) sleep(min(10, $fails));
-        if (password_verify((string)($_POST['pw'] ?? ''), $hash)) {
-            session_regenerate_id(true);
-            $_SESSION['admin'] = true;
-            $_SESSION['fails'] = 0;
-            header('Location: admin.php');
-            exit;
-        }
-        $_SESSION['fails'] = $fails + 1;
-        $error = 'Kata sandi salah.';
-    }
-}
-
+/* ---------- dashboard, atau pembuatan akun admin pertama ---------- */
 if (is_admin()) {
     $html = (string)file_get_contents(__DIR__ . '/views/dashboard.html');
     echo str_replace('__CSRF__', htmlspecialchars($_SESSION['csrf'], ENT_QUOTES), $html);
     exit;
 }
+if (admin_exists()) {
+    if (current_user()) page('Akses ditolak', '<h1>Khusus admin</h1><p class="mute">Akun Anda tidak memiliki akses ke dashboard admin.</p><a class="btn ghost" href="akun.php">Ke Akun saya</a>');
+    redirect('masuk.php?next=' . urlencode('/asesmen/admin.php'));
+}
 
-$setup = ($hash === null);
-?><!doctype html>
-<html lang="id">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Masuk · Dashboard Asesmen Zakademia</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
-<style>
-:root{--bg:#FFFFF0;--paper:#FFFFFF;--ink:#10291F;--mute:#4A6355;--line:#DCE5D7;--deep:#0B4D33;--gold:#C99A3B;--warn:#9A3B1F}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:400 15px/1.6 "Plus Jakarta Sans",system-ui,sans-serif;padding:24px 16px}
-.box{width:100%;max-width:400px;background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;box-shadow:0 18px 40px -28px rgba(11,77,51,.45)}
-h1{margin:0;font-size:24px;letter-spacing:-.02em}
-p{margin:0;color:var(--mute);font-size:14px}
-label{font-weight:600;font-size:14px;display:flex;flex-direction:column;gap:6px}
-input{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:12px;padding:11px 14px;min-height:46px;background:var(--bg);color:var(--ink)}
-button{min-height:46px;border:0;border-radius:999px;background:var(--deep);color:#FFFFF0;font:inherit;font-weight:600;font-size:15px;cursor:pointer}
-button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.err{color:var(--warn);font-size:14px;font-weight:600}
-.brand{font-weight:800;color:var(--deep)}
-</style>
-</head>
-<body>
-<form class="box" method="post" action="admin.php" autocomplete="off">
-  <span class="brand">Zakademia</span>
-  <h1><?= $setup ? 'Buat kata sandi admin' : 'Masuk ke dashboard asesmen' ?></h1>
-  <p><?= $setup ? 'Halaman ini muncul sekali saja. Kata sandi disimpan terenkripsi di server dan dipakai untuk membuka dashboard.' : 'Khusus pengelola Zakademia.' ?></p>
-  <?php if ($error): ?><p class="err" role="alert"><?= htmlspecialchars($error) ?></p><?php endif; ?>
-  <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf']) ?>">
-  <label>Kata sandi<input type="password" name="pw" required minlength="<?= $setup ? 10 : 1 ?>" autocomplete="<?= $setup ? 'new-password' : 'current-password' ?>" autofocus></label>
-  <?php if ($setup): ?><label>Ulangi kata sandi<input type="password" name="pw2" required minlength="10" autocomplete="new-password"></label><?php endif; ?>
-  <button type="submit"><?= $setup ? 'Simpan dan masuk' : 'Masuk' ?></button>
-</form>
-</body>
-</html>
-<?php
+$f = ['name' => '', 'email' => (string)(cfg('admin_email') ?: '')];
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $f['name'] = clip($_POST['name'] ?? '', 120);
+    $f['email'] = clip($_POST['email'] ?? '', 160);
+    $p1 = (string)($_POST['password'] ?? '');
+    if (!form_csrf_ok()) $error = 'Sesi kedaluwarsa. Silakan coba lagi.';
+    elseif ($f['name'] === '') $error = 'Nama wajib diisi.';
+    elseif (!valid_email($f['email'])) $error = 'Alamat email belum benar.';
+    elseif (mb_strlen($p1) < 10) $error = 'Kata sandi minimal 10 karakter.';
+    elseif ($p1 !== (string)($_POST['password2'] ?? '')) $error = 'Kedua kata sandi tidak sama.';
+    else {
+        $q = db()->prepare('SELECT id FROM users WHERE email = ?');
+        $q->execute([$f['email']]);
+        if ($id = $q->fetchColumn()) {
+            db()->prepare('UPDATE users SET role = "admin", name = ?, pass_hash = ? WHERE id = ?')->execute([$f['name'], password_hash($p1, PASSWORD_DEFAULT), $id]);
+        } else {
+            db()->prepare('INSERT INTO users (email, name, org, role, pass_hash, created) VALUES (?,?,?,?,?,?)')
+                ->execute([$f['email'], $f['name'], 'Zakademia', 'admin', password_hash($p1, PASSWORD_DEFAULT), gmdate('c')]);
+            $id = db()->lastInsertId();
+        }
+        login_user((int)$id);
+        redirect('admin.php');
+    }
+}
+page('Buat akun admin', '
+<h1>Buat akun admin</h1>
+<p class="mute">Halaman ini hanya muncul sekali, selama belum ada akun admin. Gunakan email yang bisa Anda buka, karena "Lupa kata sandi" mengirim tautan ke email ini.</p>
+' . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
+<form method="post" action="admin.php" style="display:flex;flex-direction:column;gap:14px">
+  ' . csrf_field() . '
+  <label>Nama<input name="name" value="' . e($f['name']) . '" required maxlength="120" autocomplete="name"></label>
+  <label>Email admin<input type="email" name="email" value="' . e($f['email']) . '" required autocomplete="email"></label>
+  <label>Kata sandi (minimal 10 karakter)<input type="password" name="password" required minlength="10" autocomplete="new-password"></label>
+  <label>Ulangi kata sandi<input type="password" name="password2" required minlength="10" autocomplete="new-password"></label>
+  <button class="btn" type="submit">Buat akun dan masuk</button>
+</form>');
+
 /* ---------- perhitungan untuk CSV (sama dengan dashboard) ---------- */
 
 function kp_metrics(array $kp): array

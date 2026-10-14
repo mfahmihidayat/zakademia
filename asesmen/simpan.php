@@ -9,6 +9,8 @@ try {
     $d = json_decode((string)$raw, true);
     if (!is_array($d)) json_out(['ok' => false, 'error' => 'format'], 400);
     if (!empty($d['hp'])) json_out(['ok' => true]);                 // jebakan robot
+    $user = current_user();
+    if (!$user) json_out(['ok' => false, 'error' => 'perlu_masuk'], 401);
 
     $email = clip($d['pEmail'] ?? '', 160);
     $jawaban = clean_answers($d);
@@ -23,13 +25,13 @@ try {
     if ((int)$q->fetchColumn() >= (int)cfg('rate_limit')) json_out(['ok' => false, 'error' => 'terlalu_sering'], 429);
 
     $id = uuid4();
-    $ins = $pdo->prepare('INSERT INTO kiriman (id, dikirim, org, type, pName, pRole, pEmail, pWa, jawaban, status, ip_hash) VALUES (?,?,?,?,?,?,?,?,?,?,?)');
+    $ins = $pdo->prepare('INSERT INTO kiriman (id, dikirim, org, type, pName, pRole, pEmail, pWa, jawaban, status, ip_hash, user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
     $ins->execute([$id, gmdate('c'), clip($d['org'], 200), clip($d['type'] ?? '', 80), clip($d['pName'] ?? '', 120),
-        clip($d['pRole'] ?? '', 120), $email, clip($d['pWa'] ?? '', 40), $jawaban, 'baru', $ipHash]);
+        clip($d['pRole'] ?? '', 120), $email, clip($d['pWa'] ?? '', 40), $jawaban, 'baru', $ipHash, (int)$user['id']]);
 
     $base = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'zakademia.com') . rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? '/asesmen/simpan.php'), '/');
     send_mail((string)cfg('notify_email'), 'Asesmen baru: ' . clip($d['org'], 80),
-        'Asesmen baru masuk dari ' . clip($d['org'], 120) . ' (' . clip($d['pName'] ?? '', 80) . ', ' . $email . ").\n\n" .
+        'Asesmen baru masuk dari ' . clip($d['org'], 120) . ' (' . clip($d['pName'] ?? '', 80) . ', ' . $email . ', akun ' . $user['email'] . ").\n\n" .
         'Buka dashboard untuk melihat hasilnya: ' . $base . "/admin.php\n");
 
     json_out(['ok' => true]);

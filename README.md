@@ -8,6 +8,7 @@ Website Zakademia dan formulir Asesmen Kesiapan Penghimpunan.
 | Formulir asesmen lama (Apps Script) | `asesmen.html` | https://zakademia.com/asesmen.html |
 | Formulir asesmen | `asesmen/index.html` | https://zakademia.com/asesmen/ |
 | Dashboard admin asesmen | `asesmen/admin.php` | https://zakademia.com/asesmen/admin.php |
+| Masuk / daftar akun | `asesmen/masuk.php`, `asesmen/daftar.php` | https://zakademia.com/asesmen/masuk.php |
 
 ## Penerbitan otomatis
 
@@ -22,7 +23,7 @@ Pengaturan yang diperlukan di **Settings → Secrets and variables → Actions**
 | `FTP_PASSWORD` | Secret | Kata sandi FTP |
 | `FTP_DIR` | Variable (opsional) | Folder tujuan bila bukan `/domains/zakademia.com/public_html/` |
 
-Folder `asesmen/data/` berisi database kiriman dan kata sandi admin. Folder ini dibuat otomatis di server, dilindungi `.htaccess`, dan tidak pernah diunggah atau ditimpa oleh penerbitan.
+Folder `asesmen/data/` berisi database kiriman dan akun pengguna. Folder ini dibuat otomatis di server, dilindungi `.htaccess`, dan tidak pernah diunggah atau ditimpa oleh penerbitan.
 
 Panduan pemakaian dashboard asesmen ada di `asesmen/PANDUAN.md`.
 
