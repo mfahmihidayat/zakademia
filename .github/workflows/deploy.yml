@@ -16,12 +16,54 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Unggah ke Hostinger lewat FTP
+        id: unggah1
+        continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ vars.FTP_DIR || './' }}
+          timeout: 120000
+          # Folder data asesmen (database dan kata sandi admin) tidak pernah diunggah atau ditimpa.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            README.md
+            asesmen/PANDUAN.md
+            asesmen/data/**
+
+      # Koneksi FTP Hostinger kadang terputus di tengah pengiriman; ulangi sampai dua kali.
+      - name: Ulangi unggahan (percobaan 2)
+        id: unggah2
+        if: steps.unggah1.outcome == 'failure'
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ vars.FTP_DIR || './' }}
+          timeout: 120000
+          # Folder data asesmen (database dan kata sandi admin) tidak pernah diunggah atau ditimpa.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            README.md
+            asesmen/PANDUAN.md
+            asesmen/data/**
+
+      - name: Ulangi unggahan (percobaan 3)
+        if: steps.unggah1.outcome == 'failure' && steps.unggah2.outcome == 'failure'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ vars.FTP_DIR || './' }}
+          timeout: 120000
           # Folder data asesmen (database dan kata sandi admin) tidak pernah diunggah atau ditimpa.
           exclude: |
             **/.git*
