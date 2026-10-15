@@ -348,7 +348,7 @@ function sv_head(string $title, string $crumb = ''): void
         . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"></head><body>'
         . '<header class="top"><div class="in"><a class="brand" href="/"><img src="/assets/images/logo-color.png" alt="">Zakademia</a>'
         . ($crumb ? '<span class="crumb">/ ' . $crumb . '</span>' : '')
-        . '<nav><a href="/asesmen/akun.php">Akun saya</a><a href="/survei/">Survei</a><a href="/analitik/">Analitik</a>' . ($u && $u['role'] === 'admin' ? '<a href="/asesmen/admin.php">Admin</a>' : '') . '<a href="/asesmen/keluar.php">Keluar</a></nav></div></header>';
+        . '<nav><a href="/asesmen/akun.php">Akun saya</a><a href="/survei/">Survei</a><a href="/analitik/">Analitik</a><a href="/belajar/">Belajar</a>' . ($u && $u['role'] === 'admin' ? '<a href="/asesmen/admin.php">Admin</a>' : '') . '<a href="/asesmen/keluar.php">Keluar</a></nav></div></header>';
 }
 
 /** Ekspor jawaban satu survei ke CSV (dipakai dashboard admin). */
