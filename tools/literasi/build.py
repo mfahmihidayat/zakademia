@@ -10,7 +10,7 @@ from articles import ARTIKEL, RUBRIK
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 BASE = 'https://zakademia.com'
 BULAN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
-V = date.today().strftime('%Y%m%d')
+from datetime import datetime; V = datetime.now().strftime('%Y%m%d%H%M')
 
 def e(s): return html.escape(s, quote=True)
 def tgl(iso):
@@ -125,30 +125,34 @@ bs.forEach(function(b){{b.onclick=function(){{pick(b.dataset.r);}};}});pick(new 
 '''
     return out + FOOT
 
-# Foto per artikel. Taruh foto asli di tools/literasi/foto/<slug>.jpg untuk menggantinya.
-FOTO = {
-    'rakornas-baznas-2026-target-70-triliun': ('foto-1.jpg', (0.45, 0.5)),
-    'wakaf-uang-wakaf-melalui-uang-cwls': ('foto-4.jpg', (0.5, 0.5)),
-    'rs-mata-achmad-wardi-wakaf-yang-mengembalikan-penglihatan': ('foto-7.jpg', (0.5, 0.5)),
-    'cara-menghitung-zakat-penghasilan-2026': ('foto-5.jpg', (0.5, 0.6)),
-    'membaca-angka-zakat-nasional-2025': ('foto-2.jpg', (0.5, 0.5)),
-    'zakat-infak-sedekah-wakaf-apa-bedanya': ('foto-3.jpg', (0.5, 0.5)),
+# Ilustrasi per artikel (lihat tools/og_art.js).
+ILUSTRASI = {
+    'rakornas-baznas-2026-target-70-triliun': 'rakornas',
+    'wakaf-uang-wakaf-melalui-uang-cwls': 'wakaf',
+    'rs-mata-achmad-wardi-wakaf-yang-mengembalikan-penglihatan': 'mata',
+    'cara-menghitung-zakat-penghasilan-2026': 'kalkulator',
+    'membaca-angka-zakat-nasional-2025': 'statistik',
+    'zakat-infak-sedekah-wakaf-apa-bedanya': 'bedanya',
 }
 
+def render_og(jobs):
+    """Gambar dibuat dengan Chromium (Playwright) lewat tools/og_render.js."""
+    import subprocess, tempfile
+    with tempfile.NamedTemporaryFile('w', suffix='.json', delete=False) as f: json.dump(jobs, f)
+    env = dict(os.environ)
+    try: env['NODE_PATH'] = subprocess.run(['npm', 'root', '-g'], capture_output=True, text=True).stdout.strip()
+    except Exception: pass
+    r = subprocess.run(['node', os.path.join(os.path.dirname(__file__), '..', 'og_render.js'), f.name], env=env, capture_output=True, text=True)
+    print((r.stdout + r.stderr).strip())
+
 def og_images():
-    try:
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-        from ogcard import card
-    except ImportError as ex:
-        print('gambar pratinjau dilewati:', ex); return
+    jobs = []
     for a in ARTIKEL:
         n, q, ic = RUBRIK[a['rubrik']]
-        own = [os.path.join(os.path.dirname(__file__), 'foto', a['slug'] + x) for x in ('.jpg', '.jpeg', '.png')]
-        own = [x for x in own if os.path.exists(x)]
-        fname, focus = FOTO.get(a['slug'], ('foto-3.jpg', (0.5, 0.5)))
-        photo = own[0] if own else os.path.join(ROOT, 'assets/images', fname)
-        card(photo, n, q, a['og'], 'Literasi Zakademia · ' + tgl(a['tanggal']),
-             os.path.join(ROOT, f'assets/images/og-lit-{a["slug"]}.png'), icon=os.path.join(ROOT, 'assets/images', ic), focus=focus if not own else (0.5, 0.5))
+        jobs.append(dict(out=os.path.join(ROOT, f'assets/images/og-lit-{a["slug"]}.png'), eyebrow=n, sub=q, lines=a['og'],
+                         footer='Literasi Zakademia · ' + tgl(a['tanggal']), icon=os.path.join(ROOT, 'assets/images', ic),
+                         art=ILUSTRASI.get(a['slug'], 'bedanya')))
+    render_og(jobs)
 
 def home_cards():
     """Sisipkan kartu tulisan terbaru di bagian Literasi pada index.html (di antara penanda)."""

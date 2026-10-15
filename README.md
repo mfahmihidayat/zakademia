@@ -36,4 +36,4 @@ Alur **Salin situs aktif** (dijalankan manual dari tab Actions) menyimpan isi si
 
 Isi artikel ada di `tools/literasi/articles.py`. Setelah mengubah atau menambah artikel, jalankan `python3 tools/literasi/build.py` dari akar repositori. Skrip ini membuat halaman `literasi/`, gambar pratinjau `assets/images/og-lit-*.png`, dan kartu "Bacaan terbaru" di `index.html`. Folder `tools/` tidak ikut diunggah ke hosting.
 
-Gambar pratinjau memakai foto berbingkai khas Zakademia (`tools/ogcard.py`). Untuk memakai foto asli sendiri pada suatu artikel, simpan fotonya sebagai `tools/literasi/foto/<slug>.jpg` lalu jalankan ulang skrip. Gambar pratinjau layanan dibuat dengan `python3 tools/og_layanan.py`.
+Gambar pratinjau memakai ilustrasi vektor khas Zakademia (`tools/og_art.js`, digambar dengan `tools/og_render.js` lewat Playwright). Pilihan ilustrasi per artikel ada di `ILUSTRASI` dalam `tools/literasi/build.py`. Gambar pratinjau layanan dibuat dengan `python3 tools/og_layanan.py`.
