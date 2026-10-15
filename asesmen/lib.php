@@ -380,7 +380,7 @@ function share_meta(string $key, string $url): string
     return '<title>' . e($t) . '</title><meta name="description" content="' . e($d) . '">'
         . '<meta property="og:type" content="website"><meta property="og:site_name" content="Zakademia">'
         . '<meta property="og:title" content="' . e($t) . '"><meta property="og:description" content="' . e($d) . '">'
-        . '<meta property="og:url" content="' . e($base . $url) . '"><meta property="og:image" content="' . e($base . '/assets/images/' . $img) . '">'
+        . '<meta property="og:url" content="' . e($base . $url) . '"><meta property="og:image" content="' . e($base . '/assets/images/' . $img . '?v=2') . '">'
         . '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">';
 }
 /** Untuk pengunjung yang belum masuk: tampilkan pratinjau tautan, lalu arahkan ke halaman masuk. */

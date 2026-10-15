@@ -125,33 +125,30 @@ bs.forEach(function(b){{b.onclick=function(){{pick(b.dataset.r);}};}});pick(new 
 '''
     return out + FOOT
 
+# Foto per artikel. Taruh foto asli di tools/literasi/foto/<slug>.jpg untuk menggantinya.
+FOTO = {
+    'rakornas-baznas-2026-target-70-triliun': ('foto-1.jpg', (0.45, 0.5)),
+    'wakaf-uang-wakaf-melalui-uang-cwls': ('foto-4.jpg', (0.5, 0.5)),
+    'rs-mata-achmad-wardi-wakaf-yang-mengembalikan-penglihatan': ('foto-7.jpg', (0.5, 0.5)),
+    'cara-menghitung-zakat-penghasilan-2026': ('foto-5.jpg', (0.5, 0.6)),
+    'membaca-angka-zakat-nasional-2025': ('foto-2.jpg', (0.5, 0.5)),
+    'zakat-infak-sedekah-wakaf-apa-bedanya': ('foto-3.jpg', (0.5, 0.5)),
+}
+
 def og_images():
     try:
-        from PIL import Image, ImageDraw, ImageFont, ImageFilter
-    except ImportError:
-        print('PIL tidak tersedia; gambar pratinjau dilewati'); return
-    F = os.path.join(os.path.dirname(__file__), 'fonts')
-    def font(w, s): return ImageFont.truetype(os.path.join(F, f'plus-jakarta-sans-latin-{w}-normal.woff'), s)
-    base = Image.open(os.path.join(ROOT, 'assets/images/og-image.png')).convert('RGB')
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+        from ogcard import card
+    except ImportError as ex:
+        print('gambar pratinjau dilewati:', ex); return
     for a in ARTIKEL:
         n, q, ic = RUBRIK[a['rubrik']]
-        im = base.copy()
-        layer = Image.new('RGB', (650, 500), (255, 255, 240)); gl = Image.new('L', (650, 500), 0)
-        ImageDraw.Draw(gl).ellipse((-260, 260, 300, 760), fill=110); gl = gl.filter(ImageFilter.GaussianBlur(90))
-        layer.paste(Image.new('RGB', (650, 500), (226, 236, 214)), (0, 0), gl); im.paste(layer, (0, 130))
-        icon = Image.open(os.path.join(ROOT, 'assets/images', ic)).convert('RGBA').resize((60, 60))
-        d = ImageDraw.Draw(im)
-        lines = a['og']; size = 60
-        while max(d.textlength(t, font=font(800, size)) for t in lines) > 560: size -= 2
-        f = font(800, size); lh = int(size * 1.16)
-        block = 70 + len(lines) * lh + 46; y = int(330 - block / 2)
-        im.paste(icon, (84, y), icon)
-        d.text((158, y + 4), n.upper(), font=font(800, 22), fill=(201, 154, 59))
-        d.text((158, y + 32), q, font=font(500, 20), fill=(74, 99, 85)); y += 82
-        for i, t in enumerate(lines):
-            d.text((82, y), t, font=f, fill=(16, 41, 31) if i < len(lines) - 1 else (138, 100, 24)); y += lh
-        d.text((86, y + 14), 'Literasi Zakademia · ' + tgl(a['tanggal']), font=font(500, 22), fill=(74, 99, 85))
-        im.save(os.path.join(ROOT, f'assets/images/og-lit-{a["slug"]}.png'), optimize=True)
+        own = [os.path.join(os.path.dirname(__file__), 'foto', a['slug'] + x) for x in ('.jpg', '.jpeg', '.png')]
+        own = [x for x in own if os.path.exists(x)]
+        fname, focus = FOTO.get(a['slug'], ('foto-3.jpg', (0.5, 0.5)))
+        photo = own[0] if own else os.path.join(ROOT, 'assets/images', fname)
+        card(photo, n, q, a['og'], 'Literasi Zakademia · ' + tgl(a['tanggal']),
+             os.path.join(ROOT, f'assets/images/og-lit-{a["slug"]}.png'), icon=os.path.join(ROOT, 'assets/images', ic), focus=focus if not own else (0.5, 0.5))
 
 def home_cards():
     """Sisipkan kartu tulisan terbaru di bagian Literasi pada index.html (di antara penanda)."""
