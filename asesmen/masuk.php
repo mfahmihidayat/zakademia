@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!throttle_ok($key, 10) || !throttle_ok($keyE, 6)) {
         $error = 'Terlalu banyak percobaan masuk. Tunggu 15 menit, atau gunakan "Lupa kata sandi".';
     } else {
-        $q = db()->prepare('SELECT id, role, pass_hash FROM users WHERE email = ?');
+        $q = db()->prepare('SELECT id, role, pass_hash, verified FROM users WHERE email = ?');
         $q->execute([$email]);
         $row = $q->fetch(PDO::FETCH_ASSOC);
         if ($row && password_verify((string)($_POST['password'] ?? ''), $row['pass_hash'])) {
@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             throttle_clear($keyE);
             login_user((int)$row['id']);
-            redirect($next ?: ($row['role'] === 'admin' ? 'admin.php' : 'akun.php'));
+            $dest = $next ?: ($row['role'] === 'admin' ? 'admin.php' : 'akun.php');
+            if ($row['role'] !== 'admin' && empty($row['verified'])) redirect('verifikasi.php?next=' . urlencode(str_starts_with($dest, '/') ? $dest : '/asesmen/' . $dest));
+            redirect($dest);
         }
         throttle_hit($key);
         throttle_hit($keyE);

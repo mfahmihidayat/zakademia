@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!form_csrf_ok()) $error = 'Sesi kedaluwarsa. Silakan coba lagi.';
     elseif (!throttle_ok('daftar|' . ip_key(), 5, 3600)) $error = 'Terlalu banyak pendaftaran dari jaringan ini. Coba lagi dalam satu jam.';
     elseif ($f['name'] === '' || $f['org'] === '') $error = 'Nama dan nama lembaga wajib diisi.';
-    elseif (!valid_email($f['email'])) $error = 'Alamat email belum benar.';
+    elseif ($ep = email_problem($f['email'])) $error = $ep;
     elseif (!in_array($f['org_type'], ORG_TYPES, true)) $error = 'Pilih jenis lembaga.';
     elseif (mb_strlen($p1) < 8) $error = 'Kata sandi minimal 8 karakter.';
     elseif ($p1 !== $p2) $error = 'Kedua kata sandi tidak sama.';
@@ -31,10 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             db()->prepare('INSERT INTO users (email, name, org, org_type, role, pass_hash, created) VALUES (?,?,?,?,?,?,?)')
                 ->execute([$f['email'], $f['name'], $f['org'], $f['org_type'], 'lembaga', password_hash($p1, PASSWORD_DEFAULT), gmdate('c')]);
             login_user((int)db()->lastInsertId());
-            send_mail($f['email'], 'Selamat datang di Zakademia',
-                "Assalamu'alaikum " . $f['name'] . ",\n\nAkun Zakademia untuk " . $f['org'] . " sudah aktif. Anda dapat mengisi Asesmen Kesiapan Penghimpunan di:\n"
-                . base_url() . "/\n\nRiwayat kiriman dapat dilihat di halaman Akun saya:\n" . base_url() . "/akun.php\n\nSalam,\nTim Zakademia\n");
-            redirect($next);
+            redirect('verifikasi.php?next=' . urlencode($next));
         }
     }
 }

@@ -33,6 +33,7 @@ try {
     if (!is_array($in)) $in = $_POST;
     $pdo = sv_db();
 
+    if (in_array($act, ['buat', 'atur', 'gandakan'], true) && !user_verified($u)) json_out(['ok' => false, 'error' => 'Verifikasi email akun terlebih dahulu di halaman Akun saya.'], 403);
     if ($act === 'buat') {
         $q = $pdo->prepare('SELECT COUNT(*) FROM surveys WHERE user_id = ?');
         $q->execute([$u['id']]);

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require __DIR__ . '/lib_survei.php';
 start_session();
-$u = sv_require_user('/survei/');
+$u = sv_require_verified('/survei/');
 
 $sql = 'SELECT s.id, s.slug, s.title, s.status, s.updated, s.user_id, s.quota, (SELECT COUNT(*) FROM responses r WHERE r.survey_id = s.id) AS n,
         (SELECT MAX(created) FROM responses r WHERE r.survey_id = s.id) AS last FROM surveys s';

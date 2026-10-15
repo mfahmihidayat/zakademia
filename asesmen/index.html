@@ -522,7 +522,7 @@ form.addEventListener('submit',async function(e){e.preventDefault();var k=SCREEN
   catch(err){navErr.textContent='Asesmen belum terkirim ('+(err&&err.code||'galat')+'). Periksa koneksi lalu coba lagi, atau hubungi info@zakademia.com.';}
   finally{nb.disabled=false;if(!sent)nb.textContent='Kirim asesmen';}});
 async function saveRecord(rec){var res=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
-  var out=await res.json().catch(function(){return null;});if(out&&out.error==='perlu_masuk'){saveDraft();location.href='masuk.php?next='+encodeURIComponent('/asesmen/');throw {code:'perlu masuk'};}if(!out||!out.ok)throw {code:(out&&out.error)||('http '+res.status)};}
+  var out=await res.json().catch(function(){return null;});if(out&&out.error==='perlu_verifikasi'){saveDraft();location.href='verifikasi.php?next='+encodeURIComponent('/asesmen/');throw {code:'perlu verifikasi'};}if(out&&out.error==='perlu_masuk'){saveDraft();location.href='masuk.php?next='+encodeURIComponent('/asesmen/');throw {code:'perlu masuk'};}if(!out||!out.ok)throw {code:(out&&out.error)||('http '+res.status)};}
 if(loadDraft()){var nt=document.getElementById('notice');nt.hidden=false;nt.textContent='Isian sebelumnya dipulihkan. Lanjutkan dari bagian terakhir.';}
 function stateFromRecord(d){var st=decode(d);var s=blank();s.p={org:d.org||'',type:d.type||TYPES[0],pName:d.pName||'',pRole:d.pRole||'',pEmail:d.pEmail||'',pWa:d.pWa||'',tim:st.tim};s.g=st.g;s.imp=st.imp.concat([null,null,null,null,null,null]).slice(0,6);
   s.tri={dilema:st.dilema,tuju:st.tuju};s.ku={s:st.ku.s.slice(),v:JSON.parse(JSON.stringify(st.ku.v))};s.ino={arah:st.ino.arah.slice(),frek:st.ino.frek,hamb:st.ino.hamb.slice()};s.kp=Object.assign({},st.kp);s.consent=true;return s;}
@@ -542,6 +542,8 @@ render();
       '<div class="zk-acts"><a class="btn btn-deep" href="masuk.php?next='+nx+'">Masuk</a><a class="btn btn-ghost" href="daftar.php?next='+nx+'">Daftar akun baru</a></div>'+
       (msg?'<p class="zk-note"></p>':'')+'</div>';if(msg)scr.querySelector('.zk-note').textContent=msg;}
   fetch('akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+    if(j&&j.user&&!j.user.verified){bar(j.user);var f=document.getElementById('form');if(f)f.querySelectorAll('.nav').forEach(function(x){x.hidden=true;});
+      scr.innerHTML='<div class="zk-gate"><p class="eyebrow">Asesmen Kesiapan Penghimpunan</p><h1>Verifikasi email terlebih dahulu</h1><p>Agar hasil asesmen dapat kami kirimkan dan tim Zakademia dapat menghubungi lembaga Anda, email akun perlu diverifikasi dengan kode 6 angka.</p><div class="zk-acts"><a class="btn btn-deep" href="verifikasi.php?next='+encodeURIComponent('/asesmen/')+'">Verifikasi email</a></div></div>';return;}
     if(j&&j.user){window.ZK_USER=j.user;bar(j.user);zkStart();}else gate();
   }).catch(function(){gate('Status akun belum dapat diperiksa. Muat ulang halaman ini.');});
 })();

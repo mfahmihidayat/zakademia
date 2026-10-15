@@ -44,6 +44,9 @@ function db(): PDO
         token_hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL, expires INTEGER NOT NULL, used INTEGER NOT NULL DEFAULT 0)');
     $pdo->exec('CREATE TABLE IF NOT EXISTS attempts (k TEXT NOT NULL, ts INTEGER NOT NULL)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_attempts ON attempts (k, ts)');
+    $uc = array_column($pdo->query('PRAGMA table_info(users)')->fetchAll(PDO::FETCH_ASSOC), 'name');
+    if (!in_array('verified', $uc, true)) $pdo->exec('ALTER TABLE users ADD COLUMN verified INTEGER NOT NULL DEFAULT 0');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS otp (k TEXT PRIMARY KEY, code_hash TEXT NOT NULL, email TEXT NOT NULL, expires INTEGER NOT NULL, tries INTEGER NOT NULL DEFAULT 0, sent INTEGER NOT NULL)');
     migrate_admin_json($pdo);
     apply_admin_reset($pdo);
     return $pdo;
@@ -92,8 +95,113 @@ function send_mail(string $to, string $subject, string $body, ?string $replyTo =
     ];
     $subj = '=?UTF-8?B?' . base64_encode(str_replace(["\r", "\n"], ' ', $subject)) . '?=';
     $body = str_replace(["\r\n", "\r"], "\n", $body);
+    $smtp = smtp_conf();
+    if ($smtp) return smtp_send($smtp, $to, $subj, $body, $headers);
     return @mail($to, $subj, $body, implode("\r\n", $headers), '-f' . $from);
 }
+
+/* ---------- SMTP (kotak surat Hostinger); kata sandi hanya disimpan di folder data server ---------- */
+function smtp_file(): string { return data_dir() . '/smtp.json'; }
+function smtp_conf(): ?array
+{
+    $f = smtp_file();
+    if (!is_file($f)) return null;
+    $c = json_decode((string)file_get_contents($f), true);
+    return (is_array($c) && !empty($c['host']) && !empty($c['user']) && isset($c['pass'])) ? $c : null;
+}
+/** Kirim lewat SMTP (SSL port 465 atau STARTTLS port 587). Galat terakhir disimpan di $GLOBALS['smtp_error']. */
+function smtp_send(array $c, string $to, string $subjHeader, string $body, array $headers): bool
+{
+    $GLOBALS['smtp_error'] = '';
+    $port = (int)($c['port'] ?? 465);
+    $host = ($port === 465 ? 'ssl://' : 'tcp://') . $c['host'];
+    $fp = @stream_socket_client($host . ':' . $port, $en, $es, 15);
+    if (!$fp) { $GLOBALS['smtp_error'] = "Tidak dapat terhubung: $es"; return false; }
+    stream_set_timeout($fp, 15);
+    $read = function () use ($fp): string { $r = ''; while (($l = fgets($fp, 515)) !== false) { $r .= $l; if (strlen($l) < 4 || $l[3] === ' ') break; } return $r; };
+    $cmd = function (string $line, array $okCodes) use ($fp, $read): bool {
+        if ($line !== '') fwrite($fp, $line . "\r\n");
+        $r = $read();
+        if (!in_array((int)substr($r, 0, 3), $okCodes, true)) { $GLOBALS['smtp_error'] = trim($r) ?: 'Server tidak merespons.'; return false; }
+        return true;
+    };
+    $ok = $cmd('', [220]) && $cmd('EHLO zakademia.com', [250]);
+    if ($ok && $port !== 465) {
+        $ok = $cmd('STARTTLS', [220]) && @stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT) && $cmd('EHLO zakademia.com', [250]);
+    }
+    $ok = $ok && $cmd('AUTH LOGIN', [334]) && $cmd(base64_encode($c['user']), [334]) && $cmd(base64_encode($c['pass']), [235]);
+    $from = (string)cfg('from_email');
+    $ok = $ok && $cmd('MAIL FROM:<' . ($c['user'] ?: $from) . '>', [250]) && $cmd('RCPT TO:<' . $to . '>', [250, 251]) && $cmd('DATA', [354]);
+    if ($ok) {
+        $h = $headers;
+        $h[] = 'To: <' . $to . '>';
+        $h[] = 'Subject: ' . $subjHeader;
+        $h[] = 'Date: ' . date('r');
+        $h[] = 'Message-ID: <' . bin2hex(random_bytes(8)) . '@zakademia.com>';
+        $data = implode("\r\n", $h) . "\r\n\r\n" . preg_replace('/^\./m', '..', str_replace("\n", "\r\n", $body));
+        $ok = $cmd($data . "\r\n.", [250]);
+    }
+    @fwrite($fp, "QUIT\r\n");
+    fclose($fp);
+    return $ok;
+}
+
+/* ---------- verifikasi email ---------- */
+const DISPOSABLE_DOMAINS = ['mailinator.com', 'guerrillamail.com', 'guerrillamail.info', 'guerrillamail.net', 'sharklasers.com', 'grr.la', '10minutemail.com', '10minutemail.net',
+    'tempmail.com', 'temp-mail.org', 'temp-mail.io', 'tempmail.net', 'tempmailo.com', 'tempail.com', 'tempr.email', 'yopmail.com', 'yopmail.net', 'trashmail.com', 'trashmail.de',
+    'getnada.com', 'nada.email', 'dispostable.com', 'maildrop.cc', 'mailnesia.com', 'throwawaymail.com', 'fakeinbox.com', 'mohmal.com', 'emailondeck.com', 'minuteinbox.com',
+    'mintemail.com', 'spamgourmet.com', 'moakt.com', 'emailfake.com', 'burnermail.io', 'inboxkitten.com', '1secmail.com', '1secmail.org', 'mailcatch.com', 'mytemp.email',
+    'tmpmail.org', 'tmpmail.net', 'fakemail.net', 'emailtemporanea.net', 'discard.email', 'spambox.us', 'example.com', 'example.org', 'test.com'];
+
+/** Kembalikan pesan bila email tidak dapat diterima, atau null bila layak. */
+function email_problem(string $e): ?string
+{
+    if (!valid_email($e)) return 'Alamat email belum benar.';
+    $dom = strtolower(substr(strrchr($e, '@'), 1));
+    if (in_array($dom, DISPOSABLE_DOMAINS, true)) return 'Gunakan email yang aktif dan dapat dihubungi, bukan email sementara.';
+    static $dnsOk = null;
+    if ($dnsOk === null) $dnsOk = function_exists('checkdnsrr') && @checkdnsrr('gmail.com', 'MX');
+    if ($dnsOk && !@checkdnsrr($dom, 'MX') && !@checkdnsrr($dom, 'A')) return 'Domain email tidak ditemukan. Periksa kembali penulisannya.';
+    return null;
+}
+
+/** Kirim kode 6 angka. Mengembalikan null bila berhasil, atau pesan galat. */
+function otp_send(string $key, string $email, string $purpose): ?string
+{
+    $pdo = db();
+    $q = $pdo->prepare('SELECT sent FROM otp WHERE k = ?');
+    $q->execute([$key]);
+    $last = (int)$q->fetchColumn();
+    if ($last && time() - $last < 60) return 'Kode baru saja dikirim. Tunggu ' . (60 - (time() - $last)) . ' detik sebelum meminta lagi.';
+    if (!throttle_ok('otp|' . strtolower($email), 6, 3600) || !throttle_ok('otp|' . ip_key(), 15, 3600)) return 'Terlalu banyak permintaan kode. Coba lagi dalam satu jam.';
+    $code = (string)random_int(100000, 999999);
+    $pdo->prepare('INSERT OR REPLACE INTO otp (k, code_hash, email, expires, tries, sent) VALUES (?,?,?,?,0,?)')
+        ->execute([$key, hash('sha256', $key . '|' . $code), strtolower($email), time() + 900, time()]);
+    throttle_hit('otp|' . strtolower($email));
+    throttle_hit('otp|' . ip_key());
+    $ok = send_mail($email, 'Kode verifikasi Zakademia: ' . $code,
+        "Assalamu'alaikum,\n\nKode verifikasi Anda untuk $purpose:\n\n    $code\n\nKode berlaku 15 menit. Jangan berikan kode ini kepada siapa pun.\nJika Anda tidak merasa meminta kode ini, abaikan email ini.\n\nSalam,\nTim Zakademia\n");
+    if (!$ok) { error_log('otp mail gagal: ' . ($GLOBALS['smtp_error'] ?? '')); return 'Email belum dapat dikirim. Coba lagi beberapa saat, atau hubungi info@zakademia.com.'; }
+    return null;
+}
+/** Periksa kode. Mengembalikan email yang terverifikasi, atau null. */
+function otp_check(string $key, string $code, ?string &$err = null): ?string
+{
+    $pdo = db();
+    $q = $pdo->prepare('SELECT * FROM otp WHERE k = ?');
+    $q->execute([$key]);
+    $r = $q->fetch(PDO::FETCH_ASSOC);
+    if (!$r || $r['expires'] < time()) { $err = 'Kode sudah kedaluwarsa. Minta kode baru.'; return null; }
+    if ($r['tries'] >= 5) { $err = 'Terlalu banyak percobaan. Minta kode baru.'; return null; }
+    if (!hash_equals($r['code_hash'], hash('sha256', $key . '|' . preg_replace('/\D/', '', $code)))) {
+        $pdo->prepare('UPDATE otp SET tries = tries + 1 WHERE k = ?')->execute([$key]);
+        $err = 'Kode tidak cocok. Periksa kembali email Anda.';
+        return null;
+    }
+    $pdo->prepare('DELETE FROM otp WHERE k = ?')->execute([$key]);
+    return $r['email'];
+}
+function user_verified(?array $u): bool { return $u !== null && ($u['role'] === 'admin' || !empty($u['verified'])); }
 
 /* ---------- sesi dan akun ---------- */
 function start_session(): void
@@ -141,7 +249,7 @@ function current_user(): ?array
     start_session();
     $u = null;
     if (!empty($_SESSION['uid'])) {
-        $q = db()->prepare('SELECT id, email, name, org, org_type, role FROM users WHERE id = ?');
+        $q = db()->prepare('SELECT id, email, name, org, org_type, role, verified FROM users WHERE id = ?');
         $q->execute([(int)$_SESSION['uid']]);
         $u = $q->fetch(PDO::FETCH_ASSOC) ?: null;
     }

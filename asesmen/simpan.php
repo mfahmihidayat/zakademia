@@ -11,6 +11,7 @@ try {
     if (!empty($d['hp'])) json_out(['ok' => true]);                 // jebakan robot
     $user = current_user();
     if (!$user) json_out(['ok' => false, 'error' => 'perlu_masuk'], 401);
+    if (!user_verified($user)) json_out(['ok' => false, 'error' => 'perlu_verifikasi'], 403);
 
     $email = clip($d['pEmail'] ?? '', 160);
     $jawaban = clean_answers($d);

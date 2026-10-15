@@ -37,6 +37,13 @@ function sv_require_user(string $next): array
     if (!$u) redirect('/asesmen/masuk.php?next=' . urlencode($next));
     return $u;
 }
+/** Pengguna yang sudah masuk dan emailnya terverifikasi. */
+function sv_require_verified(string $next): array
+{
+    $u = sv_require_user($next);
+    if (!user_verified($u)) redirect('/asesmen/verifikasi.php?next=' . urlencode($next));
+    return $u;
+}
 
 /** Ambil survei bila pengguna berhak menyuntingnya (pemilik atau admin). */
 function sv_get_owned(int $id, array $u): ?array

@@ -3,7 +3,7 @@ declare(strict_types=1);
 require __DIR__ . '/lib_survei.php';
 start_session();
 $id = (int)($_GET['id'] ?? 0);
-$u = sv_require_user('/survei/edit.php?id=' . $id);
+$u = sv_require_verified('/survei/edit.php?id=' . $id);
 $s = sv_get_owned($id, $u);
 if (!$s) { http_response_code(404); page('Survei tidak ditemukan', '<h1>Survei tidak ditemukan</h1><p class="mute">Survei ini tidak ada atau bukan milik akun Anda.</p><a class="btn" href="/survei/">Ke daftar survei</a>'); }
 $q = sv_db()->prepare('SELECT COUNT(*) FROM responses WHERE survey_id = ?');

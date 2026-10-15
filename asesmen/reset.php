@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     elseif ($p1 !== (string)($_POST['password2'] ?? '')) $error = 'Kedua kata sandi tidak sama.';
     else {
         $uid = (int)$row['user_id'];
-        db()->prepare('UPDATE users SET pass_hash = ? WHERE id = ?')->execute([password_hash($p1, PASSWORD_DEFAULT), $uid]);
+        db()->prepare('UPDATE users SET pass_hash = ?, verified = 1 WHERE id = ?')->execute([password_hash($p1, PASSWORD_DEFAULT), $uid]);
         db()->prepare('DELETE FROM resets WHERE user_id = ?')->execute([$uid]);
         $q = db()->prepare('SELECT email FROM users WHERE id = ?');
         $q->execute([$uid]);
