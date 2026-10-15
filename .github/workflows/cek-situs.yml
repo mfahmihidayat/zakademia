@@ -19,7 +19,7 @@ jobs:
           case " $ipweb " in *" $ipftp "*) same="SAMA";; *) same="BEDA";; esac
           echo "::notice::DNS zakademia.com = $ipweb | www = $ipwww | server FTP vs web: $same"
           echo "::notice::NS = $(dig +short NS zakademia.com | tr '\n' ' ')"
-          for u in / /asesmen/masuk.php /asesmen/akun.php /survei/ /analitik/ /analitik/lib_analitik.php /analitik/an.js /s/contoh-tidak-ada /asesmen/data/asesmen.sqlite; do
+          for u in / /layanan/riset /layanan/analitik /asesmen/masuk.php /survei/ /analitik/ /analitik/lib_analitik.php /analitik/an.js /s/contoh-tidak-ada /asesmen/data/asesmen.sqlite; do
             h=$(curl -s -o /dev/null -w "%{http_code} redirect=%{redirect_url}" --max-time 20 "https://zakademia.com$u?cek=$RANDOM")
             echo "::notice::$u -> $h"
           done

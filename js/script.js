@@ -4,10 +4,12 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   var pages=['beranda','layanan','kajian','literasi','tentang','kontak','admin'];
   var menu=document.getElementById('menu'),toggle=document.getElementById('menuToggle');
   function route(){
-    var h=(location.hash||'#beranda').slice(1); if(pages.indexOf(h)<0) h='beranda';
+    var parts=(location.hash||'#beranda').slice(1).split('/'),h=parts[0],sub=parts[1]||''; if(pages.indexOf(h)<0) h='beranda';
     document.querySelectorAll('[data-page]').forEach(function(p){p.hidden=p.getAttribute('data-page')!==h;});
     document.querySelectorAll('.menu a').forEach(function(a){ if(a.getAttribute('href')==='#'+h) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
     menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); window.scrollTo(0,0);
+    var tgt=sub&&document.getElementById(h+'-'+sub);
+    if(tgt){setTimeout(function(){tgt.scrollIntoView({behavior:'smooth',block:'start'});tgt.classList.add('zk-sorot');setTimeout(function(){tgt.classList.remove('zk-sorot');},2400);},60);}
     if(h==='admin' && window.zkAdminStart) window.zkAdminStart();
   }
   window.addEventListener('hashchange',route);

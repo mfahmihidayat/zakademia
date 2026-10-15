@@ -378,3 +378,5 @@ header{transition:box-shadow .3s}
 header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,transparent)}
 @media (prefers-reduced-motion:no-preference){main > [data-page]:not([hidden]){animation:rise .4s ease both}}
 @keyframes rise{from{transform:translateY(6px)}to{transform:none}}
+.detail article{scroll-margin-top:90px;transition:box-shadow .4s,outline-color .4s;outline:3px solid transparent;outline-offset:4px}
+.detail article.zk-sorot{outline-color:var(--gold)}
