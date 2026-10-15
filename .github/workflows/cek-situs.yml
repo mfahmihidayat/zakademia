@@ -24,6 +24,9 @@ jobs:
             echo "::notice::$u -> $h"
           done
           echo "::notice::akun.php?api=me -> $(curl -s --max-time 20 "https://zakademia.com/asesmen/akun.php?api=me")"
-          echo "::notice::script.js live: popup=$(curl -s --max-time 20 "https://zakademia.com/js/script.js?c=$RANDOM" | grep -c zk-follow) | cache: $(curl -sI --max-time 20 https://zakademia.com/js/script.js | grep -i -E '^(cache-control|x-hcdn-cache-status|age):' | tr -d '\r' | tr '\n' ' ')"
           curl -s --max-time 20 https://zakademia.com/ -o /tmp/live.html
           if cmp -s /tmp/live.html index.html; then echo "::notice::index.html di web SAMA dengan repositori"; else echo "::notice::index.html di web BEDA dengan repositori ($(wc -c < /tmp/live.html)B vs $(wc -c < index.html)B): $(head -c 300 /tmp/live.html | tr '\n' ' ')"; fi
+      - name: Periksa berkas skrip situs
+        run: |
+          echo "::notice::script.js live: popup=$(curl -s --max-time 20 "https://zakademia.com/js/script.js?c=$RANDOM" | grep -c zk-follow) | cache: $(curl -sI --max-time 20 https://zakademia.com/js/script.js | grep -i -E '^(cache-control|x-hcdn-cache-status|age):' | tr -d '\r' | tr '\n' ' ')"
+          echo "::notice::index.html memuat: $(curl -s --max-time 20 "https://zakademia.com/?c=$RANDOM" | grep -o 'js/script.js[^\"]*')"
