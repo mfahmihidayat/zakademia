@@ -33,6 +33,7 @@ jobs:
             README.md
             asesmen/PANDUAN.md
             asesmen/data/**
+            tools/**
 
       # Koneksi FTP Hostinger kadang terputus di tengah pengiriman; ulangi sampai dua kali.
       - name: Ulangi unggahan (percobaan 2)
@@ -54,6 +55,7 @@ jobs:
             README.md
             asesmen/PANDUAN.md
             asesmen/data/**
+            tools/**
 
       - name: Ulangi unggahan (percobaan 3)
         if: steps.unggah1.outcome == 'failure' && steps.unggah2.outcome == 'failure'
@@ -72,6 +74,7 @@ jobs:
             README.md
             asesmen/PANDUAN.md
             asesmen/data/**
+            tools/**
 
       # Bersihkan cache server dan CDN Hostinger agar perubahan langsung terlihat (butuh secret HOSTINGER_API_TOKEN).
       - name: Bersihkan cache Hostinger

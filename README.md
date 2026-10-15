@@ -31,3 +31,7 @@ Folder `asesmen/data/` berisi database kiriman dan akun pengguna. Folder ini dib
 Panduan pemakaian dashboard asesmen ada di `asesmen/PANDUAN.md`.
 
 Alur **Salin situs aktif** (dijalankan manual dari tab Actions) menyimpan isi situs yang sedang tayang ke cabang `situs-aktif`, misalnya sebelum perubahan besar.
+
+## Literasi (artikel)
+
+Isi artikel ada di `tools/literasi/articles.py`. Setelah mengubah atau menambah artikel, jalankan `python3 tools/literasi/build.py` dari akar repositori. Skrip ini membuat halaman `literasi/`, gambar pratinjau `assets/images/og-lit-*.png`, dan kartu "Bacaan terbaru" di `index.html`. Folder `tools/` tidak ikut diunggah ke hosting.
