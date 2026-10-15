@@ -1,6 +1,7 @@
 // Ilustrasi vektor Zakademia untuk gambar pratinjau (kanvas 532x520). Palet merek.
 const C={deep:'#0B4D33',deep2:'#156B47',leaf:'#6FAF78',soft:'#B9D9BE',mist:'#F2F5E6',gold:'#C99A3B',goldS:'#F2D79B',ivory:'#FFFFF0',ink:'#10291F',white:'#FFFFFF',paper:'#FBFAF2'};
-const T=(x,y,s,t,o={})=>`<text x="${x}" y="${y}" font-family="Plus Jakarta Sans" font-weight="${o.w||800}" font-size="${s}" fill="${o.c||C.ink}" text-anchor="${o.a||'middle'}" letter-spacing="${o.ls||0}">${t}</text>`;
+let FONT='Plus Jakarta Sans';
+const T=(x,y,s,t,o={})=>`<text x="${x}" y="${y}" font-family="${FONT}" font-weight="${o.w||800}" font-size="${s}" fill="${o.c||C.ink}" text-anchor="${o.a||'middle'}" letter-spacing="${o.ls||0}">${t}</text>`;
 const shadow=`<filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0B4D33" flood-opacity=".22"/></filter>`;
 let PLAIN=false;
 const bg=(a=C.mist,b='#E3EEDC')=>PLAIN?`<defs>${shadow}</defs>`:`<defs>${shadow}<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="532" height="520" fill="url(#bg)"/>
@@ -95,4 +96,4 @@ const ART={
  <g filter="url(#sh)"><circle cx="420" cy="150" r="58" fill="${C.goldS}"/><circle cx="420" cy="150" r="40" fill="${C.white}"/></g><rect x="402" y="200" width="36" height="34" rx="8" fill="${C.deep}"/>
  <g stroke="${C.gold}" stroke-width="6" stroke-linecap="round"><path d="M420 70 v-22"/><path d="M490 150 h22"/><path d="M350 150 h-22"/><path d="M470 100 l16 -16"/><path d="M370 100 l-16 -16"/></g>`,
 };
-module.exports={ART,setPlain:v=>{PLAIN=v;}};
+module.exports={ART,setPlain:v=>{PLAIN=v;},setFont:f=>{FONT=f;},H:{C,T,bg,coin,stack,lawBook,gavel,block,arrowUp,building,mosque,doc}};

@@ -1,8 +1,40 @@
-{"out":"assets/images/ig/zakatips-penghasilan-2026","art":"kalkulator","eyebrow":"ZakaTips",
-"slides":[
-{"type":"cover","h":"Cara menghitung zakat penghasilan <em>2026.</em>","lead":"Nisab baru, rumus 2,5%, dan tiga contoh hitungan."},
-{"type":"isi","eb":"1 · Nisab 2026","h":"Sudah wajib zakat atau belum?","body":"<div class=\"big\"><small>Nisab per bulan</small><b>Rp7.640.144</b></div><div class=\"big\"><small>Nisab per tahun</small><b>Rp91.681.728</b></div><div class=\"card\">Setara <b>85 gram emas</b>. Penghasilan di atas angka ini sudah wajib zakat.</div><p class=\"src\">Sumber: SK Ketua BAZNAS No. 15 Tahun 2026</p>"},
-{"type":"isi","eb":"2 · Rumus","h":"Kadarnya 2,5 persen.","body":"<div class=\"rumus\">Zakat = 2,5% × penghasilan</div><div class=\"card\"><span class=\"k\">Gaji tetap</span>Bandingkan dengan <b>nisab bulanan</b>, bayar tiap bulan.</div><div class=\"card\"><span class=\"k\">Penghasilan tidak tetap</span>Jumlahkan setahun, bandingkan dengan <b>nisab tahunan</b>.</div>"},
-{"type":"isi","eb":"3 · Contoh","h":"Coba hitung bersama.","body":"<div class=\"card\"><span class=\"k\">Gaji Rp9.000.000/bulan</span>2,5% × Rp9.000.000<span class=\"r\">Rp225.000 per bulan</span></div><div class=\"card\"><span class=\"k\">Pekerja lepas Rp96 juta/tahun</span>2,5% × Rp96.000.000<span class=\"r\">Rp2.400.000 per tahun</span></div><div class=\"card\"><span class=\"k\">Gaji Rp6.500.000/bulan</span>Di bawah nisab. Belum wajib zakat, tetap bisa berinfak dan bersedekah.</div>"},
-{"type":"penutup","eb":"4 · Tunaikan","h":"Bayar ke lembaga resmi, simpan buktinya.","body":"<div class=\"chk\"><i>✓</i><span>Tunaikan melalui BAZNAS atau LAZ resmi.</span></div><div class=\"chk\"><i>✓</i><span>Simpan bukti setor. Zakat ke lembaga resmi dapat mengurangi penghasilan kena pajak.</span></div><div class=\"chk\"><i>✓</i><span>Atur pembayaran otomatis tiap tanggal gajian.</span></div><div class=\"cta\">Hitung zakat Anda dengan kalkulator di artikel lengkapnya. <b>Tautan di bio.</b></div>"}
-]}
+{
+"out": "assets/images/ig/zakatips-penghasilan-2026",
+"art": "kalkulator",
+"eyebrow": "ZakaTips",
+"slides": [
+{
+"type": "cover",
+"h": "Cara menghitung zakat penghasilan <em>2026.</em>",
+"lead": "Nisab baru, rumus 2,5%, dan tiga contoh hitungan."
+},
+{
+"type": "isi",
+"eb": "1 · Nisab 2026",
+"h": "Sudah wajib zakat atau belum?",
+"body": "<div class=\"big\"><small>Nisab per bulan</small><b>Rp7.640.144</b></div><div class=\"big\"><small>Nisab per tahun</small><b>Rp91.681.728</b></div><div class=\"card\">Setara <b>85 gram emas</b>. Penghasilan di atas angka ini sudah wajib zakat.</div><p class=\"src\">Sumber: SK Ketua BAZNAS No. 15 Tahun 2026</p>",
+"art": "nisab"
+},
+{
+"type": "isi",
+"eb": "2 · Rumus",
+"h": "Kadarnya 2,5 persen.",
+"body": "<div class=\"rumus\">Zakat = 2,5% × penghasilan</div><div class=\"card\"><span class=\"k\">Gaji tetap</span>Bandingkan dengan <b>nisab bulanan</b>, bayar tiap bulan.</div><div class=\"card\"><span class=\"k\">Penghasilan tidak tetap</span>Jumlahkan setahun, bandingkan dengan <b>nisab tahunan</b>.</div>",
+"art": "rumus"
+},
+{
+"type": "isi",
+"eb": "3 · Contoh",
+"h": "Coba hitung bersama.",
+"body": "<div class=\"card\"><span class=\"k\">Gaji Rp9.000.000/bulan</span>2,5% × Rp9.000.000<span class=\"r\">Rp225.000 per bulan</span></div><div class=\"card\"><span class=\"k\">Pekerja lepas Rp96 juta/tahun</span>2,5% × Rp96.000.000<span class=\"r\">Rp2.400.000 per tahun</span></div><div class=\"card\"><span class=\"k\">Gaji Rp6.500.000/bulan</span>Di bawah nisab. Belum wajib zakat, tetap bisa berinfak dan bersedekah.</div>",
+"art": "slip"
+},
+{
+"type": "penutup",
+"eb": "4 · Tunaikan",
+"h": "Bayar ke lembaga resmi, simpan buktinya.",
+"body": "<div class=\"chk\"><i>✓</i><span>Tunaikan melalui BAZNAS atau LAZ resmi.</span></div><div class=\"chk\"><i>✓</i><span>Simpan bukti setor. Zakat ke lembaga resmi dapat mengurangi penghasilan kena pajak.</span></div><div class=\"chk\"><i>✓</i><span>Atur pembayaran otomatis tiap tanggal gajian.</span></div><div class=\"cta\">Hitung zakat Anda dengan kalkulator di artikel lengkapnya. <b>Tautan di bio.</b></div>",
+"art": "tunaikan"
+}
+]
+}
