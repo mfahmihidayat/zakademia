@@ -84,6 +84,7 @@ def article_page(a):
     {chip(a["rubrik"], True)}
     <h1>{e(a["judul"])}</h1>
     <p class="lt-dek">{e(a["dek"])}</p>
+    <figure class="lt-hero"><img src="/assets/images/ilu/{ILUSTRASI.get(a['slug'], 'bedanya')}.png?v={V}" alt="{e(ALT.get(ILUSTRASI.get(a['slug'], 'bedanya'), 'Ilustrasi artikel'))}" width="532" height="520"></figure>
     <p class="lt-byline"><img src="/assets/images/logo-color.png" alt=""><span><b>Tim Zakademia</b><br>{tgl(a["tanggal"])} · {a["menit"]} menit baca</span></p>
   </header>
   <div class="lt-wrap-n">
@@ -125,6 +126,16 @@ bs.forEach(function(b){{b.onclick=function(){{pick(b.dataset.r);}};}});pick(new 
 '''
     return out + FOOT
 
+# Teks alternatif ilustrasi (untuk pembaca layar)
+ALT = {
+    'rakornas': 'Ilustrasi grafik penghimpunan zakat nasional, buku undang-undang zakat, dan palu hakim',
+    'wakaf': 'Ilustrasi tumpukan koin, masjid, dan sertifikat sukuk wakaf yang saling terhubung',
+    'mata': 'Ilustrasi gedung rumah sakit dan mata yang berbinar',
+    'kalkulator': 'Ilustrasi kalkulator bertuliskan 2,5 persen, koin, dan batangan emas 85 gram',
+    'statistik': 'Ilustrasi grafik batang yang naik, kaca pembesar, dan angka Rp44,7 triliun',
+    'bedanya': 'Ilustrasi buku UU 23/2011 dan UU 41/2004 dengan tanda tanya',
+}
+
 # Ilustrasi per artikel (lihat tools/og_art.js).
 ILUSTRASI = {
     'rakornas-baznas-2026-target-70-triliun': 'rakornas',
@@ -153,6 +164,12 @@ def og_images():
                          footer='Literasi Zakademia · ' + tgl(a['tanggal']), icon=os.path.join(ROOT, 'assets/images', ic),
                          art=ILUSTRASI.get(a['slug'], 'bedanya')))
     render_og(jobs)
+    import subprocess
+    env = dict(os.environ)
+    try: env['NODE_PATH'] = subprocess.run(['npm', 'root', '-g'], capture_output=True, text=True).stdout.strip()
+    except Exception: pass
+    r = subprocess.run(['node', os.path.join(os.path.dirname(__file__), '..', 'ilu_render.js')] + sorted(set(ILUSTRASI.values())), env=env, capture_output=True, text=True)
+    print((r.stdout + r.stderr).strip())
 
 def home_cards():
     """Sisipkan kartu tulisan terbaru di bagian Literasi pada index.html (di antara penanda)."""

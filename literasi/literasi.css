@@ -125,3 +125,8 @@ main#isi.lt-wrap{padding-bottom:64px}
 .lt-foot{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14px;color:var(--mute)}
 .lt-foot p{margin:8px 0 0}.lt-links{display:flex;gap:16px;flex-wrap:wrap}.lt-links a{color:var(--mute)}
 @media (prefers-reduced-motion:reduce){.lt-card{transition:none}}
+
+/* gambar utama artikel */
+.lt-hero{margin:4px 0 0;border-radius:32px 32px 32px 10px;background:radial-gradient(circle at 85% 12%,rgba(255,255,255,.7) 0 18%,transparent 19%),radial-gradient(circle at 8% 96%,#CFE4CF 0 26%,transparent 27%),linear-gradient(135deg,#F2F5E6,#E3EEDC);display:flex;justify-content:center;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/9}
+.lt-hero img{height:100%;width:auto;max-width:100%;object-fit:contain;display:block}
+@media (max-width:560px){.lt-hero{aspect-ratio:4/3;border-radius:24px 24px 24px 8px}}
