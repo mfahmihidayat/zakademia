@@ -39,8 +39,8 @@ h1,h2,.big b,.card .r,.rumus{font-family:'Fraunces';font-weight:700;letter-spaci
 .penutup .eb{color:#F2D79B}.penutup .ill{border-color:#156B47}
 .chk{display:flex;gap:22px;font-size:34px;line-height:1.36;font-weight:500}.chk i{flex:none;width:52px;height:52px;border-radius:50%;background:#C99A3B;color:#0B4D33;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:28px}
 .cta{margin-top:12px;background:#FFFFF0;color:#0B4D33;border-radius:36px 36px 36px 12px;padding:32px 40px;font-size:34px;line-height:1.35;font-weight:600}.cta b{font-weight:700}`;
-function slide(s,i,n,d){const top=`<div class="glow"></div><div class="top"><div class="brand"><img src="${LOGO}">Zakademia</div><div class="pg">${i+1}/${n}</div></div>`;
- const foot=`<div class="foot"><span>zakademia.com</span>${s.type==='cover'?'<span class="swipe">Geser →</span>':s.type==='penutup'?'<b>@zakademia.official</b>':'<span>Geser →</span>'}</div>`;
+function slide(s,i,n,d){const top=`<div class="glow"></div><div class="top"><div class="brand"><img src="${LOGO}">Zakademia</div><div class="pg">${n>1?`${i+1}/${n}`:''}</div></div>`;
+ const foot=`<div class="foot"><span>zakademia.com</span>${s.type==='cover'?`<span class="swipe">${n===1?'Tautan di bio':'Geser →'}</span>`:s.type==='penutup'?'<b>@zakademia.official</b>':'<span>Geser →</span>'}</div>`;
  if(s.type==='cover')return `<body class="cover">${top}<div class="eb">${d.eyebrow}</div><h1>${s.h}</h1><p class="lead">${s.lead}</p><div class="artbox">${art(s.art||d.art)}</div>${foot}</body>`;
  return `<body class="${s.type}">${top}<div class="eb">${s.eb||d.eyebrow}</div><h2>${s.h}</h2>${s.art?`<div class="artbox ill">${art(s.art)}</div>`:''}<div class="body">${s.body}</div>${foot}</body>`;}
 (async()=>{const d=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));const out=path.join(ROOT,d.out);fs.mkdirSync(path.dirname(out),{recursive:true});

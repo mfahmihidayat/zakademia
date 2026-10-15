@@ -1,0 +1,40 @@
+{
+"out": "assets/images/ig/zakapedia-wakaf-uang-cwls",
+"art": "wakaf",
+"eyebrow": "ZakaPedia",
+"slides": [
+{
+"type": "cover",
+"h": "Wakaf uang, wakaf melalui uang, dan <em>CWLS.</em>",
+"lead": "Tiga istilah yang sering tertukar. Bedanya ada pada apa yang dijaga."
+},
+{
+"type": "isi",
+"eb": "1 · Wakaf uang",
+"h": "Pokoknya dijaga.",
+"art": "pokok",
+"body": "<div class=\"card\"><span class=\"k\">Yang diwakafkan</span>Uang itu sendiri. Pokoknya dikelola, misalnya dalam instrumen keuangan syariah.</div><div class=\"card\"><span class=\"k\">Yang disalurkan</span><b>Hasil pengelolaannya</b>. Pokok uangnya tetap utuh.</div><div class=\"card\"><span class=\"k\">Caranya</span>Melalui bank syariah yang ditunjuk Menteri Agama (LKS-PWU). Wakif menerima Sertifikat Wakaf Uang.</div>"
+},
+{
+"type": "isi",
+"eb": "2 · Wakaf melalui uang",
+"h": "Uangnya jadi aset.",
+"art": "aset",
+"body": "<div class=\"card\"><span class=\"k\">Contoh</span>“Wakaf pembangunan masjid”, “wakaf sumur”, atau wakaf sekolah.</div><div class=\"card\"><span class=\"k\">Yang dijaga</span><b>Aset yang dibangun</b>, bukan uangnya. Setelah berdiri, asetnyalah harta wakaf.</div><div class=\"card\">Keduanya sah dan sama-sama bernilai. Yang penting, wakif tahu sedang ikut yang mana.</div>"
+},
+{
+"type": "isi",
+"eb": "3 · CWLS",
+"h": "Wakaf uang di sukuk negara.",
+"art": "sukuk",
+"body": "<div class=\"card\"><span class=\"k\">Cash Waqf Linked Sukuk</span>Wakaf uang membeli sukuk negara. <b>Imbal hasilnya</b> membiayai program sosial.</div><div class=\"big\"><small>SWR007 ditawarkan hingga</small><b>21 Okt 2026 <i>pukul 12.00 WIB</i></b></div><div class=\"card\">Imbal hasil min. 6,70%/tahun · tenor 2 tahun · mulai Rp1 juta</div><p class=\"src\">Sumber: Kemenkeu; EmitenNews (5/9/2026)</p>"
+},
+{
+"type": "penutup",
+"eb": "Sebelum berwakaf",
+"h": "Tanyakan satu hal ini kepada nazhir.",
+"art": "tunaikan",
+"body": "<div class=\"cta\" style=\"margin:0;font-size:38px\">“Apakah uang ini akan <b>dijaga pokoknya</b>, atau <b>dibelanjakan menjadi aset</b>?”</div><div class=\"chk\"><i>✓</i><span>Nazhir yang amanah akan menjawab dengan jelas.</span></div><div class=\"chk\"><i>✓</i><span>Simpan ikrar atau sertifikat wakaf Anda.</span></div><div class=\"chk\"><i>✓</i><span>Tabel perbandingan lengkap ada di zakademia.com. Tautan di bio.</span></div>"
+}
+]
+}

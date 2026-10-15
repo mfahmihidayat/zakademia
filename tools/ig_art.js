@@ -67,5 +67,69 @@ const IG={
  ${check(430,380,26)}
  <rect x="0" y="440" width="532" height="80" fill="${C.soft}" opacity=".6"/>
  ${stack(110,460,3,30)}`,
+ // Infak: koin masuk kotak
+ infak:()=>bg()+`
+ <g filter="url(#sh)"><rect x="140" y="260" width="250" height="180" rx="20" fill="${C.deep}"/><rect x="200" y="252" width="130" height="16" rx="8" fill="${C.ink}"/></g>
+ <path d="M140 320 h250" stroke="${C.deep2}" stroke-width="6"/>${T(265,390,26,'INFAK',{c:C.goldS,ls:4})}
+ ${coin(265,190,34)}${coin(205,120,26)}${coin(330,90,22)}
+ <path d="M265 210 v28" stroke="${C.gold}" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/>${sparkle(440,170,.8)}`,
+ // Sedekah: hati + tangan/ilmu/senyum
+ sedekah:()=>bg()+`
+ <g filter="url(#sh)"><path d="M266 420 C 90 300, 120 130, 266 210 C 412 130, 442 300, 266 420 Z" fill="${C.leaf}"/></g>
+ ${[['Ilmu',110,120],['Tenaga',420,120],['Senyum',266,470]].map(([t,x,y])=>`<g filter="url(#sh)"><rect x="${x-70}" y="${y-30}" width="140" height="56" rx="28" fill="${C.white}"/></g>${T(x,y+6,20,t,{c:C.deep})}`).join('')}
+ ${coin(266,290,40)}`,
+ // ZakaStat: 2024 ke 2025 naik
+ naik:()=>bg()+`
+ <g filter="url(#sh)"><rect x="66" y="80" width="400" height="360" rx="22" fill="${C.white}"/></g>
+ <line x1="100" y1="390" x2="430" y2="390" stroke="${C.soft}" stroke-width="3"/>
+ <rect x="130" y="200" width="100" height="190" rx="12" fill="${C.leaf}"/><rect x="290" y="168" width="100" height="222" rx="12" fill="${C.deep}"/>
+ ${T(180,188,24,'40,8')}${T(340,156,24,'44,7',{c:'#8A6418'})}${T(180,420,18,'2024',{c:'#4A6355',w:600})}${T(340,420,18,'2025',{c:'#4A6355',w:600})}
+ <g filter="url(#sh)"><rect x="330" y="40" width="150" height="64" rx="16" fill="${C.gold}"/></g>${T(405,82,28,'+9,54%',{c:C.white})}`,
+ // Wakaf uang: koin di dalam perisai (pokok dijaga), hasil mengalir
+ pokok:()=>bg()+`
+ <g filter="url(#sh)"><path d="M180 90 L300 130 L300 250 Q300 360 180 420 Q60 360 60 250 L60 130 Z" fill="${C.deep}"/></g>
+ ${stack(180,300,5,46)}
+ <path d="M320 260 C 380 250, 410 220, 440 170" stroke="${C.gold}" stroke-width="6" fill="none" stroke-dasharray="3 12" stroke-linecap="round"/>
+ <g filter="url(#sh)"><circle cx="450" cy="140" r="46" fill="${C.white}"/></g><path d="M450 166 C 410 138, 428 112, 450 132 C 472 112, 490 138, 450 166 Z" fill="${C.leaf}"/>
+ ${T(180,470,20,'Pokok tetap utuh',{c:C.deep})}${T(450,220,18,'Hasilnya',{c:C.deep})}`,
+ // Wakaf melalui uang: koin menjadi bangunan
+ aset:()=>bg()+`
+ ${stack(110,380,4,40)}
+ <path d="M170 330 h70" stroke="${C.gold}" stroke-width="8" stroke-linecap="round"/><path d="M228 312 l20 18 -20 18" stroke="${C.gold}" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ ${mosque(380,250,1)}
+ <rect x="0" y="440" width="532" height="80" fill="${C.soft}" opacity=".6"/>
+ ${T(110,460,20,'Uang',{c:C.deep})}${T(380,460,20,'Aset wakaf',{c:C.deep})}`,
+ // CWLS: sertifikat sukuk + imbal hasil ke program
+ sukuk:()=>bg()+`
+ ${doc(60,110,220,280,'SUKUK NEGARA',5)}
+ <path d="M290 250 C 330 250, 340 200, 370 190" stroke="${C.gold}" stroke-width="6" fill="none" stroke-dasharray="3 12" stroke-linecap="round"/>
+ ${[['Klinik',150],['Pangan',260],['Pendidikan',370]].map(([t,y])=>`<g filter="url(#sh)"><rect x="350" y="${y-38}" width="140" height="76" rx="16" fill="${C.white}"/></g><circle cx="382" cy="${y}" r="14" fill="${C.leaf}"/>${T(444,y+6,t.length>8?14:17,t,{c:C.deep})}`).join('')}
+ ${stack(140,460,3,30)}`,
+ // ZakaStory: pasien kembali melihat
+ kisah:()=>bg()+`
+ <g filter="url(#sh)"><circle cx="230" cy="200" r="80" fill="${C.deep2}"/><path d="M90 440 Q90 300 230 300 Q370 300 370 440 Z" fill="${C.deep2}"/></g>
+ <g stroke="${C.ink}" stroke-width="8" fill="${C.white}" fill-opacity=".55"><circle cx="196" cy="200" r="30"/><circle cx="264" cy="200" r="30"/><path d="M226 200 h8" fill="none"/></g>
+ <g filter="url(#sh)"><rect x="330" y="300" width="150" height="110" rx="10" fill="${C.white}"/></g><path d="M405 310 v90" stroke="${C.soft}" stroke-width="4"/>${[0,1,2].map(i=>`<rect x="345" y="${325+i*24}" width="48" height="7" rx="3" fill="${C.soft}"/><rect x="417" y="${325+i*24}" width="48" height="7" rx="3" fill="${C.soft}"/>`).join('')}
+ ${sparkle(420,120,1)}${sparkle(90,120,.6)}`,
+ // ZakaStat: 73% di luar neraca
+ neraca:()=>bg()+`
+ <g filter="url(#sh)"><circle cx="230" cy="260" r="160" fill="${C.deep}"/></g>
+ <path d="M230 260 L230 100 A160 160 0 0 0 76.4 215.3 Z" fill="${C.goldS}"/>
+ <circle cx="230" cy="260" r="80" fill="${C.mist}"/>${T(230,272,40,'73%',{c:C.deep})}
+ <g filter="url(#sh)"><rect x="370" y="90" width="130" height="66" rx="16" fill="${C.white}"/></g>${T(435,132,22,'27% neraca',{c:'#8A6418'})}
+ ${T(230,470,20,'Di luar neraca',{c:C.deep})}`,
+ // ZakaStat: muzaki turun, dana naik
+ muzaki:()=>bg()+`
+ ${[0,1,2,3,4].map(i=>person(90+i*60,250,1,i<4?C.deep2:C.soft)).join('')}
+ <path d="M90 300 L380 330" stroke="#C0392B" stroke-width="6" stroke-linecap="round"/><path d="M362 316 l20 14 -20 14" stroke="#C0392B" stroke-width="6" fill="none" stroke-linecap="round"/>
+ ${T(230,380,22,'31,5 jt → 28,7 jt muzaki',{c:C.deep})}
+ ${stack(120,480,2,30)}${stack(200,480,3,30)}${stack(280,480,4,30)}${stack(360,480,5,30)}
+ ${arrowUp(450,480,150,C.gold)}`,
+ // ZakaStat: realisasi vs potensi
+ potensi:()=>bg()+`
+ <g filter="url(#sh)"><circle cx="266" cy="250" r="190" fill="${C.white}"/></g>
+ <circle cx="266" cy="250" r="190" fill="none" stroke="${C.soft}" stroke-width="3" stroke-dasharray="8 10"/>
+ <circle cx="266" cy="368" r="72" fill="${C.deep}"/>${T(266,364,24,'Rp44,7 T',{c:C.goldS})}${T(266,392,15,'realisasi',{c:'#E9F2E6',w:600})}
+ ${T(266,150,28,'Rp327,6 T',{c:'#8A6418'})}${T(266,180,17,'potensi per tahun',{c:'#4A6355',w:600})}`,
 };
 Object.assign(ART,IG);module.exports={ART};

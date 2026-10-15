@@ -1,0 +1,40 @@
+{
+"out": "assets/images/ig/zakastat-angka-zakat-2025",
+"art": "statistik",
+"eyebrow": "ZakaStat",
+"slides": [
+{
+"type": "cover",
+"h": "Rp44,7 triliun: membaca angka <em>zakat 2025.</em>",
+"lead": "Enam angka dari Laporan Pengelolaan Zakat Nasional 2025."
+},
+{
+"type": "isi",
+"eb": "1 · Penghimpunan",
+"h": "Naik 9,54 persen.",
+"art": "naik",
+"body": "<div class=\"big\"><small>ZIS-DSKL nasional 2025</small><b>Rp44,70 triliun</b></div><div class=\"card\"><span class=\"k\">2024</span>Rp40,81 triliun</div><div class=\"card\"><span class=\"k\">Penyaluran 2025</span>Rp44,29 triliun</div><p class=\"src\">Sumber: LPZN 2025, BAZNAS</p>"
+},
+{
+"type": "isi",
+"eb": "2 · Pencatatan",
+"h": "73% di luar neraca.",
+"art": "neraca",
+"body": "<div class=\"card\"><span class=\"k\">Di luar neraca</span><b>Rp32,82 triliun</b>. Dilaporkan, tetapi tidak tercatat langsung di laporan keuangan BAZNAS dan LAZ.</div><div class=\"card\"><span class=\"k\">Tercatat di neraca</span><b>Rp11,88 triliun</b>. Terbesar: zakat maal Rp4,30 T dan infak/sedekah Rp4,18 T.</div>"
+},
+{
+"type": "isi",
+"eb": "3 · Muzaki",
+"h": "Dana naik, muzaki turun.",
+"art": "muzaki",
+"body": "<div class=\"big\"><small>Muzaki tercatat 2025</small><b>28,7 juta <i>dari 31,5 juta</i></b></div><div class=\"card\">Rata-rata nilai per muzaki meningkat. <b>Menjaga muzaki lama</b> sama pentingnya dengan mencari muzaki baru.</div>"
+},
+{
+"type": "penutup",
+"eb": "4 · Ruang tumbuh",
+"h": "Baru ±14% dari potensi.",
+"art": "potensi",
+"body": "<div class=\"chk\"><i>✓</i><span>Potensi zakat diperkirakan <b>Rp327,6 triliun</b> per tahun.</span></div><div class=\"chk\"><i>✓</i><span>Wakaf uang 2024 Rp2,9 triliun, sekitar 1,6% dari potensinya.</span></div><div class=\"chk\"><i>✓</i><span>Orang Indonesia rata-rata menyumbang 1,55% penghasilan (World Giving Report 2025).</span></div><div class=\"cta\">Enam angka lengkap di zakademia.com. <b>Tautan di bio.</b></div>"
+}
+]
+}
