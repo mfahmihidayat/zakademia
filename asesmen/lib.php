@@ -364,3 +364,32 @@ function row_to_record(array $r): array
         'akun' => isset($r['user_id']) && $r['user_id'] !== null,
     ];
 }
+
+/* ---------- pratinjau tautan (WhatsApp, Instagram, dll.) ---------- */
+const SHARE_CARDS = [
+    'riset' => ['Buat Survei | Zakademia', 'Riset Kebutuhan: susun kuesioner, bagikan tautan dan kode QR, pantau jawaban yang masuk.', 'og-riset.png'],
+    'analitik' => ['Kesehatan Penghimpunan | Zakademia', 'Data & Analitik: hitung retensi donatur, CLV, CAC, dan biaya per rupiah terhimpun dari angka rekap tahunan.', 'og-analitik.png'],
+    'pendampingan' => ['Asesmen Kesiapan Penghimpunan | Zakademia', 'Pendampingan Strategi dimulai dengan asesmen kesiapan penghimpunan lembaga.', 'og-asesmen.png'],
+    'belajar' => ['Ruang Belajar | Zakademia', 'Kamar Analitik dan Kamar Riset: modul singkat, kuis, dan praktik langsung.', 'og-belajar.png'],
+];
+function share_meta(string $key, string $url): string
+{
+    [$t, $d, $img] = SHARE_CARDS[$key] ?? ['Zakademia | Riset, Data, dan Literasi Filantropi Islam', 'Ruang untuk bertumbuh, dan bermanfaat bagi sesama.', 'og-image.png'];
+    $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    $base = ($https ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'zakademia.com');
+    return '<title>' . e($t) . '</title><meta name="description" content="' . e($d) . '">'
+        . '<meta property="og:type" content="website"><meta property="og:site_name" content="Zakademia">'
+        . '<meta property="og:title" content="' . e($t) . '"><meta property="og:description" content="' . e($d) . '">'
+        . '<meta property="og:url" content="' . e($base . $url) . '"><meta property="og:image" content="' . e($base . '/assets/images/' . $img) . '">'
+        . '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">';
+}
+/** Untuk pengunjung yang belum masuk: tampilkan pratinjau tautan, lalu arahkan ke halaman masuk. */
+function share_gate(string $key, string $url, string $to): void
+{
+    header('Content-Type: text/html; charset=utf-8');
+    header('Cache-Control: no-store');
+    echo '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' . share_meta($key, $url)
+        . '<link rel="icon" href="/assets/images/favicon.png"><meta http-equiv="refresh" content="0;url=' . e($to) . '"><script>location.replace(' . json_encode($to) . ');</script></head>'
+        . '<body style="font-family:system-ui,sans-serif;background:#FFFFF0;color:#10291F;padding:40px 20px"><p>Membuka <a href="' . e($to) . '">halaman masuk Zakademia</a>…</p></body></html>';
+    exit;
+}

@@ -34,7 +34,10 @@ function sv_db(): PDO
 function sv_require_user(string $next): array
 {
     $u = current_user();
-    if (!$u) redirect('/asesmen/masuk.php?next=' . urlencode($next));
+    if (!$u) {
+        $key = str_starts_with($next, '/analitik') ? 'analitik' : (str_starts_with($next, '/belajar') ? 'belajar' : 'riset');
+        share_gate($key, $next, '/asesmen/masuk.php?next=' . urlencode($next));
+    }
     return $u;
 }
 /** Pengguna yang sudah masuk dan emailnya terverifikasi. */

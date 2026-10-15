@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require __DIR__ . '/../asesmen/lib.php';
 /* Tautan publik per layanan: menampilkan pratinjau (judul, deskripsi, gambar) saat dibagikan, lalu membuka bagian layanan di situs. */
 $L = [
     'riset' => ['Riset Kebutuhan', 'Penelitian terapan yang dirancang berdasarkan kebutuhan informasi lembaga, mencakup perilaku donatur, evaluasi program, dan pemetaan potensi.'],
@@ -20,12 +21,7 @@ header('Content-Type: text/html; charset=utf-8');
 header('Cache-Control: public, max-age=300');
 ?><!doctype html>
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title><?= $h($t) ?> · Zakademia</title>
-<meta name="description" content="<?= $h($d) ?>">
-<meta property="og:type" content="website"><meta property="og:site_name" content="Zakademia">
-<meta property="og:title" content="<?= $h($t) ?> · Zakademia"><meta property="og:description" content="<?= $h($d) ?>">
-<meta property="og:url" content="<?= $h($base . '/layanan/' . $k) ?>"><meta property="og:image" content="<?= $h($base) ?>/assets/images/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
+<?= share_meta(isset($L[$k]) ? $k : '', '/layanan/' . $k) ?>
 <link rel="canonical" href="<?= $h($base . '/layanan/' . $k) ?>">
 <link rel="icon" href="/assets/images/favicon.png">
 <meta http-equiv="refresh" content="0;url=<?= $h($to) ?>">
