@@ -34,7 +34,7 @@
 <title>Zakademia | Riset, Data, dan Literasi Filantropi Islam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
-<link href="css/style.css" rel="stylesheet"/>
+<link href="css/style.css?v=202610152321" rel="stylesheet"/>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="leaf" viewBox="0 0 300 300"><path d="M10 290 C 40 150 160 40 295 10 C 285 150 220 250 10 290 Z"/></symbol>
 </svg>
@@ -595,7 +595,7 @@
   </div>
 </footer>
 
-<script src="js/script.js"></script>
+<script src="js/script.js?v=202610152321"></script>
 <script>
 fetch('/asesmen/akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
   var a=document.getElementById('navAkun');if(a&&j&&j.user){a.textContent='Akun saya';a.href='/asesmen/akun.php';}
