@@ -25,7 +25,7 @@ poin=[
 ],
 isi='''
 <h2>Apa yang terjadi</h2>
-<p>Badan Amil Zakat Nasional (BAZNAS) menggelar Rapat Koordinasi Nasional (Rakornas) pada 13–15 Oktober 2026 di Jakarta dengan tema <em>Konsolidasi Zakat Indonesia yang Produktif dan Berdampak</em>. Sekitar 1.300 peserta dari BAZNAS pusat, provinsi, dan kabupaten/kota hadir, bersama sejumlah pejabat negara, di antaranya Ketua MPR Ahmad Muzani, Menteri Agama Nasaruddin Umar, dan Menko Kumham Imipas Yusril Ihza Mahendra.{1}</p>
+<p>Badan Amil Zakat Nasional (BAZNAS) menggelar Rapat Koordinasi Nasional (Rakornas) pada 13–15 Oktober 2026 di Jakarta dengan tema <em>Konsolidasi Zakat Indonesia yang Produktif dan Berdampak</em>. Sekitar 1.300 peserta dari BAZNAS provinsi dan kabupaten/kota se-Indonesia hadir, bersama sejumlah pejabat negara, di antaranya Ketua MPR Ahmad Muzani, Menteri Agama Nasaruddin Umar, dan Menko Kumham Imipas Yusril Ihza Mahendra.{1}</p>
 <p>Ketua BAZNAS RI Sodik Mudjahid mengumumkan target penghimpunan ZIS-DSKL nasional sebesar Rp70 triliun pada 2027. Target ini mencakup BAZNAS di semua tingkatan dan Lembaga Amil Zakat (LAZ) di seluruh Indonesia, serta mengacu pada Rencana Strategis BAZNAS 2026–2031.{1}{2}</p>
 <blockquote><p>“Setiap penerima manfaat adalah saudara kita yang sedang kita bantu bangkit, dari mustahik menjadi muzaki.”</p><cite>Sodik Mudjahid, Ketua BAZNAS RI{1}</cite></blockquote>
 
@@ -46,7 +46,7 @@ isi='''
 <p class="cta-in">Ingin tahu kondisi penghimpunan lembaga Anda? Coba <a href="/analitik/">Kesehatan Penghimpunan</a>: isi angka rekap tahunan, hasilnya langsung keluar.</p>
 ''',
 sumber=[
- ('RMOL', 'Baznas Targetkan Pengumpulan Zakat Nasional Rp70 Triliun pada 2027', '14 Oktober 2026', 'https://rmol.id/read/2026/10/14/724927/baznas-targetkan-pengumpulan-zakat-nasional-rp70-triliun-pada-2027'),
+ ('BAZNAS RI', 'Perluas Manfaat, BAZNAS RI Tetapkan Target Pengumpulan ZIS-DSKL Nasional 2027 Capai Rp70 Triliun', '13 Oktober 2026', 'https://baznas.go.id/news-show/Perluas_Manfaat__BAZNAS_RI_Tetapkan_Target_Pengumpulan_ZIS_DSKL_Nasional_2027_Capai_Rp70_Triliun/4404'),
  ('Periskop.id', 'Yusril Dorong Revisi UU Zakat, Baznas Bidik Rp70 Triliun di 2027', '15 Oktober 2026', 'https://periskop.id/regulasi/20261015/yusril-revisi-uu-zakat-baznas-target-70-triliun-2027'),
  ('BAZNAS', 'Laporan Pengelolaan Zakat Nasional Akhir Tahun 2025', '2026', 'https://baznas.go.id/assets/images/szn/LPZN-Tahun-2025.pdf'),
  ('JPNN', 'Rakornas 2026, Baznas Pasang Target Zakat Nasional Rp 70 Triliun', '14 Oktober 2026', 'https://www.jpnn.com/news/rakornas-2026-baznas-pasang-target-zakat-nasional-rp-70-triliun'),
