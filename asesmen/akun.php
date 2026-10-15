@@ -82,7 +82,7 @@ foreach (ORG_TYPES as $t) $opts .= '<option' . ($t === $u['org_type'] ? ' select
 page('Akun saya', '
 <h1>Assalamu\'alaikum, ' . e($u['name']) . '</h1>
 <p class="mute">' . e($u['email']) . ($u['org'] ? ' · ' . e($u['org']) : '') . '</p>
-' . (user_verified($u) ? '' : '<div class="err" role="status" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px">Email akun belum diverifikasi. Verifikasi diperlukan untuk mengirim asesmen dan membuat survei.</span><a class="btn" href="verifikasi.php" style="min-height:40px;padding:8px 16px;font-size:14px">Verifikasi sekarang</a></div>') . '
+' . (user_verified($u) ? '' : '<div class="err" role="status" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px">Email akun belum diverifikasi.</span><a class="btn" href="verifikasi.php" style="min-height:40px;padding:8px 16px;font-size:14px">Verifikasi sekarang</a></div>') . '
 ' . ($ok ? '<p class="ok" role="status">' . e($ok) . '</p>' : '') . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
 ' . ($u['role'] === 'admin' ? '<div class="row" style="justify-content:flex-start"><a class="btn gold" href="admin.php">Dashboard admin asesmen</a><a class="btn ghost" href="email.php">Pengaturan email</a></div>' : '') . $services . '
 <h2>Riwayat asesmen</h2>

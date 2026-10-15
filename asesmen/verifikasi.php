@@ -53,7 +53,7 @@ if ($act === 'csrf') {
 $hn = '<input type="hidden" name="next" value="' . e($next) . '">';
 page('Verifikasi email', '
 <h1>Verifikasi email</h1>
-<p class="mute">Agar tim Zakademia dapat menghubungi lembaga Anda, setiap akun perlu memastikan emailnya aktif. Masukkan 6 angka kode yang kami kirim ke <b>' . e($email) . '</b>.</p>
+<p class="mute">Masukkan 6 angka kode yang dikirim ke <b>' . e($email) . '</b>.</p>
 ' . ($info ? '<p class="ok" role="status">' . e($info) . '</p>' : '') . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
 <form method="post" action="verifikasi.php" style="display:flex;flex-direction:column;gap:14px">
   ' . csrf_field() . $hn . '<input type="hidden" name="act" value="kode">
