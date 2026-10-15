@@ -380,3 +380,20 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 @keyframes rise{from{transform:translateY(6px)}to{transform:none}}
 .detail article{scroll-margin-top:90px;transition:box-shadow .4s,outline-color .4s;outline:3px solid transparent;outline-offset:4px}
 .detail article.zk-sorot{outline-color:var(--gold)}
+
+/* pop-up ikuti kanal Zakademia */
+.zk-follow{position:fixed;z-index:60;right:20px;bottom:20px;width:min(380px,calc(100% - 32px));background:var(--paper);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lift);padding:22px 22px 18px;display:flex;flex-direction:column;gap:12px;transform:translateY(16px);opacity:0;transition:transform .35s ease,opacity .35s ease}
+.zk-follow.on{transform:none;opacity:1}
+.zk-follow .fh{display:flex;gap:12px;align-items:center;padding-right:28px}
+.zk-follow .fh img{width:44px;height:44px;flex:none}
+.zk-follow h2{font-size:18px;letter-spacing:-.01em}
+.zk-follow p{margin:0;color:var(--mute);font-size:14.5px;line-height:1.55}
+.zk-follow .fa{display:flex;flex-direction:column;gap:8px}
+.zk-follow .fa a{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;border-radius:999px;font:700 15px var(--sans);text-decoration:none;color:#fff}
+.zk-follow .fa a svg{width:20px;height:20px;flex:none}
+.zk-follow .wa{background:#1F8F4E}.zk-follow .ig{background:linear-gradient(135deg,#8A3AB9,#E1306C 55%,#F77737)}
+.zk-follow .fa a:hover{filter:brightness(1.06)}
+.zk-follow .x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;background:var(--mist);color:var(--mute);font-size:16px;cursor:pointer}
+.zk-follow .later{align-self:center;background:none;border:0;color:var(--mute);font:600 13.5px var(--sans);cursor:pointer;padding:6px 10px;text-decoration:underline}
+@media (max-width:560px){.zk-follow{right:16px;left:16px;bottom:16px;width:auto}}
+@media (prefers-reduced-motion:reduce){.zk-follow{transition:none}}

@@ -362,3 +362,30 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   var j=document.getElementById('c-jenis'),m=document.getElementById('c-pesan');
   if(j&&tp)[].forEach.call(j.options,function(o){if(o.text===tp)j.value=o.value||o.text;});
   if(m&&ps&&!m.value)m.value=ps;}catch(_){}})();
+
+// pop-up ajakan mengikuti Saluran WhatsApp dan Instagram Zakademia
+(function(){
+  var WA_CHANNEL='';   // isi dengan tautan Saluran WhatsApp, mis. https://whatsapp.com/channel/XXXXXXXX
+  var IG='https://instagram.com/zakademia.official';
+  var KEY='zk-follow-tutup',DAYS=14;
+  try{var t=+localStorage.getItem(KEY);if(t&&Date.now()-t<DAYS*864e5)return;}catch(_){}
+  if(location.hash==='#admin')return;
+  var shown=false,box;
+  function close(remember){if(!box)return;box.classList.remove('on');setTimeout(function(){box&&box.remove();box=null;},350);if(remember)try{localStorage.setItem(KEY,String(Date.now()));}catch(_){}document.removeEventListener('keydown',esc);}
+  function esc(e){if(e.key==='Escape')close(true);}
+  var waIcon='<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>';
+  var igIcon='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>';
+  function show(){if(shown)return;shown=true;
+    box=document.createElement('aside');box.className='zk-follow';box.setAttribute('role','dialog');box.setAttribute('aria-labelledby','zkFollowT');
+    box.innerHTML='<button class="x" type="button" aria-label="Tutup">✕</button><div class="fh"><img src="assets/images/logo-color.png" alt=""><h2 id="zkFollowT">Ikuti kabar Zakademia</h2></div>'+
+      '<p>Kajian, rubrik literasi bersama Zaida dan Wafiy, dan kabar layanan terbaru, langsung di genggaman Anda.</p><div class="fa">'+
+      (WA_CHANNEL?'<a class="wa" href="'+WA_CHANNEL+'" target="_blank" rel="noopener">'+waIcon+'Ikuti Saluran WhatsApp</a>':'')+
+      '<a class="ig" href="'+IG+'" target="_blank" rel="noopener">'+igIcon+'Ikuti Instagram</a></div><button class="later" type="button">Nanti saja</button>';
+    document.body.appendChild(box);requestAnimationFrame(function(){box.classList.add('on');});
+    box.querySelector('.x').onclick=function(){close(true);};box.querySelector('.later').onclick=function(){close(true);};
+    box.querySelectorAll('.fa a').forEach(function(a){a.addEventListener('click',function(){close(true);});});
+    document.addEventListener('keydown',esc);}
+  // muncul setelah 20 detik, atau setelah pengunjung menggulir lebih dari setengah halaman
+  var timer=setTimeout(show,20000);
+  window.addEventListener('scroll',function on(){var h=document.documentElement;if(h.scrollTop/(h.scrollHeight-h.clientHeight||1)>.5){clearTimeout(timer);show();window.removeEventListener('scroll',on);}},{passive:true});
+})();
