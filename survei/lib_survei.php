@@ -355,10 +355,11 @@ function sv_head(string $title, string $crumb = ''): void
     echo '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">'
         . '<title>' . e($title) . ' · Zakademia</title><link rel="icon" href="/assets/images/favicon.png">'
         . '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
-        . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"></head><body>'
+        . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/cari.js?v=202610190100" defer></script></head><body>'
         . '<header class="top"><div class="in"><a class="brand" href="/"><img src="/assets/images/logo-color.png" alt="">Zakademia</a>'
         . ($crumb ? '<span class="crumb">/ ' . $crumb . '</span>' : '')
-        . '<nav><a href="/asesmen/akun.php">Akun saya</a><a href="/survei/">Survei</a><a href="/analitik/">Analitik</a><a href="/belajar/">Belajar</a>' . ($u && $u['role'] === 'admin' ? '<a href="/asesmen/admin.php">Admin</a>' : '') . '<a href="/asesmen/keluar.php">Keluar</a></nav></div></header>';
+        . '<nav><a href="/asesmen/akun.php">Akun saya</a><a href="/survei/">Survei</a><a href="/analitik/">Analitik</a><a href="/belajar/">Belajar</a>' . ($u && $u['role'] === 'admin' ? '<a href="/asesmen/admin.php">Admin</a>' : '') . '<a href="/asesmen/keluar.php">Keluar</a></nav>'
+        . '<button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button></div></header>';
 }
 
 /** Ekspor jawaban satu survei ke CSV (dipakai dashboard admin). */

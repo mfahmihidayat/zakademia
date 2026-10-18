@@ -37,13 +37,14 @@ HEAD = '''<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/literasi/literasi.css?v={v}">
+<link rel="stylesheet" href="/css/cari.css?v=202610190100">
 {extra}
 </head>
 <body>
 <a class="skip" href="#isi">Langsung ke isi</a>
 <header class="lt-top"><div class="lt-wrap lt-nav">
   <a class="lt-brand" href="/"><img src="/assets/images/logo-color.png" alt=""><span>Zakademia</span></a>
-  <nav aria-label="Utama"><a href="/#beranda">Beranda</a><a href="/#layanan">Layanan</a><a href="/literasi/"{lit}>Literasi</a><a class="lt-btn" href="/asesmen/masuk.php">Masuk</a></nav>
+  <nav aria-label="Utama"><a href="/#beranda">Beranda</a><a href="/#layanan">Layanan</a><a href="/literasi/"{lit}>Literasi</a><a class="lt-btn" href="/asesmen/masuk.php">Masuk</a></nav><button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button>
 </div></header>
 '''
 FOOT = '''<footer class="lt-foot"><div class="lt-wrap">
@@ -51,6 +52,7 @@ FOOT = '''<footer class="lt-foot"><div class="lt-wrap">
   <p>Riset, Data, dan Literasi Filantropi Islam. <em>Bertumbuh bersama, bermanfaat bagi sesama.</em></p>
   <p class="lt-links"><a href="/#layanan">Layanan</a><a href="/literasi/">Literasi</a><a href="/#kontak">Kontak</a><a href="https://instagram.com/zakademia.official" target="_blank" rel="noopener">Instagram</a></p>
 </div></footer>
+<script src="/js/cari.js?v=202610190100"></script>
 </body></html>
 '''
 
@@ -199,3 +201,5 @@ if __name__ == '__main__':
     open(os.path.join(ROOT, 'literasi', 'index.html'), 'w', encoding='utf-8').write(index_page())
     og_images(); home_cards()
     print('selesai:', len(ARTIKEL), 'artikel')
+    # perbarui indeks pencarian situs (js/cari-indeks.json)
+    sys.path.insert(0, os.path.join(ROOT, 'tools', 'cari')); import indeks; indeks.main()
