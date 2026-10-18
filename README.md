@@ -37,3 +37,9 @@ Alur **Salin situs aktif** (dijalankan manual dari tab Actions) menyimpan isi si
 Isi artikel ada di `tools/literasi/articles.py`. Setelah mengubah atau menambah artikel, jalankan `python3 tools/literasi/build.py` dari akar repositori. Skrip ini membuat halaman `literasi/`, gambar pratinjau `assets/images/og-lit-*.png`, dan kartu "Bacaan terbaru" di `index.html`. Folder `tools/` tidak ikut diunggah ke hosting.
 
 Gambar pratinjau memakai ilustrasi vektor khas Zakademia (`tools/og_art.js`, digambar dengan `tools/og_render.js` lewat Playwright). Pilihan ilustrasi per artikel ada di `ILUSTRASI` dalam `tools/literasi/build.py`. Gambar pratinjau layanan dibuat dengan `python3 tools/og_layanan.py`.
+
+## Pencarian
+
+Ikon kaca pembesar di header (beranda, Literasi, dan halaman aplikasi) membuka jendela pencarian seluruh situs. Pintasan papan ketik: `Ctrl+K` / `⌘K` atau `/`. Kodenya ada di `js/cari.js` dan `css/cari.css`.
+
+Isi yang dapat dicari tersimpan di `js/cari-indeks.json`: artikel Literasi, halaman beranda, layanan, bidang kajian, buku, artikel ilmiah, modul Ruang Belajar, dan halaman alat. Indeks ini diperbarui otomatis saat `tools/literasi/build.py` dijalankan. Bila hanya mengubah `index.html` atau `belajar/modul.js`, jalankan `python3 tools/cari/indeks.py` dari akar repositori. Daftar halaman alat diatur di `ALAT` dalam skrip tersebut.
