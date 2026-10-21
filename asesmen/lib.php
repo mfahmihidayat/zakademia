@@ -209,7 +209,11 @@ function start_session(): void
     if (session_status() === PHP_SESSION_ACTIVE) return;
     $secure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
     session_name('zkd');
-    session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => $secure, 'httponly' => true, 'samesite' => 'Lax']);
+    $host = strtolower((string)($_SERVER['HTTP_HOST'] ?? ''));
+    $params = ['lifetime' => 0, 'path' => '/', 'secure' => $secure, 'httponly' => true, 'samesite' => 'Lax'];
+    // Cookie sesi berlaku untuk zakademia.com dan www.zakademia.com sekaligus.
+    if (preg_match('/(^|\.)zakademia\.com$/', $host)) $params['domain'] = '.zakademia.com';
+    session_set_cookie_params($params);
     session_start();
     if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(16));
 }

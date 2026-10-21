@@ -1,3 +1,9 @@
+# Satu alamat resmi: www.zakademia.com dialihkan ke zakademia.com (sesi masuk terikat pada satu host).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.zakademia\.com$ [NC]
+  RewriteRule ^ https://zakademia.com%{REQUEST_URI} [R=301,L]
+</IfModule>
 # Halaman 404 khusus; selebihnya diatur Hostinger.
 ErrorDocument 404 /404.html
 <IfModule mod_expires.c>
