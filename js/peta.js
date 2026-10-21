@@ -9,7 +9,8 @@
     pz:{l:'Pengelola zakat',s:'Jumlah BAZNAS provinsi, BAZNAS kabupaten/kota, dan LAZ yang beroperasi di provinsi ini (2024).',f:function(v){return Math.round(v)+' lembaga';},k:'pz'},
     iwn:{l:'Indeks Wakaf 2023',s:'Indeks Wakaf Nasional 2023 (BWI), skala 0 sampai 1: kelembagaan, regulasi, nazhir, aset, dan dampak.',f:function(v){return v.toFixed(3);},k:'iwn'}
   };
-  function rp(v){ if(v>=1e12) return 'Rp'+(v/1e12).toFixed(2).replace('.',',')+' triliun'; if(v>=1e9) return 'Rp'+(v/1e9).toFixed(1).replace('.',',')+' miliar'; if(v>=1e6) return 'Rp'+(v/1e6).toFixed(1).replace('.',',')+' juta'; return 'Rp'+v.toLocaleString('id-ID'); }
+  function des(x,n){ return x.toFixed(n).replace(/\.?0+$/,'').replace('.',','); }
+  function rp(v){ if(v>=1e12) return 'Rp'+des(v/1e12,2)+' triliun'; if(v>=1e9) return 'Rp'+des(v/1e9,1)+' miliar'; if(v>=1e6) return 'Rp'+des(v/1e6,1)+' juta'; return 'Rp'+Math.round(v).toLocaleString('id-ID'); }
   var cur='zis', aktif=null;
   // gambar peta
   var ns='http://www.w3.org/2000/svg'; svg.setAttribute('viewBox',D.vb);
@@ -20,8 +21,11 @@
   function kelas(){ var k=M[cur].k, vals=D.prov.map(function(p){return p[k];}), lo=Math.min.apply(null,vals), hi=Math.max.apply(null,vals), sq=cur!=='iwn';
     var f=function(v){ return sq?Math.sqrt(Math.max(0,v-lo))/Math.sqrt(hi-lo||1):(v-lo)/(hi-lo||1); };
     D.prov.forEach(function(p){ var v=p[k]; p.el.style.fill=warna(f(v)); p.el.setAttribute('aria-label',p.n+': '+M[cur].f(v)); });
-    var inv=function(t){ return sq?lo+t*t*(hi-lo):lo+t*(hi-lo); }, ticks=[0,.25,.5,.75,1];
-    legend.innerHTML='<i style="background:linear-gradient(90deg,'+warna(0)+','+warna(.25)+','+warna(.5)+','+warna(.75)+','+warna(1)+')"></i><div class="peta-ticks">'+ticks.map(function(t){ return '<span style="left:'+(t*100)+'%">'+M[cur].f(inv(t))+'</span>'; }).join('')+'</div>'; }
+    // nilai acuan legenda dibulatkan ke angka bulat (1 angka penting di tengah, 2 di ujung), lalu diletakkan sesuai skala
+    var inv=function(t){ return sq?lo+t*t*(hi-lo):lo+t*(hi-lo); };
+    var bulat=function(v,d){ if(cur==='iwn') return Math.round(v*10)/10; if(v<=0) return 0; var m=Math.pow(10,Math.floor(Math.log10(v))-(d-1)); return Math.round(v/m)*m; };
+    var ticks=[bulat(lo,2),bulat(inv(.25),1),bulat(inv(.5),1),bulat(inv(.75),1),bulat(hi,2)].filter(function(v,i,a){ return a.indexOf(v)===i; });
+    legend.innerHTML='<i style="background:linear-gradient(90deg,'+warna(0)+','+warna(.25)+','+warna(.5)+','+warna(.75)+','+warna(1)+')"></i><div class="peta-ticks">'+ticks.map(function(v){ var t=Math.max(0,Math.min(1,f(v))); return '<span style="left:'+(t*100).toFixed(1)+'%">'+(cur==='iwn'?des(v,1):M[cur].f(v))+'</span>'; }).join('')+'</div>'; }
   function rank(p){ var k=M[cur].k; return D.prov.slice().sort(function(a,b){return b[k]-a[k];}).indexOf(p)+1; }
   function tampil(p){ aktif=p; D.prov.forEach(function(x){x.el.classList.toggle('on',x===p);}); sel.value=D.prov.indexOf(p);
     var k=M[cur].k;
