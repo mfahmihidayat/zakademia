@@ -86,3 +86,14 @@ pernyataan karya sendiri; batas 3 kiriman per pekan. Admin meninjau di `/literas
 Tolak, Tarik, sunting ringan judul/rubrik/ringkasan, tandai penulis tepercaya); penulis diberi tahu lewat email.
 Tulisan terbit dirender `literasi/k.php` dari tabel `lt_tulisan` dengan template yang sama seperti artikel tim,
 ikut tampil di daftar Literasi (dimuat `literasi/api.php`), pencarian situs, dan `literasi/sitemap-kontributor.xml`.
+
+## Ruang Belajar (LMS)
+
+Struktur kelas → modul → materi (bacaan, video YouTube, berkas, kuis, praktik) disimpan di tabel `lms_*` dan dikelola
+sepenuhnya lewat `/belajar/admin.php` (teks memakai format sederhana yang sama dengan kontributor; kuis ditulis dengan
+baris `? pertanyaan`, `- pilihan`, `* pilihan benar`, `> pembahasan`). Peserta mendaftar gratis, membeli lewat Lynk.id
+(webhook mengenali kata kunci kelas), atau ditambahkan admin. Kemajuan per materi tersimpan; kuis dinilai otomatis dengan
+batas lulus per kelas; sertifikat (`belajar/sertifikat.php`, gambar GD + PDF tanpa pustaka luar, tanda tangan
+M. Fahmi Hidayat dengan fon Great Vibes) terbit otomatis saat semua materi selesai dan kuis lulus, bernomor
+`ZK-TAHUN-NNNN` dan dapat diverifikasi publik di `/belajar/sertifikat/<nomor>`. Isi awal dua kelas diambil dari
+`belajar/seed.json` (migrasi Ruang Belajar lama) saat tabel masih kosong.

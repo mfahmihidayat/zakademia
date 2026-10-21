@@ -27,7 +27,10 @@ if (preg_match('/fail|gagal|pending|expire|cancel|batal|refund/i', $p['status'])
 elseif ($conf['kata_kunci'] !== '' && !str_contains($all, strtolower($conf['kata_kunci']))) {
     $bconf = bk_conf();
     $slug = bk_match($raw, $bconf);
-    if ($slug === '') $hasil = 'diabaikan: produk lain';
+    $kls = null;
+    if ($slug === '') { try { require_once __DIR__ . '/../belajar/lib_lms.php'; $kls = lms_match($raw, lms_db()->query("SELECT * FROM lms_kelas WHERE kata_kunci != ''")->fetchAll(PDO::FETCH_ASSOC)); } catch (Throwable $e) { $kls = null; } }
+    if ($slug === '' && $kls && $p['email'] !== '') { $g = lms_beli((int)$kls['id'], $p['email'], $p['ref'], $p['nilai'], 'lynk'); $hasil = 'kelas ' . $kls['slug'] . ': ' . ($g['baru'] ? 'akses dibuat' : 'sudah tercatat'); if ($g['baru']) send_mail($p['email'], 'Akses kelas ' . $kls['judul'] . ' · Zakademia', "Terima kasih. Kelas \"{$kls['judul']}\" sudah terbuka untuk email ini.\nMasuk atau daftar dengan email ini di " . rk_site() . "/belajar/{$kls['slug']}/ lalu klik \"Sudah membayar? Buka kelas\".\n\nSalam,\nTim Zakademia"); }
+    elseif ($slug === '') $hasil = 'diabaikan: produk lain';
     elseif ($p['email'] === '') $hasil = 'diabaikan: email pembeli tidak ditemukan';
     else {
         $g = bk_grant($slug, $p['email'], $p['ref'], $p['produk'], $p['nilai'], 'lynk');

@@ -153,6 +153,8 @@ $bkBaca = (int)$bk->query('SELECT COUNT(*) FROM bk_akses WHERE terakhir IS NOT N
 $rkAkses = 0; try { $rkAkses = (int)rk_db()->query('SELECT COUNT(*) FROM rk_akses WHERE aktif = 1')->fetchColumn(); } catch (Throwable $e) {}
 $ltAntre = $ltTerbit = $ltPenulis = 0;
 try { require_once __DIR__ . '/../literasi/lib_literasi.php'; $lp = lt_db(); $ltAntre = (int)$lp->query('SELECT COUNT(*) FROM lt_tulisan WHERE status = \'ditinjau\'')->fetchColumn(); $ltTerbit = (int)$lp->query('SELECT COUNT(*) FROM lt_tulisan WHERE status = \'terbit\'')->fetchColumn(); $ltPenulis = (int)$lp->query('SELECT COUNT(*) FROM lt_penulis')->fetchColumn(); } catch (Throwable $e) {}
+$lmsKelas = $lmsPeserta = $lmsSert = $lmsTanya = 0;
+try { require_once __DIR__ . '/../belajar/lib_lms.php'; $lp = lms_db(); $lmsKelas = (int)$lp->query("SELECT COUNT(*) FROM lms_kelas WHERE status = 'terbit'")->fetchColumn(); $lmsPeserta = (int)$lp->query('SELECT COUNT(DISTINCT user_id) FROM lms_daftar')->fetchColumn(); $lmsSert = (int)$lp->query('SELECT COUNT(*) FROM lms_sertifikat')->fetchColumn(); $lmsTanya = (int)$lp->query('SELECT COUNT(*) FROM lms_tanya WHERE jawab IS NULL')->fetchColumn(); } catch (Throwable $e) {}
 $svJml = 0; try { require_once __DIR__ . '/../survei/lib_survei.php'; $svJml = (int)sv_db()->query('SELECT COUNT(*) FROM responses')->fetchColumn(); } catch (Throwable $e) {}
 
 $card = fn(string $v, string $l, string $s = '') => '<div class="kartu"><b>' . $v . '</b><span>' . $l . '</span>' . ($s ? '<small class="mute">' . $s . '</small>' : '') . '</div>';
@@ -213,7 +215,7 @@ h2{margin-top:28px}
   <a href="/buku/admin.php"><b>Admin buku digital</b><small>' . $n($bkAkses) . ' pembeli aktif · ' . $n($bkBaca) . ' sudah membaca · harga, tautan Lynk.id, akses manual</small></a>
   <a href="/asesmen/admin.php?api=csv_akun"><b>Unduh daftar akun (CSV)</b><small>semua akun dengan lembaga dan tanggal daftar</small></a>
   <a href="/analitik/"><b>Analitik</b><small>katalog data dan visualisasi</small></a>
-  <a href="/belajar/"><b>Ruang belajar</b><small>materi dan kuis</small></a>
+  <a href="/belajar/admin.php"><b>Kelola kelas (Ruang Belajar)</b><small>' . $n($lmsKelas) . ' kelas · ' . $n($lmsPeserta) . ' peserta · ' . $n($lmsSert) . ' sertifikat' . ($lmsTanya ? ' · <span class="pill">' . $lmsTanya . ' pertanyaan</span>' : '') . '</small></a>
   <a href="https://github.com/mfahmihidayat/zakademia/actions" target="_blank" rel="noopener"><b>Status penerbitan situs</b><small>GitHub Actions · unggah ke Hostinger</small></a>
 </div>
 <p class="mute" style="text-align:center;margin-top:24px"><a href="/asesmen/akun.php">Akun saya</a> · <a href="/asesmen/keluar.php">Keluar</a></p>', '1100px');

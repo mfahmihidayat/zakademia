@@ -1,0 +1,37 @@
+/* Ruang Belajar Zakademia */
+.lms-head{display:flex;flex-direction:column;gap:6px;margin-bottom:22px}.lms-head h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:0}.lms-head p{margin:0;max-width:72ch}
+.lms-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.lms-kelas{display:flex;flex-direction:column;overflow:hidden;text-decoration:none;color:var(--ink)}
+.lms-kelas .kh{display:flex;gap:14px;align-items:center;padding:20px 20px 16px;background:var(--deep);color:#FFFFF0}
+.lms-kelas .kh img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,240,.6);flex:none;background:var(--mist)}
+.lms-kelas .kh h2{font-size:19px;color:#FFFFF0;margin:0;line-height:1.25}.lms-kelas .kh small{display:block;opacity:.85;font-size:13px;margin-top:3px}
+.lms-kelas .kb{padding:16px 20px 18px;display:flex;flex-direction:column;gap:10px;flex:1}.lms-kelas .kb p{margin:0;color:var(--mute);font-size:14.5px;flex:1}
+.lms-kelas .km{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--mute);font-weight:600}
+.bar{height:8px;background:var(--mist);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gold);border-radius:9px}
+.lms-kelas .kh .bar{background:rgba(255,255,240,.25);margin-top:8px}
+.harga{font-weight:800;color:var(--deep)}
+/* halaman kelas */
+.lms-two{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px;align-items:start}
+.lms-daftar{list-style:none;margin:0;padding:0}
+.lms-daftar .mod{padding:14px 18px 6px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.lms-daftar a,.lms-daftar .x{display:flex;gap:12px;align-items:center;padding:11px 18px;text-decoration:none;color:var(--ink);border-top:1px solid var(--line)}
+.lms-daftar a:hover{background:var(--mist)}.lms-daftar a.on{background:var(--mist);box-shadow:inset 4px 0 0 var(--gold)}
+.lms-daftar .no{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--mist);color:var(--deep);flex:none}
+.lms-daftar .done .no{background:var(--deep);color:#FFFFF0}.lms-daftar .lock .no{background:transparent;border:1.5px dashed var(--line);color:var(--mute)}
+.lms-daftar b{display:block;font-size:14.5px;font-weight:600}.lms-daftar small{color:var(--mute);font-size:12.5px}
+/* materi */
+.lms-body{padding:clamp(18px,4vw,34px)}.lms-body h1{font-size:clamp(24px,3.4vw,32px);line-height:1.2;margin:0 0 6px}
+.lms-body .isi{font-size:16.5px;line-height:1.75}.lms-body .isi h2{font-size:21px;margin:26px 0 8px}.lms-body .isi h3{font-size:17px;margin:20px 0 6px}
+.lms-body .isi blockquote{margin:14px 0;padding:12px 16px;background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;font-size:15px}
+.lms-body .isi p strong:first-child{color:var(--deep)}
+.lms-video{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;margin:14px 0}.lms-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.lms-nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:26px;padding-top:18px;border-top:1px solid var(--line)}
+.quiz{display:flex;flex-direction:column;gap:18px}.qq{display:flex;flex-direction:column;gap:8px}.qq .qt{font-weight:700}
+.qo{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;min-height:46px}
+.qo input{width:18px;height:18px;accent-color:var(--deep);margin:0}.qo.ok{border-color:#2E7D4F;background:#EEF6EF}.qo.no{border-color:#B4532A;background:var(--warn-soft)}
+.qe{font-size:13.5px;color:var(--mute);border-left:3px solid var(--line);padding-left:10px}
+.hasil{padding:16px 18px;border-radius:14px;background:var(--mist);display:flex;gap:14px;align-items:center;flex-wrap:wrap}.hasil b{font-size:26px;color:var(--deep)}
+.sert{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:18px 20px;background:linear-gradient(135deg,var(--deep),#14613F);color:#FFFFF0;border-radius:var(--r)}
+.sert b{font-size:18px}.sert p{margin:4px 0 0;opacity:.9;font-size:14px}.sert .btn{background:var(--gold);color:var(--ink)}
+.tanya{display:flex;flex-direction:column;gap:12px;margin-top:26px}.tanya .t{border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:14.5px}.tanya .t b{font-size:13px;color:var(--mute)}.tanya .j{margin-top:8px;padding:10px 12px;background:var(--mist);border-radius:10px}
+@media(max-width:860px){.lms-two{grid-template-columns:1fr}.lms-side{order:2}}

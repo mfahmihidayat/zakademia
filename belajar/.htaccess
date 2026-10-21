@@ -1,11 +1,24 @@
-# Halaman formulir dan dashboard selalu diambil versi terbaru, tidak disimpan di cache CDN atau browser.
+# Ruang Belajar: /belajar/<kelas>/ , /belajar/<kelas>/<materi>/ , /belajar/sertifikat/<nomor>
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /belajar/
+  RewriteRule ^sertifikat/([A-Za-z0-9-]+)/?$ sertifikat.php?no=$1 [L,QSA]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-z0-9-]+)/([0-9]+)/?$ materi.php?k=$1&m=$2 [L,QSA]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-z0-9-]+)/?$ kelas.php?k=$1 [L,QSA]
+</IfModule>
+<FilesMatch "^(lib_lms|lib_belajar)\.php$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "\.(otf|ttf|json)$">
+  Require all denied
+</FilesMatch>
 <IfModule mod_headers.c>
-  <FilesMatch "\.(html|php)$">
+  <FilesMatch "\.php$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   </FilesMatch>
 </IfModule>
-DirectoryIndex index.php
-
-<FilesMatch "^(lib_belajar)\.php$">
-  Require all denied
-</FilesMatch>
