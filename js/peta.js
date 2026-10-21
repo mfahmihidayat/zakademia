@@ -6,7 +6,7 @@
     zis:{l:'Pengumpulan ZIS 2024',s:'Zakat maal, zakat fitrah, dan infak/sedekah yang dihimpun BAZNAS provinsi dan kabupaten/kota sepanjang 2024.',f:rp,k:'zis'},
     zm:{l:'Zakat maal 2024',s:'Zakat harta yang dihimpun BAZNAS daerah sepanjang 2024.',f:rp,k:'zm'},
     is:{l:'Infak/sedekah 2024',s:'Infak dan sedekah yang dihimpun BAZNAS daerah sepanjang 2024.',f:rp,k:'is'},
-    pz:{l:'Pengelola zakat',s:'Jumlah BAZNAS provinsi, BAZNAS kabupaten/kota, dan LAZ yang beroperasi di provinsi ini (2024).',f:function(v){return v+' lembaga';},k:'pz'},
+    pz:{l:'Pengelola zakat',s:'Jumlah BAZNAS provinsi, BAZNAS kabupaten/kota, dan LAZ yang beroperasi di provinsi ini (2024).',f:function(v){return Math.round(v)+' lembaga';},k:'pz'},
     iwn:{l:'Indeks Wakaf 2023',s:'Indeks Wakaf Nasional 2023 (BWI), skala 0 sampai 1: kelembagaan, regulasi, nazhir, aset, dan dampak.',f:function(v){return v.toFixed(3);},k:'iwn'}
   };
   function rp(v){ if(v>=1e12) return 'Rp'+(v/1e12).toFixed(2).replace('.',',')+' triliun'; if(v>=1e9) return 'Rp'+(v/1e9).toFixed(1).replace('.',',')+' miliar'; if(v>=1e6) return 'Rp'+(v/1e6).toFixed(1).replace('.',',')+' juta'; return 'Rp'+v.toLocaleString('id-ID'); }
