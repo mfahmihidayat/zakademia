@@ -52,7 +52,7 @@ FOOT = '''<footer class="lt-foot"><div class="lt-wrap">
   <p>Riset, Data, dan Literasi Filantropi Islam. <em>Bertumbuh bersama, bermanfaat bagi sesama.</em></p>
   <p class="lt-links"><a href="/#layanan">Layanan</a><a href="/literasi/">Literasi</a><a href="/#kontak">Kontak</a><a href="https://instagram.com/zakademia.official" target="_blank" rel="noopener">Instagram</a></p>
 </div></footer>
-<script src="/js/cari.js?v=202610212200"></script><script src="/js/stat.js" defer></script>
+<script src="/js/cari.js?v=202610212200"></script><script src="/js/stat.js?v=2" defer></script>
 </body></html>
 '''
 
@@ -201,6 +201,11 @@ def home_cards():
            '<p style="margin-top:28px"><a class="btn btn-deep" href="/literasi/">Semua tulisan</a></p></section>\n  <!-- LITERASI-END -->')
     if '<!-- LITERASI-START -->' in s:
         s = re.sub(r'<!-- LITERASI-START -->.*?<!-- LITERASI-END -->', lambda m: blk, s, flags=re.S)
+    # tiga tulisan terbaru di tampilan beranda
+    home = ('<!-- LITERASI-HOME-START -->\n  <section class="wrap sec lt-home" style="padding-top:0"><div class="sec-head"><h2>Bacaan <em>terbaru</em></h2>'
+            '<a class="link" href="/literasi/">Semua tulisan</a></div><div class="lt-grid">' + ''.join(card(a) for a in latest[:3]) + '</div></section>\n  <!-- LITERASI-HOME-END -->')
+    if '<!-- LITERASI-HOME-START -->' in s:
+        s = re.sub(r'<!-- LITERASI-HOME-START -->.*?<!-- LITERASI-HOME-END -->', lambda m: home, s, flags=re.S)
     else:
         anchor = '<svg class="curve" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 C 360 0 900 0 1440 50 L1440 70 Z"/></svg>\n  <section class="deep"><div class="wrap sec">\n    <div data-reveal class="rubrics">'
         assert anchor in s, 'penanda bagian rubrik tidak ditemukan'

@@ -99,7 +99,7 @@ function st_nama(string $path): string
     if ($path === '/') return 'Beranda';
     $peta = ['/literasi/' => 'Literasi (daftar)', '/buku/metodologi/' => 'Buku: Metodologi Penelitian', '/buku/metodologi/baca' => 'Buku: pembaca flip',
         '/asesmen/' => 'Asesmen', '/asesmen/masuk.php' => 'Masuk', '/asesmen/daftar.php' => 'Daftar akun', '/asesmen/akun.php' => 'Akun saya',
-        '/survei/' => 'Survei', '/analitik/' => 'Analitik', '/belajar/' => 'Belajar', '/layanan/' => 'Layanan', '/rekomendasi/' => 'Rekomendasi Asesmen'];
+        '/survei/' => 'Survei', '/kajian/' => 'Kajian (beranda)', '/tentang/' => 'Tentang (beranda)', '/kontak/' => 'Kontak (beranda)', '/analitik/' => 'Analitik', '/belajar/' => 'Belajar', '/layanan/' => 'Layanan', '/rekomendasi/' => 'Rekomendasi Asesmen'];
     if (isset($peta[$path])) return $peta[$path];
     if (preg_match('#^/literasi/([^/]+)/?$#', $path, $m)) return 'Literasi: ' . str_replace('-', ' ', $m[1]);
     if (preg_match('#^/s/#', $path)) return 'Tautan pendek ' . $path;

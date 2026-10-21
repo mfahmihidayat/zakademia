@@ -57,5 +57,5 @@ sv_head('Ruang Belajar', $m ? '<a href="/belajar/">Ruang Belajar</a>' : 'Ruang B
 <script>var CSRF=<?= json_encode($_SESSION['csrf']) ?>,PROG=<?= json_encode((object)$prog) ?>,MOD=<?= json_encode($m) ?>,NAMA=<?= json_encode($u['name'], JSON_HEX_TAG) ?>;</script>
 <script src="/belajar/modul.js?v=1"></script>
 <script src="/belajar/belajar.js?v=1"></script>
-<script src="/js/stat.js" defer></script>
+<script src="/js/stat.js?v=2" defer></script>
 </body></html>

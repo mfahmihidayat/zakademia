@@ -78,5 +78,5 @@ footer input.go{width:64px;font:inherit;border-radius:10px;border:1px solid rgba
 <script>window.BK=<?= json_encode($cfg, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
 <script src="/js/flip/page-flip.browser.js"></script>
 <script src="/js/flip/baca.js?v=1"></script>
-<script src="/js/stat.js" defer></script>
+<script src="/js/stat.js?v=2" defer></script>
 </body></html>

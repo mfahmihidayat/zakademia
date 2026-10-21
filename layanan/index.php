@@ -28,5 +28,5 @@ header('Cache-Control: public, max-age=300');
 <script>location.replace(<?= json_encode($to) ?>);</script>
 </head><body style="font-family:system-ui,sans-serif;background:#FFFFF0;color:#10291F;padding:40px 20px">
 <p>Membuka <a href="<?= $h($to) ?>"><?= $h($t) ?></a> di Zakademia…</p>
-<script src="/js/stat.js" defer></script>
+<script src="/js/stat.js?v=2" defer></script>
 </body></html>

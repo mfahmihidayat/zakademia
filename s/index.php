@@ -76,6 +76,6 @@ $title = $s ? $def['title'] : 'Survei';
 })();
 </script>
 <?php endif; ?>
-<script src="/js/stat.js" defer></script>
+<script src="/js/stat.js?v=2" defer></script>
 </body>
 </html>

@@ -348,7 +348,7 @@ function page(string $title, string $body, string $width = '440px'): void
         . '.hp{position:absolute;left:-9999px}.check{flex-direction:row;align-items:flex-start;gap:10px;font-weight:400;color:var(--mute)}.check input{width:20px;min-height:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--deep)}'
         . 'table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}th{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}'
         . '.pill{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:#FFF1D6;color:#7A5410;white-space:nowrap}.pill.done{background:var(--mist);color:var(--deep)}'
-        . '</style><script src="/js/stat.js" defer></script></head><body><header><div class="in"><a class="brand" href="/"><img src="/assets/images/logo-color.png" alt="">Zakademia</a><nav>'
+        . '</style><script src="/js/stat.js?v=2" defer></script></head><body><header><div class="in"><a class="brand" href="/"><img src="/assets/images/logo-color.png" alt="">Zakademia</a><nav>'
         . (current_user() ? '<a href="/asesmen/akun.php">Akun saya</a><a href="/asesmen/keluar.php">Keluar</a>' : '<a href="/asesmen/masuk.php">Masuk</a><a href="/asesmen/daftar.php">Daftar</a>')
         . '</nav></div></header><main><div class="box">' . $body . '</div></main></body></html>';
     exit;
