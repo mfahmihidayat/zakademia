@@ -370,6 +370,7 @@ const SHARE_CARDS = [
     'riset' => ['Buat Survei | Zakademia', 'Riset Kebutuhan: susun kuesioner, bagikan tautan dan kode QR, pantau jawaban yang masuk.', 'og-riset.png'],
     'analitik' => ['Kesehatan Penghimpunan | Zakademia', 'Data & Analitik: hitung retensi donatur, CLV, CAC, dan biaya per rupiah terhimpun dari angka rekap tahunan.', 'og-analitik.png'],
     'pendampingan' => ['Asesmen Kesiapan Penghimpunan | Zakademia', 'Pendampingan Strategi dimulai dengan asesmen kesiapan penghimpunan lembaga.', 'og-asesmen.png'],
+    'rekomendasi' => ['Rekomendasi Asesmen | Zakademia', 'Hasil asesmen kesiapan penghimpunan lembaga Anda beserta 30 langkah prioritas dan indikator ukurnya.', 'og-asesmen.png'],
     'belajar' => ['Ruang Belajar | Zakademia', 'Kamar Analitik dan Kamar Riset: modul singkat, kuis, dan praktik langsung.', 'og-belajar.png'],
 ];
 function share_meta(string $key, string $url): string

@@ -69,3 +69,20 @@ Tambahkan tombol atau tautan "Ikuti asesmen" ke `https://zakademia.com/asesmen/`
 - **Pesan "terlalu sering" saat mengisi:** satu alamat IP dibatasi 5 kiriman per 10 menit. Ubah `rate_limit` di `config.php` bila perlu.
 - **Cadangan data:** unduh `asesmen/data/asesmen.sqlite` secara berkala, atau gunakan fitur Backup di cPanel.
 - **Reset akun admin tanpa email:** ubah `admin_reset` di `config.php` ke nilai baru (misalnya `r2`) dan `setup_code_hash` ke hash SHA-256 kode penyiapan baru, lalu deploy. Semua akun admin terhapus satu kali; akun lembaga dan kiriman tetap. Buka `admin.php` dan buat akun admin dengan kode tersebut.
+
+## Rekomendasi Asesmen (produk digital Lynk.id)
+
+Pembeli membayar di Lynk.id, lalu membuka **zakademia.com/rekomendasi**. Halaman itu meminta masuk (atau daftar) dan verifikasi email, kemudian menampilkan hasil asesmen lembaga beserta **rekomendasi rinci** dan tombol Unduh PDF (rekomendasi ikut di dalamnya).
+
+**Penyiapan sekali:**
+1. Masuk sebagai admin, buka **zakademia.com/rekomendasi/admin.php** (atau tombol *Pembeli rekomendasi* di Akun saya).
+2. Salin URL webhook di bagian 1, lalu tempel di Lynk.id: **Settings → Integrations → Webhooks → Save URL**. Klik *Test URL* di Lynk.id, lalu cek bagian 5 (Catatan webhook) untuk memastikan kiriman masuk.
+3. Isi tautan produk Lynk.id di bagian 2. Kata kunci produk bawaan "Rekomendasi": transaksi produk lain yang namanya tidak memuat kata ini diabaikan.
+4. Di Lynk.id, isi tautan yang diterima pembeli setelah bayar dengan **https://zakademia.com/rekomendasi/**.
+
+**Cara akses terbuka:**
+- Webhook transaksi sukses mencatat email pembeli dan mengirim email berisi tautan akses.
+- Bila akun Zakademia memakai email yang sama dengan email pembelian, akses langsung terbuka.
+- Bila berbeda, pembeli memasukkan email pembelian di halaman /rekomendasi; kode verifikasi dikirim ke email itu, lalu akses dipindahkan ke akunnya. Satu pembelian hanya untuk satu akun.
+- Bila webhook gagal atau pembayaran di luar Lynk.id, tambahkan akses manual di bagian 3. Akses bisa dicabut di bagian 4.
+- Rekomendasi disusun dari asesmen terbaru akun tersebut (atau yang diisi dengan email akun). Bila belum ada, pembeli diarahkan mengisi asesmen dulu.

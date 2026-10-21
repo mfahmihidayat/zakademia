@@ -76,6 +76,12 @@ foreach ($rows as $r) {
     $list .= '<tr><td>' . e($fmt($r['dikirim'])) . '</td><td>' . e($r['org']) . '</td><td><span class="pill' . ($done ? ' done' : '') . '">'
         . ($done ? 'Hasil dikirim ' . e($fmt($r['terkirim_pada'])) : 'Sedang ditelaah') . '</span></td></tr>';
 }
+$rkHas = false;
+try {
+    $q = db()->prepare('SELECT 1 FROM rk_akses WHERE aktif = 1 AND (user_id = ? OR (user_id IS NULL AND email = ?)) LIMIT 1');
+    $q->execute([$u['id'], $u['email']]);
+    $rkHas = (bool)$q->fetchColumn();
+} catch (Throwable $e) { $rkHas = false; }
 $opts = '';
 foreach (ORG_TYPES as $t) $opts .= '<option' . ($t === $u['org_type'] ? ' selected' : '') . '>' . e($t) . '</option>';
 
@@ -84,7 +90,7 @@ page('Akun saya', '
 <p class="mute">' . e($u['email']) . ($u['org'] ? ' · ' . e($u['org']) : '') . '</p>
 ' . (user_verified($u) ? '' : '<div class="err" role="status" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px">Email akun belum diverifikasi.</span><a class="btn" href="verifikasi.php" style="min-height:40px;padding:8px 16px;font-size:14px">Verifikasi sekarang</a></div>') . '
 ' . ($ok ? '<p class="ok" role="status">' . e($ok) . '</p>' : '') . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
-' . ($u['role'] === 'admin' ? '<div class="row" style="justify-content:flex-start"><a class="btn gold" href="admin.php">Dashboard admin asesmen</a><a class="btn ghost" href="email.php">Pengaturan email</a></div>' : '') . $services . '
+' . ($u['role'] === 'admin' ? '<div class="row" style="justify-content:flex-start"><a class="btn gold" href="admin.php">Dashboard admin asesmen</a><a class="btn ghost" href="/rekomendasi/admin.php">Pembeli rekomendasi</a><a class="btn ghost" href="email.php">Pengaturan email</a></div>' : '') . ($rkHas ? '<div class="ok" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px">Rekomendasi Asesmen lembaga Anda sudah dapat dibuka.</span><a class="btn" href="/rekomendasi/" style="min-height:40px;padding:8px 16px;font-size:14px">Buka rekomendasi</a></div>' : '') . $services . '
 <h2>Riwayat asesmen</h2>
 ' . ($rows ? '<div style="overflow-x:auto"><table><thead><tr><th>Dikirim</th><th>Lembaga</th><th>Status</th></tr></thead><tbody>' . $list . '</tbody></table></div>
 <p class="mute">Hasil asesmen ditelaah tim Zakademia dan dikirim ke email Anda.</p>'
