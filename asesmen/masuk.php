@@ -5,7 +5,7 @@ start_session();
 
 $next = safe_next($_GET['next'] ?? $_POST['next'] ?? '', '');
 $u = current_user();
-if ($u) redirect($next ?: ($u['role'] === 'admin' ? 'admin.php' : 'akun.php'));
+if ($u) redirect($next ?: ($u['role'] === 'admin' ? '/admin/' : 'akun.php'));
 
 $error = '';
 $email = '';
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             throttle_clear($keyE);
             login_user((int)$row['id']);
-            $dest = $next ?: ($row['role'] === 'admin' ? 'admin.php' : 'akun.php');
+            $dest = $next ?: ($row['role'] === 'admin' ? '/admin/' : 'akun.php');
             if ($row['role'] !== 'admin' && empty($row['verified'])) redirect('verifikasi.php?next=' . urlencode(str_starts_with($dest, '/') ? $dest : '/asesmen/' . $dest));
             redirect($dest);
         }

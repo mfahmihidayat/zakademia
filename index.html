@@ -615,7 +615,7 @@
 <script src="js/cari.js?v=202610220100"></script><script src="/js/stat.js?v=2" defer></script>
 <script>
 fetch('/asesmen/akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
-  var a=document.getElementById('navAkun');if(a&&j&&j.user){a.textContent='Akun saya';a.href='/asesmen/akun.php';}
+  var a=document.getElementById('navAkun');if(a&&j&&j.user){if(j.user.role==='admin'){a.textContent='Pusat kendali';a.href='/admin/';}else{a.textContent='Akun saya';a.href='/asesmen/akun.php';}}
 }).catch(function(){});
 </script>
 
