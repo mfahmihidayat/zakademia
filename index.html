@@ -34,7 +34,7 @@
 <title>Zakademia | Riset, Data, dan Literasi Filantropi Islam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
-<link href="css/style.css?v=202610152339" rel="stylesheet"/>
+<link href="css/style.css?v=202610211740" rel="stylesheet"/>
 <link href="css/cari.css?v=202610190100" rel="stylesheet"/>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="leaf" viewBox="0 0 300 300"><path d="M10 290 C 40 150 160 40 295 10 C 285 150 220 250 10 290 Z"/></symbol>
@@ -50,6 +50,7 @@
       <a href="#kajian">Kajian</a>
       <a href="#literasi">Literasi</a>
       <a href="#tentang">Tentang</a>
+      <a href="/buku/metodologi/">Buku digital</a>
       <a href="/asesmen/">Asesmen</a>
       <a class="btn btn-deep" href="/asesmen/masuk.php" id="navAkun">Masuk</a>
     </nav>
@@ -290,7 +291,7 @@
       </article>
     </div>
   </section>
-  <section class="wrap" style="padding-bottom:88px">
+  <section class="wrap" id="buku" style="padding-bottom:88px">
     <div class="sec-head"><h2 data-edit="t17">Publikasi <em>buku</em></h2><p data-edit="t25">Buku dan bab buku tim Zakademia di bidang zakat, wakaf, dan pembangunan manusia.</p></div>
     <div class="books">
       <article class="book"><div class="cover real"><img src="assets/images/cover-metodologi.jpg" alt="Sampul buku" loading="lazy"></div><div class="book-body"><span class="kicker">Zakademia · 2026 · Buku digital</span><h3>Metodologi Penelitian Filantropi Islam</h3><p class="book-sub">Paradigma, Metode, dan Penerapan dalam Studi Zakat-Wakaf</p><p class="book-au">M. Fahmi Hidayat, Fauziyah Latiefa Salsabila</p><p class="book-meta">483 hlm. · dibaca di situs</p><p>Panduan memilih, memadukan, dan menerapkan desain penelitian zakat dan wakaf dalam sepuluh bab, dengan studi kasus, kotak Dalam Jurnal, kuis, dan kamus istilah di tepi halaman. Pratinjau 24 halaman terbuka untuk semua.</p><a class="link" href="/buku/metodologi/">Baca buku digital</a></div></article>
@@ -602,7 +603,20 @@
   </div>
 </footer>
 
-<script src="js/script.js?v=202610152339"></script>
+<div class="bk-pop" id="bkPop" hidden role="dialog" aria-modal="true" aria-labelledby="bkPopT">
+  <div class="bk-pop-card">
+    <button class="bk-pop-x" type="button" id="bkPopX" aria-label="Tutup">&times;</button>
+    <a class="bk-pop-cover" href="/buku/metodologi/"><img src="assets/images/cover-metodologi.jpg" alt="Sampul Metodologi Penelitian Filantropi Islam"></a>
+    <div class="bk-pop-body">
+      <span class="kicker">Buku digital terbaru</span>
+      <h2 id="bkPopT">Metodologi Penelitian Filantropi Islam</h2>
+      <p class="bk-pop-sub">Paradigma, Metode, dan Penerapan dalam Studi Zakat-Wakaf</p>
+      <p>Sepuluh bab panduan desain penelitian zakat dan wakaf, dibaca langsung di situs dengan tampilan buku. Pratinjau 24 halaman terbuka untuk semua.</p>
+      <div class="bk-pop-act"><a class="btn btn-gold" href="/buku/metodologi/baca">Baca pratinjau</a><a class="btn btn-ghost" href="/buku/metodologi/">Lihat buku</a></div>
+    </div>
+  </div>
+</div>
+<script src="js/script.js?v=202610211740"></script>
 <script src="js/cari.js?v=202610190100"></script>
 <script>
 fetch('/asesmen/akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){

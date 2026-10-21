@@ -408,3 +408,17 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 .lt-chip img{width:26px;height:26px;border-radius:50%}
 .lt-chip b{font-weight:800}
 .lt-chip i{font-style:normal;color:var(--gold-text);font-weight:600;margin-left:2px}
+
+/* Popup buku digital di beranda */
+.bk-pop{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(16,41,31,.55);backdrop-filter:blur(3px);animation:bkIn .3s ease}
+.bk-pop-card{position:relative;display:grid;grid-template-columns:200px minmax(0,1fr);gap:26px;align-items:center;width:min(640px,100%);background:var(--paper);border-radius:28px 28px 28px 8px;padding:28px;box-shadow:0 30px 60px -24px rgba(0,0,0,.5);animation:bkUp .35s ease}
+.bk-pop-cover{display:block;border-radius:12px;overflow:hidden;box-shadow:0 18px 30px -16px rgba(0,0,0,.5)}
+.bk-pop-cover img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+.bk-pop-body h2{font-size:clamp(20px,2.6vw,26px);line-height:1.2;margin:6px 0 4px}
+.bk-pop-sub{color:var(--gold-text);font-weight:600;margin:0 0 8px}
+.bk-pop-body p{margin:0 0 6px}
+.bk-pop-act{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.bk-pop-act .btn{min-height:44px;padding:10px 20px;font-size:15px}
+.bk-pop-x{position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--mist);color:var(--ink);font-size:24px;line-height:1;cursor:pointer}
+@keyframes bkIn{from{opacity:0}}@keyframes bkUp{from{transform:translateY(16px);opacity:0}}
+@media(max-width:560px){.bk-pop-card{grid-template-columns:1fr;gap:16px;padding:22px;max-height:92vh;overflow:auto}.bk-pop-cover{width:150px;margin:0 auto}.bk-pop-body{text-align:center}.bk-pop-act{justify-content:center}}

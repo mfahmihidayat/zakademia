@@ -389,3 +389,17 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   var timer=setTimeout(show,20000);
   window.addEventListener('scroll',function on(){var h=document.documentElement;if(h.scrollTop/(h.scrollHeight-h.clientHeight||1)>.5){clearTimeout(timer);show();window.removeEventListener('scroll',on);}},{passive:true});
 })();
+
+/* Popup buku digital: tampil sekali per 7 hari, bisa ditutup dengan tombol, klik latar, atau Esc. */
+(function(){
+  var pop=document.getElementById('bkPop'); if(!pop) return;
+  var key='bk_pop_metodologi', now=Date.now();
+  try{ var t=parseInt(localStorage.getItem(key)||'0',10); if(now-t<7*864e5) return; }catch(e){}
+  if(location.hash && location.hash!=='#beranda') return;
+  function close(){ pop.hidden=true; document.body.style.overflow=''; try{localStorage.setItem(key,String(now));}catch(e){} }
+  setTimeout(function(){ pop.hidden=false; document.body.style.overflow='hidden'; document.getElementById('bkPopX').focus(); },1500);
+  document.getElementById('bkPopX').addEventListener('click',close);
+  pop.addEventListener('click',function(e){ if(e.target===pop) close(); });
+  pop.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',close); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !pop.hidden) close(); });
+})();
