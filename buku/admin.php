@@ -103,7 +103,7 @@ page('Buku digital · Admin', '
 <p class="mute">Pembeli membayar di Lynk.id, lalu membuka zakademia.com/buku dan masuk dengan email pembelian. Pembayaran lewat transfer ditambahkan manual di bagian 3.</p>
 ' . ($ok ? '<p class="ok" role="status">' . e($ok) . '</p>' : '') . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
 <h2>1. Webhook Lynk.id</h2>
-<p class="mute">Salin URL ini ke Lynk.id: Settings → Integrations → Webhooks → Save URL. Satu URL untuk semua buku; buku dikenali dari kata kunci nama produk. Transaksi sukses membuka akses otomatis dan mengirim email ke pembeli.</p>
+<p class="mute">Lynk.id hanya menerima satu URL webhook per akun. Kalau URL webhook Rekomendasi Asesmen sudah terdaftar di Lynk.id, <b>tidak perlu menambah apa pun</b>: URL itu juga mengenali produk buku dari kata kuncinya dan membuka akses otomatis. URL di bawah ini cadangan kalau ingin memakai webhook khusus buku (Settings → Integrations → Webhooks).</p>
 <input readonly value="' . e($hook) . '" onclick="this.select()" style="font-size:13px">
 <form method="post" action="admin.php">' . csrf_field() . '<input type="hidden" name="act" value="kunci"><button class="btn ghost" type="submit" onclick="return confirm(\'Ganti kunci? URL lama di Lynk.id tidak berlaku lagi.\')">Buat kunci baru</button></form>
 <h2>2. Pengaturan per buku</h2>
