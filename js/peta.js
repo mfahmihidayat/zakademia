@@ -11,13 +11,16 @@
   };
   function rp(v){ if(v>=1e12) return 'Rp'+(v/1e12).toFixed(2).replace('.',',')+' triliun'; if(v>=1e9) return 'Rp'+(v/1e9).toFixed(1).replace('.',',')+' miliar'; if(v>=1e6) return 'Rp'+(v/1e6).toFixed(1).replace('.',',')+' juta'; return 'Rp'+v.toLocaleString('id-ID'); }
   var cur='zis', aktif=null;
-  var COL=['rgba(255,255,240,.10)','rgba(226,188,103,.28)','rgba(226,188,103,.5)','rgba(226,188,103,.74)','#E2BC67'];
-  var LBL=['Terendah','','','','Tertinggi'];
   // gambar peta
   var ns='http://www.w3.org/2000/svg'; svg.setAttribute('viewBox',D.vb);
   D.prov.forEach(function(p,i){ var el=document.createElementNS(ns,'path'); el.setAttribute('d',p.d); el.setAttribute('tabindex','0'); el.setAttribute('role','button'); el.dataset.i=i; svg.appendChild(el); p.el=el; var o=document.createElement('option'); o.value=i; o.textContent=p.n; sel.appendChild(o); });
-  function kelas(){ var k=M[cur].k, vals=D.prov.map(function(p){return p[k];}).sort(function(a,b){return a-b;}); var q=[1,2,3,4].map(function(j){return vals[Math.floor(vals.length*j/5)];});
-    D.prov.forEach(function(p){ var v=p[k], c=0; while(c<4&&v>=q[c]) c++; p.el.style.fill=COL[c]; p.el.setAttribute('aria-label',p.n+': '+M[cur].f(v)); }); }
+  // warna berjenjang: hijau pucat (terendah) -> emas (tengah) -> emas tua (tertinggi); nilai yang timpang diratakan dengan akar
+  var STOPS=[[207,227,212],[233,199,122],[176,119,28]];
+  function warna(t){ var a=t<.5?STOPS[0]:STOPS[1], b=t<.5?STOPS[1]:STOPS[2], u=t<.5?t*2:(t-.5)*2; return 'rgb('+a.map(function(c,i){return Math.round(c+(b[i]-c)*u);}).join(',')+')'; }
+  function kelas(){ var k=M[cur].k, vals=D.prov.map(function(p){return p[k];}), lo=Math.min.apply(null,vals), hi=Math.max.apply(null,vals), sq=cur!=='iwn';
+    var f=function(v){ return sq?Math.sqrt(Math.max(0,v-lo))/Math.sqrt(hi-lo||1):(v-lo)/(hi-lo||1); };
+    D.prov.forEach(function(p){ var v=p[k]; p.el.style.fill=warna(f(v)); p.el.setAttribute('aria-label',p.n+': '+M[cur].f(v)); });
+    legend.innerHTML='<span>'+M[cur].f(lo)+'</span><i style="background:linear-gradient(90deg,'+warna(0)+','+warna(.5)+','+warna(1)+')"></i><span>'+M[cur].f(hi)+'</span>'; }
   function rank(p){ var k=M[cur].k; return D.prov.slice().sort(function(a,b){return b[k]-a[k];}).indexOf(p)+1; }
   function tampil(p){ aktif=p; D.prov.forEach(function(x){x.el.classList.toggle('on',x===p);}); sel.value=D.prov.indexOf(p);
     var k=M[cur].k;
@@ -30,7 +33,6 @@
       +(cur==='iwn'?'<p class="peta-note">Nasional: 0,301 (Baik). Sentuh provinsi di peta untuk rinciannya.</p>':'<p class="peta-note">Total 34 provinsi: '+M[cur].f(D.total[k])+'. Sentuh provinsi di peta untuk rinciannya.</p>');
     panel.querySelectorAll('button[data-i]').forEach(function(b){ b.onclick=function(){ tampil(D.prov[+b.dataset.i]); }; }); }
   function ganti(m){ cur=m; root.querySelectorAll('.peta-tabs button').forEach(function(b){ var on=b.dataset.m===m; b.classList.toggle('on',on); b.setAttribute('aria-selected',on); }); root.querySelector('.peta-desc').textContent=M[m].s; kelas(); if(aktif) tampil(aktif); else nasional(); }
-  legend.innerHTML=COL.map(function(c,i){return '<i style="background:'+c+'"></i>';}).join('')+'<span>Rendah</span><span style="margin-left:auto">Tinggi</span>';
   svg.addEventListener('mousemove',function(e){ var t=e.target; if(t.tagName!=='path'){ tip.hidden=true; return; } var p=D.prov[+t.dataset.i]; tip.hidden=false; tip.innerHTML='<b>'+p.n+'</b><br>'+M[cur].f(p[M[cur].k]); var r=root.querySelector('.peta-map').getBoundingClientRect(); tip.style.left=(e.clientX-r.left+12)+'px'; tip.style.top=(e.clientY-r.top-10)+'px'; });
   svg.addEventListener('mouseleave',function(){ tip.hidden=true; });
   svg.addEventListener('click',function(e){ if(e.target.tagName==='path') tampil(D.prov[+e.target.dataset.i]); });
