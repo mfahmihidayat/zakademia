@@ -76,7 +76,7 @@ header('Cache-Control: no-store');
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/images/favicon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/cari.js?v=202610190100" defer></script><script src="/js/stat.js" defer></script>
+<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/cari.js?v=202610212200" defer></script><script src="/js/stat.js" defer></script>
 <style>
 .bk{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:minmax(220px,320px) 1fr;gap:clamp(22px,4vw,48px);align-items:start}
 @media(max-width:720px){.bk{grid-template-columns:1fr}.bk .cov{max-width:280px;margin:0 auto}}

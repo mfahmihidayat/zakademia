@@ -239,6 +239,9 @@
     else if (e.key === '/' && !ketik && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); buka_dialog(); }
   });
   window.addEventListener('hashchange', function () { setTimeout(sorotKartu, 120); });
+  // ?cari=kata membuka dialog pencarian dengan kata itu (dipakai halaman 404)
+  var qCari = new URLSearchParams(location.search).get('cari');
+  if (qCari) { bangun(); inp.value = qCari; setTimeout(buka_dialog, 150); }
   if (document.readyState === 'complete') setTimeout(sorotKartu, 200);
   else window.addEventListener('load', function () { setTimeout(sorotKartu, 200); });
   // muat indeks lebih awal saat pengguna mengarahkan kursor ke tombol

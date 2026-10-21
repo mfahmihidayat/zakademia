@@ -395,7 +395,7 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   var pop=document.getElementById('bkPop'); if(!pop) return;
   var key='bk_pop_metodologi', now=Date.now();
   try{ var t=parseInt(localStorage.getItem(key)||'0',10); if(now-t<7*864e5) return; }catch(e){}
-  if(location.hash && location.hash!=='#beranda') return;
+  if((location.hash && location.hash!=='#beranda') || /[?&]cari=/.test(location.search)) return;
   function close(){ pop.hidden=true; document.body.style.overflow=''; try{localStorage.setItem(key,String(now));}catch(e){} }
   setTimeout(function(){ pop.hidden=false; document.body.style.overflow='hidden'; document.getElementById('bkPopX').focus(); },1500);
   document.getElementById('bkPopX').addEventListener('click',close);

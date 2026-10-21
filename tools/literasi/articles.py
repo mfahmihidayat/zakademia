@@ -2,12 +2,12 @@
 """Isi artikel Literasi Zakademia. Penanda {n} di teks menjadi rujukan bernomor ke daftar sumber."""
 
 RUBRIK = {
-    'flash': ('ZakaFlash', 'Apa yang baru?', 'rb-flash.png'),
-    'pedia': ('ZakaPedia', 'Apa artinya?', 'rb-pedia.png'),
-    'story': ('ZakaStory', 'Siapa yang merasakan?', 'rb-story.png'),
-    'tips': ('ZakaTips', 'Bagaimana caranya?', 'rb-tips.png'),
-    'stat': ('ZakaStat', 'Berapa besarnya?', 'rb-stat.png'),
-    'talk': ('ZakaTalk', 'Apa kata kamu?', 'rb-talk.png'),
+    'flash': ('ZakaFlash', 'Apa yang baru?', 'rb-flash.webp'),
+    'pedia': ('ZakaPedia', 'Apa artinya?', 'rb-pedia.webp'),
+    'story': ('ZakaStory', 'Siapa yang merasakan?', 'rb-story.webp'),
+    'tips': ('ZakaTips', 'Bagaimana caranya?', 'rb-tips.webp'),
+    'stat': ('ZakaStat', 'Berapa besarnya?', 'rb-stat.webp'),
+    'talk': ('ZakaTalk', 'Apa kata kamu?', 'rb-talk.webp'),
 }
 
 ARTIKEL = [
@@ -265,19 +265,19 @@ poin=[
 ],
 isi='''
 <div class="qa"><p class="q">“Bukankah semuanya sama-sama memberi? Kenapa harus dibedakan?”</p>
-<div class="a zaida"><img src="/assets/images/zaida.jpg" alt=""><div><b>Zaida</b><p>Betul, semuanya kebaikan. Bedanya ada pada hukum, ketentuan, dan siapa yang berhak menerima. Karena itu lembaga amil wajib mencatatnya terpisah, dan kita pun perlu tahu sedang menunaikan yang mana.</p></div></div></div>
+<div class="a zaida"><img src="/assets/images/zaida.webp" alt=""><div><b>Zaida</b><p>Betul, semuanya kebaikan. Bedanya ada pada hukum, ketentuan, dan siapa yang berhak menerima. Karena itu lembaga amil wajib mencatatnya terpisah, dan kita pun perlu tahu sedang menunaikan yang mana.</p></div></div></div>
 
 <div class="qa"><p class="q">“Apa itu zakat?”</p>
-<div class="a zaida"><img src="/assets/images/zaida.jpg" alt=""><div><b>Zaida</b><p>Menurut UU Pengelolaan Zakat, zakat adalah harta yang wajib dikeluarkan oleh seorang muslim atau badan usaha untuk diberikan kepada yang berhak menerimanya sesuai dengan syariat Islam.{1} Kata kuncinya <em>wajib</em>. Zakat punya batas minimal (nisab), kadar tertentu, dan penerimanya delapan golongan sebagaimana disebut dalam QS At-Taubah ayat 60: fakir, miskin, amil, mualaf, hamba sahaya, orang berutang, fisabilillah, dan ibnu sabil.</p></div></div></div>
+<div class="a zaida"><img src="/assets/images/zaida.webp" alt=""><div><b>Zaida</b><p>Menurut UU Pengelolaan Zakat, zakat adalah harta yang wajib dikeluarkan oleh seorang muslim atau badan usaha untuk diberikan kepada yang berhak menerimanya sesuai dengan syariat Islam.{1} Kata kuncinya <em>wajib</em>. Zakat punya batas minimal (nisab), kadar tertentu, dan penerimanya delapan golongan sebagaimana disebut dalam QS At-Taubah ayat 60: fakir, miskin, amil, mualaf, hamba sahaya, orang berutang, fisabilillah, dan ibnu sabil.</p></div></div></div>
 
 <div class="qa"><p class="q">“Lalu infak dan sedekah?”</p>
-<div class="a zaida"><img src="/assets/images/zaida.jpg" alt=""><div><b>Zaida</b><p>Keduanya sukarela. Undang-undang mendefinisikan infak sebagai harta yang dikeluarkan oleh seseorang atau badan usaha di luar zakat untuk kemaslahatan umum. Sedekah adalah harta <em>atau nonharta</em> yang dikeluarkan di luar zakat untuk kemaslahatan umum.{1}{2} Jadi tenaga, ilmu, bahkan senyum bisa menjadi sedekah, sedangkan infak selalu berupa harta. Tidak ada nisab, dan penerimanya lebih luas.</p></div></div></div>
+<div class="a zaida"><img src="/assets/images/zaida.webp" alt=""><div><b>Zaida</b><p>Keduanya sukarela. Undang-undang mendefinisikan infak sebagai harta yang dikeluarkan oleh seseorang atau badan usaha di luar zakat untuk kemaslahatan umum. Sedekah adalah harta <em>atau nonharta</em> yang dikeluarkan di luar zakat untuk kemaslahatan umum.{1}{2} Jadi tenaga, ilmu, bahkan senyum bisa menjadi sedekah, sedangkan infak selalu berupa harta. Tidak ada nisab, dan penerimanya lebih luas.</p></div></div></div>
 
 <div class="qa"><p class="q">“Kalau wakaf?”</p>
-<div class="a wafiy"><img src="/assets/images/wafiy.jpg" alt=""><div><b>Wafiy</b><p>Wakaf itu menahan pokoknya, mengalirkan manfaatnya. UU Wakaf menyebutnya perbuatan hukum wakif untuk memisahkan atau menyerahkan sebagian harta bendanya untuk dimanfaatkan selamanya atau untuk jangka waktu tertentu, guna keperluan ibadah dan/atau kesejahteraan umum menurut syariah.{3} Hartanya dikelola nazhir. Contohnya tanah wakaf yang menjadi <a href="/literasi/rs-mata-achmad-wardi-wakaf-yang-mengembalikan-penglihatan/">rumah sakit mata</a> di Serang. Rumah sakitnya tetap berdiri, manfaatnya dirasakan ribuan pasien.</p></div></div></div>
+<div class="a wafiy"><img src="/assets/images/wafiy.webp" alt=""><div><b>Wafiy</b><p>Wakaf itu menahan pokoknya, mengalirkan manfaatnya. UU Wakaf menyebutnya perbuatan hukum wakif untuk memisahkan atau menyerahkan sebagian harta bendanya untuk dimanfaatkan selamanya atau untuk jangka waktu tertentu, guna keperluan ibadah dan/atau kesejahteraan umum menurut syariah.{3} Hartanya dikelola nazhir. Contohnya tanah wakaf yang menjadi <a href="/literasi/rs-mata-achmad-wardi-wakaf-yang-mengembalikan-penglihatan/">rumah sakit mata</a> di Serang. Rumah sakitnya tetap berdiri, manfaatnya dirasakan ribuan pasien.</p></div></div></div>
 
 <div class="qa"><p class="q">“Kalau saya menitipkan semuanya ke satu lembaga, apakah tercampur?”</p>
-<div class="a zaida"><img src="/assets/images/zaida.jpg" alt=""><div><b>Zaida</b><p>Seharusnya tidak. Undang-undang mengatur bahwa infak, sedekah, dan dana sosial keagamaan lainnya yang diterima BAZNAS dicatat dalam pembukuan tersendiri.{2} Saat menyalurkan, sebutkan peruntukannya dengan jelas: zakat, infak, sedekah, atau wakaf. Simpan bukti setornya.</p></div></div></div>
+<div class="a zaida"><img src="/assets/images/zaida.webp" alt=""><div><b>Zaida</b><p>Seharusnya tidak. Undang-undang mengatur bahwa infak, sedekah, dan dana sosial keagamaan lainnya yang diterima BAZNAS dicatat dalam pembukuan tersendiri.{2} Saat menyalurkan, sebutkan peruntukannya dengan jelas: zakat, infak, sedekah, atau wakaf. Simpan bukti setornya.</p></div></div></div>
 
 <h2>Ringkasnya</h2>
 <div class="tbl"><table>

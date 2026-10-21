@@ -69,3 +69,10 @@ garam harian yang berganti tiap hari), dan id akun bila sedang masuk. IP tidak d
 kunjungan, perangkat, jam ramai, akun yang sedang online, serta daftar akun dengan tindakan verifikasi manual,
 jadikan/cabut admin, dan hapus. Bagian "Alat pengelolaan" menautkan dashboard asesmen, hasil survei, admin rekomendasi,
 admin buku digital, dan ekspor CSV. Artikel literasi baru otomatis memuat `stat.js` lewat `tools/literasi/build.py`.
+
+## SEO dan kinerja
+
+`robots.txt` dan `sitemap.xml` ada di akar situs; sitemap dibuat `tools/sitemap.py` (dipanggil otomatis oleh build literasi,
+atau jalankan sendiri setelah menambah halaman). `404.html` dipasang lewat `.htaccess` (`ErrorDocument 404`). Foto dan
+sampul dipasang sebagai WebP (`assets/images/*.webp`); file JPG/PNG aslinya tetap ada untuk gambar OG dan bahan Instagram.
+Halaman 404 memiliki kotak cari yang membuka pencarian situs lewat `/?cari=kata`.

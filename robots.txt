@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /stat/
+Disallow: /asesmen/admin.php
+Disallow: /asesmen/data/
+Disallow: /buku/admin.php
+Disallow: /buku/hal.php
+Disallow: /rekomendasi/admin.php
+Disallow: /s/
+
+Sitemap: https://zakademia.com/sitemap.xml

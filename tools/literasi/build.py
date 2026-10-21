@@ -52,7 +52,7 @@ FOOT = '''<footer class="lt-foot"><div class="lt-wrap">
   <p>Riset, Data, dan Literasi Filantropi Islam. <em>Bertumbuh bersama, bermanfaat bagi sesama.</em></p>
   <p class="lt-links"><a href="/#layanan">Layanan</a><a href="/literasi/">Literasi</a><a href="/#kontak">Kontak</a><a href="https://instagram.com/zakademia.official" target="_blank" rel="noopener">Instagram</a></p>
 </div></footer>
-<script src="/js/cari.js?v=202610190100"></script><script src="/js/stat.js" defer></script>
+<script src="/js/cari.js?v=202610212200"></script><script src="/js/stat.js" defer></script>
 </body></html>
 '''
 
@@ -221,3 +221,5 @@ if __name__ == '__main__':
     print('selesai:', len(ARTIKEL), 'artikel')
     # perbarui indeks pencarian situs (js/cari-indeks.json)
     sys.path.insert(0, os.path.join(ROOT, 'tools', 'cari')); import indeks; indeks.main()
+    # perbarui sitemap.xml
+    import runpy; runpy.run_path(os.path.join(ROOT, 'tools', 'sitemap.py'))
