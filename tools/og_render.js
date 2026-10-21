@@ -1,5 +1,5 @@
 // Render gambar pratinjau Zakademia dari daftar pekerjaan JSON. Pakai: node tools/og_render.js jobs.json
-const fs=require('fs'),path=require('path');const {chromium}=require('playwright');const {ART}=require('./og_art.js');
+const fs=require('fs'),path=require('path');const {chromium}=require('playwright');const {ART}=require('./og_art.js');require('./ig_art2.js');
 const ROOT=path.resolve(__dirname,'..');const F=path.join(__dirname,'literasi','fonts');
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 function html(j){const words=[];j.lines.forEach((l,i)=>l.split(' ').forEach(w=>words.push(`<span class="${i===j.lines.length-1?'g':''}">${esc(w)}</span>`)));

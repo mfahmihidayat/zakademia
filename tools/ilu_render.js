@@ -1,5 +1,5 @@
 // Ekspor ilustrasi saja (latar transparan) untuk gambar utama artikel. Pakai: node tools/ilu_render.js kunci1 kunci2 ...
-const fs=require('fs'),path=require('path'),os=require('os');const {chromium}=require('playwright');const {ART,setPlain}=require('./og_art.js');
+const fs=require('fs'),path=require('path'),os=require('os');const {chromium}=require('playwright');const {ART,setPlain}=require('./og_art.js');require('./ig_art2.js');
 const ROOT=path.resolve(__dirname,'..');const F=path.join(__dirname,'literasi','fonts');const OUT=path.join(ROOT,'assets/images/ilu');
 (async()=>{fs.mkdirSync(OUT,{recursive:true});setPlain(true);const b=await chromium.launch();const p=await b.newPage({viewport:{width:532,height:520},deviceScaleFactor:2});
  for(const k of process.argv.slice(2)){const html=`<!doctype html><html><head><meta charset="utf-8"><style>

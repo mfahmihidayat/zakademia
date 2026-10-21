@@ -136,6 +136,15 @@ ALT = {
     'kalkulator': 'Ilustrasi kalkulator bertuliskan 2,5 persen, koin, dan batangan emas 85 gram',
     'statistik': 'Ilustrasi grafik batang yang naik, kaca pembesar, dan angka Rp44,7 triliun',
     'bedanya': 'Ilustrasi buku UU 23/2011 dan UU 41/2004 dengan tanda tanya',
+    'emas': 'Ilustrasi emas batangan berlabel 85 gram dan kalender 12 bulan',
+    'tabungan': 'Ilustrasi buku tabungan, rincian saldo, dan koin',
+    'toko': 'Ilustrasi toko, kardus stok barang, dan nota',
+    'fidyah': 'Ilustrasi piring nasi dan kalender hari puasa yang dicentang',
+    'asnaf': 'Ilustrasi delapan orang melingkari koin zakat',
+    'sawah': 'Ilustrasi sawah, padi menguning, awan hujan, dan saluran irigasi',
+    'pajak': 'Ilustrasi formulir SPT Tahunan dan bukti setor zakat',
+    'nazhir': 'Ilustrasi perisai berisi masjid wakaf dan laporan ke Badan Wakaf Indonesia',
+    'retensi': 'Ilustrasi dua donatur, hati, dan panah melingkar',
 }
 
 # Ilustrasi per artikel (lihat tools/og_art.js).
@@ -146,6 +155,15 @@ ILUSTRASI = {
     'cara-menghitung-zakat-penghasilan-2026': 'kalkulator',
     'membaca-angka-zakat-nasional-2025': 'statistik',
     'zakat-infak-sedekah-wakaf-apa-bedanya': 'bedanya',
+    'zakat-emas-nisab-85-gram': 'emas',
+    'zakat-tabungan-dan-deposito': 'tabungan',
+    'cara-menghitung-zakat-perdagangan': 'toko',
+    'fidyah-2026-besaran-dan-ketentuan': 'fidyah',
+    'delapan-asnaf-penerima-zakat': 'asnaf',
+    'zakat-pertanian-653-kg-gabah': 'sawah',
+    'zakat-pengurang-penghasilan-kena-pajak': 'pajak',
+    'tugas-nazhir-wakaf': 'nazhir',
+    'retensi-donatur-lembaga-zakat': 'retensi',
 }
 
 def render_og(jobs):

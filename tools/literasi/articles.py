@@ -296,4 +296,304 @@ sumber=[
  ('Hukumonline', 'Pengelolaan Zakat, Infak, dan Sedekah oleh BAZNAS', '—', 'https://www.hukumonline.com/klinik/a/pengelolaan-zakat--infak-dan-sedekah-oleh-baznas-lt5ce23056410bd/'),
  ('JDIH Kementerian Keuangan', 'Undang-Undang Nomor 41 Tahun 2004 tentang Wakaf', '2004', 'https://jdih.kemenkeu.go.id/fulltext/2004/41TAHUN2004UU.htm'),
 ]),
+# ---------------------------------------------------------------- Seri 22–29 Oktober 2026
+dict(
+slug='zakat-emas-nisab-85-gram', rubrik='pedia', tanggal='2026-10-21', menit=3,
+judul='Zakat Emas: Nisab 85 Gram, Kadar 2,5 Persen',
+og=['Punya emas 85 gram?', 'Sudah wajib zakat.'],
+dek='Emas yang disimpan juga ada zakatnya. Ketentuannya dihitung dalam gram, sehingga nilai rupiahnya ikut naik turun bersama harga emas.',
+poin=[
+ 'Zakat emas wajib bila kepemilikan mencapai nisab 85 gram dan sudah dimiliki satu tahun (haul).',
+ 'Kadarnya 2,5 persen dari emas yang dimiliki.',
+ 'Nisab perak 595 gram dengan kadar yang sama, 2,5 persen.',
+],
+isi="""
+<h2>Ketentuannya</h2>
+<p>Peraturan Menteri Agama Nomor 52 Tahun 2014 menetapkan bahwa zakat emas wajib atas kepemilikan emas yang telah mencapai nisab 85 gram, dengan kadar 2,5 persen.{1} Zakat ditunaikan setelah emas dimiliki selama satu tahun (haul), yaitu 12 bulan qamariah, melalui amil zakat resmi.{1}</p>
+<p>Untuk perak, nisabnya 595 gram dengan kadar yang sama, 2,5 persen.{1}</p>
+
+<h2>Contoh hitungan</h2>
+<p>Seseorang menyimpan emas 100 gram selama setahun penuh. Karena melebihi 85 gram, zakatnya 2,5 persen × 100 gram = <b>2,5 gram emas</b>, atau senilai harga 2,5 gram emas pada saat zakat ditunaikan.</p>
+<p>Karena nisab dihitung dalam gram, nilainya dalam rupiah tidak tetap. Bila harga emas naik, nilai rupiah nisab ikut naik.</p>
+
+<h2>Bagaimana dengan perhiasan?</h2>
+<p>Para ulama berbeda pendapat tentang emas yang dipakai sehari-hari sebagai perhiasan. Bila ragu, tanyakan kepada lembaga amil zakat tempat Anda menunaikan zakat, dan sebutkan apakah emas tersebut disimpan atau dipakai.</p>
+<p class="cta-in">Punya penghasilan rutin juga? Baca <a href="/literasi/cara-menghitung-zakat-penghasilan-2026/">cara menghitung zakat penghasilan 2026</a>.</p>
+""",
+sumber=[
+ ('Peraturan.go.id', 'Peraturan Menteri Agama Nomor 52 Tahun 2014 tentang Syarat dan Tata Cara Penghitungan Zakat Mal dan Zakat Fitrah', '2014', 'https://peraturan.go.id/files/bn1830-2014.pdf'),
+]),
+
+dict(
+slug='zakat-tabungan-dan-deposito', rubrik='tips', tanggal='2026-10-21', menit=3,
+judul='Zakat Tabungan: Kapan Saldo Mengendap Wajib Dizakati?',
+og=['Saldo mengendap setahun?', 'Cek nisabnya.'],
+dek='Uang yang tersimpan di tabungan atau deposito termasuk harta yang dizakati bila nilainya mencapai nisab dan sudah tersimpan setahun.',
+poin=[
+ 'Zakat atas uang dan surat berharga berlaku bila nilainya setara 85 gram emas.',
+ 'Uang tersebut sudah dimiliki selama satu tahun (haul).',
+ 'Kadarnya 2,5 persen.',
+],
+isi="""
+<h2>Syaratnya</h2>
+<p>Dalam PMA Nomor 52 Tahun 2014, uang dan surat berharga dikenai zakat bila nilainya mencapai nisab senilai 85 gram emas, dengan kadar 2,5 persen. Zakat ditunaikan setelah mencapai haul, melalui amil zakat resmi.{1}</p>
+<p>Tabungan, deposito, dan giro adalah bentuk penyimpanan uang. Yang dihitung adalah saldo yang memang tersimpan, bukan uang yang keluar masuk untuk kebutuhan bulanan.</p>
+
+<h2>Contoh hitungan</h2>
+<ul>
+<li>Saldo tabungan Rp300 juta tersimpan selama setahun, dan nilainya di atas nisab 85 gram emas.</li>
+<li>Zakatnya: 2,5% × Rp300.000.000 = <b>Rp7.500.000</b>.</li>
+</ul>
+<p>Karena nisab dihitung dari harga emas, cek dulu harga emas saat zakat akan ditunaikan untuk memastikan saldo Anda sudah melewati nisab.</p>
+
+<h2>Tips praktis</h2>
+<ul>
+<li><b>Tetapkan satu tanggal haul</b>, misalnya setiap awal Ramadan, lalu hitung saldo pada tanggal itu setiap tahun.</li>
+<li><b>Pisahkan dana kebutuhan rutin</b> dari tabungan jangka panjang agar hitungannya lebih jelas.</li>
+<li><b>Simpan bukti setor</b> zakat dari lembaga resmi.</li>
+</ul>
+""",
+sumber=[
+ ('Peraturan.go.id', 'Peraturan Menteri Agama Nomor 52 Tahun 2014 tentang Syarat dan Tata Cara Penghitungan Zakat Mal dan Zakat Fitrah', '2014', 'https://peraturan.go.id/files/bn1830-2014.pdf'),
+]),
+
+dict(
+slug='cara-menghitung-zakat-perdagangan', rubrik='tips', tanggal='2026-10-21', menit=4,
+judul='Cara Menghitung Zakat Usaha: dari Aset Lancar, Bukan Omzet',
+og=['Zakat usaha dihitung', 'dari aset lancar.'],
+dek='Pemilik usaha sering mengira zakat dihitung dari omzet. Aturannya memakai aset lancar dikurangi kewajiban jangka pendek.',
+poin=[
+ 'Rumus zakat perniagaan: (aset lancar − kewajiban jangka pendek) × 2,5%.',
+ 'Wajib bila hasilnya mencapai nisab senilai 85 gram emas.',
+ 'Ditunaikan setelah usaha berjalan satu tahun (haul).',
+],
+isi="""
+<h2>Rumusnya</h2>
+<p>PMA Nomor 52 Tahun 2014 mengatur bahwa harta perniagaan dihitung dari aktiva lancar dikurangi kewajiban jangka pendek pada saat haul. Bila selisihnya mencapai nisab senilai 85 gram emas, zakat wajib dibayar dengan kadar 2,5 persen.{1}</p>
+<p class="rumus">Zakat = (aset lancar − utang jangka pendek) × 2,5%</p>
+
+<h2>Apa saja aset lancar?</h2>
+<ul>
+<li><b>Kas dan saldo bank</b> milik usaha.</li>
+<li><b>Stok barang dagangan</b>, dinilai dengan harga saat ini.</li>
+<li><b>Piutang yang lancar</b>, yaitu yang masih dapat ditagih.</li>
+</ul>
+<p>Aset tetap seperti bangunan, kendaraan operasional, dan mesin tidak dimasukkan, karena tidak untuk dijual.</p>
+
+<h2>Contoh hitungan</h2>
+<ul>
+<li>Aset lancar: Rp500 juta</li>
+<li>Utang jangka pendek: Rp100 juta</li>
+<li>Selisih Rp400 juta, di atas nisab.</li>
+<li>Zakat: 2,5% × Rp400.000.000 = <b>Rp10.000.000</b></li>
+</ul>
+<p class="cta-in">Untuk penghasilan pribadi pemilik usaha, lihat <a href="/literasi/cara-menghitung-zakat-penghasilan-2026/">zakat penghasilan 2026</a>.</p>
+""",
+sumber=[
+ ('Peraturan.go.id', 'Peraturan Menteri Agama Nomor 52 Tahun 2014 tentang Syarat dan Tata Cara Penghitungan Zakat Mal dan Zakat Fitrah', '2014', 'https://peraturan.go.id/files/bn1830-2014.pdf'),
+]),
+
+dict(
+slug='fidyah-2026-besaran-dan-ketentuan', rubrik='pedia', tanggal='2026-10-21', menit=3,
+judul='Fidyah 2026: Siapa yang Menunaikan dan Berapa Besarnya?',
+og=['Tak mampu puasa?', 'Tunaikan fidyah.'],
+dek='Bagi yang tidak mampu berpuasa dan tidak dapat menggantinya, ada fidyah. BAZNAS RI menetapkan acuan Rp65.000 per jiwa per hari untuk 2026.',
+poin=[
+ 'Fidyah ditunaikan oleh orang yang tidak mampu berpuasa, seperti lansia dan orang sakit yang tidak diharapkan sembuh.',
+ 'Acuan BAZNAS RI 2026: Rp65.000 per jiwa per hari.',
+ 'BAZNAS daerah dan LAZ dapat memakai besaran berbeda sesuai harga pangan setempat.',
+],
+isi="""
+<h2>Siapa yang menunaikan fidyah</h2>
+<p>Dasar fidyah adalah QS Al-Baqarah ayat 184: bagi orang yang berat menjalankan puasa, wajib membayar fidyah, yaitu memberi makan seorang miskin.{1} Dalam praktik, fidyah ditunaikan antara lain oleh lansia yang tidak lagi kuat berpuasa dan orang sakit yang tidak diharapkan sembuh.</p>
+
+<h2>Berapa besarnya</h2>
+<p>Melalui Keputusan Ketua BAZNAS RI Nomor 14 Tahun 2026, fidyah ditetapkan sebesar <b>Rp65.000 per jiwa per hari</b>.{2}{3} Besaran ini berlaku untuk pembayaran melalui BAZNAS RI. BAZNAS provinsi, kabupaten/kota, dan LAZ dapat menjadikannya acuan, atau menetapkan besaran sendiri bila harga pangan di daerahnya berbeda.{2}</p>
+
+<h2>Contoh hitungan</h2>
+<ul>
+<li>Utang puasa 10 hari: 10 × Rp65.000 = <b>Rp650.000</b>.</li>
+<li>Utang puasa 30 hari: 30 × Rp65.000 = <b>Rp1.950.000</b>.</li>
+</ul>
+<p>Saat menyalurkan, sebutkan bahwa dana tersebut adalah fidyah, bukan zakat atau infak, agar dicatat dan disalurkan sesuai peruntukannya.</p>
+""",
+sumber=[
+ ('NU Online', 'QS Al-Baqarah ayat 184', '—', 'https://quran.nu.or.id/al-baqarah/184'),
+ ('Jawa Pos', 'BAZNAS Tetapkan Zakat Fitrah 2026 Sebesar Rp50.000 dan Fidyah Rp65.000 per Jiwa', '10 Februari 2026', 'https://www.jawapos.com/nasional/2602100086/baznas-tetapkan-zakat-fitrah-2026-sebesar-rp-50000-dan-fidyah-rp-65000-per-jiwa'),
+ ('Metro TV', 'BAZNAS RI Tetapkan Zakat Fitrah dan Fidyah 2026, Segini Besarannya', '2026', 'https://www.metrotvnews.com/read/k8oCQ9Rz-baznas-ri-tetapkan-zakat-fitrah-dan-fidyah-2026-segini-besarannya'),
+]),
+
+dict(
+slug='delapan-asnaf-penerima-zakat', rubrik='pedia', tanggal='2026-10-21', menit=4,
+judul='Delapan Asnaf: Siapa Saja yang Berhak Menerima Zakat?',
+og=['Siapa saja', 'penerima zakat?'],
+dek='Zakat tidak boleh disalurkan ke sembarang orang. Al-Qur’an menyebut delapan golongan yang berhak menerimanya.',
+poin=[
+ 'Delapan golongan penerima zakat disebut dalam QS At-Taubah ayat 60.',
+ 'UU Pengelolaan Zakat mewajibkan zakat didistribusikan kepada mustahik sesuai syariat Islam.',
+ 'Lembaga amil menyalurkan zakat berdasarkan skala prioritas.',
+],
+isi="""
+<h2>Dasar hukumnya</h2>
+<p>QS At-Taubah ayat 60 menyebut delapan golongan (asnaf) yang berhak menerima zakat.{1} UU Nomor 23 Tahun 2011 menegaskan bahwa zakat wajib didistribusikan kepada mustahik sesuai dengan syariat Islam, berdasarkan skala prioritas dengan memperhatikan prinsip pemerataan, keadilan, dan kewilayahan.{2}</p>
+
+<h2>Delapan golongan itu</h2>
+<div class="tbl"><table>
+<thead><tr><th>Golongan</th><th>Secara umum dipahami sebagai</th></tr></thead>
+<tbody>
+<tr><th>1. Fakir</th><td>Orang yang tidak memiliki harta dan penghasilan yang mencukupi kebutuhan dasarnya</td></tr>
+<tr><th>2. Miskin</th><td>Orang yang memiliki penghasilan, tetapi belum mencukupi kebutuhannya</td></tr>
+<tr><th>3. Amil</th><td>Pihak yang mengelola zakat: menghimpun, mencatat, dan menyalurkan</td></tr>
+<tr><th>4. Mualaf</th><td>Orang yang hatinya perlu dikuatkan dalam Islam, termasuk yang baru memeluk Islam</td></tr>
+<tr><th>5. Riqab</th><td>Untuk memerdekakan orang dari perbudakan</td></tr>
+<tr><th>6. Gharimin</th><td>Orang yang terlilit utang untuk kebutuhan yang dibolehkan dan tidak mampu melunasinya</td></tr>
+<tr><th>7. Fisabilillah</th><td>Untuk kepentingan di jalan Allah</td></tr>
+<tr><th>8. Ibnu sabil</th><td>Musafir yang kehabisan bekal dalam perjalanan</td></tr>
+</tbody></table></div>
+<p>Rincian kriteria setiap golongan dibahas panjang dalam kitab fikih dan dapat berbeda antarmazhab. Lembaga amil biasanya menetapkan kriteria operasional sebelum menyalurkan.</p>
+
+<h2>Mengapa ini penting bagi muzaki</h2>
+<p>Menunaikan zakat melalui lembaga resmi membantu memastikan dana sampai ke golongan yang berhak. Tanyakan laporan penyaluran kepada lembaga tempat Anda berzakat.</p>
+""",
+sumber=[
+ ('NU Online', 'QS At-Taubah ayat 60', '—', 'https://quran.nu.or.id/at-taubah/60'),
+ ('Peraturan.go.id', 'Undang-Undang Nomor 23 Tahun 2011 tentang Pengelolaan Zakat', '2011', 'https://peraturan.go.id/files/uu23-2011bt.pdf'),
+]),
+
+dict(
+slug='zakat-pertanian-653-kg-gabah', rubrik='tips', tanggal='2026-10-21', menit=3,
+judul='Zakat Pertanian: Nisab 653 Kg Gabah, Ditunaikan Saat Panen',
+og=['Panen mencapai', '653 kg gabah?'],
+dek='Berbeda dari zakat harta lain, zakat pertanian tidak menunggu setahun. Kadarnya tergantung cara pengairan.',
+poin=[
+ 'Nisab zakat pertanian, perkebunan, dan kehutanan adalah 653 kg gabah.',
+ 'Kadarnya 10 persen bila tadah hujan, atau 5 persen bila memakai irigasi dan perawatan lainnya.',
+ 'Zakat ditunaikan saat panen.',
+],
+isi="""
+<h2>Ketentuannya</h2>
+<p>PMA Nomor 52 Tahun 2014 menetapkan nisab zakat pertanian, perkebunan, dan kehutanan senilai 653 kg gabah. Kadarnya 10 persen bila tadah hujan, atau 5 persen bila menggunakan irigasi dan perawatan lainnya.{1} Zakat ini ditunaikan pada saat panen.{1}</p>
+
+<h2>Contoh hitungan</h2>
+<ul>
+<li>Panen 2.000 kg gabah dari sawah beririgasi: 5% × 2.000 kg = <b>100 kg gabah</b>.</li>
+<li>Panen 2.000 kg gabah dari sawah tadah hujan: 10% × 2.000 kg = <b>200 kg gabah</b>.</li>
+<li>Panen 600 kg gabah: di bawah nisab, belum wajib zakat. Tetap dapat bersedekah.</li>
+</ul>
+
+<h2>Mengapa kadarnya berbeda?</h2>
+<p>Sawah beririgasi dan dirawat membutuhkan biaya tambahan dari petani, sedangkan sawah tadah hujan diairi oleh hujan. Karena itu kadarnya dibedakan.</p>
+""",
+sumber=[
+ ('Peraturan.go.id', 'Peraturan Menteri Agama Nomor 52 Tahun 2014 tentang Syarat dan Tata Cara Penghitungan Zakat Mal dan Zakat Fitrah', '2014', 'https://peraturan.go.id/files/bn1830-2014.pdf'),
+]),
+
+dict(
+slug='zakat-pengurang-penghasilan-kena-pajak', rubrik='tips', tanggal='2026-10-21', menit=4,
+judul='Zakat sebagai Pengurang Penghasilan Kena Pajak: Syarat Terbaru',
+og=['Zakat mengurangi', 'penghasilan kena pajak.'],
+dek='Zakat yang dibayar ke lembaga resmi dapat dikurangkan dari penghasilan bruto. PMK 114/2025 memperjelas syarat dan isi bukti bayarnya.',
+poin=[
+ 'Zakat yang dibayar ke BAZNAS atau LAZ resmi dikurangkan dari penghasilan kena pajak.',
+ 'PMK 114/2025 mensyaratkan bukti pembayaran yang sah, penerima ber-NPWP, dan tidak menimbulkan rugi fiskal.',
+ 'Yang berkurang adalah dasar penghitungan pajak, bukan tagihan pajak secara langsung.',
+],
+isi="""
+<h2>Dasar hukumnya</h2>
+<p>UU Nomor 23 Tahun 2011 menyatakan bahwa zakat yang dibayarkan muzaki kepada BAZNAS atau LAZ dikurangkan dari penghasilan kena pajak, dan lembaga wajib memberikan bukti setoran zakat kepada setiap muzaki.{1} Ketentuan teknisnya diatur dalam PP Nomor 60 Tahun 2010{2} dan diperbarui melalui PMK Nomor 114 Tahun 2025.{3}</p>
+
+<h2>Tiga syarat menurut PMK 114/2025</h2>
+<ol>
+<li><b>Tidak menyebabkan rugi fiskal</b> pada tahun pajak zakat itu dibayarkan.</li>
+<li><b>Didukung bukti pembayaran yang sah.</b></li>
+<li><b>Diterima oleh badan atau lembaga amil zakat yang memiliki NPWP.</b></li>
+</ol>
+<p>Ketiga syarat ini berlaku bersamaan.{3}{4}</p>
+
+<h2>Isi bukti pembayaran yang sah</h2>
+<ul>
+<li>Nomor dan tanggal bukti pembayaran.</li>
+<li>Nama lengkap dan NPWP atau NIK pembayar.</li>
+<li>Jumlah zakat yang dibayar.</li>
+<li>Nama dan NPWP lembaga penerima.</li>
+<li>Tanda tangan petugas atau validasi pembayaran.</li>
+</ul>
+<p>Saat lapor SPT Tahunan orang pribadi, nilai zakat diisi pada bagian pengurang penghasilan neto, dan salinan bukti pembayarannya dilampirkan.{5}</p>
+
+<h2>Yang perlu dipahami</h2>
+<p>Zakat Rp3 juta tidak memotong tagihan pajak sebesar Rp3 juta. Zakat mengurangi penghasilan yang menjadi dasar penghitungan pajak, sehingga pajak yang terutang ikut berkurang sesuai tarif yang berlaku.</p>
+""",
+sumber=[
+ ('Peraturan.go.id', 'Undang-Undang Nomor 23 Tahun 2011 tentang Pengelolaan Zakat', '2011', 'https://peraturan.go.id/files/uu23-2011bt.pdf'),
+ ('Peraturan.go.id', 'Peraturan Pemerintah Nomor 60 Tahun 2010 tentang Zakat atau Sumbangan Keagamaan yang Sifatnya Wajib yang Dapat Dikurangkan dari Penghasilan Bruto', '2010', 'https://peraturan.go.id/files/pp60-2010bt.pdf'),
+ ('JDIH Kementerian Keuangan', 'Peraturan Menteri Keuangan Nomor 114 Tahun 2025', '2025', 'https://jdih.kemenkeu.go.id/api/download/956c4a77-a4bb-4c97-a4a9-989bc6a98c79/2025pmkeuangan114.pdf'),
+ ('DDTCNews', 'Ada Perombakan Ketentuan Zakat, Perhatikan Kembali 3 Syarat Ini', '9 Januari 2026', 'https://news.ddtc.co.id/review/konsultasi/1816488/ada-perombakan-ketentuan-zakat-perhatikan-kembali-3-syarat-ini'),
+ ('DDTCNews', 'Kurangkan Zakat dari Penghasilan Bruto, Ada Kriteria Bukti Bayarnya', '10 Maret 2026', 'https://news.ddtc.co.id/berita/nasional/1817876/kurangkan-zakat-dari-penghasilan-bruto-ada-kriteria-bukti-bayarnya'),
+]),
+
+dict(
+slug='tugas-nazhir-wakaf', rubrik='pedia', tanggal='2026-10-21', menit=3,
+judul='Apa Tugas Nazhir Wakaf?',
+og=['Apa tugas', 'nazhir wakaf?'],
+dek='Nazhir adalah pihak yang menerima dan mengelola harta wakaf. Undang-undang memberinya empat tugas utama.',
+poin=[
+ 'Nazhir bertugas mengadministrasikan, mengelola dan mengembangkan, serta mengawasi dan melindungi harta wakaf.',
+ 'Nazhir wajib melaporkan pelaksanaan tugasnya kepada Badan Wakaf Indonesia.',
+ 'Imbalan nazhir paling banyak 10 persen dari hasil bersih pengelolaan wakaf.',
+],
+isi="""
+<h2>Empat tugas nazhir</h2>
+<p>Menurut UU Nomor 41 Tahun 2004 Pasal 11, nazhir bertugas:{1}</p>
+<ol>
+<li>Melakukan pengadministrasian harta benda wakaf.</li>
+<li>Mengelola dan mengembangkan harta benda wakaf sesuai dengan tujuan, fungsi, dan peruntukannya.</li>
+<li>Mengawasi dan melindungi harta benda wakaf.</li>
+<li>Melaporkan pelaksanaan tugas kepada Badan Wakaf Indonesia.</li>
+</ol>
+
+<h2>Imbalan nazhir</h2>
+<p>Dalam melaksanakan tugasnya, nazhir dapat menerima imbalan dari hasil bersih pengelolaan dan pengembangan harta benda wakaf, yang besarnya tidak melebihi 10 persen.{1}</p>
+
+<h2>Pertanyaan sebelum berwakaf</h2>
+<ul>
+<li>Siapa nazhirnya, dan apakah terdaftar?</li>
+<li>Untuk apa harta wakaf ini akan dikelola?</li>
+<li>Bagaimana laporan pengelolaan dan manfaatnya disampaikan kepada wakif?</li>
+</ul>
+<p class="cta-in">Baca juga perbedaan <a href="/literasi/wakaf-uang-wakaf-melalui-uang-cwls/">wakaf uang, wakaf melalui uang, dan CWLS</a>.</p>
+""",
+sumber=[
+ ('JDIH Kementerian Keuangan', 'Undang-Undang Nomor 41 Tahun 2004 tentang Wakaf', '2004', 'https://jdih.kemenkeu.go.id/fulltext/2004/41TAHUN2004UU.htm'),
+]),
+
+dict(
+slug='retensi-donatur-lembaga-zakat', rubrik='talk', tanggal='2026-10-21', menit=4,
+judul='Donatur Lama Jangan Dilupakan: Tiga Pertanyaan tentang Retensi',
+og=['Donatur lama', 'jangan dilupakan.'],
+dek='Untuk pengelola lembaga zakat dan wakaf: sebelum mencari donatur baru, cek dulu berapa banyak donatur lama yang kembali.',
+poin=[
+ 'Retensi donatur adalah porsi donatur tahun lalu yang kembali berdonasi tahun ini.',
+ 'Tiga hal yang perlu dicek: angka retensi, frekuensi sapaan di luar permintaan donasi, dan laporan dampak.',
+ 'Retensi dapat dihitung dari angka rekap tahunan, tanpa mengunggah data donatur.',
+],
+isi="""
+<h2>Apa itu retensi donatur</h2>
+<p>Retensi donatur adalah persentase donatur tahun lalu yang kembali berdonasi tahun ini. Cara menghitungnya sederhana:</p>
+<p class="rumus">Retensi = donatur tahun lalu yang berdonasi lagi tahun ini ÷ seluruh donatur tahun lalu</p>
+<p>Contoh: tahun lalu ada 1.000 donatur, dan 400 di antaranya berdonasi lagi tahun ini. Retensinya 40 persen.</p>
+
+<h2>Tiga pertanyaan untuk minggu ini</h2>
+<ol>
+<li><b>Berapa persen donatur tahun lalu yang kembali berdonasi?</b> Bila belum tahu, itu temuan pertama: data donatur belum dicatat per orang.</li>
+<li><b>Kapan terakhir mereka dihubungi selain saat diminta donasi?</b> Ucapan terima kasih, kabar program, atau sapaan hari besar membuat donatur merasa dikenal.</li>
+<li><b>Sudahkah mereka menerima laporan dampak?</b> Donatur yang tahu ke mana donasinya pergi punya alasan untuk kembali.</li>
+</ol>
+
+<h2>Mengapa retensi penting</h2>
+<p>Mendapatkan donatur baru butuh biaya kampanye dan waktu. Donatur lama sudah mengenal lembaga. Menjaga mereka membantu penghimpunan tumbuh lebih stabil, dan membuat biaya per rupiah terhimpun lebih terkendali.</p>
+<p class="cta-in">Hitung retensi, CLV, dan CAC lembaga Anda secara gratis di <a href="/analitik/">Kesehatan Penghimpunan</a>. Cukup isi angka rekap tahunan.</p>
+""",
+sumber=[
+ ('Zakademia', 'Kesehatan Penghimpunan: retensi, CLV, CAC, dan biaya per rupiah terhimpun', '—', 'https://zakademia.com/analitik/'),
+]),
 ]
