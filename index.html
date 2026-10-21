@@ -34,7 +34,7 @@
 <title>Zakademia | Riset, Data, dan Literasi Filantropi Islam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
-<link href="css/style.css?v=202610212330" rel="stylesheet"/>
+<link href="css/style.css?v=202610230010" rel="stylesheet"/>
 <link href="css/cari.css?v=202610190100" rel="stylesheet"/>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="leaf" viewBox="0 0 300 300"><path d="M10 290 C 40 150 160 40 295 10 C 285 150 220 250 10 290 Z"/></symbol>
@@ -113,30 +113,27 @@
   </section>
 
   <svg class="curve" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 C 360 0 900 0 1440 50 L1440 70 Z"/></svg>
-  <section class="deep">
-    <div class="wrap sec scope">
-      <div class="scope-copy">
-        <h2 data-edit="scope">Berakar di zakat dan wakaf, <em>bercabang ke seluruh kebaikan.</em></h2>
-        <div class="ring-key">
-          <div data-ring="1" tabindex="0"><i style="background:var(--gold)"></i><p><b>Zakat dan wakaf,</b> <span>akar tempat kami berpijak.</span></p></div>
-          <div data-ring="2" tabindex="0"><i style="background:var(--leaf)"></i><p><b>Infak, sedekah, kurban, dan fidyah,</b> <span>kebaikan yang hadir setiap hari.</span></p></div>
-          <div data-ring="3" tabindex="0"><i style="background:var(--leaf-soft)"></i><p><b>Masjid, pesantren, dan lembaga kemanusiaan,</b> <span>rumah tempat kebaikan dirawat.</span></p></div>
-          <div data-ring="4" tabindex="0"><i style="background:color-mix(in srgb,var(--deep-ink) 30%,transparent)"></i><p><b>Keuangan sosial Islam,</b> <span>jalan agar manfaat terus mengalir.</span></p></div>
+  <section class="deep" id="peta">
+    <div class="wrap sec peta">
+      <div class="sec-head"><h2 data-edit="scope">Zakat dan wakaf <em>di 34 provinsi.</em></h2><p>Peta ini dibuat dari data yang ada: laporan BAZNAS 2024 dan Indeks Wakaf Nasional BWI 2023. Pilih ukuran, lalu sentuh provinsi.</p></div>
+      <div class="peta-tabs" role="tablist" aria-label="Ukuran yang ditampilkan">
+        <button type="button" role="tab" data-m="zis" class="on" aria-selected="true">Pengumpulan ZIS 2024</button>
+        <button type="button" role="tab" data-m="zm" aria-selected="false">Zakat maal</button>
+        <button type="button" role="tab" data-m="is" aria-selected="false">Infak/sedekah</button>
+        <button type="button" role="tab" data-m="pz" aria-selected="false">Pengelola zakat</button>
+        <button type="button" role="tab" data-m="iwn" aria-selected="false">Indeks Wakaf 2023</button>
+      </div>
+      <p class="peta-desc"></p>
+      <div class="peta-grid">
+        <div class="peta-map">
+          <svg class="peta-svg" role="group" aria-label="Peta Indonesia per provinsi"></svg>
+          <div class="peta-tip" hidden></div>
+          <div class="peta-legend" aria-hidden="true"></div>
+          <label class="peta-pilih">Atau pilih provinsi <select class="peta-sel"><option value="">Semua provinsi</option></select></label>
         </div>
+        <aside class="peta-panel" aria-live="polite"></aside>
       </div>
-      <div class="rings">
-        <svg viewBox="0 0 460 460" role="img" aria-label="Lingkar kajian Zakademia: zakat dan wakaf di pusat, lalu infak dan sedekah, masjid dan pesantren, hingga keuangan sosial Islam">
-          <circle class="ring r4" cx="230" cy="230" r="220" fill="none" stroke="var(--deep-mute)" stroke-opacity=".35" stroke-dasharray="3 7"/>
-          <circle class="ring r3" cx="230" cy="230" r="168" fill="var(--leaf-soft)" fill-opacity=".22"/>
-          <circle class="ring r2" cx="230" cy="230" r="118" fill="var(--leaf)" fill-opacity=".35"/>
-          <circle class="ring r1 core" cx="230" cy="230" r="66" fill="var(--gold)"/>
-          <text x="230" y="226" text-anchor="middle" style="fill:#1E1606">Zakat</text>
-          <text x="230" y="244" text-anchor="middle" style="fill:#1E1606">&amp; wakaf</text>
-          <text x="230" y="138" text-anchor="middle">Infak · sedekah</text>
-          <text x="230" y="86" text-anchor="middle" class="soft">Masjid · pesantren</text>
-          <text x="230" y="30" text-anchor="middle" class="soft">Keuangan sosial Islam</text>
-        </svg>
-      </div>
+      <p class="peta-src">Sumber: BAZNAS, <a href="https://baznas.go.id/assets/images/szn/LPZ%20Nasional%20Akhir%20Tahun%202024.pdf" target="_blank" rel="noopener">Laporan Pengelolaan Zakat Nasional Akhir Tahun 2024</a> (Tabel 2.1, 2.5, 2.6, 2.7; data per 11 Februari 2025; angka per provinsi hanya mencakup BAZNAS provinsi dan kabupaten/kota, tidak termasuk BAZNAS Pusat dan LAZ) dan BWI, <a href="https://www.bwi.go.id/wp-content/uploads/2023/12/IWN-2023_Rakornas.pdf" target="_blank" rel="noopener">Indeks Wakaf Nasional 2023</a>. Empat provinsi hasil pemekaran Papua masih tergabung dalam Papua dan Papua Barat sesuai laporan. Batas provinsi disederhanakan. <button type="button" class="peta-reset">Kembali ke lima teratas</button></p>
     </div>
   </section>
   <svg class="curve" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" style="transform:scaleY(-1)"><path d="M0 70 C 540 0 1080 0 1440 50 L1440 70 Z"/></svg>
@@ -611,6 +608,7 @@
     </div>
   </div>
 </div>
+<script src="js/peta-data.js?v=1"></script><script src="js/peta.js?v=1"></script>
 <script src="js/script.js?v=202610212330"></script>
 <script src="js/cari.js?v=202610220100"></script><script src="/js/stat.js?v=2" defer></script>
 <script>
