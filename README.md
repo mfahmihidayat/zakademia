@@ -11,6 +11,8 @@ Website Zakademia dan formulir Asesmen Kesiapan Penghimpunan.
 | Survei (Riset Kebutuhan) | `survei/` | https://zakademia.com/survei/ |
 | Kesehatan Penghimpunan (Data & Analitik) | `analitik/` | https://zakademia.com/analitik/ |
 | Tautan survei untuk responden | `s/` | https://zakademia.com/s/nama-survei |
+| Buku digital (baca di situs, flip) | `buku/` | https://zakademia.com/buku/metodologi/ |
+| Admin buku digital | `buku/admin.php` | https://zakademia.com/buku/admin.php |
 | Masuk / daftar akun | `asesmen/masuk.php`, `asesmen/daftar.php` | https://zakademia.com/asesmen/masuk.php |
 
 ## Penerbitan otomatis
@@ -43,3 +45,14 @@ Gambar pratinjau memakai ilustrasi vektor khas Zakademia (`tools/og_art.js`, dig
 Ikon kaca pembesar di header (beranda, Literasi, dan halaman aplikasi) membuka jendela pencarian seluruh situs. Pintasan papan ketik: `Ctrl+K` / `⌘K` atau `/`. Kodenya ada di `js/cari.js` dan `css/cari.css`.
 
 Isi yang dapat dicari tersimpan di `js/cari-indeks.json`: artikel Literasi, halaman beranda, layanan, bidang kajian, buku, artikel ilmiah, modul Ruang Belajar, dan halaman alat. Indeks ini diperbarui otomatis saat `tools/literasi/build.py` dijalankan. Bila hanya mengubah `index.html` atau `belajar/modul.js`, jalankan `python3 tools/cari/indeks.py` dari akar repositori. Daftar halaman alat diatur di `ALAT` dalam skrip tersebut.
+
+## Buku digital
+
+Buku dibaca di situs dengan tampilan flip (`buku/baca.php`, pustaka `js/flip/page-flip.browser.js`, MIT). Halaman buku disimpan sebagai gambar WebP di `buku/halaman/<slug>/` yang dilindungi `.htaccess` dan hanya dikirim lewat `buku/hal.php` setelah akses diperiksa. Halaman pratinjau (bawaan 24, diatur admin) terbuka untuk semua pengunjung.
+
+Akses pembeli mengikuti pola Rekomendasi Asesmen: webhook Lynk.id (`buku/webhook.php`, URL lengkap ada di halaman admin) membuka akses otomatis berdasarkan email pembeli, dan admin dapat menambah akses manual untuk pembayaran transfer di `buku/admin.php`. Pembeli masuk atau mendaftar dengan email pembelian; bila memakai email lain, ia dapat mengeklaim lewat kode verifikasi. Daftar buku ada di `BK_BUKU` dalam `buku/lib_buku.php`; tautan Lynk.id, harga, kata kunci produk, dan jumlah halaman pratinjau disimpan di `asesmen/data/buku.json` di server.
+
+Menyiapkan halaman buku dari PDF (sekali, lalu commit hasilnya):
+
+    pip install pymupdf pillow numpy
+    python3 tools/buku/render.py metodologi /path/Buku.pdf

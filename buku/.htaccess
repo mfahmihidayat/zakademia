@@ -1,0 +1,20 @@
+# zakademia.com/buku/metodologi/ -> halaman buku; /buku/metodologi/baca -> pembaca flip
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /buku/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-z0-9-]+)/baca/?$ baca.php?b=$1 [L,QSA]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-z0-9-]+)/?$ index.php?b=$1 [L,QSA]
+</IfModule>
+<FilesMatch "^(lib_buku)\.php$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+  <FilesMatch "^(index|baca|admin|webhook)\.php$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
