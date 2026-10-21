@@ -56,3 +56,16 @@ Menyiapkan halaman buku dari PDF (sekali, lalu commit hasilnya):
 
     pip install pymupdf pillow numpy
     python3 tools/buku/render.py metodologi /path/Buku.pdf
+
+## Statistik kunjungan dan pusat kendali
+
+Statistik dihitung sendiri (`stat/`), tanpa layanan pihak ketiga dan tanpa cookie pelacak. Setiap halaman publik memuat
+`js/stat.js`, yang mengirim satu kiriman kecil ke `stat/hit.php` (alamat halaman dan situs perujuk). Yang disimpan di
+`asesmen/data/statistik.sqlite`: waktu, halaman, perujuk, jenis perangkat, kode pengunjung harian (hash IP + peramban +
+garam harian yang berganti tiap hari), dan id akun bila sedang masuk. IP tidak disimpan; bot diabaikan; data lebih dari
+400 hari dihapus. Halaman admin tidak dihitung.
+
+`/admin/` (khusus admin) menampilkan pengunjung dan tayangan per hari (7/30/90 hari), halaman terpopuler, sumber
+kunjungan, perangkat, jam ramai, akun yang sedang online, serta daftar akun dengan tindakan verifikasi manual,
+jadikan/cabut admin, dan hapus. Bagian "Alat pengelolaan" menautkan dashboard asesmen, hasil survei, admin rekomendasi,
+admin buku digital, dan ekspor CSV. Artikel literasi baru otomatis memuat `stat.js` lewat `tools/literasi/build.py`.

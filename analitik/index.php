@@ -125,4 +125,5 @@ var CSRF=<?= json_encode($_SESSION['csrf']) ?>,SAVED=<?= json_encode($saved, JSO
 </script>
 <script src="/analitik/an.js?v=2"></script>
 <script src="/analitik/katalog.js?v=4"></script>
+<script src="/js/stat.js" defer></script>
 </body></html>

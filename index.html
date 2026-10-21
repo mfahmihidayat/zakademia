@@ -617,7 +617,7 @@
   </div>
 </div>
 <script src="js/script.js?v=202610211740"></script>
-<script src="js/cari.js?v=202610190100"></script>
+<script src="js/cari.js?v=202610190100"></script><script src="/js/stat.js" defer></script>
 <script>
 fetch('/asesmen/akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
   var a=document.getElementById('navAkun');if(a&&j&&j.user){a.textContent='Akun saya';a.href='/asesmen/akun.php';}

@@ -1,0 +1,3 @@
+<FilesMatch "^lib_stat\.php$">
+  Require all denied
+</FilesMatch>

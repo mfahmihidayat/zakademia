@@ -85,4 +85,5 @@ drawList();
 
 function openShare(s){ZKShare.open(s,function(){drawList();});}
 </script>
+<script src="/js/stat.js" defer></script>
 </body></html>
