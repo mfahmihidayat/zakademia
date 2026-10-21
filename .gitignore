@@ -1,3 +1,4 @@
 # Data asesmen hanya ada di server, tidak pernah masuk repositori.
 asesmen/data/
 .DS_Store
+__pycache__/
