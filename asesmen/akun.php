@@ -70,18 +70,19 @@ $services = '<h2>Layanan Anda</h2><div style="display:grid;grid-template-columns
     . $svc('strategi', 'Daun muda', 'Pendampingan Strategi', 'Pendampingan dimulai dengan Asesmen Kesiapan Penghimpunan (sekitar 15 menit).', [[ 'Mulai Asesmen', '/asesmen/']])
     . $svc('belajar', 'Daun terbuka', 'Ruang Belajar', 'Dua kamar belajar mandiri, Analitik dan Riset: modul singkat, kuis, dan praktik langsung dengan alat Zakademia.', [['Masuk Ruang Belajar', '/belajar/']])
     . '</div>';
-$list = '';
-foreach ($rows as $r) {
-    $done = $r['status'] === 'terkirim';
-    $list .= '<tr><td>' . e($fmt($r['dikirim'])) . '</td><td>' . e($r['org']) . '</td><td><span class="pill' . ($done ? ' done' : '') . '">'
-        . ($done ? 'Hasil dikirim ' . e($fmt($r['terkirim_pada'])) : 'Sedang ditelaah') . '</span></td></tr>';
-}
 $rkHas = false;
 try {
     $q = db()->prepare('SELECT 1 FROM rk_akses WHERE aktif = 1 AND (user_id = ? OR (user_id IS NULL AND email = ?)) LIMIT 1');
     $q->execute([$u['id'], $u['email']]);
     $rkHas = (bool)$q->fetchColumn();
 } catch (Throwable $e) { $rkHas = false; }
+$list = '';
+foreach ($rows as $r) {
+    $done = $r['status'] === 'terkirim';
+    $list .= '<tr><td>' . e($fmt($r['dikirim'])) . '</td><td>' . e($r['org']) . '</td><td><span class="pill' . ($done ? ' done' : '') . '">'
+        . ($done ? 'Hasil dikirim ' . e($fmt($r['terkirim_pada'])) : 'Sedang ditelaah') . '</span>'
+        . ($done ? ($rkHas ? ' <a href="/rekomendasi/" style="font-size:13px">Buka rekomendasi</a>' : ' <a href="' . e(rk_lynk_url()) . '" target="_blank" rel="noopener" style="font-size:13px">Dapatkan rekomendasi lengkap</a>') : '') . '</td></tr>';
+}
 $opts = '';
 foreach (ORG_TYPES as $t) $opts .= '<option' . ($t === $u['org_type'] ? ' selected' : '') . '>' . e($t) . '</option>';
 

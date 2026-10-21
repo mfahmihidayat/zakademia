@@ -324,7 +324,7 @@ body{padding-bottom:24px}
 </main>
 <script>
 (function(){
-var CSRF='__CSRF__';
+var CSRF='__CSRF__';var LYNK='__LYNK__';
 function api(name,data){return fetch('admin.php?api='+name,{method:data?'POST':'GET',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF':CSRF},body:data?JSON.stringify(data):undefined})
   .then(function(r){return r.json().catch(function(){return {ok:false,error:'Tanggapan server tidak terbaca ('+r.status+').'};});})
   .then(function(j){if(!j||!j.ok){if(j&&j.login){location.href='admin.php';}throw new Error((j&&j.error)||'galat');}return j.data;});}
@@ -628,7 +628,7 @@ function emailText(rec,st,r){
      .forEach(function(x){if(x[1])lines.push('- '+x[0]+': '+x[1]);});
     if(m.health)lines.push('Status kesehatan penghimpunan: '+HL[m.health]+'.');}
   lines.push('','Temuan utama:');storyLines(st,r).forEach(function(l){lines.push('- '+l);});
-  lines.push('','Rekomendasi rinci dan langkah prioritas akan kami paparkan dalam sesi diskusi bersama tim '+rec.org+'. Silakan balas email ini untuk menentukan waktunya.','');
+  lines.push('','Rekomendasi rinci untuk '+rec.org+' (langkah prioritas per dimensi beserta indikator ukurnya) tersedia sebagai laporan lengkap. Dapatkan di '+LYNK+' dengan email yang sama seperti akun Zakademia Anda, lalu buka di zakademia.com/rekomendasi.','','Bila ingin membahas hasil ini bersama tim, balas email ini.','');
   lines.push('Salam,','Tim Zakademia','info@zakademia.com · +62 856-9209-0699');
   return lines.join('\n');
 }

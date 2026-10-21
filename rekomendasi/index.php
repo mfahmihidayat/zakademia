@@ -94,6 +94,7 @@ $swap = [
     ["var BACKEND={list:function(){return api('list');}", 'var BACKEND={list:function(){return Promise.resolve([]);}'],
     ["\nload();\n})();", "\nvar REC=$recJson;document.getElementById('pdfReco').checked=true;openResult(REC);\n})();"],
     ['__CSRF__', ''],
+    ['__LYNK__', e(rk_lynk_url())],
 ];
 $missing = [];
 foreach ($swap as [$a, $b]) {

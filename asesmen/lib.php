@@ -302,6 +302,14 @@ function safe_next(?string $n, string $default): string
     if ($n === '' || !preg_match('#^/[A-Za-z0-9/_\-.?=&]*$#', $n) || str_starts_with($n, '//')) return $default;
     return $n;
 }
+/** Tautan checkout Rekomendasi Asesmen di Lynk.id (diatur di /rekomendasi/admin.php). */
+function rk_lynk_url(): string
+{
+    $f = data_dir() . '/rekomendasi.json';
+    $c = is_file($f) ? (json_decode((string)file_get_contents($f), true) ?: []) : [];
+    $u = (string)($c['lynk_url'] ?? '');
+    return $u !== '' ? $u : 'https://lynk.id/zakademia/x497oomm651d';
+}
 function e($s): string { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 function csrf_field(): string { return '<input type="hidden" name="csrf" value="' . e($_SESSION['csrf'] ?? '') . '">'; }
 function form_csrf_ok(): bool { return hash_equals($_SESSION['csrf'] ?? '', (string)($_POST['csrf'] ?? '')); }

@@ -86,6 +86,7 @@ if (isset($_GET['api'])) {
 if (is_admin()) {
     $html = (string)file_get_contents(__DIR__ . '/views/dashboard.html');
     $html = str_replace('<!--UNDUH-->', unduh_panel(), $html);
+    $html = str_replace('__LYNK__', htmlspecialchars(rk_lynk_url(), ENT_QUOTES), $html);
     echo str_replace('__CSRF__', htmlspecialchars($_SESSION['csrf'], ENT_QUOTES), $html);
     exit;
 }
