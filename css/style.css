@@ -463,8 +463,13 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 .peta-svg path:hover,.peta-svg path:focus-visible{stroke:#fff;stroke-width:1.4;outline:none}
 .peta-svg path.on{stroke:#fff;stroke-width:1.8;filter:drop-shadow(0 0 6px rgba(226,188,103,.9))}
 .peta-tip{position:absolute;pointer-events:none;background:#10291F;color:#FFFFF0;border:1px solid rgba(255,255,240,.25);border-radius:10px;padding:6px 10px;font-size:13px;line-height:1.35;white-space:nowrap;z-index:2}
-.peta-legend{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px;color:var(--deep-mute)}
-.peta-legend i{display:block;flex:1;max-width:260px;height:10px;border-radius:5px;border:1px solid rgba(255,255,240,.25)}.peta-legend span{white-space:nowrap}
+.peta-legend{margin:12px 6px 0;font-size:11.5px;color:var(--deep-mute)}
+.peta-legend i{display:block;height:12px;border-radius:6px;border:1px solid rgba(255,255,240,.25)}
+.peta-ticks{position:relative;height:30px;margin-top:4px}
+.peta-ticks span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap;padding-top:6px}
+.peta-ticks span::before{content:"";position:absolute;top:-4px;left:50%;width:1px;height:6px;background:rgba(255,255,240,.5)}
+.peta-ticks span:first-child{transform:none}.peta-ticks span:first-child::before{left:0}.peta-ticks span:last-child{transform:translateX(-100%)}.peta-ticks span:last-child::before{left:auto;right:0}
+@media(max-width:560px){.peta-ticks span:nth-child(2),.peta-ticks span:nth-child(4){display:none}}
 .peta-pilih{display:flex;gap:10px;align-items:center;margin-top:10px;font-size:13px;color:var(--deep-mute)}
 .peta-sel{font:inherit;font-size:14px;color:var(--deep-ink);background:rgba(255,255,240,.1);border:1px solid rgba(255,255,240,.3);border-radius:10px;padding:6px 10px;flex:1;min-width:0}
 .peta-sel option{color:#10291F}

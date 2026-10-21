@@ -20,7 +20,8 @@
   function kelas(){ var k=M[cur].k, vals=D.prov.map(function(p){return p[k];}), lo=Math.min.apply(null,vals), hi=Math.max.apply(null,vals), sq=cur!=='iwn';
     var f=function(v){ return sq?Math.sqrt(Math.max(0,v-lo))/Math.sqrt(hi-lo||1):(v-lo)/(hi-lo||1); };
     D.prov.forEach(function(p){ var v=p[k]; p.el.style.fill=warna(f(v)); p.el.setAttribute('aria-label',p.n+': '+M[cur].f(v)); });
-    legend.innerHTML='<span>'+M[cur].f(lo)+'</span><i style="background:linear-gradient(90deg,'+warna(0)+','+warna(.5)+','+warna(1)+')"></i><span>'+M[cur].f(hi)+'</span>'; }
+    var inv=function(t){ return sq?lo+t*t*(hi-lo):lo+t*(hi-lo); }, ticks=[0,.25,.5,.75,1];
+    legend.innerHTML='<i style="background:linear-gradient(90deg,'+warna(0)+','+warna(.25)+','+warna(.5)+','+warna(.75)+','+warna(1)+')"></i><div class="peta-ticks">'+ticks.map(function(t){ return '<span style="left:'+(t*100)+'%">'+M[cur].f(inv(t))+'</span>'; }).join('')+'</div>'; }
   function rank(p){ var k=M[cur].k; return D.prov.slice().sort(function(a,b){return b[k]-a[k];}).indexOf(p)+1; }
   function tampil(p){ aktif=p; D.prov.forEach(function(x){x.el.classList.toggle('on',x===p);}); sel.value=D.prov.indexOf(p);
     var k=M[cur].k;
