@@ -159,7 +159,10 @@ def dari_beranda():
         for art in kaj.find_all('article', 'book'):
             h, sub = art.find('h3'), art.find(cls='book-sub')
             body = [x for x in art.find_all('p') if not x.cls()]
-            out.append(dict(t=h.text() + (': ' + sub.text() if sub else ''), k='Buku', u='/#kajian', s=h.text(),
+            a = art.find('a')
+            href = (a.attrs.get('href') or '') if a else ''
+            u = href if href.startswith('/buku/') else '/#kajian'
+            out.append(dict(t=h.text() + (': ' + sub.text() if sub else ''), k='Buku digital' if u != '/#kajian' else 'Buku', u=u, s=h.text(),
                             d=potong(body[0].text() if body else ''), x=art.text()))
         for art in kaj.find_all('article', 'paper'):
             h, au, jr, sm = art.find('h3'), art.find(cls='paper-au'), art.find(cls='paper-jr'), art.find(cls='paper-sum')
