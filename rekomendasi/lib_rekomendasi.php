@@ -26,7 +26,7 @@ function rk_conf(): array
 {
     $f = data_dir() . '/rekomendasi.json';
     $c = is_file($f) ? (json_decode((string)file_get_contents($f), true) ?: []) : [];
-    $c += ['kunci' => '', 'lynk_url' => '', 'kata_kunci' => 'Rekomendasi', 'merchant_key' => ''];
+    $c += ['kunci' => '', 'lynk_url' => 'https://lynk.id/zakademia/x497oomm651d', 'kata_kunci' => 'Rekomendasi', 'merchant_key' => ''];
     if ($c['kunci'] === '') { $c['kunci'] = bin2hex(random_bytes(20)); rk_conf_save($c); }
     return $c;
 }
