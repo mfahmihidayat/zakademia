@@ -1,0 +1,18 @@
+Analitik Data Donatur untuk Amil · Modul 2: Retensi, perolehan, dan kehilangan donatur
+Video: Berapa donatur yang kembali?
+
+[1] Satu pertanyaan sederhana
+Retensi menjawab satu pertanyaan: dari semua donatur tahun lalu, berapa persen yang memberi lagi tahun ini. Angka ini menunjukkan apakah lembaga dipercaya untuk kedua kalinya.
+
+[2] Tiga kelompok setiap tahun
+Setiap tahun basis donatur terdiri dari tiga kelompok: yang bertahan, yang hilang, dan yang baru. Pertumbuhan bersih adalah donatur baru dikurangi donatur hilang.
+
+[3] Kohort: mengikuti satu angkatan
+Kohort mengikuti satu angkatan donatur dari tahun ke tahun. Biasanya kehilangan terbesar terjadi di tahun kedua. Di situlah program retensi paling berdampak.
+
+[4] Menghitung di spreadsheet
+Satu pivot table sudah cukup: ID donatur di baris, tahun di kolom. Donatur yang bertahan punya nilai di dua kolom berurutan. Template Kohort Retensi melakukan ini otomatis dari rekap standar Anda.
+
+[5] Membaca hasilnya
+Retensi 30 sampai 45 persen lazim bagi lembaga zakat. Donatur baru lebih mudah hilang daripada donatur lama. Menaikkan retensi lima poin biasanya menaikkan dana lebih dari lima persen, karena donatur yang bertahan cenderung memberi lebih besar.
+

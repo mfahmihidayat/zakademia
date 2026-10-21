@@ -1,0 +1,18 @@
+Analitik Data Donatur untuk Amil · Modul 3: Segmentasi RFM dan piramida donatur
+Video: Tidak semua donatur sama
+
+[1] Mengapa perlu segmentasi
+Mengirim pesan yang sama ke semua donatur berarti tidak tepat untuk siapa pun. Segmentasi membagi donatur ke kelompok yang butuh perlakuan berbeda.
+
+[2] RFM: tiga pertanyaan
+RFM hanya mengajukan tiga pertanyaan untuk tiap donatur: kapan terakhir memberi, berapa kali, dan berapa total nilainya. Tiga angka ini cukup untuk mengelompokkan ribuan donatur.
+
+[3] Memberi skor 1 sampai 5
+Setiap dimensi diberi skor satu sampai lima dengan membagi donatur ke lima kelompok sama besar. Donatur dengan skor lima di ketiganya adalah juara lembaga Anda.
+
+[4] Lima segmen yang bisa ditindaklanjuti
+Dari skor itu terbentuk lima segmen dengan tindakan masing-masing: juara dijaga, setia ditawari program rutin, berpotensi ditindaklanjuti dalam 90 hari, rawan dihubungi secara personal, dan tidur dibangunkan dengan kampanye ringan.
+
+[5] Piramida donatur
+Piramida donatur mengurutkan donatur dari total terbesar. Di banyak lembaga, sepuluh persen donatur teratas menyumbang separuh sampai dua pertiga dana. Mereka sedikit, tetapi menentukan.
+

@@ -1,0 +1,18 @@
+Analitik Data Donatur untuk Amil · Modul 4: Nilai donatur dan biaya penghimpunan
+Video: Berapa harga satu donatur?
+
+[1] Dua angka yang harus berpasangan
+Nilai donatur dan biaya akuisisi harus dibaca berpasangan. Lembaga sehat bila nilai seorang donatur selama ia bertahan setidaknya tiga kali biaya untuk mendapatkannya.
+
+[2] Menghitung CLV
+CLV dihitung dari donasi rata-rata per donatur per tahun dibagi satu dikurangi retensi. Dengan retensi empat puluh persen dan donasi rata-rata satu koma dua juta, nilai seorang donatur sekitar dua juta rupiah.
+
+[3] Menghitung CAC
+CAC adalah seluruh biaya untuk menjaring donatur baru dibagi jumlah donatur baru yang benar-benar masuk. Masukkan semua biayanya, termasuk waktu tim.
+
+[4] Biaya per rupiah terhimpun per kanal
+Hitung biaya per rupiah terhimpun untuk tiap kanal. Kanal murah biasanya kanal donatur lama; kanal mahal menjaring donatur baru. Keduanya perlu, tetapi anggarannya berbeda.
+
+[5] Keputusan yang dihasilkan
+Keputusannya sederhana: kanal dengan rasio di bawah satu dihentikan atau diperbaiki, kanal di atas tiga layak ditambah anggaran. Hitung ulang tiap tahun dengan cara yang sama.
+

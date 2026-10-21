@@ -14,7 +14,7 @@ DirectoryIndex index.php
 <FilesMatch "^(lib_lms|lib_belajar)\.php$">
   Require all denied
 </FilesMatch>
-<FilesMatch "\.(otf|ttf|json)$">
+<FilesMatch "\.(otf|ttf|json|mp4|xlsx|txt)$">
   Require all denied
 </FilesMatch>
 <IfModule mod_headers.c>

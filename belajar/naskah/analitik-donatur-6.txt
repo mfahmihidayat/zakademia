@@ -1,0 +1,18 @@
+Analitik Data Donatur untuk Amil · Modul 6: Dari angka ke keputusan dan laporan pimpinan
+Video: Satu halaman yang dibaca pimpinan
+
+[1] Pimpinan tidak butuh 40 halaman
+Laporan analitik untuk pimpinan cukup satu halaman: delapan angka yang penting dan tiga keputusan yang diusulkan. Angka tanpa keputusan hanya hiasan.
+
+[2] Delapan angka wajib
+Delapan angka itu: dana dan pertumbuhannya, donatur aktif, baru, dan hilang, retensi total dan retensi donatur baru, konsentrasi sepuluh persen teratas, rasio CLV dibanding CAC, dan biaya per rupiah terhimpun.
+
+[3] Tiga aturan penyajian
+Tiga aturan penyajian: selalu bandingkan dengan periode yang sama, satu grafik saja, dan tulis apa arti angka itu bagi lembaga.
+
+[4] Angka yang menyesatkan
+Waspadai angka yang terlihat bagus tetapi menyesatkan: dana naik sementara basis donatur turun, jumlah donatur melonjak karena kampanye nominal kecil, atau retensi tinggi karena donatur tidur dihapus dari hitungan.
+
+[5] Tugas akhir
+Tugas akhir kelas ini adalah laporan satu halaman untuk lembaga Anda sendiri, memakai angka dari lima modul sebelumnya, dengan tiga keputusan yang Anda usulkan.
+

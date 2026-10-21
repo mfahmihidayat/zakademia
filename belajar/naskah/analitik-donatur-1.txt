@@ -1,0 +1,18 @@
+Analitik Data Donatur untuk Amil · Modul 1: Menyiapkan data donatur yang bisa dianalisis
+Video: Data yang rapi dulu, angka menyusul
+
+[1] Mengapa mulai dari data
+Sebelum menghitung apa pun, kita rapikan dulu rekapnya. Sebagian besar kegagalan analitik di lembaga bukan karena rumus, tetapi karena data yang tidak bisa dihubungkan.
+
+[2] Dua tabel yang cukup
+Dua tabel ini sudah cukup untuk seluruh kelas. Tabel donasi mencatat setiap transaksi, tabel donatur mencatat siapa orangnya. Keduanya dihubungkan lewat ID donatur.
+
+[3] Empat kesalahan yang paling sering
+Empat kesalahan ini membuat retensi dan segmentasi tidak bisa dihitung. Perbaikannya sederhana: ID unik dari nomor telepon atau nomor anggota, satu format tanggal, nominal murni angka, dan satu baris per transaksi.
+
+[4] Membersihkan dalam 15 menit
+Template Rekap Donasi Standar sudah berisi kolom dan validasinya. Salin data Anda, rapikan tanggal, buat ID dari nomor WhatsApp yang sudah dibersihkan dari spasi dan tanda plus, lalu hapus transaksi ganda.
+
+[5] Praktik modul ini
+Praktiknya satu: rekap 12 bulan terakhir lembaga Anda masuk ke template sampai setiap baris punya ID donatur dan tanggal yang benar. Jumlah donatur unik yang muncul adalah angka pertama Anda.
+

@@ -1,0 +1,518 @@
+# -*- coding: utf-8 -*-
+"""Isi kelas berbayar "Analitik Data Donatur untuk Amil": bacaan, naskah video, kuis, praktik.
+Dipakai oleh bangun_kelas.py untuk membuat belajar/seed/analitik-donatur.json, template XLSX, dan video."""
+
+KELAS = {
+    'slug': 'analitik-donatur',
+    'judul': 'Analitik Data Donatur untuk Amil',
+    'ringkas': 'Enam modul untuk membaca basis donatur lembaga Anda sendiri: data yang rapi, retensi, segmentasi RFM, nilai donatur dan biaya, musim Ramadan, sampai laporan satu halaman untuk pimpinan.',
+    'deskripsi': """Kelas ini melanjutkan kelas gratis Analitik Penghimpunan. Bedanya, setiap modul berakhir pada satu angka yang Anda hitung dari data lembaga Anda sendiri, dengan template spreadsheet yang disediakan dan alat Analitik Zakademia.
+
+## Untuk siapa
+
+Amil bagian penghimpunan, data, atau pimpinan LAZ dan BAZNAS daerah yang memiliki rekap donasi minimal satu tahun. Tidak perlu latar belakang statistik; semua perhitungan dilakukan di spreadsheet biasa.
+
+## Yang Anda dapatkan
+
+- Enam template spreadsheet siap isi (rekap standar, kohort retensi, RFM, biaya per kanal, proyeksi musiman, laporan pimpinan)
+- Enam video penjelasan dan bacaan ringkas per modul
+- Kuis tiap modul dengan pembahasan
+- Satu laporan analitik lembaga Anda sendiri sebagai tugas akhir
+- Sertifikat penyelesaian bernomor yang dapat diverifikasi
+
+## Cara belajar
+
+Ikuti modul berurutan. Tonton video, baca materi, unduh template, lalu kerjakan praktiknya dengan data lembaga Anda. Kuis dapat diulang; nilai terbaik yang dicatat. Pertanyaan dapat diajukan di bawah tiap materi dan dijawab tim Zakademia.""",
+    'tujuan': """- Menyiapkan rekap donasi yang bisa dianalisis
+- Menghitung retensi, perolehan, dan kehilangan donatur per kohort
+- Menyusun segmentasi RFM dan piramida donatur
+- Menghitung nilai donatur, biaya akuisisi, dan biaya per kanal
+- Membaca musim penghimpunan dan memproyeksi Ramadan
+- Menyusun laporan analitik satu halaman untuk pimpinan""",
+    'pemandu': 'zaida', 'lulus': 70, 'harga': 'Rp199.000', 'kata_kunci': 'Analitik Donatur',
+}
+
+# Setiap modul: judul, video (adegan: judul + poin + narasi), bacaan (format sederhana), berkas (nama template), praktik, kuis.
+MODUL = []
+
+MODUL.append({
+ 'judul': 'Menyiapkan data donatur yang bisa dianalisis', 'menit': 50, 'berkas': 'rekap-donasi-standar',
+ 'video': {
+  'judul': 'Data yang rapi dulu, angka menyusul',
+  'adegan': [
+   {'h': 'Mengapa mulai dari data', 'p': ['Analitik hanya sebaik datanya', 'Satu rekap, satu baris per transaksi', 'Setiap donatur punya satu ID'],
+    'n': 'Sebelum menghitung apa pun, kita rapikan dulu rekapnya. Sebagian besar kegagalan analitik di lembaga bukan karena rumus, tetapi karena data yang tidak bisa dihubungkan.'},
+   {'h': 'Dua tabel yang cukup', 'p': ['Tabel donasi: tanggal, ID donatur, nominal, jenis dana, kanal, program', 'Tabel donatur: ID, nama, kota, kanal pertama, tanggal donasi pertama'],
+    'n': 'Dua tabel ini sudah cukup untuk seluruh kelas. Tabel donasi mencatat setiap transaksi, tabel donatur mencatat siapa orangnya. Keduanya dihubungkan lewat ID donatur.'},
+   {'h': 'Empat kesalahan yang paling sering', 'p': ['Nama dipakai sebagai ID (Ahmad ada 40 orang)', 'Tanggal campur format: 5/3/2025 dan 05-03-25', 'Nominal berisi teks: "Rp 100.000"', 'Satu baris berisi beberapa donasi'],
+    'n': 'Empat kesalahan ini membuat retensi dan segmentasi tidak bisa dihitung. Perbaikannya sederhana: ID unik dari nomor telepon atau nomor anggota, satu format tanggal, nominal murni angka, dan satu baris per transaksi.'},
+   {'h': 'Membersihkan dalam 15 menit', 'p': ['Salin rekap ke template', 'Samakan format tanggal dengan Text to Columns', 'Buat ID dari nomor WhatsApp', 'Hapus duplikat transaksi'],
+    'n': 'Template Rekap Donasi Standar sudah berisi kolom dan validasinya. Salin data Anda, rapikan tanggal, buat ID dari nomor WhatsApp yang sudah dibersihkan dari spasi dan tanda plus, lalu hapus transaksi ganda.'},
+   {'h': 'Praktik modul ini', 'p': ['Isi template dengan rekap 12 bulan terakhir', 'Pastikan setiap baris punya ID dan tanggal', 'Catat jumlah donatur unik'],
+    'n': 'Praktiknya satu: rekap 12 bulan terakhir lembaga Anda masuk ke template sampai setiap baris punya ID donatur dan tanggal yang benar. Jumlah donatur unik yang muncul adalah angka pertama Anda.'},
+  ]},
+ 'bacaan': """**Setelah modul ini Anda dapat:**
+
+- Menyusun rekap donasi dalam bentuk satu baris per transaksi
+- Memberi ID unik pada setiap donatur
+- Mengenali dan memperbaiki empat kesalahan data yang paling sering terjadi
+
+## Mengapa data lebih penting daripada rumus
+
+Retensi, segmentasi, dan nilai donatur semuanya bergantung pada satu hal: lembaga tahu transaksi mana milik donatur yang sama. Bila donatur hanya dikenali dari nama, "Ahmad" yang berdonasi di Ramadan dan "Ahmad" yang berdonasi di Muharam tidak bisa dipastikan orang yang sama. Semua angka setelahnya menjadi tebakan.
+
+Karena itu modul pertama tidak membahas rumus sama sekali. Kita menyiapkan rekap yang bisa dianalisis.
+
+## Dua tabel yang cukup
+
+**Tabel donasi**, satu baris untuk satu transaksi, dengan kolom:
+
+- Tanggal (satu format: 2025-03-05)
+- ID donatur
+- Nominal (angka murni, tanpa "Rp" atau titik)
+- Jenis dana (zakat, infak, wakaf, kurban, dan seterusnya)
+- Kanal (transfer, QRIS, aplikasi, kotak amal, payroll, mitra)
+- Program (opsional)
+
+**Tabel donatur**, satu baris untuk satu orang atau lembaga, dengan kolom ID donatur, nama, kota, kanal pertama, dan tanggal donasi pertama. Tabel ini bisa dibuat otomatis dari tabel donasi.
+
+## Empat kesalahan yang paling sering
+
+1. **Nama sebagai ID.** Dua orang bernama sama tergabung, satu orang dengan ejaan berbeda terpisah. Gunakan nomor WhatsApp yang dibersihkan (hapus spasi, tanda hubung, dan +62 menjadi 0) atau nomor anggota.
+2. **Format tanggal campur.** 5/3/2025 dapat dibaca 5 Maret atau 3 Mei. Pilih satu format, sebaiknya tahun-bulan-tanggal, dan terapkan ke seluruh kolom.
+3. **Nominal berisi teks.** "Rp 100.000" tidak bisa dijumlahkan. Simpan sebagai angka 100000.
+4. **Satu baris berisi beberapa donasi.** Misalnya "zakat 500.000 dan infak 50.000" dalam satu sel. Pecah menjadi dua baris.
+
+Kesalahan kelima yang lebih halus adalah **transaksi ganda** akibat rekap dari dua sumber (mutasi bank dan aplikasi) yang digabung. Tandai dengan kombinasi tanggal, ID, dan nominal yang sama, lalu hapus salah satunya.
+
+## Membersihkan dalam 15 menit
+
+Template Rekap Donasi Standar yang diunduh di materi berikutnya sudah memuat kolom di atas, validasi tanggal dan angka, serta lembar Donatur yang terisi otomatis. Langkahnya:
+
+1. Salin rekap lama ke lembar Donasi, sesuaikan urutan kolom.
+2. Samakan format tanggal (di Excel: Data, Text to Columns, pilih format tanggal asal).
+3. Buat ID dari nomor WhatsApp dengan rumus yang sudah ada di kolom bantu.
+4. Hapus duplikat transaksi (Data, Remove Duplicates, pilih kolom tanggal, ID, nominal).
+5. Lihat lembar Donatur: jumlah donatur unik dan donasi pertama tiap orang sudah terisi.
+
+> Patokan: bila lebih dari 10% baris tidak punya ID donatur yang bisa dipastikan, hentikan analisis dan lengkapi dulu datanya. Angka dari data yang bolong lebih berbahaya daripada tidak ada angka.
+
+## Kebiasaan yang menjaga data tetap rapi
+
+- Satu rekap induk, bukan rekap per kampanye.
+- ID donatur diberikan saat donasi pertama, bukan saat rekap.
+- Tutup rekap tiap akhir bulan dan simpan salinannya.
+- Siapa pun yang menginput memakai template yang sama.""",
+ 'praktik': {'judul': 'Rapikan rekap 12 bulan terakhir lembaga Anda', 'isi': """Unduh template Rekap Donasi Standar, salin rekap 12 bulan terakhir lembaga Anda ke lembar Donasi, dan ikuti lima langkah di bacaan sampai setiap baris memiliki ID donatur dan tanggal yang benar.
+
+Catat tiga angka dari lembar Donatur: jumlah donatur unik, jumlah transaksi, dan total dana. Ketiganya akan dipakai di modul berikutnya.
+
+Kalau rekap Anda sudah bersih, uji dengan alat Kesehatan Penghimpunan di Analitik Zakademia.""", 'tautan': '/analitik/'},
+ 'kuis': [
+  {'q': 'Mengapa nama tidak boleh dipakai sebagai pengenal donatur?', 'o': ['Karena nama terlalu panjang untuk spreadsheet', 'Karena dua orang bisa bernama sama dan satu orang bisa ditulis dengan ejaan berbeda', 'Karena nama bersifat rahasia', 'Karena rumus Excel tidak bisa membaca huruf'], 'a': 1, 'e': 'ID unik (nomor WhatsApp bersih atau nomor anggota) memastikan transaksi dari orang yang sama tergabung.'},
+  {'q': 'Bentuk tabel donasi yang bisa dianalisis adalah', 'o': ['Satu baris per donatur, kolom per bulan', 'Satu baris per kampanye', 'Satu baris per transaksi', 'Satu lembar per kanal'], 'a': 2, 'e': 'Satu baris per transaksi memungkinkan pengelompokan apa pun: per donatur, bulan, kanal, atau program.'},
+  {'q': 'Sel berisi "Rp 100.000" bermasalah karena', 'o': ['Tidak bisa dijumlahkan sebagai angka', 'Terlalu besar', 'Harus dalam dolar', 'Tidak ada tanggalnya'], 'a': 0, 'e': 'Nominal harus angka murni (100000) agar bisa dijumlahkan dan dirata-rata.'},
+  {'q': 'Rekap dari mutasi bank dan dari aplikasi digabung. Risiko utamanya adalah', 'o': ['Data terlalu sedikit', 'Transaksi yang sama tercatat dua kali', 'Format tanggal otomatis berubah', 'Donatur anonim hilang'], 'a': 1, 'e': 'Transaksi ganda menggelembungkan dana dan jumlah transaksi; hapus dengan kombinasi tanggal, ID, dan nominal yang sama.'},
+  {'q': 'Bila 25% baris rekap tidak punya ID donatur yang bisa dipastikan, langkah yang tepat adalah', 'o': ['Lanjutkan analisis dan abaikan baris itu', 'Hentikan analisis dan lengkapi dulu datanya', 'Isi ID dengan nama', 'Hapus semua baris tersebut'], 'a': 1, 'e': 'Patokan di modul ini: di atas 10% baris tanpa ID, hasil analisis tidak bisa dipercaya.'},
+ ]})
+
+MODUL.append({
+ 'judul': 'Retensi, perolehan, dan kehilangan donatur', 'menit': 55, 'berkas': 'kohort-retensi',
+ 'video': {
+  'judul': 'Berapa donatur yang kembali?',
+  'adegan': [
+   {'h': 'Satu pertanyaan sederhana', 'p': ['Dari donatur tahun lalu, berapa yang memberi lagi tahun ini?', 'Itulah retensi'],
+    'n': 'Retensi menjawab satu pertanyaan: dari semua donatur tahun lalu, berapa persen yang memberi lagi tahun ini. Angka ini menunjukkan apakah lembaga dipercaya untuk kedua kalinya.'},
+   {'h': 'Tiga kelompok setiap tahun', 'p': ['Bertahan: tahun lalu memberi, tahun ini memberi', 'Hilang: tahun lalu memberi, tahun ini tidak', 'Baru: tahun ini pertama kali'],
+    'n': 'Setiap tahun basis donatur terdiri dari tiga kelompok: yang bertahan, yang hilang, dan yang baru. Pertumbuhan bersih adalah donatur baru dikurangi donatur hilang.'},
+   {'h': 'Kohort: mengikuti satu angkatan', 'p': ['Angkatan 2023: semua yang pertama kali memberi di 2023', 'Berapa yang masih memberi di 2024? di 2025?', 'Kohort menunjukkan di tahun ke berapa donatur paling banyak hilang'],
+    'n': 'Kohort mengikuti satu angkatan donatur dari tahun ke tahun. Biasanya kehilangan terbesar terjadi di tahun kedua. Di situlah program retensi paling berdampak.'},
+   {'h': 'Menghitung di spreadsheet', 'p': ['Pivot: ID donatur sebagai baris, tahun sebagai kolom, jumlah donasi sebagai nilai', 'Donatur bertahan = ada nilai di dua kolom berurutan', 'Template Kohort Retensi menghitung otomatis'],
+    'n': 'Satu pivot table sudah cukup: ID donatur di baris, tahun di kolom. Donatur yang bertahan punya nilai di dua kolom berurutan. Template Kohort Retensi melakukan ini otomatis dari rekap standar Anda.'},
+   {'h': 'Membaca hasilnya', 'p': ['Retensi 30 sampai 45 persen lazim untuk lembaga zakat di Indonesia', 'Retensi donatur baru biasanya separuh retensi donatur lama', 'Naikkan 5 poin retensi, dana bisa naik lebih dari 5 persen'],
+    'n': 'Retensi 30 sampai 45 persen lazim bagi lembaga zakat. Donatur baru lebih mudah hilang daripada donatur lama. Menaikkan retensi lima poin biasanya menaikkan dana lebih dari lima persen, karena donatur yang bertahan cenderung memberi lebih besar.'},
+  ]},
+ 'bacaan': """**Setelah modul ini Anda dapat:**
+
+- Menghitung retensi tahunan dan retensi donatur baru
+- Menyusun tabel kohort dari rekap standar
+- Membaca pertumbuhan bersih basis donatur
+
+## Retensi
+
+Retensi donatur adalah persentase donatur tahun lalu yang memberi lagi tahun ini.
+
+**Rumus:** Retensi = donatur tahun lalu yang memberi lagi tahun ini ÷ jumlah donatur tahun lalu
+
+> Contoh: Tahun 2024 ada 3.200 donatur. Pada 2025, 1.350 di antaranya memberi lagi. Retensi 2025 = 1.350 ÷ 3.200 = 42,2%.
+
+Retensi dihitung per tahun karena sebagian besar donatur zakat memberi setahun sekali, di Ramadan. Menghitung retensi bulanan untuk lembaga zakat akan terlihat sangat rendah dan menyesatkan.
+
+## Tiga kelompok setiap tahun
+
+Pada tahun berjalan, setiap donatur masuk salah satu kelompok:
+
+- **Bertahan**: memberi tahun lalu dan tahun ini.
+- **Hilang**: memberi tahun lalu, tidak memberi tahun ini.
+- **Baru**: memberi tahun ini untuk pertama kali.
+
+**Rumus:** Pertumbuhan bersih = donatur baru − donatur hilang
+
+> Contoh: 1.850 donatur hilang, 1.600 donatur baru. Pertumbuhan bersih −250. Total dana bisa saja naik karena donatur besar menambah, tetapi basisnya menyusut.
+
+Ada kelompok keempat yang sering terlupakan: **kembali**, yaitu donatur yang pernah memberi, absen satu tahun atau lebih, lalu memberi lagi. Mereka tidak dihitung sebagai baru.
+
+## Kohort
+
+Kohort adalah angkatan donatur berdasarkan tahun donasi pertama. Tabel kohort menunjukkan berapa persen tiap angkatan yang masih memberi pada tahun-tahun berikutnya.
+
+| Angkatan | Jumlah | Tahun ke-2 | Tahun ke-3 |
+|---|---|---|---|
+| 2022 | 1.400 | 38% | 29% |
+| 2023 | 1.700 | 41% | – |
+| 2024 | 1.600 | 44% | – |
+
+Dua hal yang dibaca dari tabel kohort: di tahun ke berapa kehilangan terbesar terjadi (hampir selalu tahun kedua), dan apakah angkatan yang lebih baru bertahan lebih baik daripada angkatan lama (tanda program retensi bekerja).
+
+## Retensi donatur baru dan donatur lama
+
+Pisahkan retensi menjadi dua:
+
+- **Retensi donatur baru**: dari donatur yang pertama kali memberi tahun lalu, berapa yang memberi lagi tahun ini.
+- **Retensi donatur lama**: dari donatur yang sudah memberi dua tahun atau lebih, berapa yang memberi lagi.
+
+Retensi donatur baru biasanya separuh retensi donatur lama. Karena itu usaha mempertahankan donatur paling efektif diarahkan ke donatur yang baru sekali memberi: ucapan terima kasih, laporan penyaluran, dan ajakan kedua dalam 90 hari.
+
+## Menghitung di spreadsheet
+
+Template Kohort Retensi bekerja dari lembar Donasi di Rekap Donasi Standar:
+
+1. Pivot table: ID donatur di baris, tahun di kolom, jumlah nominal sebagai nilai.
+2. Kolom bantu menandai, untuk tiap donatur, tahun pertama memberi dan apakah memberi di tiap tahun.
+3. Lembar Ringkasan menghitung jumlah donatur, bertahan, hilang, baru, kembali, retensi total, retensi donatur baru, dan tabel kohort.
+
+## Membaca angkanya
+
+- Retensi total 30 sampai 45% lazim untuk lembaga zakat di Indonesia; di atas 50% tergolong sangat baik.
+- Pertumbuhan bersih negatif dua tahun berturut-turut berarti lembaga bergantung pada donatur besar; prioritaskan retensi, bukan iklan.
+- Kenaikan retensi 5 poin biasanya menaikkan dana lebih dari 5%, karena donatur yang bertahan cenderung memberi lebih besar dari tahun ke tahun.""",
+ 'praktik': {'judul': 'Hitung retensi dan kohort lembaga Anda', 'isi': """Buka template Kohort Retensi, tempel lembar Donasi dari rekap standar Anda, dan baca lembar Ringkasan.
+
+Catat: retensi total tahun ini, retensi donatur baru, pertumbuhan bersih, dan tahun dengan kehilangan terbesar di tabel kohort. Bandingkan retensi total dengan hasil alat Kesehatan Penghimpunan di Analitik Zakademia; keduanya semestinya mendekati.""", 'tautan': '/analitik/'},
+ 'kuis': [
+  {'q': 'Tahun lalu 2.500 donatur, tahun ini 1.000 di antaranya memberi lagi. Retensinya', 'o': ['25%', '40%', '60%', 'Tidak bisa dihitung tanpa total dana'], 'a': 1, 'e': '1.000 ÷ 2.500 = 40%. Total dana tidak diperlukan.'},
+  {'q': 'Donatur hilang 1.900, donatur baru 1.700. Pertumbuhan bersih basis donatur', 'o': ['+200', '−200', '+3.600', '0'], 'a': 1, 'e': 'Baru dikurangi hilang: 1.700 − 1.900 = −200. Basis menyusut meski dana mungkin naik.'},
+  {'q': 'Tabel kohort paling berguna untuk mengetahui', 'o': ['Total dana per program', 'Di tahun ke berapa satu angkatan donatur paling banyak hilang', 'Kanal termurah', 'Nominal rata-rata'], 'a': 1, 'e': 'Kohort mengikuti satu angkatan dari tahun ke tahun; kehilangan terbesar biasanya di tahun kedua.'},
+  {'q': 'Retensi untuk lembaga zakat sebaiknya dihitung per', 'o': ['Hari', 'Bulan', 'Tahun', 'Kampanye'], 'a': 2, 'e': 'Donatur zakat umumnya memberi setahun sekali; retensi bulanan akan terlihat sangat rendah dan menyesatkan.'},
+  {'q': 'Donatur yang absen dua tahun lalu memberi lagi dihitung sebagai', 'o': ['Baru', 'Bertahan', 'Kembali', 'Hilang'], 'a': 2, 'e': 'Kelompok kembali dibedakan dari baru, karena mereka sudah pernah memberi.'},
+  {'q': 'Usaha retensi paling efektif diarahkan ke', 'o': ['Donatur yang baru sekali memberi', 'Donatur terbesar', 'Donatur anonim', 'Semua donatur sama rata'], 'a': 0, 'e': 'Retensi donatur baru biasanya separuh retensi donatur lama, sehingga di sanalah kebocoran terbesar.'},
+ ]})
+
+MODUL.append({
+ 'judul': 'Segmentasi RFM dan piramida donatur', 'menit': 60, 'berkas': 'rfm',
+ 'video': {
+  'judul': 'Tidak semua donatur sama',
+  'adegan': [
+   {'h': 'Mengapa perlu segmentasi', 'p': ['Pesan yang sama untuk semua orang berarti tidak tepat untuk siapa pun', 'Segmentasi menjawab: siapa yang perlu dijaga, siapa yang perlu dibangunkan'],
+    'n': 'Mengirim pesan yang sama ke semua donatur berarti tidak tepat untuk siapa pun. Segmentasi membagi donatur ke kelompok yang butuh perlakuan berbeda.'},
+   {'h': 'RFM: tiga pertanyaan', 'p': ['Recency: kapan terakhir memberi?', 'Frequency: berapa kali memberi?', 'Monetary: berapa total yang diberikan?'],
+    'n': 'RFM hanya mengajukan tiga pertanyaan untuk tiap donatur: kapan terakhir memberi, berapa kali, dan berapa total nilainya. Tiga angka ini cukup untuk mengelompokkan ribuan donatur.'},
+   {'h': 'Memberi skor 1 sampai 5', 'p': ['Setiap dimensi dibagi lima kelompok sama besar', 'Skor 5 untuk yang terbaru, tersering, terbesar', 'Skor RFM 555 adalah donatur juara'],
+    'n': 'Setiap dimensi diberi skor satu sampai lima dengan membagi donatur ke lima kelompok sama besar. Donatur dengan skor lima di ketiganya adalah juara lembaga Anda.'},
+   {'h': 'Lima segmen yang bisa ditindaklanjuti', 'p': ['Juara: jaga, laporkan dampak, ajak jadi duta', 'Setia: tawarkan program rutin', 'Berpotensi: baru dan besar, follow-up 90 hari', 'Rawan: dulu aktif, mulai menjauh, hubungi personal', 'Tidur: lama tak memberi, kampanye ulang ringan'],
+    'n': 'Dari skor itu terbentuk lima segmen dengan tindakan masing-masing: juara dijaga, setia ditawari program rutin, berpotensi ditindaklanjuti dalam 90 hari, rawan dihubungi secara personal, dan tidur dibangunkan dengan kampanye ringan.'},
+   {'h': 'Piramida donatur', 'p': ['Urutkan donatur dari total terbesar', '10 persen teratas biasanya menyumbang 50 sampai 70 persen dana', 'Puncak piramida kecil tetapi menentukan'],
+    'n': 'Piramida donatur mengurutkan donatur dari total terbesar. Di banyak lembaga, sepuluh persen donatur teratas menyumbang separuh sampai dua pertiga dana. Mereka sedikit, tetapi menentukan.'},
+  ]},
+ 'bacaan': """**Setelah modul ini Anda dapat:**
+
+- Menghitung skor RFM untuk setiap donatur
+- Membagi donatur ke lima segmen dengan tindakan yang berbeda
+- Menyusun piramida donatur dan membaca konsentrasi dana
+
+## RFM
+
+RFM mengelompokkan donatur dari tiga ukuran yang semuanya ada di rekap donasi:
+
+- **Recency (R)**: berapa lama sejak donasi terakhir. Semakin baru semakin baik.
+- **Frequency (F)**: berapa kali berdonasi dalam periode (misalnya 3 tahun).
+- **Monetary (M)**: total nominal dalam periode yang sama.
+
+Masing-masing diberi skor 1 sampai 5 dengan membagi seluruh donatur menjadi lima kelompok sama besar (kuintil). Skor 5 untuk yang paling baru, paling sering, dan paling besar.
+
+> Contoh: Ibu Rina terakhir memberi 2 bulan lalu (R=5), memberi 7 kali dalam 3 tahun (F=5), total Rp9,5 juta (M=4). Skor RFM 554.
+
+## Lima segmen dan tindakannya
+
+| Segmen | Ciri skor | Tindakan |
+|---|---|---|
+| Juara | R 4–5, F 4–5, M 4–5 | Laporan dampak personal, ajak menjadi duta, jangan dibanjiri promosi |
+| Setia | F 4–5, R 3–5 | Tawarkan program rutin bulanan atau autodebit |
+| Berpotensi | R 5, F 1–2, M 3–5 | Donatur baru bernilai besar; tindak lanjut dalam 90 hari |
+| Rawan | R 2–3, F 3–5 | Dulu aktif, mulai menjauh; hubungi secara personal |
+| Tidur | R 1–2, F 1–2 | Lama tidak memberi; kampanye ulang ringan, jangan mahal |
+
+Segmen yang tidak masuk kelima kelompok itu (misalnya R 3, F 2, M 2) diperlakukan sebagai donatur umum.
+
+## Piramida donatur
+
+Urutkan donatur dari total donasi terbesar, lalu hitung berapa persen dana yang disumbang 1%, 10%, dan 50% donatur teratas.
+
+> Contoh: 4.000 donatur, total Rp6 miliar. 40 donatur teratas (1%) menyumbang Rp1,5 miliar (25%). 400 donatur teratas (10%) menyumbang Rp3,6 miliar (60%).
+
+Konsentrasi tinggi (10% teratas di atas 70%) berarti lembaga rentan bila beberapa donatur besar berhenti. Konsentrasi rendah (di bawah 40%) berarti basis luas tetapi nilai per donatur kecil; peluangnya ada di menaikkan nominal.
+
+## Menghitung di spreadsheet
+
+Template RFM bekerja dari lembar Donasi:
+
+1. Lembar Donatur merangkum tanggal terakhir, jumlah transaksi, dan total per ID.
+2. Skor R, F, M dihitung dengan PERCENTRANK, lalu dibulatkan ke 1–5.
+3. Kolom Segmen memberi label berdasarkan aturan di tabel.
+4. Lembar Piramida mengurutkan dan menghitung konsentrasi.
+
+## Yang sering keliru
+
+- Menghitung M dari satu tahun saja; pakai 2 sampai 3 tahun agar donatur Ramadan tidak terlihat "tidur".
+- Mengirim promosi gencar ke Juara; mereka butuh laporan, bukan ajakan.
+- Mengabaikan Rawan; segmen ini paling murah diselamatkan karena masih ingat lembaga.""",
+ 'praktik': {'judul': 'Segmentasi basis donatur Anda', 'isi': """Buka template RFM, tempel lembar Donasi tiga tahun terakhir, dan baca lembar Segmen serta Piramida.
+
+Catat: jumlah donatur di tiap segmen, persentase dana dari 10% donatur teratas, dan tiga nama di segmen Rawan yang akan Anda hubungi pekan ini.""", 'tautan': '/analitik/'},
+ 'kuis': [
+  {'q': 'Huruf R dalam RFM menunjukkan', 'o': ['Rata-rata donasi', 'Kapan terakhir berdonasi', 'Jumlah rekening', 'Rasio retensi'], 'a': 1, 'e': 'Recency: berapa lama sejak donasi terakhir.'},
+  {'q': 'Donatur dengan skor R=5, F=1, M=4 paling tepat dimasukkan ke segmen', 'o': ['Juara', 'Tidur', 'Berpotensi', 'Rawan'], 'a': 2, 'e': 'Baru saja memberi, baru sekali, nilainya besar: donatur baru bernilai tinggi yang perlu ditindaklanjuti dalam 90 hari.'},
+  {'q': 'Perlakuan yang tepat untuk segmen Juara', 'o': ['Kirim promosi sesering mungkin', 'Laporan dampak personal dan ajakan menjadi duta', 'Abaikan karena sudah pasti memberi', 'Minta nominal lebih besar setiap bulan'], 'a': 1, 'e': 'Juara butuh dijaga dengan laporan dan penghargaan, bukan dibanjiri promosi.'},
+  {'q': '10% donatur teratas menyumbang 75% dana. Artinya', 'o': ['Basis donatur sangat sehat', 'Lembaga rentan bila beberapa donatur besar berhenti', 'Retensi pasti tinggi', 'Kanal digital tidak bekerja'], 'a': 1, 'e': 'Konsentrasi tinggi berarti ketergantungan pada sedikit donatur besar.'},
+  {'q': 'Periode yang disarankan untuk menghitung skor M', 'o': ['1 bulan', '1 tahun', '2 sampai 3 tahun', '10 tahun'], 'a': 2, 'e': 'Agar donatur yang memberi setahun sekali di Ramadan tidak salah dilabeli tidur.'},
+  {'q': 'Segmen yang paling murah diselamatkan adalah', 'o': ['Tidur', 'Rawan', 'Juara', 'Berpotensi'], 'a': 1, 'e': 'Rawan masih mengingat lembaga dan baru mulai menjauh; sapaan personal sering cukup.'},
+ ]})
+
+MODUL.append({
+ 'judul': 'Nilai donatur dan biaya penghimpunan', 'menit': 50, 'berkas': 'biaya-per-kanal',
+ 'video': {
+  'judul': 'Berapa harga satu donatur?',
+  'adegan': [
+   {'h': 'Dua angka yang harus berpasangan', 'p': ['CLV: nilai seorang donatur selama ia bertahan', 'CAC: biaya mendapatkan satu donatur baru', 'Sehat bila CLV setidaknya 3 kali CAC'],
+    'n': 'Nilai donatur dan biaya akuisisi harus dibaca berpasangan. Lembaga sehat bila nilai seorang donatur selama ia bertahan setidaknya tiga kali biaya untuk mendapatkannya.'},
+   {'h': 'Menghitung CLV', 'p': ['CLV ≈ donasi per donatur per tahun ÷ (1 − retensi)', 'Retensi 40 persen, donasi Rp1,2 juta per tahun → CLV Rp2 juta'],
+    'n': 'CLV dihitung dari donasi rata-rata per donatur per tahun dibagi satu dikurangi retensi. Dengan retensi empat puluh persen dan donasi rata-rata satu koma dua juta, nilai seorang donatur sekitar dua juta rupiah.'},
+   {'h': 'Menghitung CAC', 'p': ['CAC = seluruh biaya menjaring donatur baru ÷ jumlah donatur baru', 'Masukkan iklan, konten, honor, hadiah, dan waktu tim'],
+    'n': 'CAC adalah seluruh biaya untuk menjaring donatur baru dibagi jumlah donatur baru yang benar-benar masuk. Masukkan semua biayanya, termasuk waktu tim.'},
+   {'h': 'Biaya per rupiah terhimpun per kanal', 'p': ['Bandingkan tiap kanal: iklan digital, QRIS masjid, payroll, mitra, acara', 'Kanal murah untuk mempertahankan, kanal mahal untuk menjaring', 'Acuan hak amil 12,5 persen'],
+    'n': 'Hitung biaya per rupiah terhimpun untuk tiap kanal. Kanal murah biasanya kanal donatur lama; kanal mahal menjaring donatur baru. Keduanya perlu, tetapi anggarannya berbeda.'},
+   {'h': 'Keputusan yang dihasilkan', 'p': ['Kanal dengan CLV:CAC di bawah 1 dihentikan atau diperbaiki', 'Kanal di atas 3 layak ditambah anggaran', 'Hitung ulang setiap tahun dengan cara yang sama'],
+    'n': 'Keputusannya sederhana: kanal dengan rasio di bawah satu dihentikan atau diperbaiki, kanal di atas tiga layak ditambah anggaran. Hitung ulang tiap tahun dengan cara yang sama.'},
+  ]},
+ 'bacaan': """**Setelah modul ini Anda dapat:**
+
+- Menghitung nilai donatur (CLV) dan biaya akuisisi (CAC)
+- Membandingkan biaya per rupiah terhimpun antar kanal
+- Memutuskan kanal mana yang ditambah dan dikurangi anggarannya
+
+## Nilai donatur (CLV)
+
+CLV memperkirakan total donasi seorang donatur selama ia bertahan dengan lembaga.
+
+**Rumus:** CLV ≈ donasi rata-rata per donatur per tahun ÷ (1 − retensi)
+
+> Contoh: donasi rata-rata Rp1,2 juta per tahun, retensi 40%. CLV ≈ 1,2 juta ÷ 0,6 = Rp2 juta.
+
+Rumus ini sederhana tetapi cukup untuk keputusan anggaran. Perhatikan bahwa retensi masuk ke penyebut: menaikkan retensi dari 40% ke 50% menaikkan CLV dari Rp2 juta ke Rp2,4 juta tanpa menambah donasi per orang.
+
+## Biaya akuisisi (CAC)
+
+**Rumus:** CAC = seluruh biaya menjaring donatur baru ÷ jumlah donatur baru
+
+Masukkan semua biaya: iklan, produksi konten, honor relawan, hadiah, cetak, dan perkiraan waktu tim. Hitung per kanal bila bisa.
+
+> Contoh: biaya iklan dan konten digital Rp180 juta setahun mendatangkan 1.200 donatur baru. CAC digital = Rp150 ribu.
+
+## Rasio CLV : CAC
+
+- Di bawah 1 : 1, lembaga rugi untuk setiap donatur baru dari kanal itu.
+- 1 sampai 3 : 1, masih untung tetapi tipis; perbaiki retensi atau biaya.
+- 3 : 1 atau lebih, sehat; layak ditambah anggaran.
+
+> Contoh: CLV Rp2 juta, CAC digital Rp150 ribu, rasio 13 : 1. Sangat sehat. Kanal acara dengan CAC Rp900 ribu memberi rasio 2,2 : 1, masih untung tetapi perlu dibenahi.
+
+## Biaya per rupiah terhimpun per kanal
+
+Untuk tiap kanal, bagi biaya kanal dengan dana yang dihimpun lewat kanal itu.
+
+| Kanal | Biaya | Dana | Biaya per Rp100 |
+|---|---|---|---|
+| Transfer donatur lama | Rp20 juta | Rp2,4 miliar | Rp0,8 |
+| Iklan digital | Rp180 juta | Rp1,1 miliar | Rp16,4 |
+| QRIS masjid dan mitra | Rp35 juta | Rp600 juta | Rp5,8 |
+| Acara | Rp120 juta | Rp450 juta | Rp26,7 |
+
+Kanal donatur lama hampir selalu paling murah; itulah mengapa retensi adalah investasi terbaik. Kanal mahal tetap diperlukan untuk menjaring donatur baru, tetapi anggarannya harus diukur dengan CLV : CAC, bukan dengan dana yang terhimpun tahun itu saja.
+
+## Acuan hak amil
+
+Untuk dana zakat, bagian amil maksimal seperdelapan (12,5%) sering dipakai sebagai acuan batas biaya pengelolaan secara keseluruhan. Biaya per rupiah terhimpun untuk seluruh kanal sebaiknya berada di bawah angka itu dengan ruang untuk biaya penyaluran dan operasional, dengan tetap mengikuti ketentuan yang berlaku bagi lembaga Anda.
+
+## Menghitung di spreadsheet
+
+Template Biaya per Kanal meminta tiga input per kanal: biaya setahun, dana terhimpun, dan jumlah donatur baru. Lembar Hasil menghitung CAC, biaya per rupiah, dan rasio CLV : CAC memakai CLV dari modul 2.""",
+ 'praktik': {'judul': 'Bandingkan kanal penghimpunan lembaga Anda', 'isi': """Isi template Biaya per Kanal dengan biaya, dana, dan donatur baru per kanal tahun lalu (perkiraan yang jujur lebih baik daripada kosong).
+
+Catat: CLV lembaga, CAC per kanal, dan satu keputusan anggaran untuk tahun depan yang Anda dukung dengan angka ini.""", 'tautan': '/analitik/'},
+ 'kuis': [
+  {'q': 'Donasi rata-rata Rp1 juta per tahun, retensi 50%. Perkiraan CLV', 'o': ['Rp500 ribu', 'Rp1 juta', 'Rp2 juta', 'Rp5 juta'], 'a': 2, 'e': '1 juta ÷ (1 − 0,5) = Rp2 juta.'},
+  {'q': 'Biaya iklan Rp60 juta mendatangkan 400 donatur baru. CAC', 'o': ['Rp15 ribu', 'Rp150 ribu', 'Rp1,5 juta', 'Rp6 juta'], 'a': 1, 'e': '60 juta ÷ 400 = Rp150 ribu.'},
+  {'q': 'Rasio CLV : CAC yang dianggap sehat', 'o': ['0,5 : 1', '1 : 1', '3 : 1 atau lebih', 'Tidak ada patokan'], 'a': 2, 'e': 'Di bawah 1 rugi, 1–3 tipis, 3 ke atas sehat.'},
+  {'q': 'Kanal yang hampir selalu paling murah per rupiah terhimpun', 'o': ['Acara', 'Iklan digital', 'Donatur lama lewat transfer', 'Cetak brosur'], 'a': 2, 'e': 'Mempertahankan donatur lama jauh lebih murah daripada menjaring donatur baru.'},
+  {'q': 'Menaikkan retensi dari 40% ke 50% berdampak pada CLV', 'o': ['Tidak berubah', 'Naik, karena retensi ada di penyebut rumus', 'Turun', 'Hanya berubah bila nominal naik'], 'a': 1, 'e': 'CLV = donasi ÷ (1 − retensi); penyebut mengecil, CLV naik.'},
+ ]})
+
+MODUL.append({
+ 'judul': 'Musim, tren, dan proyeksi Ramadan', 'menit': 50, 'berkas': 'proyeksi-musiman',
+ 'video': {
+  'judul': 'Membaca musim penghimpunan',
+  'adegan': [
+   {'h': 'Penghimpunan punya musim', 'p': ['Ramadan bisa menyumbang 40 sampai 60 persen dana setahun', 'Ramadan bergeser sekitar 11 hari lebih awal setiap tahun', 'Membandingkan Maret 2025 dengan Maret 2024 bisa menyesatkan'],
+    'n': 'Penghimpunan zakat punya musim yang kuat. Ramadan bisa menyumbang separuh dana setahun, dan ia bergeser sekitar sebelas hari lebih awal tiap tahun. Membandingkan bulan yang sama di dua tahun bisa menyesatkan.'},
+   {'h': 'Indeks musiman', 'p': ['Indeks bulan = rata-rata dana bulan itu ÷ rata-rata semua bulan', 'Indeks 3,0 berarti bulan itu tiga kali bulan biasa', 'Hitung dari 2 sampai 3 tahun data'],
+    'n': 'Indeks musiman membandingkan tiap bulan dengan bulan rata-rata. Indeks tiga berarti bulan itu menghimpun tiga kali lipat bulan biasa. Hitung dari dua sampai tiga tahun data.'},
+   {'h': 'Pisahkan tren dari musim', 'p': ['Bandingkan Ramadan dengan Ramadan, bukan bulan dengan bulan', 'Rata-rata bergerak 12 bulan menunjukkan arah tanpa gangguan musim'],
+    'n': 'Untuk melihat arah yang sebenarnya, bandingkan Ramadan dengan Ramadan, dan gunakan rata-rata bergerak dua belas bulan yang menghapus gangguan musim.'},
+   {'h': 'Proyeksi Ramadan sederhana', 'p': ['Dana Ramadan tahun depan ≈ dana Ramadan tahun ini × (1 + pertumbuhan rata-rata)', 'Koreksi dengan retensi dan rencana kanal', 'Beri rentang, bukan satu angka'],
+    'n': 'Proyeksi Ramadan tidak perlu rumit: dana Ramadan tahun ini dikalikan pertumbuhan rata-rata tiga tahun, dikoreksi dengan retensi dan rencana kanal. Sajikan sebagai rentang, bukan satu angka.'},
+   {'h': 'Memakainya untuk perencanaan', 'p': ['Jadwal kampanye mulai 60 hari sebelum Ramadan', 'Target mingguan dari indeks musiman', 'Arus kas: dana besar masuk tiga bulan, dipakai dua belas bulan'],
+    'n': 'Indeks musiman juga menjadi dasar jadwal kampanye, target mingguan, dan perencanaan arus kas: dana besar masuk dalam tiga bulan, tetapi dipakai sepanjang tahun.'},
+  ]},
+ 'bacaan': """**Setelah modul ini Anda dapat:**
+
+- Menghitung indeks musiman bulanan
+- Memisahkan tren dari pengaruh musim
+- Memproyeksi penghimpunan Ramadan berikutnya dalam rentang
+
+## Musim penghimpunan
+
+Di sebagian besar lembaga zakat Indonesia, Ramadan dan sepuluh hari sebelum Idulfitri menyumbang 40 sampai 60% dana setahun. Karena kalender Hijriah lebih pendek sekitar 11 hari, Ramadan bergeser lebih awal tiap tahun: Maret 2025, Februari-Maret 2026, Februari 2027. Grafik bulanan yang dibandingkan tahun ke tahun (Maret vs Maret) akan menunjukkan "penurunan" yang sebenarnya hanya pergeseran musim.
+
+## Indeks musiman
+
+**Rumus:** Indeks bulan = rata-rata dana bulan itu ÷ rata-rata dana semua bulan
+
+Hitung dari 2 sampai 3 tahun data agar satu kejadian luar biasa tidak mendominasi. Untuk lembaga zakat, lebih baik menghitung indeks berdasarkan **bulan Hijriah**, sehingga Ramadan selalu jatuh di baris yang sama.
+
+> Contoh: rata-rata dana per bulan Hijriah Rp500 juta. Ramadan rata-rata Rp2,1 miliar, indeks 4,2. Safar rata-rata Rp220 juta, indeks 0,44.
+
+## Memisahkan tren dari musim
+
+Dua cara sederhana:
+
+1. **Bandingkan periode yang sama**: Ramadan 2025 dengan Ramadan 2024, bukan Maret dengan Maret.
+2. **Rata-rata bergerak 12 bulan**: untuk tiap bulan, rata-rata dana 12 bulan terakhir. Garisnya menghapus gelombang musim dan memperlihatkan arah sebenarnya.
+
+> Contoh: Dana Maret 2025 turun 35% dari Maret 2024, tetapi Ramadan 2025 naik 8% dari Ramadan 2024, dan rata-rata bergerak 12 bulan naik 6%. Kesimpulannya pertumbuhan, bukan penurunan.
+
+## Proyeksi Ramadan
+
+**Rumus:** Proyeksi Ramadan tahun depan ≈ dana Ramadan tahun ini × (1 + pertumbuhan rata-rata 3 tahun)
+
+Lalu koreksi:
+
+- Bila retensi turun tahun ini, kurangi 3 sampai 5 poin.
+- Bila ada kanal baru yang sudah terbukti (bukan rencana), tambahkan sesuai CAC dan anggarannya.
+- Sajikan sebagai rentang: skenario rendah (pertumbuhan terendah 3 tahun), tengah (rata-rata), tinggi (tertinggi).
+
+> Contoh: Ramadan 2025 Rp2,3 miliar; pertumbuhan 3 tahun terakhir 4%, 9%, 12%. Proyeksi 2026: rendah Rp2,39 miliar, tengah Rp2,49 miliar, tinggi Rp2,58 miliar.
+
+## Dari proyeksi ke rencana
+
+- **Jadwal kampanye**: mulai 60 hari sebelum Ramadan, puncak di 10 hari terakhir.
+- **Target mingguan**: bagi proyeksi dengan pola mingguan Ramadan tahun lalu (biasanya 10 hari terakhir menyumbang 45 sampai 55% dana Ramadan).
+- **Arus kas**: dana masuk terkonsentrasi di tiga bulan, sedangkan penyaluran dan operasional berjalan dua belas bulan. Indeks musiman membantu menyusun rencana kas agar tidak kehabisan di bulan Safar.
+
+## Menghitung di spreadsheet
+
+Template Proyeksi Musiman meminta rekap bulanan 24 sampai 36 bulan dengan penanda bulan Hijriah. Lembar Indeks menghitung indeks per bulan Hijriah, lembar Tren menghitung rata-rata bergerak, dan lembar Proyeksi menghasilkan tiga skenario Ramadan berikutnya.""",
+ 'praktik': {'judul': 'Proyeksikan Ramadan tahun depan', 'isi': """Isi template Proyeksi Musiman dengan rekap bulanan 24 sampai 36 bulan terakhir, beri penanda bulan Hijriah, dan baca lembar Proyeksi.
+
+Catat: indeks Ramadan lembaga Anda, arah rata-rata bergerak 12 bulan, dan tiga skenario proyeksi Ramadan berikutnya.""", 'tautan': '/analitik/'},
+ 'kuis': [
+  {'q': 'Dana Maret 2025 turun 30% dari Maret 2024, padahal Ramadan 2025 jatuh di Februari-Maret. Kesimpulan yang tepat', 'o': ['Lembaga menurun', 'Belum bisa disimpulkan; bandingkan Ramadan dengan Ramadan', 'Kanal digital gagal', 'Retensi pasti turun'], 'a': 1, 'e': 'Pergeseran Ramadan membuat perbandingan bulan Masehi menyesatkan.'},
+  {'q': 'Rata-rata dana per bulan Rp400 juta, rata-rata Ramadan Rp1,6 miliar. Indeks musiman Ramadan', 'o': ['0,25', '1,2', '4,0', '40'], 'a': 2, 'e': '1,6 miliar ÷ 400 juta = 4,0.'},
+  {'q': 'Alat paling sederhana untuk melihat arah tanpa gangguan musim', 'o': ['Grafik harian', 'Rata-rata bergerak 12 bulan', 'Total per kampanye', 'Perbandingan bulan Masehi'], 'a': 1, 'e': 'Rata-rata 12 bulan terakhir selalu memuat satu Ramadan, sehingga musimnya ternetralkan.'},
+  {'q': 'Proyeksi sebaiknya disajikan sebagai', 'o': ['Satu angka pasti', 'Rentang tiga skenario', 'Persentase saja', 'Angka tahun lalu'], 'a': 1, 'e': 'Rentang rendah-tengah-tinggi lebih jujur dan memudahkan rencana cadangan.'},
+  {'q': 'Kampanye Ramadan sebaiknya dimulai', 'o': ['Hari pertama Ramadan', 'Sekitar 60 hari sebelum Ramadan', 'Setelah Idulfitri', 'Hanya 10 hari terakhir'], 'a': 1, 'e': 'Dua bulan persiapan memberi waktu membangun kesadaran sebelum puncak di 10 hari terakhir.'},
+ ]})
+
+MODUL.append({
+ 'judul': 'Dari angka ke keputusan dan laporan pimpinan', 'menit': 45, 'berkas': 'laporan-pimpinan',
+ 'video': {
+  'judul': 'Satu halaman yang dibaca pimpinan',
+  'adegan': [
+   {'h': 'Pimpinan tidak butuh 40 halaman', 'p': ['Satu halaman, delapan angka, tiga keputusan', 'Angka tanpa keputusan hanya hiasan'],
+    'n': 'Laporan analitik untuk pimpinan cukup satu halaman: delapan angka yang penting dan tiga keputusan yang diusulkan. Angka tanpa keputusan hanya hiasan.'},
+   {'h': 'Delapan angka wajib', 'p': ['Dana dan pertumbuhan dibanding periode sama', 'Donatur aktif, baru, hilang', 'Retensi total dan retensi donatur baru', 'Konsentrasi 10 persen teratas', 'CLV : CAC', 'Biaya per rupiah terhimpun'],
+    'n': 'Delapan angka itu: dana dan pertumbuhannya, donatur aktif, baru, dan hilang, retensi total dan retensi donatur baru, konsentrasi sepuluh persen teratas, rasio CLV dibanding CAC, dan biaya per rupiah terhimpun.'},
+   {'h': 'Tiga aturan penyajian', 'p': ['Selalu bandingkan dengan periode yang sama', 'Satu grafik, bukan sepuluh', 'Tulis arti angkanya, bukan hanya angkanya'],
+    'n': 'Tiga aturan penyajian: selalu bandingkan dengan periode yang sama, satu grafik saja, dan tulis apa arti angka itu bagi lembaga.'},
+   {'h': 'Angka yang menyesatkan', 'p': ['Total dana naik, basis donatur turun', 'Jumlah donatur naik karena kampanye Rp10 ribu', 'Retensi tinggi karena donatur tidur dihapus'],
+    'n': 'Waspadai angka yang terlihat bagus tetapi menyesatkan: dana naik sementara basis donatur turun, jumlah donatur melonjak karena kampanye nominal kecil, atau retensi tinggi karena donatur tidur dihapus dari hitungan.'},
+   {'h': 'Tugas akhir', 'p': ['Susun laporan satu halaman lembaga Anda', 'Pakai angka dari lima modul sebelumnya', 'Tiga keputusan yang Anda usulkan'],
+    'n': 'Tugas akhir kelas ini adalah laporan satu halaman untuk lembaga Anda sendiri, memakai angka dari lima modul sebelumnya, dengan tiga keputusan yang Anda usulkan.'},
+  ]},
+ 'bacaan': """**Setelah modul ini Anda dapat:**
+
+- Menyusun laporan analitik satu halaman untuk pimpinan
+- Mengenali angka yang terlihat bagus tetapi menyesatkan
+- Mengubah temuan menjadi usulan keputusan
+
+## Satu halaman, delapan angka, tiga keputusan
+
+Pimpinan dan pengawas tidak membaca laporan panjang. Laporan analitik yang bekerja memuat delapan angka dengan pembandingnya, satu grafik, dan tiga keputusan yang diusulkan.
+
+**Delapan angka wajib**
+
+1. Dana terhimpun dan pertumbuhannya dibanding periode yang sama tahun lalu
+2. Donatur aktif (memberi dalam periode)
+3. Donatur baru
+4. Donatur hilang
+5. Retensi total
+6. Retensi donatur baru
+7. Konsentrasi: persentase dana dari 10% donatur teratas
+8. Rasio CLV : CAC dan biaya per rupiah terhimpun
+
+Setiap angka ditulis dengan pembandingnya dan satu kalimat arti. Misalnya: "Retensi 42% (tahun lalu 38%). Program terima kasih 90 hari mulai terlihat hasilnya."
+
+## Tiga aturan penyajian
+
+- **Bandingkan dengan periode yang sama.** Ramadan dengan Ramadan, semester dengan semester.
+- **Satu grafik.** Biasanya rata-rata bergerak 12 bulan atau kohort retensi. Grafik kedua hanya bila ada keputusan yang bergantung padanya.
+- **Tulis artinya.** Angka diikuti kalimat "artinya..." dan "maka kami mengusulkan...".
+
+## Angka yang menyesatkan
+
+| Yang terlihat | Yang sebenarnya | Cara memeriksa |
+|---|---|---|
+| Dana naik 15% | Basis donatur turun, donatur besar menambah | Lihat pertumbuhan bersih donatur |
+| Donatur naik 60% | Kampanye nominal Rp10 ribu; CLV kecil, retensi rendah | Lihat retensi dan nominal rata-rata segmen baru |
+| Retensi 70% | Donatur tidur dihapus dari penyebut | Pastikan penyebut semua donatur tahun lalu |
+| CAC turun | Biaya tim tidak dihitung | Masukkan seluruh biaya |
+
+## Dari temuan ke keputusan
+
+Setiap keputusan yang diusulkan memuat empat unsur: angka yang mendasari, tindakan, biaya atau sumber daya, dan angka yang akan dilihat enam bulan lagi untuk menilai hasilnya.
+
+> Contoh: Retensi donatur baru 19%. Usul: program terima kasih dan laporan penyaluran dalam 90 hari untuk semua donatur pertama, biaya Rp25 juta setahun. Ukuran keberhasilan: retensi donatur baru 28% pada Ramadan berikutnya.
+
+## Tugas akhir
+
+Susun laporan satu halaman untuk lembaga Anda dengan template Laporan Pimpinan. Isi delapan angka dari modul 2 sampai 5, satu grafik, dan tiga keputusan. Kirim tautannya lewat kotak Tanya pemandu di materi ini; tim Zakademia memberi umpan balik singkat. Sertifikat terbit setelah seluruh materi dan kuis tuntas.""",
+ 'praktik': {'judul': 'Tugas akhir: laporan analitik satu halaman', 'isi': """Buka template Laporan Pimpinan dan isi delapan angka lembaga Anda dari praktik modul 2 sampai 5, satu grafik, dan tiga keputusan yang Anda usulkan lengkap dengan ukuran keberhasilannya.
+
+Simpan sebagai PDF, unggah ke Google Drive, dan kirim tautannya lewat kotak Tanya pemandu di bawah materi ini. Tim Zakademia membalas dengan umpan balik singkat. Tandai selesai setelah terkirim.""", 'tautan': '/analitik/'},
+ 'kuis': [
+  {'q': 'Laporan analitik untuk pimpinan yang disarankan di modul ini', 'o': ['40 halaman lengkap dengan semua tabel', 'Satu halaman: delapan angka, satu grafik, tiga keputusan', 'Hanya grafik', 'Hanya total dana'], 'a': 1, 'e': 'Ringkas, berpembanding, dan berujung pada keputusan.'},
+  {'q': 'Dana naik 15% tetapi pertumbuhan bersih donatur negatif. Artinya', 'o': ['Lembaga sangat sehat', 'Pertumbuhan bertumpu pada donatur besar; basis menyusut', 'Retensi pasti naik', 'Kanal digital berhasil'], 'a': 1, 'e': 'Dana bisa naik dari sedikit donatur besar sementara basis donatur menyusut.'},
+  {'q': 'Retensi 70% patut dicurigai bila', 'o': ['Donatur tidur dikeluarkan dari penyebut', 'Dihitung per tahun', 'Dibandingkan dengan tahun lalu', 'Memakai ID donatur'], 'a': 0, 'e': 'Penyebut harus semua donatur tahun lalu, termasuk yang tidur.'},
+  {'q': 'Setiap keputusan yang diusulkan sebaiknya memuat', 'o': ['Hanya tindakan', 'Angka dasar, tindakan, biaya, dan ukuran keberhasilan', 'Kutipan motivasi', 'Daftar semua donatur'], 'a': 1, 'e': 'Empat unsur itu membuat usulan bisa dinilai hasilnya enam bulan kemudian.'},
+  {'q': 'Grafik yang disarankan untuk laporan satu halaman', 'o': ['Sepuluh grafik per kanal', 'Satu grafik, misalnya rata-rata bergerak 12 bulan atau kohort', 'Diagram lingkaran per program', 'Tidak perlu grafik'], 'a': 1, 'e': 'Satu grafik yang menjawab pertanyaan utama lebih dibaca daripada banyak grafik.'},
+  {'q': 'Jumlah donatur melonjak 60% setelah kampanye donasi Rp10 ribu. Yang perlu diperiksa', 'o': ['Tidak perlu diperiksa', 'Retensi dan nominal rata-rata segmen donatur baru', 'Jumlah relawan', 'Harga iklan'], 'a': 1, 'e': 'Donatur nominal kecil sering bernilai rendah dan cepat hilang; CLV-nya bisa di bawah CAC.'},
+ ]})

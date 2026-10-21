@@ -39,6 +39,7 @@ function lms_db(): PDO
     $pdo->exec('CREATE TABLE IF NOT EXISTS lms_tanya (id INTEGER PRIMARY KEY AUTOINCREMENT, materi_id INTEGER NOT NULL, user_id INTEGER NOT NULL, isi TEXT NOT NULL, jawab TEXT, dibuat TEXT NOT NULL, dijawab TEXT)');
     $ok = true;
     lms_seed($pdo);
+    lms_seed_tambahan($pdo);
     return $pdo;
 }
 
@@ -75,6 +76,26 @@ function lms_seed(PDO $pdo): void
                 ->execute([(int)$r['user_id'], $p['materi'], $r['selesai'], (int)$r['terbaik'], (int)$r['total'], (int)((int)$r['terbaik'] >= ceil((int)$r['total'] * .6))]);
         }
     } catch (Throwable $e) { /* tabel lama tidak ada */ }
+}
+
+/** Kelas tambahan dari belajar/seed/*.json: dimasukkan sekali (bila slug belum ada), sebagai draf agar admin memeriksa dulu. */
+function lms_seed_tambahan(PDO $pdo): void
+{
+    foreach (glob(__DIR__ . '/seed/*.json') ?: [] as $f) {
+        $k = json_decode((string)file_get_contents($f), true);
+        if (!is_array($k) || empty($k['slug'])) continue;
+        $q = $pdo->prepare('SELECT id FROM lms_kelas WHERE slug = ?'); $q->execute([$k['slug']]);
+        if ($q->fetchColumn()) continue;
+        $now = gmdate('c');
+        $pdo->prepare('INSERT INTO lms_kelas (slug, judul, ringkas, deskripsi, pemandu, tujuan, harga, lynk_url, kata_kunci, lulus, sertifikat, status, urutan, dibuat, diubah) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
+            ->execute([$k['slug'], $k['judul'], $k['ringkas'] ?? '', $k['deskripsi'] ?? '', $k['pemandu'] ?? '', $k['tujuan'] ?? '', $k['harga'] ?? '', $k['lynk_url'] ?? '', $k['kata_kunci'] ?? '', (int)($k['lulus'] ?? 70), 1, $k['status'] ?? 'draf', (int)($k['urutan'] ?? 9), $now, $now]);
+        $kid = (int)$pdo->lastInsertId();
+        foreach ($k['modul'] as $mi => $m) {
+            $pdo->prepare('INSERT INTO lms_modul (kelas_id, judul, urutan) VALUES (?,?,?)')->execute([$kid, $m['judul'], $mi]); $mid = (int)$pdo->lastInsertId();
+            foreach ($m['materi'] as $ti => $t) $pdo->prepare('INSERT INTO lms_materi (modul_id, judul, jenis, isi, tautan, kuis, menit, urutan) VALUES (?,?,?,?,?,?,?,?)')
+                ->execute([$mid, $t['judul'], $t['jenis'], $t['isi'] ?? '', $t['tautan'] ?? '', json_encode($t['kuis'] ?? [], JSON_UNESCAPED_UNICODE), (int)($t['menit'] ?? 10), $ti]);
+        }
+    }
 }
 
 /* ---------- pengambilan data ---------- */
@@ -286,6 +307,7 @@ function lms_foot(): void { echo '<script src="/js/stat.js?v=2" defer></script><
 function lms_pemandu(string $p): string { return $p === 'zaida' ? '/assets/images/zaida.webp' : ($p === 'wafiy' ? '/assets/images/wafiy.webp' : ''); }
 function lms_video_embed(string $url): string
 {
+    if (str_starts_with($url, '/belajar/video.php')) return '<div class="lms-video"><video controls controlsList="nodownload" playsinline preload="metadata" src="' . e($url) . '" style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video></div>';
     if (preg_match('#(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{6,})#', $url, $m)) return '<div class="lms-video"><iframe src="https://www.youtube-nocookie.com/embed/' . e($m[1]) . '" title="Video materi" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
     return '<p><a class="btn" href="' . e($url) . '" target="_blank" rel="noopener">Buka video</a></p>';
 }

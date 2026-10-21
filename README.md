@@ -97,3 +97,11 @@ batas lulus per kelas; sertifikat (`belajar/sertifikat.php`, gambar GD + PDF tan
 M. Fahmi Hidayat dengan fon Great Vibes) terbit otomatis saat semua materi selesai dan kuis lulus, bernomor
 `ZK-TAHUN-NNNN` dan dapat diverifikasi publik di `/belajar/sertifikat/<nomor>`. Isi awal dua kelas diambil dari
 `belajar/seed.json` (migrasi Ruang Belajar lama) saat tabel masih kosong.
+
+### Kelas berbayar "Analitik Data Donatur untuk Amil"
+
+Isinya ditulis di `tools/belajar/kelas_analitik_donatur.py`; `python3 tools/belajar/bangun_kelas.py` membangun enam template
+XLSX (`belajar/berkas/`, diunduh lewat `berkas.php` hanya oleh peserta), enam video slide bernarasi teks
+(`belajar/video/`, diputar lewat `video.php` dengan dukungan Range, hanya peserta), naskah narasi untuk sulih suara
+(`belajar/naskah/`), dan `belajar/seed/analitik-donatur.json` yang dimasukkan otomatis sebagai kelas draf saat slug
+belum ada di database. Admin lalu mengisi tautan produk Lynk.id dan mengubah status ke Terbit.

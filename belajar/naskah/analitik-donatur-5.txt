@@ -1,0 +1,18 @@
+Analitik Data Donatur untuk Amil · Modul 5: Musim, tren, dan proyeksi Ramadan
+Video: Membaca musim penghimpunan
+
+[1] Penghimpunan punya musim
+Penghimpunan zakat punya musim yang kuat. Ramadan bisa menyumbang separuh dana setahun, dan ia bergeser sekitar sebelas hari lebih awal tiap tahun. Membandingkan bulan yang sama di dua tahun bisa menyesatkan.
+
+[2] Indeks musiman
+Indeks musiman membandingkan tiap bulan dengan bulan rata-rata. Indeks tiga berarti bulan itu menghimpun tiga kali lipat bulan biasa. Hitung dari dua sampai tiga tahun data.
+
+[3] Pisahkan tren dari musim
+Untuk melihat arah yang sebenarnya, bandingkan Ramadan dengan Ramadan, dan gunakan rata-rata bergerak dua belas bulan yang menghapus gangguan musim.
+
+[4] Proyeksi Ramadan sederhana
+Proyeksi Ramadan tidak perlu rumit: dana Ramadan tahun ini dikalikan pertumbuhan rata-rata tiga tahun, dikoreksi dengan retensi dan rencana kanal. Sajikan sebagai rentang, bukan satu angka.
+
+[5] Memakainya untuk perencanaan
+Indeks musiman juga menjadi dasar jadwal kampanye, target mingguan, dan perencanaan arus kas: dana besar masuk dalam tiga bulan, tetapi dipakai sepanjang tahun.
+
