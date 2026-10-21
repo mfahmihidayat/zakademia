@@ -214,7 +214,6 @@ def home_cards():
     soro = '<!-- SOROTAN-ARTIKEL-START -->\n        ' + '\n        '.join(so(a) for a in latest[:2]) + '\n        <!-- SOROTAN-ARTIKEL-END -->'
     if '<!-- SOROTAN-ARTIKEL-START -->' in s:
         s = re.sub(r'<!-- SOROTAN-ARTIKEL-START -->.*?<!-- SOROTAN-ARTIKEL-END -->', lambda m: soro, s, flags=re.S)
-    s = re.sub(r'data-n="\d+" data-k="tulisan"', 'data-n="%d" data-k="tulisan"' % len(ARTIKEL), s)
     if '<!-- LITERASI-HOME-START -->' in s:
         s = re.sub(r'<!-- LITERASI-HOME-START -->.*?<!-- LITERASI-HOME-END -->', lambda m: home, s, flags=re.S)
     else:

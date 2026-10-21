@@ -422,12 +422,3 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   root.addEventListener('touchend',function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) go(dx<0?i+1:i-1); x0=null; paused=false; t0=Date.now(); });
   document.addEventListener('visibilitychange',function(){ paused=document.hidden||paused; if(!document.hidden){ paused=false; t0=Date.now(); } });
 })();
-/* Zakademia dalam angka: angka berjalan naik saat bagian terlihat. */
-(function(){
-  var nums=[].slice.call(document.querySelectorAll('.angka .num')); if(!nums.length) return;
-  var done=false, reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function fmt(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.'); }
-  function run(){ if(done) return; done=true; nums.forEach(function(el){ var n=parseInt(el.getAttribute('data-n'),10)||0; if(reduce){ el.textContent=fmt(n); return; } var s=Date.now(); (function step(){ var p=Math.min(1,(Date.now()-s)/1400); var e=1-Math.pow(1-p,3); el.textContent=fmt(n*e); if(p<1) requestAnimationFrame(step); })(); }); }
-  if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){ if(es.some(function(e){ return e.isIntersecting; })){ run(); io.disconnect(); } },{threshold:.3}); io.observe(nums[0].parentNode.parentNode); } else run();
-  window.addEventListener('hashchange',function(){ if(!done){ /* bagian baru saja tampil */ } });
-})();
