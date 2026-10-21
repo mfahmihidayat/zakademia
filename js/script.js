@@ -403,3 +403,31 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   pop.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',close); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !pop.hidden) close(); });
 })();
+
+/* Sorotan: geser otomatis tiap 6 detik, berhenti saat disentuh/diarahkan kursor, bisa digeser dan dipakai keyboard. */
+(function(){
+  var root=document.getElementById('sorotan'); if(!root) return;
+  var slides=[].slice.call(root.querySelectorAll('.so-slide')), dots=document.getElementById('soDots'), bar=document.getElementById('soBar');
+  if(slides.length<2){ root.querySelector('.so-nav').hidden=true; root.querySelector('.so-bar').hidden=true; return; }
+  var i=0, timer=null, t0=0, DUR=6000, paused=false, reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  slides.forEach(function(s,k){ var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Sorotan '+(k+1)); b.onclick=function(){ go(k); }; dots.appendChild(b); });
+  function go(k){ i=(k+slides.length)%slides.length; slides.forEach(function(s,j){ s.classList.toggle('on',j===i); s.setAttribute('aria-hidden',j===i?'false':'true'); }); [].forEach.call(dots.children,function(d,j){ d.setAttribute('aria-current',j===i?'true':'false'); }); t0=Date.now(); }
+  function tick(){ if(paused||reduce){ return; } var p=Math.min(1,(Date.now()-t0)/DUR); bar.style.width=(p*100)+'%'; if(p>=1) go(i+1); }
+  go(0); if(!reduce) timer=setInterval(tick,100); else bar.parentNode.hidden=true;
+  document.getElementById('soPrev').onclick=function(){ go(i-1); }; document.getElementById('soNext').onclick=function(){ go(i+1); };
+  root.addEventListener('mouseenter',function(){ paused=true; }); root.addEventListener('mouseleave',function(){ paused=false; t0=Date.now(); });
+  root.addEventListener('focusin',function(){ paused=true; }); root.addEventListener('focusout',function(){ paused=false; t0=Date.now(); });
+  root.addEventListener('keydown',function(e){ if(e.key==='ArrowLeft') go(i-1); else if(e.key==='ArrowRight') go(i+1); });
+  var x0=null; root.addEventListener('touchstart',function(e){ x0=e.touches[0].clientX; paused=true; },{passive:true});
+  root.addEventListener('touchend',function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) go(dx<0?i+1:i-1); x0=null; paused=false; t0=Date.now(); });
+  document.addEventListener('visibilitychange',function(){ paused=document.hidden||paused; if(!document.hidden){ paused=false; t0=Date.now(); } });
+})();
+/* Zakademia dalam angka: angka berjalan naik saat bagian terlihat. */
+(function(){
+  var nums=[].slice.call(document.querySelectorAll('.angka .num')); if(!nums.length) return;
+  var done=false, reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmt(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.'); }
+  function run(){ if(done) return; done=true; nums.forEach(function(el){ var n=parseInt(el.getAttribute('data-n'),10)||0; if(reduce){ el.textContent=fmt(n); return; } var s=Date.now(); (function step(){ var p=Math.min(1,(Date.now()-s)/1400); var e=1-Math.pow(1-p,3); el.textContent=fmt(n*e); if(p<1) requestAnimationFrame(step); })(); }); }
+  if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){ if(es.some(function(e){ return e.isIntersecting; })){ run(); io.disconnect(); } },{threshold:.3}); io.observe(nums[0].parentNode.parentNode); } else run();
+  window.addEventListener('hashchange',function(){ if(!done){ /* bagian baru saja tampil */ } });
+})();

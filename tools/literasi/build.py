@@ -204,6 +204,17 @@ def home_cards():
     # tiga tulisan terbaru di tampilan beranda
     home = ('<!-- LITERASI-HOME-START -->\n  <section class="wrap sec lt-home" style="padding-top:0"><div class="sec-head"><h2>Bacaan <em>terbaru</em></h2>'
             '<a class="link" href="/literasi/">Semua tulisan</a></div><div class="lt-grid">' + ''.join(card(a) for a in latest[:3]) + '</div></section>\n  <!-- LITERASI-HOME-END -->')
+    # dua tulisan terbaru di sorotan beranda
+    def so(a):
+        ilu = ILUSTRASI.get(a['slug'])
+        art = (f'<a class="so-art ilu" href="{url(a)}"><img src="assets/images/ilu/{ilu}.png" alt="" loading="lazy" width="600" height="600"></a>' if ilu
+               else f'<a class="so-art foto" href="{url(a)}"><img src="assets/images/og-lit-{a["slug"]}.png" alt="" loading="lazy" width="1200" height="630"></a>')
+        return (f'<article class="so-slide" role="group" aria-roledescription="slide"><div class="so-copy"><span class="so-tag">Baru · {RUBRIK[a["rubrik"]][0]}</span>'
+                f'<h3>{e(a["judul"])}</h3><p>{e(a["dek"])}</p><div class="cta-row"><a class="btn btn-gold" href="{url(a)}">Baca tulisan</a><a class="link" href="/literasi/">Semua tulisan</a></div></div>{art}</article>')
+    soro = '<!-- SOROTAN-ARTIKEL-START -->\n        ' + '\n        '.join(so(a) for a in latest[:2]) + '\n        <!-- SOROTAN-ARTIKEL-END -->'
+    if '<!-- SOROTAN-ARTIKEL-START -->' in s:
+        s = re.sub(r'<!-- SOROTAN-ARTIKEL-START -->.*?<!-- SOROTAN-ARTIKEL-END -->', lambda m: soro, s, flags=re.S)
+    s = re.sub(r'data-n="\d+" data-k="tulisan"', 'data-n="%d" data-k="tulisan"' % len(ARTIKEL), s)
     if '<!-- LITERASI-HOME-START -->' in s:
         s = re.sub(r'<!-- LITERASI-HOME-START -->.*?<!-- LITERASI-HOME-END -->', lambda m: home, s, flags=re.S)
     else:

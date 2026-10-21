@@ -430,3 +430,27 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 .asesmen-cta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;background:linear-gradient(135deg,var(--mist),#fff);border:1px solid var(--line);border-radius:28px 28px 28px 8px;padding:28px 30px}
 .asesmen-cta h2{font-size:clamp(22px,2.8vw,30px)}.asesmen-cta p{color:var(--mute);max-width:56ch}
 @media(max-width:640px){.feat-book{grid-template-columns:1fr;padding:20px}.feat-cover{width:160px}.asesmen-cta{grid-template-columns:1fr;padding:22px}}
+
+/* Sorotan: apa yang baru */
+.sorotan-wrap{padding-top:8px;padding-bottom:64px}
+.sorotan{position:relative;background:linear-gradient(135deg,var(--deep-2),var(--deep));color:var(--deep-ink);border-radius:28px 28px 28px 8px;overflow:hidden;box-shadow:var(--shadow-lift)}
+.so-track{position:relative;min-height:320px}
+.so-slide{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:center;padding:36px 40px 28px;position:absolute;inset:0;opacity:0;transform:translateX(24px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+.so-slide.on{position:relative;opacity:1;transform:none;pointer-events:auto}
+.so-tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:var(--gold);color:#1E1606;padding:4px 10px;border-radius:999px;font-weight:600}
+.so-copy h3{font-size:clamp(24px,3.2vw,36px);line-height:1.12;letter-spacing:-.02em;margin:14px 0 10px;color:#fff}
+.so-copy p{color:var(--deep-mute);max-width:52ch;font-size:16px}
+.so-copy .cta-row{margin-top:18px}.so-copy .link{color:#fff;background-image:linear-gradient(var(--gold),var(--gold))}
+.so-art{display:block;border-radius:14px;overflow:hidden;box-shadow:0 24px 40px -20px rgba(0,0,0,.6);transform:rotate(2deg);transition:transform .4s ease}.so-slide.on .so-art{transform:rotate(0)}
+.so-art img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}.so-art.ilu img{aspect-ratio:1/1;background:#F7F6EE}.so-art.foto img{aspect-ratio:4/3}
+.so-nav{display:flex;align-items:center;justify-content:center;gap:14px;padding:0 20px 18px}
+.so-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,240,.3);background:rgba(255,255,240,.1);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.so-btn:hover{background:rgba(255,255,240,.22)}
+.so-dots{display:flex;gap:8px}.so-dots button{width:10px;height:10px;border-radius:50%;border:0;background:rgba(255,255,240,.35);cursor:pointer;padding:0}.so-dots button[aria-current=true]{background:var(--gold);width:26px;border-radius:999px}
+.so-bar{height:3px;background:rgba(255,255,240,.12)}.so-bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .2s linear}
+@media(max-width:760px){.so-slide{grid-template-columns:1fr;padding:24px 22px 16px;gap:18px}.so-art{width:150px;margin:0 auto}.so-art.foto{width:100%}.so-copy{text-align:left}.so-track{min-height:0}}
+/* Zakademia dalam angka */
+.angka{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.angka div{background:var(--paper);border:1px solid var(--line);border-radius:20px 20px 20px 6px;padding:22px 20px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+.angka .num{font-size:clamp(34px,4vw,46px);line-height:1;letter-spacing:-.03em;color:var(--deep);font-variant-numeric:tabular-nums}
+.angka span{color:var(--mute);font-size:14px;font-weight:600}
