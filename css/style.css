@@ -480,3 +480,8 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 .peta-src{color:var(--deep-mute);font-size:12.5px;line-height:1.6;margin:18px 0 0;max-width:none}.peta-src a{color:var(--deep-ink)}
 .peta-reset{font:600 12.5px var(--sans);background:transparent;border:1px solid rgba(255,255,240,.3);color:var(--deep-ink);border-radius:999px;padding:3px 10px;cursor:pointer;margin-left:6px}
 @media(max-width:860px){.peta-grid{grid-template-columns:1fr}.peta-map{padding:10px 10px 8px}.peta-panel{min-height:0}}
+/* ilustrasi di kartu tulisan (beranda) */
+.lt-thumb{display:block;margin:-22px -22px 6px;aspect-ratio:16/9;background:#F7F6EE;border-bottom:1px solid var(--line);border-radius:24px 24px 0 0;overflow:hidden}
+.lt-thumb img{width:100%;height:100%;object-fit:contain;padding:6px 0;display:block}
+.lt-thumb.rub{background:linear-gradient(135deg,var(--mist),#fff);display:flex;align-items:center;justify-content:center}
+.lt-thumb.rub img{width:84px;height:84px;padding:0;object-fit:contain;border-radius:50%}

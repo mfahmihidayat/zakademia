@@ -60,8 +60,13 @@ def chip(r, big=False):
     n, q, ic = RUBRIK[r]
     return f'<span class="lt-chip{" big" if big else ""}"><img src="/assets/images/{ic}" alt=""><b>{n}</b>{"<i>" + e(q) + "</i>" if big else ""}</span>'
 
+def thumb(a):
+    ilu = ILUSTRASI.get(a['slug'])
+    if ilu: return f'<span class="lt-thumb"><img src="/assets/images/ilu/k/{ilu}.webp" alt="" loading="lazy" width="480" height="469"></span>'
+    return f'<span class="lt-thumb rub"><img src="/assets/images/{RUBRIK[a["rubrik"]][2]}" alt="" loading="lazy"></span>'
+
 def card(a):
-    return (f'<a class="lt-card" href="{url(a)}">{chip(a["rubrik"])}<h3>{e(a["judul"])}</h3>'
+    return (f'<a class="lt-card" href="{url(a)}">{thumb(a)}{chip(a["rubrik"])}<h3>{e(a["judul"])}</h3>'
             f'<p>{e(a["dek"])}</p><span class="lt-meta">{tgl(a["tanggal"])} · {a["menit"]} menit baca</span></a>')
 
 def article_page(a):
