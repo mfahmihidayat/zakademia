@@ -1,0 +1,17 @@
+# Tulisan kontributor: /literasi/k/<slug>/ ; menulis: /literasi/tulis/ ; tulisan saya: /literasi/saya/
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /literasi/
+  RewriteRule ^k/([a-z0-9-]+)/?$ k.php?s=$1 [L,QSA]
+  RewriteRule ^tulis/?$ tulis.php [L,QSA]
+  RewriteRule ^saya/?$ saya.php [L,QSA]
+  RewriteRule ^sitemap-kontributor\.xml$ api.php?sitemap=1 [L]
+</IfModule>
+<FilesMatch "^lib_literasi\.php$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+  <FilesMatch "^(tulis|saya|tinjau)\.php$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>

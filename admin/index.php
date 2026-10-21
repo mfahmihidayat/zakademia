@@ -151,6 +151,8 @@ $bk = bk_db();
 $bkAkses = (int)$bk->query('SELECT COUNT(*) FROM bk_akses WHERE aktif = 1')->fetchColumn();
 $bkBaca = (int)$bk->query('SELECT COUNT(*) FROM bk_akses WHERE terakhir IS NOT NULL')->fetchColumn();
 $rkAkses = 0; try { $rkAkses = (int)rk_db()->query('SELECT COUNT(*) FROM rk_akses WHERE aktif = 1')->fetchColumn(); } catch (Throwable $e) {}
+$ltAntre = $ltTerbit = $ltPenulis = 0;
+try { require_once __DIR__ . '/../literasi/lib_literasi.php'; $lp = lt_db(); $ltAntre = (int)$lp->query('SELECT COUNT(*) FROM lt_tulisan WHERE status = \'ditinjau\'')->fetchColumn(); $ltTerbit = (int)$lp->query('SELECT COUNT(*) FROM lt_tulisan WHERE status = \'terbit\'')->fetchColumn(); $ltPenulis = (int)$lp->query('SELECT COUNT(*) FROM lt_penulis')->fetchColumn(); } catch (Throwable $e) {}
 $svJml = 0; try { require_once __DIR__ . '/../survei/lib_survei.php'; $svJml = (int)sv_db()->query('SELECT COUNT(*) FROM responses')->fetchColumn(); } catch (Throwable $e) {}
 
 $card = fn(string $v, string $l, string $s = '') => '<div class="kartu"><b>' . $v . '</b><span>' . $l . '</span>' . ($s ? '<small class="mute">' . $s . '</small>' : '') . '</div>';
@@ -202,9 +204,10 @@ h2{margin-top:28px}
 <p class="mute" style="font-size:13px">' . ($cari !== '' ? count($users) . ' akun cocok.' : 'Diurutkan dari yang terakhir masuk; 100 akun teratas.') . ' Verifikasi manual berguna bila email kode tidak sampai. Menghapus akun tidak menghapus kiriman asesmen atau catatan pembeliannya.</p>
 <div style="overflow-x:auto"><table><thead><tr><th>Pengguna</th><th>Peran</th><th>Daftar</th><th>Terakhir masuk</th><th>Kunjungan ' . $hari . ' hari</th><th></th></tr></thead><tbody>' . ($tAkun ?: '<tr><td colspan="6" class="mute">Tidak ada akun.</td></tr>') . '</tbody></table></div>
 
-<h2>Alat pengelolaan</h2>
+<h2>Alat pengelolaan</h2>' . ($ltAntre ? '<p class="err"><b>' . $ltAntre . ' tulisan kontributor</b> menunggu tinjauan Anda. <a href="/literasi/tinjau.php">Tinjau sekarang</a></p>' : '') . '
 <div class="alat">
   <a href="/asesmen/admin.php"><b>Dashboard asesmen</b><small>' . $n($kir) . ' kiriman' . ($kirBaru ? ' · <span class="pill">' . $kirBaru . ' baru</span>' : '') . ' · hasil, kirim email, ekspor CSV</small></a>
+  <a href="/literasi/tinjau.php"><b>Tinjauan tulisan kontributor</b><small>' . $n($ltAntre) . ' menunggu tinjauan · ' . $n($ltTerbit) . ' terbit · ' . $n($ltPenulis) . ' penulis</small></a>
   <a href="/survei/hasil.php"><b>Hasil survei</b><small>' . $n($svJml) . ' jawaban terkumpul</small></a>
   <a href="/rekomendasi/admin.php"><b>Admin Rekomendasi</b><small>' . $n($rkAkses) . ' akses aktif · webhook Lynk.id, tambah manual</small></a>
   <a href="/buku/admin.php"><b>Admin buku digital</b><small>' . $n($bkAkses) . ' pembeli aktif · ' . $n($bkBaca) . ' sudah membaca · harga, tautan Lynk.id, akses manual</small></a>

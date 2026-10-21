@@ -8,5 +8,10 @@ Disallow: /buku/admin.php
 Disallow: /buku/hal.php
 Disallow: /rekomendasi/admin.php
 Disallow: /s/
+Disallow: /literasi/tulis/
+Disallow: /literasi/saya/
+Disallow: /literasi/tinjau.php
+Disallow: /literasi/k.php
 
 Sitemap: https://zakademia.com/sitemap.xml
+Sitemap: https://zakademia.com/literasi/sitemap-kontributor.xml

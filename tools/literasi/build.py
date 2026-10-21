@@ -52,7 +52,7 @@ FOOT = '''<footer class="lt-foot"><div class="lt-wrap">
   <p>Riset, Data, dan Literasi Filantropi Islam. <em>Bertumbuh bersama, bermanfaat bagi sesama.</em></p>
   <p class="lt-links"><a href="/#layanan">Layanan</a><a href="/literasi/">Literasi</a><a href="/#kontak">Kontak</a><a href="https://instagram.com/zakademia.official" target="_blank" rel="noopener">Instagram</a></p>
 </div></footer>
-<script src="/js/cari.js?v=202610212200"></script><script src="/js/stat.js?v=2" defer></script>
+<script src="/js/cari.js?v=202610220100"></script><script src="/js/stat.js?v=2" defer></script>
 </body></html>
 '''
 
@@ -100,6 +100,7 @@ def article_page(a):
   </div>
 </article>
 <section class="lt-more lt-wrap"><h2>Baca juga</h2><div class="lt-grid">{"".join(card(o) for o in others)}</div></section>
+<section class="lt-wrap"><div class="lt-tulis"><p><b>Punya pengalaman atau kajian seputar zakat dan wakaf?</b> Tulis untuk Zakademia. Setiap tulisan ditinjau editor sebelum terbit dan tampil dengan nama Anda.</p><a class="lt-btn gold" href="/literasi/tulis/">Mulai menulis</a></div></section>
 <section class="lt-cta lt-wrap"><div><b>Butuh data yang menjawab pertanyaan lembaga Anda?</b><p>Zakademia menemani lembaga filantropi Islam lewat riset, analitik, dan pendampingan.</p></div><a class="lt-btn gold" href="/#layanan">Lihat layanan</a></section>
 </main>
 <script>document.querySelectorAll('[data-copy]').forEach(function(b){{b.onclick=function(){{var u=b.getAttribute('data-copy');(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){{b.textContent='Tersalin';setTimeout(function(){{b.textContent='Salin tautan';}},2000);}},function(){{prompt('Salin tautan ini:',u);}});}};}});</script>
@@ -109,12 +110,13 @@ def article_page(a):
 def index_page():
     chips = '<button type="button" class="on" data-r="">Semua</button>' + ''.join(
         f'<button type="button" data-r="{k}"><img src="/assets/images/{v[2]}" alt="">{v[0]}</button>' for k, v in RUBRIK.items())
-    cards = ''.join(f'<div data-r="{a["rubrik"]}">{card(a)}</div>' for a in sorted(ARTIKEL, key=lambda x: x['tanggal'], reverse=True))
+    cards = ''.join(f'<div data-r="{a["rubrik"]}" data-t="{a["tanggal"]}">{card(a)}</div>' for a in sorted(ARTIKEL, key=lambda x: x['tanggal'], reverse=True))
     out = HEAD.format(title='Literasi | Zakademia', desc='Kabar, istilah, kisah, panduan, angka, dan tanya jawab seputar zakat, wakaf, dan filantropi Islam.',
                       canon=BASE + '/literasi/', ogtype='website', img=f'{BASE}/assets/images/og-image.png', v=V, lit=' aria-current="page"', extra='')
     out += f'''<main id="isi" class="lt-wrap">
 <header class="lt-ihead"><p class="lt-eyebrow">Literasi</p><h1>Ilmu yang dibagikan kepada semua.</h1>
 <p>Enam rubrik untuk memahami zakat, wakaf, dan filantropi Islam: kabar terbaru, istilah, kisah, panduan, angka, dan tanya jawab. Setiap tulisan disertai sumbernya.</p></header>
+<div class="lt-tulis"><p><b>Punya pengalaman atau kajian seputar zakat dan wakaf?</b> Tulis untuk Zakademia. Setiap tulisan ditinjau editor sebelum terbit dan tampil dengan nama Anda.</p><a class="lt-btn gold" href="/literasi/tulis/">Mulai menulis</a></div>
 <div class="lt-filter" role="group" aria-label="Saring menurut rubrik">{chips}</div>
 <div class="lt-grid" id="daftar">{cards}</div>
 <p class="lt-empty" id="kosong" hidden>Belum ada tulisan di rubrik ini.</p>
@@ -123,7 +125,11 @@ def index_page():
 (function(){{var bs=[].slice.call(document.querySelectorAll('.lt-filter button')),items=[].slice.call(document.querySelectorAll('#daftar>[data-r]'));
 function pick(r){{bs.forEach(function(b){{var on=b.dataset.r===r;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);}});var n=0;items.forEach(function(i){{var s=!r||i.dataset.r===r;i.hidden=!s;if(s)n++;}});document.getElementById('kosong').hidden=n>0;
  var u=new URL(location.href);if(r)u.searchParams.set('rubrik',r);else u.searchParams.delete('rubrik');history.replaceState(null,'',u);}}
-bs.forEach(function(b){{b.onclick=function(){{pick(b.dataset.r);}};}});pick(new URLSearchParams(location.search).get('rubrik')||'');}})();
+bs.forEach(function(b){{b.onclick=function(){{pick(b.dataset.r);}};}});pick(new URLSearchParams(location.search).get('rubrik')||'');
+// tulisan kontributor (terbit) disisipkan sesuai tanggal
+fetch('/literasi/api.php',{{cache:'no-cache'}}).then(function(r){{return r.json();}}).then(function(j){{if(!j||!j.data||!j.data.length)return;var g=document.getElementById('daftar');
+ j.data.forEach(function(k){{var d=document.createElement('div');d.dataset.r=k.r;d.dataset.t=k.tanggal;d.innerHTML=k.html;var ref=null;[].forEach.call(g.children,function(c){{if(!ref&&(c.dataset.t||'')<k.tanggal)ref=c;}});g.insertBefore(d,ref);}});
+ items=[].slice.call(document.querySelectorAll('#daftar>[data-r]'));pick(new URLSearchParams(location.search).get('rubrik')||'');}}).catch(function(){{}});}})();
 </script>
 '''
     return out + FOOT

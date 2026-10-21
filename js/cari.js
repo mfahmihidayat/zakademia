@@ -19,7 +19,10 @@
   function muat() {
     if (data) return Promise.resolve(data);
     if (memuat) return memuat;
-    memuat = fetch(INDEKS, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    memuat = Promise.all([
+        fetch(INDEKS, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
+        fetch('/literasi/api.php?indeks=1', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; })
+      ]).then(function (a) { return a[0].concat(a[1] || []); })
       .then(function (j) {
         data = j.map(function (it) {
           return { it: it, t: ' ' + norm(it.t) + ' ', d: ' ' + norm(it.d) + ' ', k: ' ' + norm(it.k) + ' ', x: ' ' + norm(it.x) + ' ' };

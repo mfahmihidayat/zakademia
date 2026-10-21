@@ -76,3 +76,13 @@ admin buku digital, dan ekspor CSV. Artikel literasi baru otomatis memuat `stat.
 atau jalankan sendiri setelah menambah halaman). `404.html` dipasang lewat `.htaccess` (`ErrorDocument 404`). Foto dan
 sampul dipasang sebagai WebP (`assets/images/*.webp`); file JPG/PNG aslinya tetap ada untuk gambar OG dan bahan Instagram.
 Halaman 404 memiliki kotak cari yang membuka pencarian situs lewat `/?cari=kata`.
+
+## Literasi kontributor
+
+Pengguna terverifikasi dapat menulis lewat `/literasi/tulis/` (profil penulis sekali, lalu editor dengan format teks
+sederhana: `## Subjudul`, `- daftar`, `**tebal**`, `[teks](url)`, `{1}` rujukan sumber). Draf tersimpan otomatis.
+Syarat kirim: judul 12–110 karakter, ringkasan 60–240, 2–4 poin, isi 350–2.500 kata, minimal 2 sumber bertautan,
+pernyataan karya sendiri; batas 3 kiriman per pekan. Admin meninjau di `/literasi/tinjau.php` (Terbitkan, Minta revisi,
+Tolak, Tarik, sunting ringan judul/rubrik/ringkasan, tandai penulis tepercaya); penulis diberi tahu lewat email.
+Tulisan terbit dirender `literasi/k.php` dari tabel `lt_tulisan` dengan template yang sama seperti artikel tim,
+ikut tampil di daftar Literasi (dimuat `literasi/api.php`), pencarian situs, dan `literasi/sitemap-kontributor.xml`.
