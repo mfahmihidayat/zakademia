@@ -69,21 +69,40 @@ def card(a):
     return (f'<a class="lt-card" href="{url(a)}">{thumb(a)}{chip(a["rubrik"])}<h3>{e(a["judul"])}</h3>'
             f'<p>{e(a["dek"])}</p><span class="lt-meta">{tgl(a["tanggal"])} · {a["menit"]} menit baca</span></a>')
 
+def terkait(a, n=3):
+    """Tiga tulisan paling berkaitan: rubrik sama dan kata kunci judul yang beririsan."""
+    stop = {'dan', 'yang', 'di', 'dari', 'untuk', 'apa', 'ini', 'itu', 'dengan', 'cara', 'bukan', 'kapan', 'siapa', 'berapa', 'tahun', '2025', '2026'}
+    kata = lambda x: {w for w in re.findall(r'[a-z0-9]+', x['judul'].lower()) if len(w) > 3 and w not in stop}
+    ka = kata(a)
+    skor = sorted((o for o in ARTIKEL if o is not a), key=lambda o: (-(2 * (o['rubrik'] == a['rubrik']) + 3 * len(ka & kata(o))), o['tanggal']))
+    return skor[:n]
+
+def lanjutan(a):
+    """Kotak tautan ke produk Zakademia yang relevan dengan tulisan."""
+    j = a['judul'].lower()
+    if 'wakaf' in j or 'nazhir' in j: return ('Ingin meneliti wakaf lebih dalam?', 'Buku digital Metodologi Penelitian Filantropi Islam membahas desain penelitian zakat dan wakaf dalam sepuluh bab; 24 halaman pertama gratis.', '/buku/metodologi/', 'Baca pratinjau buku')
+    if a['rubrik'] in ('stat', 'flash'): return ('Membaca angka lembaga Anda sendiri?', 'Kelas Analitik Penghimpunan di Ruang Belajar mengajarkan retensi, nilai donatur, dan biaya penghimpunan dari rekap lembaga Anda.', '/belajar/', 'Buka Ruang Belajar')
+    if a['rubrik'] == 'tips': return ('Mengelola lembaga zakat?', 'Asesmen Kesiapan Penghimpunan gratis memetakan kesiapan lembaga pada enam dimensi dan memberi rekomendasi langkah berikutnya.', '/asesmen/', 'Mulai asesmen')
+    return ('Ingin belajar lebih jauh?', 'Ruang Belajar Zakademia menyediakan kelas mandiri dengan kuis dan sertifikat, dan buku digital Metodologi Penelitian Filantropi Islam.', '/belajar/', 'Buka Ruang Belajar')
+
 def article_page(a):
     rn = RUBRIK[a['rubrik']][0]
     poin = ''.join(f'<li>{e(p)}</li>' for p in a['poin'])
     src = ''.join(f'<li id="sumber-{i}"><span>{e(pub)}.</span> <a href="{e(u)}" target="_blank" rel="noopener">{e(t)}</a>{"" if d == "—" else ". " + e(d)}.</li>'
                   for i, (pub, t, d, u) in enumerate(a['sumber'], 1))
-    others = [o for o in ARTIKEL if o is not a][:3]
+    others = terkait(a)
     canon = BASE + url(a)
+    crumb = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Beranda", "item": BASE + "/"}, {"@type": "ListItem", "position": 2, "name": "Literasi", "item": BASE + "/literasi/"},
+        {"@type": "ListItem", "position": 3, "name": rn, "item": BASE + "/literasi/?rubrik=" + a['rubrik']}, {"@type": "ListItem", "position": 4, "name": a['judul'], "item": canon}]}
     ld = {"@context": "https://schema.org", "@type": "Article", "headline": a['judul'], "description": a['dek'],
-          "datePublished": a['tanggal'], "inLanguage": "id", "image": f'{BASE}/assets/images/og-lit-{a["slug"]}.png',
+          "datePublished": a['tanggal'], "dateModified": a.get('diubah', a['tanggal']), "inLanguage": "id", "image": f'{BASE}/assets/images/og-lit-{a["slug"]}.png',
           "author": {"@type": "Organization", "name": "Tim Zakademia"},
           "publisher": {"@type": "Organization", "name": "Zakademia", "logo": {"@type": "ImageObject", "url": BASE + "/assets/images/logo-color.png"}},
           "mainEntityOfPage": canon}
     out = HEAD.format(title=e(f'{a["judul"]} | {rn} Zakademia'), desc=e(a['dek']), canon=canon, ogtype='article',
                       img=f'{BASE}/assets/images/og-lit-{a["slug"]}.png?v={V}', v=V, lit=' aria-current="page"',
-                      extra='<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>')
+                      extra='<script type="application/ld+json">' + json.dumps([ld, crumb], ensure_ascii=False) + '</script>')
     out += f'''<main id="isi">
 <article class="lt-art">
   <header class="lt-head lt-wrap-n">
@@ -105,6 +124,7 @@ def article_page(a):
   </div>
 </article>
 <section class="lt-more lt-wrap"><h2>Baca juga</h2><div class="lt-grid">{"".join(card(o) for o in others)}</div></section>
+<section class="lt-wrap"><div class="lt-tulis lt-lanjut"><p><b>{e(lanjutan(a)[0])}</b> {e(lanjutan(a)[1])}</p><a class="lt-btn" href="{lanjutan(a)[2]}">{e(lanjutan(a)[3])}</a></div></section>
 <section class="lt-wrap"><div class="lt-tulis"><p><b>Punya pengalaman atau kajian seputar zakat dan wakaf?</b> Tulis untuk Zakademia. Setiap tulisan ditinjau editor sebelum terbit dan tampil dengan nama Anda.</p><a class="lt-btn gold" href="/literasi/tulis/">Mulai menulis</a></div></section>
 <section class="lt-cta lt-wrap"><div><b>Butuh data yang menjawab pertanyaan lembaga Anda?</b><p>Zakademia menemani lembaga filantropi Islam lewat riset, analitik, dan pendampingan.</p></div><a class="lt-btn gold" href="/#layanan">Lihat layanan</a></section>
 </main>
