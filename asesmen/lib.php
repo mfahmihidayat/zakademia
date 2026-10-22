@@ -46,6 +46,7 @@ function db(): PDO
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_attempts ON attempts (k, ts)');
     $uc = array_column($pdo->query('PRAGMA table_info(users)')->fetchAll(PDO::FETCH_ASSOC), 'name');
     if (!in_array('verified', $uc, true)) $pdo->exec('ALTER TABLE users ADD COLUMN verified INTEGER NOT NULL DEFAULT 0');
+    $pdo->exec('CREATE TABLE IF NOT EXISTS tautan (token_hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL, expires INTEGER NOT NULL, used INTEGER NOT NULL DEFAULT 0, next TEXT)');
     $pdo->exec('CREATE TABLE IF NOT EXISTS otp (k TEXT PRIMARY KEY, code_hash TEXT NOT NULL, email TEXT NOT NULL, expires INTEGER NOT NULL, tries INTEGER NOT NULL DEFAULT 0, sent INTEGER NOT NULL)');
     migrate_admin_json($pdo);
     apply_admin_reset($pdo);
@@ -384,7 +385,7 @@ const SHARE_CARDS = [
     'analitik' => ['Kesehatan Penghimpunan | Zakademia', 'Data & Analitik: hitung retensi donatur, CLV, CAC, dan biaya per rupiah terhimpun dari angka rekap tahunan.', 'og-analitik.png'],
     'pendampingan' => ['Asesmen Kesiapan Penghimpunan | Zakademia', 'Pendampingan Strategi dimulai dengan asesmen kesiapan penghimpunan lembaga.', 'og-asesmen.png'],
     'rekomendasi' => ['Rekomendasi Asesmen | Zakademia', 'Hasil asesmen kesiapan penghimpunan lembaga Anda beserta 30 langkah prioritas dan indikator ukurnya.', 'og-asesmen.png'],
-    'belajar' => ['Ruang Belajar | Zakademia', 'Kamar Analitik dan Kamar Riset: modul singkat, kuis, dan praktik langsung.', 'og-belajar.png'],
+    'belajar' => ['Ruang Belajar | Zakademia', 'Kelas mandiri zakat, wakaf, data, dan riset: materi singkat, kuis, praktik, dan sertifikat.', 'og-belajar.png'],
 ];
 function share_meta(string $key, string $url): string
 {
@@ -420,4 +421,34 @@ function zk_kepala(): string
 function zk_kepala_aset(): string
 {
     return '<link rel="stylesheet" href="/css/kepala.css?v=1"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/kepala.js?v=1" defer></script><script src="/js/cari.js?v=202610220100" defer></script>';
+}
+
+/** Tautan masuk sekali pakai lewat email (tanpa kata sandi). Mengembalikan pesan galat atau null. */
+function tautan_kirim(string $email, string $next): ?string
+{
+    $email = strtolower(trim($email));
+    if (!throttle_ok('tautan|' . $email, 5, 3600) || !throttle_ok('tautan|' . ip_key(), 15, 3600)) return 'Terlalu banyak permintaan. Coba lagi dalam satu jam.';
+    throttle_hit('tautan|' . $email); throttle_hit('tautan|' . ip_key());
+    $q = db()->prepare('SELECT id, name FROM users WHERE email = ?'); $q->execute([$email]);
+    $u = $q->fetch(PDO::FETCH_ASSOC);
+    if (!$u) return null; // tidak membocorkan apakah email terdaftar
+    $tok = bin2hex(random_bytes(24));
+    db()->prepare('INSERT INTO tautan (token_hash, user_id, expires, next) VALUES (?,?,?,?)')->execute([hash('sha256', $tok), (int)$u['id'], time() + 1800, $next]);
+    $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    $url = ($https ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'zakademia.com') . '/asesmen/masuk.php?t=' . $tok;
+    $ok = send_mail($email, 'Tautan masuk Zakademia', "Assalamu'alaikum " . $u['name'] . ",\n\nKlik tautan ini untuk masuk ke Zakademia (berlaku 30 menit, sekali pakai):\n\n$url\n\nJika Anda tidak meminta tautan ini, abaikan saja email ini.\n\nSalam,\nTim Zakademia");
+    return $ok ? null : 'Email belum dapat dikirim. Coba lagi beberapa saat.';
+}
+/** Pakai tautan: masuk, tandai email terverifikasi, kembalikan tujuan. Null bila tautan tidak sah. */
+function tautan_pakai(string $tok): ?string
+{
+    $h = hash('sha256', $tok);
+    $q = db()->prepare('SELECT * FROM tautan WHERE token_hash = ?'); $q->execute([$h]);
+    $r = $q->fetch(PDO::FETCH_ASSOC);
+    if (!$r || $r['used'] || (int)$r['expires'] < time()) return null;
+    db()->prepare('UPDATE tautan SET used = 1 WHERE token_hash = ?')->execute([$h]);
+    db()->prepare('UPDATE users SET verified = 1 WHERE id = ?')->execute([(int)$r['user_id']]);
+    db()->exec('DELETE FROM tautan WHERE expires < ' . (time() - 86400));
+    login_user((int)$r['user_id']);
+    return (string)($r['next'] ?: '');
 }

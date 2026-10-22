@@ -101,4 +101,4 @@ page('Rekomendasi Asesmen · Admin', '
 <h2>5. Catatan webhook terakhir</h2>
 <p class="mute">Isi mentah dari Lynk.id, untuk memeriksa bila ada transaksi yang tidak terbaca.</p>
 ' . ($l ?: '<p class="mute">Belum ada kiriman webhook.</p>') . '
-<p class="mute" style="text-align:center"><a href="/admin/">Pusat kendali</a> · <a href="/asesmen/admin.php">Dashboard asesmen</a> · <a href="/asesmen/akun.php">Akun saya</a></p>', '880px');
+<p class="mute" style="text-align:center"><a href="/admin/">Pusat kendali</a> · <a href="/asesmen/admin.php">Dashboard asesmen</a> · <a href="/asesmen/akun.php">Akun saya</a></p>', '980px');

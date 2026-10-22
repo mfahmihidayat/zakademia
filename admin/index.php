@@ -219,4 +219,4 @@ h2{margin-top:28px}
   <a href="/belajar/admin.php"><b>Kelola kelas (Ruang Belajar)</b><small>' . $n($lmsKelas) . ' kelas · ' . $n($lmsPeserta) . ' peserta · ' . $n($lmsSert) . ' sertifikat' . ($lmsTanya ? ' · <span class="pill">' . $lmsTanya . ' pertanyaan</span>' : '') . '</small></a>
   <a href="https://github.com/mfahmihidayat/zakademia/actions" target="_blank" rel="noopener"><b>Status penerbitan situs</b><small>GitHub Actions · unggah ke Hostinger</small></a>
 </div>
-<p class="mute" style="text-align:center;margin-top:24px"><a href="/asesmen/akun.php">Akun saya</a> · <a href="/asesmen/keluar.php">Keluar</a></p>', '1100px');
+<p class="mute" style="text-align:center;margin-top:24px"><a href="/asesmen/akun.php">Akun saya</a> · <a href="/asesmen/keluar.php">Keluar</a></p>', '980px');

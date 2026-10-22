@@ -123,4 +123,4 @@ page('Buku digital · Admin', '
 ' . ($rows ? '<div style="overflow-x:auto"><table><thead><tr><th>Dibuat</th><th>Buku</th><th>Email pembelian</th><th>Sumber</th><th>Akun</th><th></th></tr></thead><tbody>' . $t . '</tbody></table></div>' : '<p class="mute">Belum ada pembeli.</p>') . '
 <h2>5. Catatan webhook terakhir</h2>
 ' . ($l ?: '<p class="mute">Belum ada kiriman webhook.</p>') . '
-<p class="mute" style="text-align:center"><a href="/admin/">Pusat kendali</a> · <a href="/rekomendasi/admin.php">Admin Rekomendasi</a> · <a href="/asesmen/admin.php">Dashboard asesmen</a> · <a href="/asesmen/akun.php">Akun saya</a></p>', '920px');
+<p class="mute" style="text-align:center"><a href="/admin/">Pusat kendali</a> · <a href="/rekomendasi/admin.php">Admin Rekomendasi</a> · <a href="/asesmen/admin.php">Dashboard asesmen</a> · <a href="/asesmen/akun.php">Akun saya</a></p>', '980px');

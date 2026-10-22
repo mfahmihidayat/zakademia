@@ -31,4 +31,4 @@ page('Kabar zakat dan wakaf · Admin', '<div class="row"><h1>Kabar zakat dan wak
     . ($m ? '<table style="margin-top:10px"><tbody>' . $m . '</tbody></table>' : '')
     . '<h2>Kabar terkumpul (' . count($d['item']) . ')</h2>' . ($l ? '<table><tbody>' . $l . '</tbody></table>' : '<p class="mute">Belum ada. Tekan Perbarui sekarang.</p>')
     . '<h2>Cron (opsional)</h2><p class="mute small">Agar selalu segar meski sepi pengunjung, tambahkan cron di hPanel Hostinger tiap 30 menit yang memanggil URL ini:</p><input readonly value="' . e((( !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'zakademia.com') . '/berita/ambil.php?k=' . $d['kunci']) . '" onclick="this.select()" style="font-size:13px">'
-    . '<h2>Catatan pengambilan</h2><pre style="font-size:12px;white-space:pre-wrap;background:var(--mist);padding:10px;border-radius:10px">' . e(implode("\n", $d['log'] ?: ['–'])) . '</pre>', '900px');
+    . '<h2>Catatan pengambilan</h2><pre style="font-size:12px;white-space:pre-wrap;background:var(--mist);padding:10px;border-radius:10px">' . e(implode("\n", $d['log'] ?: ['–'])) . '</pre>', '980px');

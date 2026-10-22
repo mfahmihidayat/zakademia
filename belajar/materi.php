@@ -81,5 +81,5 @@ echo '</article></div><aside class="lms-side"><div class="card" style="padding:1
 $i = 0; $modNow = '';
 foreach ($semua as $x) { $i++; if ($x['modul'] !== $modNow) { $modNow = $x['modul']; echo '<li class="mod">' . e($modNow) . '</li>'; } $px = $prog[(int)$x['id']] ?? null; $done = $px && ($x['jenis'] !== 'kuis' || $px['lulus']);
     echo '<li class="' . ($done ? 'done' : '') . '"><a class="' . ((int)$x['id'] === (int)$t['id'] ? 'on' : '') . '" href="' . $self . (int)$x['id'] . '/"><span class="no">' . ($done ? '✓' : $i) . '</span><span><b>' . e($x['judul']) . '</b><small>' . LMS_JENIS[$x['jenis']] . ' · ' . (int)$x['menit'] . ' menit</small></span></a></li>'; }
-echo '</ul></div></aside></div></main>';
+echo '</ul></div></aside></div></main><div class="baca-prog" id="bacaProg" aria-hidden="true"></div><script>(function(){var b=document.getElementById("bacaProg");function u(){var h=document.documentElement;var p=h.scrollHeight-h.clientHeight;b.style.width=(p>0?Math.min(100,window.scrollY/p*100):100)+"%";}window.addEventListener("scroll",u,{passive:true});u();})();</script>';
 lms_foot();

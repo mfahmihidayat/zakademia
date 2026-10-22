@@ -63,4 +63,4 @@ details.kirim{border:1px solid var(--line);border-radius:16px;padding:12px 16px}
 ' . ($ok ? '<p class="ok" role="status">' . e($ok) . '</p>' : '') . ($error ? '<p class="err" role="alert">' . e($error) . '</p>' : '') . '
 <div class="tab">' . $tabs . '</div>
 <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">' . ($list ?: '<p class="mute">Tidak ada tulisan di bagian ini.</p>') . '</div>
-<p class="mute" style="text-align:center;margin-top:8px"><a href="/admin/">Pusat kendali</a> · <a href="/literasi/">Literasi</a></p>', '900px');
+<p class="mute" style="text-align:center;margin-top:8px"><a href="/admin/">Pusat kendali</a> · <a href="/literasi/">Literasi</a></p>', '980px');

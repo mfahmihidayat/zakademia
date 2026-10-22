@@ -110,6 +110,7 @@ textarea.isi{min-height:420px;line-height:1.65}
 .panduan{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14px}.panduan code{background:#fff;padding:1px 6px;border-radius:6px;font-size:13px}
 .panduan summary{cursor:pointer;font-weight:700}
 .hitung{font-size:13px;color:var(--mute);text-align:right}
+.tb{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 6px}.tb button{font:600 13px "Plus Jakarta Sans",system-ui,sans-serif;min-height:32px;padding:4px 10px;border-radius:8px;border:1px solid var(--line);background:var(--mist);color:var(--ink);cursor:pointer}.tb button:hover{border-color:var(--gold)}
 details.profil{border:1px solid var(--line);border-radius:14px;padding:12px 16px}details.profil summary{cursor:pointer;font-weight:700}
 .aksi{display:flex;gap:10px;flex-wrap:wrap;align-items:center;position:sticky;bottom:0;background:var(--paper);padding:12px 0;border-top:1px solid var(--line)}
 #autosave{font-size:13px;color:var(--mute);margin-left:auto}
@@ -134,7 +135,7 @@ details.profil{border:1px solid var(--line);border-radius:14px;padding:12px 16px
   <label>Rubrik<select name="rubrik">' . $rubrikOpsi . '</select></label>
   <label>Ringkasan (60 sampai 240 karakter; tampil di kartu dan hasil pencarian)<textarea name="dek" maxlength="300" rows="2" data-hitung>' . $v('dek') . '</textarea><span class="hitung"></span></label>
   <label>Poin penting (2 sampai 4 baris, satu poin per baris)<textarea name="poin" rows="4" maxlength="1200">' . $v('poin') . '</textarea></label>
-  <label>Isi tulisan<textarea name="isi" class="isi" data-hitung-kata>' . $v('isi') . '</textarea><span class="hitung"></span></label>
+  <label>Isi tulisan<div class="tb" role="toolbar" aria-label="Format"><button type="button" data-f="## " title="Subjudul">H2</button><button type="button" data-f="**" data-w="1" title="Tebal"><b>B</b></button><button type="button" data-f="*" data-w="1" title="Miring"><i>I</i></button><button type="button" data-f="- " title="Daftar">• Daftar</button><button type="button" data-f="1. " title="Daftar bernomor">1. Nomor</button><button type="button" data-f="> " title="Kutipan atau contoh">❝ Kutipan</button><button type="button" data-f="[teks](https://)" title="Tautan">🔗 Tautan</button><button type="button" data-f="{1}" title="Rujukan sumber nomor 1">{1}</button></div><textarea name="isi" class="isi" data-hitung-kata>' . $v('isi') . '</textarea><span class="hitung"></span></label>
   <div><b style="font-size:14px">Sumber (minimal 2)</b><p class="mute" style="font-size:13px;margin:2px 0 8px">Rujuk di teks dengan {1}, {2}, dan seterusnya sesuai urutan di sini.</p><div id="sumber" style="display:flex;flex-direction:column;gap:8px">' . $srcRows . '</div><button type="button" class="btn ghost" style="min-height:36px;font-size:13px;margin-top:8px" id="tambahSrc">Tambah sumber</button></div>
   <label class="check"><input type="checkbox" name="asli" value="1" id="asli"' . (!empty($_POST['asli']) ? ' checked' : '') . '> Tulisan ini karya saya sendiri, belum terbit di tempat lain, dan saya setuju diterbitkan di Zakademia dengan nama saya.</label>
   <div class="aksi"><button class="btn ghost" type="submit" data-act="simpan">Simpan draf</button><button class="btn ghost" type="submit" data-act="simpan" data-lalu="pratinjau">Pratinjau</button><button class="btn gold" type="submit" data-act="kirim">Kirim untuk ditinjau</button><span id="autosave"></span></div>
@@ -146,6 +147,11 @@ details.profil{border:1px solid var(--line);border-radius:14px;padding:12px 16px
   f.querySelectorAll("[data-hitung]").forEach(function(t){ var s=t.nextElementSibling; function u(){ s.textContent=t.value.length+" karakter"; } t.addEventListener("input",u); u(); });
   f.querySelectorAll("[data-hitung-kata]").forEach(function(t){ var s=t.nextElementSibling; function u(){ var n=(t.value.trim().match(/\\S+/g)||[]).length; s.textContent=n+" kata"; } t.addEventListener("input",u); u(); });
   document.getElementById("tambahSrc").onclick=function(){ var d=document.createElement("div"); d.className="src"; d.innerHTML=\'<input name="s_penerbit[]" placeholder="Penerbit / lembaga" maxlength="120"><input name="s_judul[]" placeholder="Judul sumber" maxlength="200"><input name="s_tanggal[]" placeholder="Tanggal / tahun" maxlength="40"><input name="s_url[]" type="url" placeholder="https://..." maxlength="300">\'; document.getElementById("sumber").appendChild(d); };
+  // toolbar format: sisipkan penanda di posisi kursor
+  var ta=f.querySelector("textarea.isi");
+  f.querySelectorAll(".tb button").forEach(function(b){ b.addEventListener("click",function(){ var s=ta.selectionStart, e=ta.selectionEnd, v=ta.value, sel=v.slice(s,e), m=b.dataset.f, out;
+    if(b.dataset.w){ out=m+(sel||"teks")+m; } else if(m.indexOf("\n")<0 && (m==="## "||m==="- "||m==="1. "||m==="> ")){ var ls=v.lastIndexOf("\n",s-1)+1; ta.value=v.slice(0,ls)+m+v.slice(ls); ta.selectionStart=ta.selectionEnd=e+m.length; ta.focus(); dirty=true; return; } else { out=sel?m.replace("teks",sel):m; }
+    ta.value=v.slice(0,s)+out+v.slice(e); ta.selectionStart=s; ta.selectionEnd=s+out.length; ta.focus(); dirty=true; ta.dispatchEvent(new Event("input")); }); });
   // simpan otomatis tiap 40 detik bila ada perubahan
   var dirty=false, st=document.getElementById("autosave"); f.addEventListener("input",function(){ dirty=true; });
   setInterval(function(){ if(!dirty) return; dirty=false; var fd=new FormData(f); fd.set("act","simpan"); fd.set("ajax","1");

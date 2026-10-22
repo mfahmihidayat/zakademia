@@ -35,3 +35,5 @@
 .sert b{font-size:18px}.sert p{margin:4px 0 0;opacity:.9;font-size:14px}.sert .btn{background:var(--gold);color:var(--ink)}
 .tanya{display:flex;flex-direction:column;gap:12px;margin-top:26px}.tanya .t{border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:14.5px}.tanya .t b{font-size:13px;color:var(--mute)}.tanya .j{margin-top:8px;padding:10px 12px;background:var(--mist);border-radius:10px}
 @media(max-width:860px){.lms-two{grid-template-columns:1fr}.lms-side{order:2}}
+.baca-prog{position:fixed;left:0;top:0;height:4px;background:var(--gold);width:0;z-index:60;transition:width .1s linear}
+@media(max-width:860px){.lms-nav form{position:sticky;bottom:12px}}
