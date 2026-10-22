@@ -105,3 +105,11 @@ XLSX (`belajar/berkas/`, diunduh lewat `berkas.php` hanya oleh peserta), enam vi
 (`belajar/video/`, diputar lewat `video.php` dengan dukungan Range, hanya peserta), naskah narasi untuk sulih suara
 (`belajar/naskah/`), dan `belajar/seed/analitik-donatur.json` yang dimasukkan otomatis sebagai kelas draf saat slug
 belum ada di database. Admin lalu mengisi tautan produk Lynk.id dan mengubah status ke Terbit.
+
+## Kabar zakat dan wakaf (running text)
+
+`berita/lib_berita.php` mengambil RSS BWI, Dompet Dhuafa, Rumah Zakat, LAZISMU (disaring kata kunci zakat/wakaf)
+dan Google News untuk BAZNAS, Kemenag/Bimas Islam, zakat, dan wakaf; hasil digabung, dibuang duplikatnya, disimpan di
+`asesmen/data/berita.json` (60 judul, 14 hari). Pembaruan otomatis tiap 30 menit saat `berita/api.php` dipanggil
+(running text beranda lewat `js/script.js`), atau lewat cron `berita/ambil.php?k=KUNCI`. Admin dapat menyembunyikan
+judul dan menambah pengumuman sendiri yang tampil paling depan.

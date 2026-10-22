@@ -422,3 +422,13 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   root.addEventListener('touchend',function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) go(dx<0?i+1:i-1); x0=null; paused=false; t0=Date.now(); });
   document.addEventListener('visibilitychange',function(){ paused=document.hidden||paused; if(!document.hidden){ paused=false; t0=Date.now(); } });
 })();
+
+/* Running text kabar zakat dan wakaf: diambil dari /berita/api.php, diperbarui tiap 10 menit. */
+(function(){
+  var k=document.getElementById('kabar'), t=document.getElementById('kabarT'); if(!k||!t) return;
+  function rel(ts){ var s=Date.now()/1000-ts; if(s<3600) return Math.max(1,Math.floor(s/60))+' mnt lalu'; if(s<86400) return Math.floor(s/3600)+' jam lalu'; return Math.floor(s/86400)+' hari lalu'; }
+  function muat(){ fetch('/berita/api.php',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){ if(!j||!j.item||!j.item.length){ k.hidden=true; return; }
+    var h=j.item.slice(0,18).map(function(i){ var a=document.createElement('a'); a.href=i.url||'/berita/'; if(i.url) {a.target='_blank'; a.rel='noopener';} a.textContent=i.judul; var s=document.createElement('small'); s.textContent=i.asal+' · '+rel(i.ts); a.appendChild(s); return a.outerHTML; }).join('');
+    t.innerHTML=h+h; k.hidden=false; t.style.setProperty('--d', Math.max(40, Math.round(t.scrollWidth/2/60))+'s'); }).catch(function(){ k.hidden=true; }); }
+  muat(); setInterval(muat, 600000);
+})();

@@ -1,0 +1,3 @@
+<FilesMatch "^lib_berita\.php$">
+  Require all denied
+</FilesMatch>

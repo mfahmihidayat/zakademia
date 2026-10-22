@@ -490,3 +490,17 @@ header.scrolled{box-shadow:0 10px 30px -24px color-mix(in srgb,var(--deep) 70%,t
 .lt-thumb img{width:100%;height:100%;object-fit:contain;padding:6px 0;display:block}
 .lt-thumb.rub{background:linear-gradient(135deg,var(--mist),#fff);display:flex;align-items:center;justify-content:center}
 .lt-thumb.rub img{width:84px;height:84px;padding:0;object-fit:contain;border-radius:50%}
+
+/* Running text kabar zakat dan wakaf */
+.kabar{display:flex;align-items:stretch;background:var(--deep);color:var(--deep-ink);font-size:14px;overflow:hidden;border-bottom:1px solid rgba(255,255,240,.12)}
+.kabar-l{flex:none;display:flex;align-items:center;gap:6px;padding:9px 18px;background:#083A26;color:#FFFFF0;text-decoration:none;font-weight:800;letter-spacing:.02em;white-space:nowrap;position:relative;z-index:1}
+.kabar-l em{font-style:normal;color:var(--gold)}.kabar-l::after{content:"";position:absolute;right:-14px;top:0;bottom:0;width:14px;background:linear-gradient(90deg,#083A26,transparent)}
+.kabar-v{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center}
+.kabar-t{display:flex;gap:0;white-space:nowrap;will-change:transform;animation:kabarGeser var(--d,60s) linear infinite}
+.kabar:hover .kabar-t,.kabar:focus-within .kabar-t{animation-play-state:paused}
+.kabar-t a{color:var(--deep-ink);text-decoration:none;padding:9px 0;margin-right:44px;display:inline-flex;align-items:center;gap:10px}
+.kabar-t a:hover{color:#fff}.kabar-t a::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);flex:none}
+.kabar-t a small{color:var(--deep-mute);font-weight:600;font-size:12px}
+@keyframes kabarGeser{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.kabar-t{animation:none;flex-wrap:wrap;white-space:normal}}
+@media(max-width:640px){.kabar-l{padding:8px 12px;font-size:12px}.kabar-l em{display:none}.kabar-t a{margin-right:28px}}

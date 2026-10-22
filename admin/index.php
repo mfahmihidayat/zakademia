@@ -214,6 +214,7 @@ h2{margin-top:28px}
   <a href="/rekomendasi/admin.php"><b>Admin Rekomendasi</b><small>' . $n($rkAkses) . ' akses aktif · webhook Lynk.id, tambah manual</small></a>
   <a href="/buku/admin.php"><b>Admin buku digital</b><small>' . $n($bkAkses) . ' pembeli aktif · ' . $n($bkBaca) . ' sudah membaca · harga, tautan Lynk.id, akses manual</small></a>
   <a href="/asesmen/admin.php?api=csv_akun"><b>Unduh daftar akun (CSV)</b><small>semua akun dengan lembaga dan tanggal daftar</small></a>
+  <a href="/berita/admin.php"><b>Kabar zakat dan wakaf</b><small>running text beranda · sembunyikan judul · pengumuman sendiri</small></a>
   <a href="/analitik/"><b>Analitik</b><small>katalog data dan visualisasi</small></a>
   <a href="/belajar/admin.php"><b>Kelola kelas (Ruang Belajar)</b><small>' . $n($lmsKelas) . ' kelas · ' . $n($lmsPeserta) . ' peserta · ' . $n($lmsSert) . ' sertifikat' . ($lmsTanya ? ' · <span class="pill">' . $lmsTanya . ' pertanyaan</span>' : '') . '</small></a>
   <a href="https://github.com/mfahmihidayat/zakademia/actions" target="_blank" rel="noopener"><b>Status penerbitan situs</b><small>GitHub Actions · unggah ke Hostinger</small></a>

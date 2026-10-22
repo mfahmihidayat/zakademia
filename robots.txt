@@ -6,6 +6,8 @@ Disallow: /asesmen/admin.php
 Disallow: /asesmen/data/
 Disallow: /buku/admin.php
 Disallow: /belajar/admin.php
+Disallow: /berita/admin.php
+Disallow: /berita/ambil.php
 Disallow: /belajar/sertifikat.php
 Disallow: /buku/hal.php
 Disallow: /rekomendasi/admin.php
