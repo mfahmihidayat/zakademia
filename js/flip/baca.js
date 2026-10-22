@@ -87,4 +87,49 @@
   });
   var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(build, 250); });
   document.addEventListener('contextmenu', function (e) { if (e.target.closest('.page')) e.preventDefault(); });
+
+  /* ---------- cari di buku ---------- */
+  var cari = document.getElementById('cari'), qCari = document.getElementById('qCari'), crCari = document.getElementById('crCari'), ciCari = document.getElementById('ciCari');
+  function bukaCari() { cari.hidden = false; qCari.focus(); qCari.select(); }
+  function tutupCari() { cari.hidden = true; }
+  document.getElementById('btnCari').onclick = function () { cari.hidden ? bukaCari() : tutupCari(); };
+  document.getElementById('xCari').onclick = tutupCari;
+  document.getElementById('fCari').addEventListener('submit', function (e) {
+    e.preventDefault(); var q = qCari.value.trim(); if (q.length < 3) return;
+    ciCari.textContent = 'Mencari…'; crCari.innerHTML = '';
+    fetch('/buku/cari.php?b=' + encodeURIComponent(B.slug) + '&q=' + encodeURIComponent(q), { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.ok) { ciCari.textContent = j.error || 'Gagal mencari.'; return; }
+      var n = j.hasil.length;
+      ciCari.textContent = j.total === 0 ? 'Tidak ditemukan "' + j.q + '".' : 'Ditemukan di ' + j.total + ' halaman' + (j.terkunci ? ' (' + j.terkunci + ' di bagian berbayar)' : '') + '.';
+      j.hasil.forEach(function (h) { var li = document.createElement('li'); var b = document.createElement('button'); b.type = 'button'; b.innerHTML = '<b>Halaman ' + h.n + (h.k > 1 ? ' · ' + h.k + ' kali' : '') + '</b>' + h.s; b.onclick = function () { goTo(h.n); if (window.innerWidth < 760) tutupCari(); }; li.appendChild(b); crCari.appendChild(li); });
+      if (j.terkunci && !j.penuh) { var li = document.createElement('li'); li.className = 'lock'; var b = document.createElement('button'); b.type = 'button'; b.innerHTML = '<b>' + j.terkunci + ' hasil lagi di halaman berbayar</b>' + (B.lynk ? 'Beli bukunya untuk membuka seluruh halaman.' : 'Masuk dengan akun pembeli untuk membuka.'); b.onclick = function () { location.href = B.lynk || B.masuk; }; li.appendChild(b); crCari.appendChild(li); }
+    }).catch(function () { ciCari.textContent = 'Gagal menghubungi server.'; });
+  });
+
+  /* ---------- perbesar halaman ---------- */
+  var zoom = document.getElementById('zoom'), zs = document.getElementById('zs'), zImg = document.getElementById('zImg'), zPct = document.getElementById('zPct'), zNo = document.getElementById('zNo');
+  var zn = 1, zk = 1, drag = null, pinch = null;
+  function zTerapkan() { zImg.style.width = Math.round((zs.clientWidth - 32) * zk) + 'px'; zPct.textContent = Math.round(zk * 100) + '%'; }
+  function bukaZoom(n) {
+    n = Math.max(1, Math.min(B.jumlah, n)); if (n > B.batas && n !== B.jumlah) { alert('Halaman ini terkunci. Beli bukunya untuk membaca seluruh halaman.'); return; }
+    zn = n; zNo.textContent = 'Halaman ' + n + ' / ' + B.jumlah; zImg.src = src(n); zoom.hidden = false; document.body.style.overflow = 'hidden'; zk = Math.max(1, zk); zImg.onload = function () { zTerapkan(); zs.scrollTop = 0; }; zTerapkan();
+  }
+  function tutupZoom() { zoom.hidden = true; document.body.style.overflow = ''; goTo(zn); }
+  function zSet(k, cx, cy) { var lama = zk; zk = Math.max(1, Math.min(4, k)); var rx = (zs.scrollLeft + (cx || zs.clientWidth / 2)) / lama, ry = (zs.scrollTop + (cy || zs.clientHeight / 2)) / lama; zTerapkan(); zs.scrollLeft = rx * zk - (cx || zs.clientWidth / 2); zs.scrollTop = ry * zk - (cy || zs.clientHeight / 2); }
+  document.getElementById('btnZoom').onclick = function () { bukaZoom(cur); };
+  document.getElementById('zX').onclick = tutupZoom; document.getElementById('zPlus').onclick = function () { zSet(zk + 0.25); }; document.getElementById('zMin').onclick = function () { zSet(zk - 0.25); }; document.getElementById('zFit').onclick = function () { zSet(1); };
+  document.getElementById('zPrev').onclick = function () { bukaZoom(zn - 1); }; document.getElementById('zNext').onclick = function () { bukaZoom(zn + 1); };
+  wrap.addEventListener('dblclick', function (e) { var p = e.target.closest('.page'); if (p && p.querySelector('img')) bukaZoom(parseInt(p.dataset.n, 10)); });
+  zs.addEventListener('wheel', function (e) { if (e.ctrlKey || e.metaKey) { e.preventDefault(); var r = zs.getBoundingClientRect(); zSet(zk * (e.deltaY < 0 ? 1.1 : 0.9), e.clientX - r.left, e.clientY - r.top); } }, { passive: false });
+  zs.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch') return; drag = { x: e.clientX, y: e.clientY, l: zs.scrollLeft, t: zs.scrollTop }; zs.classList.add('drag'); zs.setPointerCapture(e.pointerId); });
+  zs.addEventListener('pointermove', function (e) { if (!drag) return; zs.scrollLeft = drag.l - (e.clientX - drag.x); zs.scrollTop = drag.t - (e.clientY - drag.y); });
+  zs.addEventListener('pointerup', function () { drag = null; zs.classList.remove('drag'); }); zs.addEventListener('pointercancel', function () { drag = null; zs.classList.remove('drag'); });
+  zs.addEventListener('touchstart', function (e) { if (e.touches.length === 2) { pinch = { d: Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY), k: zk }; } else if (e.touches.length === 1) { drag = { x: e.touches[0].clientX, y: e.touches[0].clientY, l: zs.scrollLeft, t: zs.scrollTop }; } }, { passive: true });
+  zs.addEventListener('touchmove', function (e) { if (e.touches.length === 2 && pinch) { e.preventDefault(); var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); zSet(pinch.k * d / pinch.d); } else if (e.touches.length === 1 && drag) { zs.scrollLeft = drag.l - (e.touches[0].clientX - drag.x); zs.scrollTop = drag.t - (e.touches[0].clientY - drag.y); } }, { passive: false });
+  zs.addEventListener('touchend', function () { pinch = null; drag = null; });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'f' || e.key === 'F') && (e.ctrlKey || e.metaKey)) { e.preventDefault(); bukaCari(); return; }
+    if (!zoom.hidden) { if (e.key === 'Escape') tutupZoom(); else if (e.key === '+' || e.key === '=') zSet(zk + 0.25); else if (e.key === '-') zSet(zk - 0.25); else if (e.key === 'ArrowRight') bukaZoom(zn + 1); else if (e.key === 'ArrowLeft') bukaZoom(zn - 1); e.stopImmediatePropagation(); return; }
+    if (e.key === 'Escape' && !cari.hidden) tutupCari();
+  }, true);
 })();
