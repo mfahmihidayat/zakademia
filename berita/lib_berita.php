@@ -34,7 +34,7 @@ function br_ambil_url(string $url): string
 {
     if (!function_exists('curl_init')) return (string)@file_get_contents($url, false, stream_context_create(['http' => ['timeout' => 8, 'user_agent' => 'Zakademia/1.0 (+https://zakademia.com)']]));
     $c = curl_init($url);
-    curl_setopt_array($c, [CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => true, CURLOPT_MAXREDIRS => 4, CURLOPT_CONNECTTIMEOUT => 6, CURLOPT_TIMEOUT => 10, CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; Zakademia/1.0; +https://zakademia.com)', CURLOPT_ENCODING => '']);
+    curl_setopt_array($c, [CURLOPT_RETURNTRANSFER => true, CURLOPT_FOLLOWLOCATION => true, CURLOPT_MAXREDIRS => 4, CURLOPT_CONNECTTIMEOUT => 4, CURLOPT_TIMEOUT => 6, CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; Zakademia/1.0; +https://zakademia.com)', CURLOPT_ENCODING => '']);
     $r = (string)curl_exec($c); $code = (int)curl_getinfo($c, CURLINFO_HTTP_CODE); curl_close($c);
     return $code >= 200 && $code < 300 ? $r : '';
 }
@@ -70,13 +70,19 @@ function br_perbarui(): array
     return $d;
 }
 /** Data untuk tampilan: perbarui bila lebih dari 30 menit dan tidak sedang diperbarui proses lain. */
+function br_basi(array $d): bool { return time() - (int)$d['diperbarui'] > 1800; }
+/** Perbarui bila basi dan tidak ada proses lain yang sedang memperbarui. Dipanggil setelah respons dikirim agar pengunjung tidak menunggu. */
+function br_perbarui_bila_basi(): void
+{
+    $d = br_baca(); if (!br_basi($d)) return;
+    $lock = data_dir() . '/berita.lock';
+    if (is_file($lock) && filemtime($lock) > time() - 120) return;
+    touch($lock); try { br_perbarui(); } catch (Throwable $e) { error_log('berita: ' . $e->getMessage()); } @unlink($lock);
+}
 function br_tampil(int $maks = 25): array
 {
     $d = br_baca();
-    if (time() - (int)$d['diperbarui'] > 1800) {
-        $lock = data_dir() . '/berita.lock';
-        if (!is_file($lock) || filemtime($lock) < time() - 120) { touch($lock); try { $d = br_perbarui(); } catch (Throwable $e) { error_log('berita: ' . $e->getMessage()); } @unlink($lock); }
-    }
+    if ((int)$d['diperbarui'] === 0) { br_perbarui_bila_basi(); $d = br_baca(); }   // pertama kali: ambil langsung
     $semb = array_flip($d['sembunyi']); $out = [];
     foreach ($d['manual'] as $m) if (($m['sampai'] ?? 0) === 0 || $m['sampai'] > time()) $out[] = ['judul' => $m['judul'], 'url' => $m['url'] ?? '', 'ts' => $m['ts'], 'asal' => 'Zakademia', 'manual' => true];
     foreach ($d['item'] as $i) { if (isset($semb[$i['id']])) continue; $out[] = ['judul' => $i['judul'], 'url' => $i['url'], 'ts' => $i['ts'], 'asal' => $i['asal']]; if (count($out) >= $maks) break; }
