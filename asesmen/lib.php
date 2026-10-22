@@ -355,9 +355,7 @@ function page(string $title, string $body, string $width = '440px'): void
         . '.hp{position:absolute;left:-9999px}.check{flex-direction:row;align-items:flex-start;gap:10px;font-weight:400;color:var(--mute)}.check input{width:20px;min-height:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--deep)}'
         . 'table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}th{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}'
         . '.pill{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:#FFF1D6;color:#7A5410;white-space:nowrap}.pill.done{background:var(--mist);color:var(--deep)}'
-        . '</style><script src="/js/stat.js?v=2" defer></script></head><body><header><div class="in"><a class="brand" href="/"><img src="/assets/images/logo-color.png" alt="">Zakademia</a><nav>'
-        . (current_user() ? '<a href="/asesmen/akun.php">Akun saya</a><a href="/asesmen/keluar.php">Keluar</a>' : '<a href="/asesmen/masuk.php">Masuk</a><a href="/asesmen/daftar.php">Daftar</a>')
-        . '</nav></div></header><main><div class="box">' . $body . '</div></main></body></html>';
+        . '</style>' . zk_kepala_aset() . '<script src="/js/stat.js?v=2" defer></script></head><body>' . zk_kepala() . '<main><div class="box">' . $body . '</div></main></body></html>';
     exit;
 }
 
@@ -408,4 +406,18 @@ function share_gate(string $key, string $url, string $to): void
         . '<link rel="icon" href="/assets/images/favicon.png"><meta http-equiv="refresh" content="0;url=' . e($to) . '"><script>location.replace(' . json_encode($to) . ');</script></head>'
         . '<body style="font-family:system-ui,sans-serif;background:#FFFFF0;color:#10291F;padding:40px 20px"><p>Membuka <a href="' . e($to) . '">halaman masuk Zakademia</a>…</p></body></html>';
     exit;
+}
+
+/** Kepala halaman yang sama untuk seluruh situs (inc/kepala.html). Tombol akun diisi di server agar tidak berkedip. */
+function zk_kepala(): string
+{
+    static $tpl = null;
+    if ($tpl === null) $tpl = (string)@file_get_contents(__DIR__ . '/../inc/kepala.html');
+    $u = current_user();
+    [$url, $label] = $u ? ($u['role'] === 'admin' ? ['/admin/', 'Pusat kendali'] : ['/asesmen/akun.php', 'Akun saya']) : ['/asesmen/masuk.php?next=' . rawurlencode($_SERVER['REQUEST_URI'] ?? '/'), 'Masuk'];
+    return str_replace(['{{AKUN_URL}}', '{{AKUN_LABEL}}', 'id="zkAkun"'], [e($url), $label, 'id="zkAkun" data-server="1"'], $tpl);
+}
+function zk_kepala_aset(): string
+{
+    return '<link rel="stylesheet" href="/css/kepala.css?v=1"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/kepala.js?v=1" defer></script><script src="/js/cari.js?v=202610220100" defer></script>';
 }

@@ -298,10 +298,8 @@ function lms_head(string $title, string $crumb = ''): void
     echo '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
         . '<title>' . e($title) . ' · Zakademia</title><link rel="icon" href="/assets/images/favicon.png">'
         . '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
-        . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/belajar/lms.css?v=1"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/cari.js?v=202610220100" defer></script></head><body>'
-        . '<header class="top"><div class="in"><a class="brand" href="/"><img src="/assets/images/logo-color.png" alt="">Zakademia</a>' . ($crumb ? '<span class="crumb">/ ' . $crumb . '</span>' : '')
-        . '<nav><a href="/belajar/">Ruang Belajar</a><a href="/literasi/">Literasi</a>' . ($u ? '<a href="/asesmen/akun.php">Akun saya</a>' . ($u['role'] === 'admin' ? '<a href="/belajar/admin.php">Kelola kelas</a>' : '') . '<a href="/asesmen/keluar.php">Keluar</a>' : '<a href="/asesmen/masuk.php?next=' . e(urlencode($_SERVER['REQUEST_URI'] ?? '/belajar/')) . '">Masuk</a>') . '</nav>'
-        . '<button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button></div></header>';
+        . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/belajar/lms.css?v=1">' . zk_kepala_aset() . '</head><body>'
+        . zk_kepala();
 }
 function lms_foot(): void { echo '<script src="/js/stat.js?v=2" defer></script></body></html>'; }
 function lms_pemandu(string $p): string { return $p === 'zaida' ? '/assets/images/zaida.webp' : ($p === 'wafiy' ? '/assets/images/wafiy.webp' : ''); }

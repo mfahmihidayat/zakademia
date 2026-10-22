@@ -37,28 +37,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
 <link href="css/style.css?v=202610230320" rel="stylesheet"/>
+<link href="css/kepala.css?v=1" rel="stylesheet"/>
 <link href="css/cari.css?v=202610190100" rel="stylesheet"/>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="leaf" viewBox="0 0 300 300"><path d="M10 290 C 40 150 160 40 295 10 C 285 150 220 250 10 290 Z"/></symbol>
 </svg>
 
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="#beranda"><img src="assets/images/logo-color.png" alt=""><span>Zakademia</span></a>
-    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="menu">Menu</button>
-    <nav class="menu" id="menu" aria-label="Utama">
-      <a href="#beranda">Beranda</a>
-      <a href="#layanan">Layanan</a>
-      <a href="#kajian">Kajian</a>
-      <a href="#literasi">Literasi</a>
-      <a href="#tentang">Tentang</a>
-      <a href="/buku/metodologi/">Buku</a>
-      <a href="/asesmen/">Asesmen</a>
-      <a class="btn btn-deep" href="/asesmen/masuk.php" id="navAkun">Masuk</a>
-    </nav>
-    <button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button>
-  </div>
-</header>
+<header class="zk-top" id="zkTop"><div class="zk-in">
+  <a class="zk-brand" href="/"><img src="/assets/images/logo-color.png" alt="" width="30" height="38"><span>Zakademia</span></a>
+  <button class="zk-burger" id="zkBurger" type="button" aria-expanded="false" aria-controls="zkMenu">Menu</button>
+  <nav class="zk-menu" id="zkMenu" aria-label="Utama">
+    <a href="/literasi/" data-k="literasi">Literasi</a>
+    <div class="zk-dd" data-k="belajar"><button type="button" aria-expanded="false">Belajar</button><div class="zk-dm"><a href="/belajar/">Ruang Belajar</a><a href="/buku/metodologi/">Buku digital</a><a href="/literasi/tulis/">Tulis untuk Zakademia</a></div></div>
+    <div class="zk-dd" data-k="lembaga"><button type="button" aria-expanded="false">Untuk Lembaga</button><div class="zk-dm"><a href="/#layanan">Layanan</a><a href="/asesmen/">Asesmen kesiapan</a><a href="/survei/">Survei donatur</a><a href="/analitik/">Analitik</a><a href="/rekomendasi/">Rekomendasi</a></div></div>
+    <div class="zk-dd" data-k="tentang"><button type="button" aria-expanded="false">Tentang</button><div class="zk-dm"><a href="/#kajian">Kajian</a><a href="/#tentang">Tentang Zakademia</a><a href="/berita/">Kabar zakat &amp; wakaf</a><a href="/#kontak">Kontak</a></div></div>
+    <a class="zk-btn" href="/asesmen/masuk.php" id="zkAkun">Masuk</a>
+  </nav>
+  <button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button>
+</div></header>
 
 <div class="kabar" id="kabar" hidden aria-label="Kabar zakat dan wakaf terbaru">
   <a class="kabar-l" href="/berita/">Kabar <em>zakat &amp; wakaf</em></a>
@@ -602,26 +598,8 @@
   </div>
 </footer>
 
-<div class="bk-pop" id="bkPop" hidden role="dialog" aria-modal="true" aria-labelledby="bkPopT">
-  <div class="bk-pop-card">
-    <button class="bk-pop-x" type="button" id="bkPopX" aria-label="Tutup">&times;</button>
-    <a class="bk-pop-cover" href="/buku/metodologi/"><img src="assets/images/cover-metodologi.webp" alt="Sampul Metodologi Penelitian Filantropi Islam"></a>
-    <div class="bk-pop-body">
-      <span class="kicker">Buku digital terbaru</span>
-      <h2 id="bkPopT">Metodologi Penelitian Filantropi Islam</h2>
-      <p class="bk-pop-sub">Paradigma, Metode, dan Penerapan dalam Studi Zakat-Wakaf</p>
-      <p>Sepuluh bab panduan desain penelitian zakat dan wakaf, dibaca langsung di situs dengan tampilan buku. Pratinjau 24 halaman terbuka untuk semua.</p>
-      <div class="bk-pop-act"><a class="btn btn-gold" href="/buku/metodologi/baca">Baca pratinjau</a><a class="btn btn-ghost" href="/buku/metodologi/">Lihat buku</a></div>
-    </div>
-  </div>
-</div>
 <script src="js/peta-data.js?v=1"></script><script src="js/peta.js?v=5"></script>
-<script src="js/script.js?v=202610230320"></script>
-<script src="js/cari.js?v=202610220100"></script><script src="/js/stat.js?v=2" defer></script>
-<script>
-fetch('/asesmen/akun.php?api=me',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
-  var a=document.getElementById('navAkun');if(a&&j&&j.user){if(j.user.role==='admin'){a.textContent='Pusat kendali';a.href='/admin/';}else{a.textContent='Akun saya';a.href='/asesmen/akun.php';}}
-}).catch(function(){});
-</script>
+<script src="js/script.js?v=202610230400"></script>
+<script src="js/kepala.js?v=1"></script><script src="js/cari.js?v=202610220100"></script><script src="/js/stat.js?v=2" defer></script>
 
 </body></html>

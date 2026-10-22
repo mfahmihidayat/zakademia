@@ -20,6 +20,7 @@ def strip_tags(s): return re.sub(r'<[^>]+>', '', s)
 def refs(s, slug):
     return re.sub(r'\{(\d+)\}', lambda m: f'<sup class="ref"><a href="#sumber-{m.group(1)}" aria-label="Sumber {m.group(1)}">{m.group(1)}</a></sup>', s)
 
+KEPALA = open(os.path.join(ROOT, 'inc', 'kepala.html'), encoding='utf-8').read().replace('{{AKUN_URL}}', '/asesmen/masuk.php').replace('{{AKUN_LABEL}}', 'Masuk')
 HEAD = '''<!doctype html>
 <html lang="id">
 <head>
@@ -37,15 +38,12 @@ HEAD = '''<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/literasi/literasi.css?v={v}">
-<link rel="stylesheet" href="/css/cari.css?v=202610190100">
+<link rel="stylesheet" href="/css/kepala.css?v=1"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/kepala.js?v=1" defer></script>
 {extra}
 </head>
 <body>
 <a class="skip" href="#isi">Langsung ke isi</a>
-<header class="lt-top"><div class="lt-wrap lt-nav">
-  <a class="lt-brand" href="/"><img src="/assets/images/logo-color.png" alt=""><span>Zakademia</span></a>
-  <nav aria-label="Utama"><a href="/#beranda">Beranda</a><a href="/#layanan">Layanan</a><a href="/literasi/"{lit}>Literasi</a><a class="lt-btn" href="/asesmen/masuk.php">Masuk</a></nav><button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button>
-</div></header>
+'''+KEPALA+'''
 '''
 FOOT = '''<footer class="lt-foot"><div class="lt-wrap">
   <a class="lt-brand" href="/"><img src="/assets/images/logo-color.png" alt=""><span>Zakademia</span></a>
@@ -101,7 +99,7 @@ def article_page(a):
           "publisher": {"@type": "Organization", "name": "Zakademia", "logo": {"@type": "ImageObject", "url": BASE + "/assets/images/logo-color.png"}},
           "mainEntityOfPage": canon}
     out = HEAD.format(title=e(f'{a["judul"]} | {rn} Zakademia'), desc=e(a['dek']), canon=canon, ogtype='article',
-                      img=f'{BASE}/assets/images/og-lit-{a["slug"]}.png?v={V}', v=V, lit=' aria-current="page"',
+                      img=f'{BASE}/assets/images/og-lit-{a["slug"]}.png?v={V}', v=V,
                       extra='<script type="application/ld+json">' + json.dumps([ld, crumb], ensure_ascii=False) + '</script>')
     out += f'''<main id="isi">
 <article class="lt-art">
@@ -137,7 +135,7 @@ def index_page():
         f'<button type="button" data-r="{k}"><img src="/assets/images/{v[2]}" alt="">{v[0]}</button>' for k, v in RUBRIK.items())
     cards = ''.join(f'<div data-r="{a["rubrik"]}" data-t="{a["tanggal"]}">{card(a)}</div>' for a in sorted(ARTIKEL, key=lambda x: x['tanggal'], reverse=True))
     out = HEAD.format(title='Literasi | Zakademia', desc='Kabar, istilah, kisah, panduan, angka, dan tanya jawab seputar zakat, wakaf, dan filantropi Islam.',
-                      canon=BASE + '/literasi/', ogtype='website', img=f'{BASE}/assets/images/og-image.png', v=V, lit=' aria-current="page"', extra='')
+                      canon=BASE + '/literasi/', ogtype='website', img=f'{BASE}/assets/images/og-image.png', v=V, extra='')
     out += f'''<main id="isi" class="lt-wrap">
 <header class="lt-ihead"><p class="lt-eyebrow">Literasi</p><h1>Ilmu yang dibagikan kepada semua.</h1>
 <p>Enam rubrik untuk memahami zakat, wakaf, dan filantropi Islam: kabar terbaru, istilah, kisah, panduan, angka, dan tanya jawab. Setiap tulisan disertai sumbernya.</p></header>

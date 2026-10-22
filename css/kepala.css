@@ -1,0 +1,27 @@
+/* Kepala halaman Zakademia: satu untuk seluruh situs. Mandiri, tidak bergantung pada stylesheet lain. */
+.zk-top{--zk-bg:#FFFFF0;--zk-ink:#10291F;--zk-mute:#4A6355;--zk-line:#DCE5D7;--zk-deep:#0B4D33;--zk-deep2:#14613F;--zk-mist:#F2F5E6;--zk-gold:#C99A3B;
+  position:sticky;top:0;z-index:50;background:rgba(255,255,240,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--zk-line);font-family:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif}
+.zk-in{max-width:1160px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px;min-height:64px;position:relative}
+.zk-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--zk-deep);margin-right:auto}.zk-brand img{width:30px;height:auto}.zk-brand span{font-weight:800;font-size:21px;letter-spacing:-.02em}
+.zk-menu{display:flex;align-items:center;gap:2px}
+.zk-menu>a,.zk-dd>button{font:500 15.5px/1 inherit;font-family:inherit;color:var(--zk-mute);background:transparent;border:0;padding:10px 14px;border-radius:999px;text-decoration:none;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.zk-menu>a:hover,.zk-dd>button:hover,.zk-dd[aria-current]>button,.zk-menu>a[aria-current]{color:var(--zk-ink);background:var(--zk-mist)}
+.zk-dd{position:relative}.zk-dd>button::after{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);opacity:.7}
+.zk-dm{position:absolute;left:0;top:calc(100% + 6px);min-width:220px;background:#fff;border:1px solid var(--zk-line);border-radius:16px 16px 16px 6px;box-shadow:0 24px 48px -24px rgba(11,77,51,.45);padding:8px;display:none;flex-direction:column;z-index:60}
+.zk-dd:hover>.zk-dm,.zk-dd:focus-within>.zk-dm,.zk-dd.open>.zk-dm{display:flex}
+.zk-dm a{padding:9px 12px;border-radius:10px;text-decoration:none;color:var(--zk-ink);font-size:15px;font-weight:500}.zk-dm a:hover{background:var(--zk-mist);color:var(--zk-deep)}
+.zk-menu>a.zk-btn{margin-left:8px;background:linear-gradient(135deg,var(--zk-deep2),var(--zk-deep));color:#FFFFF0!important;font-weight:700!important;padding:10px 20px!important;box-shadow:0 10px 24px -14px rgba(11,77,51,.7)}
+.zk-menu>a.zk-btn:hover{filter:brightness(1.08);background:linear-gradient(135deg,var(--zk-deep2),var(--zk-deep))!important}
+.zk-burger{display:none;font:600 14px inherit;font-family:inherit;min-height:42px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--zk-line);background:transparent;color:var(--zk-ink);cursor:pointer}
+.zk-cari-btn{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--zk-line);background:transparent;color:var(--zk-ink);cursor:pointer;flex:none}
+.zk-cari-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}.zk-cari-btn:hover{background:var(--zk-mist)}
+@media(max-width:900px){
+  .zk-burger{display:inline-flex;align-items:center;order:3}.zk-cari-btn{order:2}
+  .zk-menu{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:2px;padding:10px 16px 18px;background:var(--zk-bg);border-bottom:1px solid var(--zk-line);box-shadow:0 30px 40px -30px rgba(11,77,51,.4)}
+  .zk-menu.open{display:flex}
+  .zk-menu>a,.zk-dd>button{width:100%;padding:12px 14px;font-size:16px;justify-content:space-between}
+  .zk-dd>button::after{display:none}.zk-dd>button{color:var(--zk-ink);font-weight:700;pointer-events:none}
+  .zk-dm{position:static;display:flex;border:0;box-shadow:none;background:transparent;padding:0 0 6px 10px;border-radius:0}.zk-dm a{font-size:15px;padding:9px 12px}
+  .zk-menu>a.zk-btn{margin:8px 0 0;text-align:center;justify-content:center}
+}
+@media(prefers-reduced-motion:no-preference){.zk-menu>a,.zk-dd>button{transition:background .15s,color .15s}}

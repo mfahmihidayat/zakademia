@@ -76,7 +76,7 @@ header('Cache-Control: no-store');
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/images/favicon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/cari.js?v=202610220100" defer></script><script src="/js/stat.js?v=2" defer></script>
+<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><?= zk_kepala_aset() ?><script src="/js/stat.js?v=2" defer></script>
 <style>
 .bk{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:minmax(220px,320px) 1fr;gap:clamp(22px,4vw,48px);align-items:start}
 @media(max-width:720px){.bk{grid-template-columns:1fr}.bk .cov{max-width:280px;margin:0 auto}}
@@ -99,9 +99,7 @@ h1.judul{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.02em
 .err{background:#FBEFE6;border:1px solid #EBCBB4;color:#6E2C16;border-radius:12px;padding:10px 14px;font-size:14px}
 .ok{background:var(--mist);border:1px solid var(--line);color:var(--deep);border-radius:12px;padding:10px 14px;font-size:14px}
 </style></head><body>
-<header class="top"><div class="in"><a class="brand" href="/"><img src="/assets/images/logo-color.png" alt="">Zakademia</a><span class="crumb">/ Buku digital</span>
-<nav><?= $u ? '<a href="/asesmen/akun.php">Akun saya</a>' . ($u['role'] === 'admin' ? '<a href="/buku/admin.php">Admin buku</a>' : '') . '<a href="/asesmen/keluar.php">Keluar</a>' : '<a href="' . e($masuk) . '">Masuk</a><a href="' . e($daftar) . '">Daftar</a>' ?></nav>
-<button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button></div></header>
+<?= zk_kepala() ?>
 <main class="wrap" style="padding-top:32px;padding-bottom:70px">
 <div class="bk">
   <div>

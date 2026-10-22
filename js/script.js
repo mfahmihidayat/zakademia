@@ -6,14 +6,14 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   function route(){
     var parts=(location.hash||'#beranda').slice(1).split('/'),h=parts[0],sub=parts[1]||''; if(pages.indexOf(h)<0) h='beranda';
     document.querySelectorAll('[data-page]').forEach(function(p){p.hidden=p.getAttribute('data-page')!==h;});
-    document.querySelectorAll('.menu a').forEach(function(a){ if(a.getAttribute('href')==='#'+h) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
-    menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); window.scrollTo(0,0);
+    
+    if(menu){menu.classList.remove('open');} if(toggle){toggle.setAttribute('aria-expanded','false');} var zm=document.getElementById('zkMenu'); if(zm) zm.classList.remove('open'); window.scrollTo(0,0);
     var tgt=sub&&document.getElementById(h+'-'+sub);
     if(tgt){setTimeout(function(){tgt.scrollIntoView({behavior:'smooth',block:'start'});tgt.classList.add('zk-sorot');setTimeout(function(){tgt.classList.remove('zk-sorot');},2400);},60);}
     if(h==='admin' && window.zkAdminStart) window.zkAdminStart();
   }
   window.addEventListener('hashchange',route);
-  toggle.addEventListener('click',function(){var o=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',o?'true':'false');});
+  if(toggle) toggle.addEventListener('click',function(){var o=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',o?'true':'false');});
   route();
 
   // header shadow on scroll
@@ -39,7 +39,7 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
       d.addEventListener('click',function(){clearInterval(gal.timer);galShow(i);});gal.dots.appendChild(d);
     });
     gal.dots.hidden=items.length<2;
-    if(items.length>1 && !still) gal.timer=setInterval(function(){galShow((gal.idx+1)%items.length);},5500);
+    // galeri tidak berputar sendiri; pengunjung memilih lewat titik di bawahnya
   }
   galRender(GAL_DEFAULT);
 
@@ -390,19 +390,6 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   window.addEventListener('scroll',function on(){var h=document.documentElement;if(h.scrollTop/(h.scrollHeight-h.clientHeight||1)>.5){clearTimeout(timer);show();window.removeEventListener('scroll',on);}},{passive:true});
 })();
 
-/* Popup buku digital: tampil sekali per 7 hari, bisa ditutup dengan tombol, klik latar, atau Esc. */
-(function(){
-  var pop=document.getElementById('bkPop'); if(!pop) return;
-  var key='bk_pop_metodologi', now=Date.now();
-  try{ var t=parseInt(localStorage.getItem(key)||'0',10); if(now-t<7*864e5) return; }catch(e){}
-  if((location.hash && location.hash!=='#beranda') || /[?&]cari=/.test(location.search)) return;
-  function close(){ pop.hidden=true; document.body.style.overflow=''; try{localStorage.setItem(key,String(now));}catch(e){} }
-  setTimeout(function(){ pop.hidden=false; document.body.style.overflow='hidden'; document.getElementById('bkPopX').focus(); },1500);
-  document.getElementById('bkPopX').addEventListener('click',close);
-  pop.addEventListener('click',function(e){ if(e.target===pop) close(); });
-  pop.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',close); });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !pop.hidden) close(); });
-})();
 
 /* Sorotan: geser otomatis tiap 6 detik, berhenti saat disentuh/diarahkan kursor, bisa digeser dan dipakai keyboard. */
 (function(){
