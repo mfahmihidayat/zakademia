@@ -7,7 +7,7 @@ start_session();
 $d = br_tampil(60);
 $rel = function (int $ts): string { $s = time() - $ts; if ($s < 3600) return max(1, (int)($s / 60)) . ' menit lalu'; if ($s < 86400) return (int)($s / 3600) . ' jam lalu'; if ($s < 7 * 86400) return (int)($s / 86400) . ' hari lalu'; return lt_tgl(gmdate('c', $ts)); };
 echo lt_head('Kabar Zakat dan Wakaf | Zakademia', 'Berita terbaru seputar zakat, wakaf, BAZNAS, LAZ, BWI, dan Kemenag dari berbagai sumber, diperbarui otomatis.', LT_BASE . '/berita/', LT_BASE . '/assets/images/og-image.png', '', true);
-echo '<main id="isi" class="lt-wrap"><header class="lt-ihead"><p class="lt-eyebrow">Kabar</p><h1>Kabar zakat dan wakaf hari ini.</h1><p>Judul berita dari BWI, Dompet Dhuafa, Rumah Zakat, LAZISMU, dan pemberitaan media tentang BAZNAS dan Kemenag, dikumpulkan otomatis setiap 30 menit. Klik untuk membaca di sumbernya.</p></header><ol class="br-list">';
+echo '<main id="isi" class="lt-wrap"><header class="lt-ihead"><p class="lt-eyebrow">Kabar</p><h1>Kabar.</h1><p>Judul berita dari BWI, Dompet Dhuafa, Rumah Zakat, LAZISMU, dan pemberitaan media tentang BAZNAS dan Kemenag, dikumpulkan otomatis setiap 30 menit. Klik untuk membaca di sumbernya.</p></header><ol class="br-list">';
 $warna = ['#0B4D33', '#14613F', '#8A6418', '#2E5C4A', '#5C4A12', '#1F4F3C'];
 foreach ($d['item'] as $n => $i) {
     $gbr = !empty($i['img']) ? '<span class="br-img"><img src="' . e($i['img']) . '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.className=\'br-img kosong\';this.remove()"><i>' . e(mb_substr($i['asal'], 0, 1)) . '</i></span>'
