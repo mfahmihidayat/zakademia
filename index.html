@@ -47,10 +47,10 @@
   <a class="zk-brand" href="/"><img src="/assets/images/logo-color.png" alt="" width="30" height="38"><span>Zakademia</span></a>
   <button class="zk-burger" id="zkBurger" type="button" aria-expanded="false" aria-controls="zkMenu">Menu</button>
   <nav class="zk-menu" id="zkMenu" aria-label="Utama">
-    <a href="/literasi/" data-k="literasi">Literasi</a>
+    <div class="zk-dd" data-k="literasi"><button type="button" aria-expanded="false">Literasi</button><div class="zk-dm"><a href="/literasi/">Tulisan</a><a href="/#kajian">Kajian</a><a href="/#kajian/jurnal">Artikel jurnal</a><a href="/#kajian/buku">Buku</a><a href="/berita/">Kabar zakat &amp; wakaf</a></div></div>
     <div class="zk-dd" data-k="belajar"><button type="button" aria-expanded="false">Belajar</button><div class="zk-dm"><a href="/belajar/">Ruang Belajar</a><a href="/buku/metodologi/">Buku digital</a><a href="/literasi/tulis/">Tulis untuk Zakademia</a></div></div>
     <div class="zk-dd" data-k="lembaga"><button type="button" aria-expanded="false">Untuk Lembaga</button><div class="zk-dm"><a href="/#layanan">Layanan</a><a href="/asesmen/">Asesmen kesiapan</a><a href="/survei/">Survei donatur</a><a href="/analitik/">Analitik</a><a href="/rekomendasi/">Rekomendasi</a></div></div>
-    <div class="zk-dd" data-k="tentang"><button type="button" aria-expanded="false">Tentang</button><div class="zk-dm"><a href="/#kajian">Kajian</a><a href="/#tentang">Tentang Zakademia</a><a href="/berita/">Kabar zakat &amp; wakaf</a><a href="/#kontak">Kontak</a></div></div>
+    <div class="zk-dd" data-k="tentang"><button type="button" aria-expanded="false">Tentang</button><div class="zk-dm"><a href="/#tentang">Tentang Zakademia</a><a href="/#kontak">Kontak</a></div></div>
     <a class="zk-btn" href="/asesmen/masuk.php" id="zkAkun">Masuk</a>
   </nav>
   <button class="zk-cari-btn" type="button" data-cari aria-label="Cari di Zakademia" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg></button>
@@ -289,7 +289,7 @@
       <article class="book"><div class="cover real"><img src="assets/images/cover-c4.webp" alt="Sampul buku" loading="lazy"></div><div class="book-body"><h3>Jejak Perjuangan di Peta Pendidikan Indonesia</h3><p class="book-sub">Bab: Perbendaharaan Masa Depan: Penanganan Stunting di Bunda Tanah Melayu</p><p class="book-au">Eogenie Lakilaki, Artamananda, Amaliah Sobli, Achmad Soediro, Annisa Fatihah Salsabila, M. Fahmi Hidayat, dkk.</p><p class="book-meta">viii + 88 hlm. · hlm. 47–56</p><p>Refleksi sembilan penulis tentang jarak antara kebijakan pendidikan dan dampaknya di ruang kelas hingga daerah terpencil.</p><a class="link" href="https://penerbitlitnus.co.id/portfolio/jejak-perjuangan-di-peta-pendidikan-indonesia-membangun-sokoguru-bangsa/" target="_blank" rel="noopener">Lihat buku</a></div></article>
     </div>
   </section>
-  <section class="wrap sec">
+  <section class="wrap sec" id="kajian-jurnal">
     <div class="sec-head"><h2 data-edit="t18">Artikel <em>ilmiah</em></h2><p data-edit="t26">Ringkasan temuan artikel jurnal tim Zakademia beserta tautan ke sumber aslinya.</p></div>
     <div class="filters" role="group" aria-label="Saring menurut tema">
       <button type="button" data-t="semua" aria-pressed="true">Semua</button><button type="button" data-t="zakat" aria-pressed="false">Zakat</button><button type="button" data-t="wakaf" aria-pressed="false">Wakaf</button><button type="button" data-t="data" aria-pressed="false">Data &amp; Digital</button><button type="button" data-t="keuangan" aria-pressed="false">Keuangan Syariah</button><button type="button" data-t="pemikiran" aria-pressed="false">Pemikiran Islam</button>
@@ -600,6 +600,6 @@
 
 <script src="js/peta-data.js?v=1"></script><script src="js/peta.js?v=5"></script>
 <script src="js/script.js?v=202610232030"></script>
-<script src="js/kepala.js?v=1"></script><script src="js/cari.js?v=202610220100"></script><script src="/js/stat.js?v=2" defer></script>
+<script src="js/kepala.js?v=2"></script><script src="js/cari.js?v=202610220100"></script><script src="/js/stat.js?v=2" defer></script>
 
 </body></html>

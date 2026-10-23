@@ -8,7 +8,7 @@
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ top.querySelectorAll('.zk-dd.open').forEach(function(x){x.classList.remove('open');}); if(menu&&menu.classList.contains('open')){ menu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); } } });
   // halaman aktif
   var k=document.body.getAttribute('data-zk')||''; var p=location.pathname;
-  if(!k){ if(p.indexOf('/literasi')===0) k='literasi'; else if(p.indexOf('/belajar')===0||p.indexOf('/buku')===0) k='belajar'; else if(/^\/(asesmen|survei|analitik|rekomendasi|layanan)/.test(p)) k='lembaga'; else if(p.indexOf('/berita')===0) k='tentang'; }
+  if(!k){ if(p.indexOf('/literasi')===0||p.indexOf('/berita')===0) k='literasi'; else if(p.indexOf('/belajar')===0||p.indexOf('/buku')===0) k='belajar'; else if(/^\/(asesmen|survei|analitik|rekomendasi|layanan)/.test(p)) k='lembaga'; }
   if(k){ var el=top.querySelector('[data-k="'+k+'"]'); if(el) el.setAttribute('aria-current', el.tagName==='A'?'page':'true'); }
   // tombol akun
   var a=document.getElementById('zkAkun');

@@ -420,7 +420,7 @@ function zk_kepala(): string
 }
 function zk_kepala_aset(): string
 {
-    return '<link rel="stylesheet" href="/css/kepala.css?v=1"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/kepala.js?v=1" defer></script><script src="/js/cari.js?v=202610220100" defer></script>';
+    return '<link rel="stylesheet" href="/css/kepala.css?v=1"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/kepala.js?v=2" defer></script><script src="/js/cari.js?v=202610220100" defer></script>';
 }
 
 /** Tautan masuk sekali pakai lewat email (tanpa kata sandi). Mengembalikan pesan galat atau null. */
