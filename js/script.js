@@ -396,7 +396,7 @@ document.querySelectorAll('.emb[data-parts]').forEach(function(el){zkLight(el,el
   var root=document.getElementById('sorotan'); if(!root) return;
   var slides=[].slice.call(root.querySelectorAll('.so-slide')), dots=document.getElementById('soDots'), bar=document.getElementById('soBar');
   if(slides.length<2){ root.querySelector('.so-nav').hidden=true; root.querySelector('.so-bar').hidden=true; return; }
-  var i=0, timer=null, t0=0, DUR=6000, paused=false, reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var i=0, timer=null, t0=0, DUR=9000, paused=false, reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   slides.forEach(function(s,k){ var b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Sorotan '+(k+1)); b.onclick=function(){ go(k); }; dots.appendChild(b); });
   function go(k){ i=(k+slides.length)%slides.length; slides.forEach(function(s,j){ s.classList.toggle('on',j===i); s.setAttribute('aria-hidden',j===i?'false':'true'); }); [].forEach.call(dots.children,function(d,j){ d.setAttribute('aria-current',j===i?'true':'false'); }); t0=Date.now(); }
   function tick(){ if(paused||reduce){ return; } var p=Math.min(1,(Date.now()-t0)/DUR); bar.style.width=(p*100)+'%'; if(p>=1) go(i+1); }
