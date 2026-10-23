@@ -11,7 +11,7 @@ header('Referrer-Policy: same-origin');
 
 $self = '/rekomendasi/';
 $u = current_user();
-if (!$u) share_gate('rekomendasi', $self, '/asesmen/masuk.php?next=' . urlencode($self));
+if (!$u) { require_once __DIR__ . '/../inc/layanan.php'; zk_layanan_intro('rekomendasi'); }
 if (!user_verified($u)) redirect('/asesmen/verifikasi.php?next=' . urlencode($self));
 
 $conf = rk_conf();

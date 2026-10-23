@@ -4,4 +4,4 @@
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   </FilesMatch>
 </IfModule>
-DirectoryIndex index.html index.php
+DirectoryIndex index.php index.html
