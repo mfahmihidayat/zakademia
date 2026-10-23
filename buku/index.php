@@ -67,7 +67,7 @@ header('Content-Type: text/html; charset=utf-8');
 header('Cache-Control: no-store');
 ?><!doctype html>
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title><?= e($b['judul']) ?> · Buku digital Zakademia</title>
+<title><?= e($b['judul']) ?>: <?= e($b['sub']) ?> | Buku Zakademia</title>
 <meta name="description" content="<?= e($b['ringkas']) ?>">
 <link rel="canonical" href="<?= e($base . $self) ?>">
 <meta property="og:type" content="book"><meta property="og:site_name" content="Zakademia">
@@ -75,6 +75,17 @@ header('Cache-Control: no-store');
 <meta property="og:url" content="<?= e($base . $self) ?>"><meta property="og:image" content="<?= e($base . '/assets/images/og-buku-' . $slug . '.png?v=1') ?>">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/images/favicon.png">
+<script type="application/ld+json"><?= json_encode(['@context' => 'https://schema.org', '@graph' => array_values(array_filter([
+    ['@type' => 'Book', '@id' => $base . $self . '#buku', 'name' => $b['judul'], 'alternativeHeadline' => $b['sub'], 'description' => $b['ringkas'], 'url' => $base . $self,
+     'image' => $base . '/assets/images/og-buku-' . $slug . '.png', 'inLanguage' => 'id', 'bookFormat' => 'https://schema.org/EBook', 'datePublished' => $b['tahun'] ?? '2026',
+     'numberOfPages' => $jml ?: null, 'genre' => 'Metodologi penelitian', 'about' => ['Filantropi Islam', 'Zakat', 'Wakaf', 'Metodologi penelitian'],
+     'author' => array_map(fn($n) => ['@type' => 'Person', 'name' => trim($n)], explode(',', $b['penulis'])),
+     'publisher' => ['@type' => 'Organization', 'name' => 'Zakademia', 'url' => $base . '/', 'logo' => $base . '/assets/images/logo-color.png'],
+     'hasPart' => array_map(fn($i, $x) => ['@type' => 'Chapter', 'position' => $i + 1, 'name' => 'Bab ' . ($i + 1) . ': ' . $x[0]], array_keys($b['bab'] ?? []), $b['bab'] ?? []),
+     'offers' => $lynk !== '' ? ['@type' => 'Offer', 'url' => $lynk, 'availability' => 'https://schema.org/InStock', 'priceCurrency' => 'IDR'] + (preg_match('/[\d.]+/', str_replace('.', '', $harga), $m) && (int)$m[0] > 0 ? ['price' => (int)$m[0]] : []) : null],
+    ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Zakademia', 'item' => $base . '/'], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Publikasi', 'item' => $base . '/#kajian/buku'], ['@type' => 'ListItem', 'position' => 3, 'name' => $b['judul'], 'item' => $base . $self]]],
+    !empty($b['faq']) ? ['@type' => 'FAQPage', 'mainEntity' => array_map(fn($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]], $b['faq'])] : null,
+])) ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/survei/assets/sv.css?v=3"><?= zk_kepala_aset() ?><script src="/js/stat.js?v=2" defer></script>
 <style>
@@ -97,6 +108,14 @@ h1.judul{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.02em
 .fitur div{background:var(--mist);border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.5}
 .fitur b{display:block;color:var(--deep);font-size:14px}
 .err{background:#FBEFE6;border:1px solid #EBCBB4;color:#6E2C16;border-radius:12px;padding:10px 14px;font-size:14px}
+.isi{max-width:1040px;margin:48px auto 0;display:grid;grid-template-columns:minmax(220px,320px) 1fr;gap:clamp(22px,4vw,48px)}
+@media(max-width:720px){.isi{grid-template-columns:1fr}}
+.isi h2{font-size:24px;margin:0 0 12px;color:var(--deep)}
+.isi ol{margin:0;padding:0;list-style:none;display:grid;gap:10px;counter-reset:b}
+.isi ol li{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+
+.isi ol b{display:block;color:var(--deep)}.isi ol span{font-size:14px;color:var(--mute);line-height:1.5}
+.isi details{border-bottom:1px solid var(--line);padding:12px 0}.isi summary{font-weight:700;cursor:pointer;color:var(--deep)}.isi details p{margin:8px 0 0;line-height:1.65}
 .ok{background:var(--mist);border:1px solid var(--line);color:var(--deep);border-radius:12px;padding:10px 14px;font-size:14px}
 </style></head><body>
 <?= zk_kepala() ?>
@@ -154,5 +173,12 @@ h1.judul{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.02em
 <?php endif; ?>
   </div>
 </div>
+<?php if (!empty($b['bab'])): ?>
+<section class="isi" aria-labelledby="h-isi">
+  <div><h2 id="h-isi">Isi buku</h2><p class="mute" style="line-height:1.65;margin:0">Buku <b><?= e($b['judul']) ?></b> karya <?= e($b['penulis']) ?> membahas <?= count($b['bab']) ?> bab metode penelitian zakat dan wakaf, dari pendekatan normatif-syariah hingga big data dan pemodelan formal.</p>
+  <?php if (!empty($b['faq'])): ?><h2 style="margin-top:28px">Pertanyaan umum</h2><?php foreach ($b['faq'] as $f): ?><details><summary><?= e($f[0]) ?></summary><p><?= e($f[1]) ?></p></details><?php endforeach; endif; ?></div>
+  <ol><?php foreach ($b['bab'] as $i => $x): ?><li><div><b>Bab <?= $i + 1 ?>. <?= e($x[0]) ?></b><span><?= e($x[1]) ?></span></div></li><?php endforeach; ?></ol>
+</section>
+<?php endif; ?>
 </main>
 </body></html>

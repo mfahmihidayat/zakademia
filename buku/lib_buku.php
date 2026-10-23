@@ -18,6 +18,24 @@ const BK_BUKU = [
         'ringkas' => 'Panduan memilih, memadukan, dan menerapkan desain penelitian zakat dan wakaf. Sepuluh bab yang mencakup metode normatif-syariah, kuantitatif, kualitatif, historis, campuran, terapan, digital, dan lanjutan, dengan contoh kasus, kotak Dalam Jurnal, kuis, dan kamus istilah di tepi halaman.',
         'kata_kunci' => 'Metodologi',
         'pratinjau' => 24,
+        'tahun' => '2026',
+        'bab' => [
+            ['Pengantar Penelitian Filantropi Islam', 'Memahami penelitian, peta penelitian zakat dan wakaf, analisis SWOT metodologi, cara menggunakan buku'],
+            ['Metode Normatif-Syariah', 'Analisis prinsip Qur\'ani, analisis fikih, maqasid al-shari\'ah, istinbat hukum muamalah'],
+            ['Metode Kuantitatif', 'Desain deskriptif dan korelasional, variabel dan hipotesis, kuesioner, analisis data kuantitatif'],
+            ['Metode Kualitatif', 'Desain penelitian kualitatif, wawancara dan observasi, analisis data kualitatif'],
+            ['Metode Historis-Dokumenter', 'Desain historis dan dokumenter, pengumpulan dan kritik sumber, analisis data historis'],
+            ['Metode Campuran dan Komparatif', 'Mixed methods dan analisis komparatif antarlembaga dan antarnegara'],
+            ['Metode Terapan', 'Penelitian tindakan, penelitian evaluasi, penelitian dan pengembangan (R&D)'],
+            ['Metode Digital', 'Penelitian berbasis internet, big data, analisis teks otomatis'],
+            ['Metode Lanjutan', 'Analisis jaringan sosial, analisis sekuens, analisis sistem, pemodelan formal'],
+            ['Tantangan dan Dampak Penelitian Filantropi Islam', 'Tantangan metodologi, jalan ke depan, penelitian yang membawa perubahan'],
+        ],
+        'faq' => [
+            ['Untuk siapa buku Metodologi Penelitian Filantropi Islam?', 'Mahasiswa S1 hingga S3 ekonomi syariah dan studi Islam, dosen pengampu metodologi penelitian, peneliti, serta amil dan nazhir yang ingin meneliti lembaganya sendiri.'],
+            ['Metode apa saja yang dibahas?', 'Sepuluh bab: normatif-syariah, kuantitatif, kualitatif, historis-dokumenter, campuran dan komparatif, terapan, digital, dan metode lanjutan, masing-masing dengan contoh penelitian zakat dan wakaf.'],
+            ['Bagaimana cara membacanya?', 'Buku digital dibaca langsung di zakademia.com dalam tampilan buku yang dapat dibalik, diperbesar, dan dicari kata demi kata. Pratinjau gratis tersedia; akses penuh terbuka setelah pembelian.'],
+        ],
     ],
 ];
 
