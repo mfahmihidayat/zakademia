@@ -28,8 +28,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     elseif ($act === 'sunting') {
         $pdo->prepare('UPDATE lt_tulisan SET judul = ?, rubrik = ?, dek = ?, diubah = ? WHERE id = ?')->execute([clip($_POST['judul'] ?? '', 140), isset(LT_RUBRIK[$_POST['rubrik'] ?? '']) ? $_POST['rubrik'] : $t['rubrik'], clip($_POST['dek'] ?? '', 300), gmdate('c'), $id]);
         flash('Judul, rubrik, dan ringkasan disunting.'); redirect('/literasi/tinjau.php?f=' . $t['status']);
+    } elseif ($act === 'ilu') {
+        require dirname(__DIR__) . '/inc/ilu.php'; $semua = zk_ilu_unsur();
+        $u = array_values(array_filter(array_map('strval', (array)($_POST['unsur'] ?? [])), fn($x) => isset($semua[$x])));
+        $v = isset($_POST['acak']) ? ((int)$t['ilu_varian'] + 1) % 6 : max(0, min(5, (int)($_POST['varian'] ?? 0)));
+        if (isset($_POST['otomatis'])) $u = [];
+        $pdo->prepare('UPDATE lt_tulisan SET ilu_varian = ?, ilu_unsur = ? WHERE id = ?')->execute([$v, implode(',', $u), $id]);
+        flash('Ilustrasi diperbarui.'); redirect('/literasi/tinjau.php?f=' . $t['status'] . '#t' . $id);
     }
 }
+require_once dirname(__DIR__) . '/inc/ilu.php';
+$iluNama = array_keys(zk_ilu_unsur());
 $f = (string)($_GET['f'] ?? 'ditinjau'); if (!isset(LT_STATUS[$f]) && $f !== 'semua') $f = 'ditinjau';
 $hit = [];
 foreach ($pdo->query('SELECT status, COUNT(*) n FROM lt_tulisan GROUP BY status') as $r) $hit[$r['status']] = (int)$r['n'];
@@ -42,9 +51,19 @@ foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $t) {
     $kurang = lt_periksa($t);
     $rubrikOpsi = ''; foreach (LT_RUBRIK as $k => [$n]) $rubrikOpsi .= '<option value="' . $k . '"' . ($t['rubrik'] === $k ? ' selected' : '') . '>' . $n . '</option>';
     $frm = fn(string $act, string $label, string $cls = 'ghost', string $confirm = '') => '<button class="btn ' . $cls . '" style="min-height:36px;padding:5px 14px;font-size:13px" type="submit" name="act" value="' . $act . '"' . ($confirm ? ' onclick="return confirm(\'' . e($confirm) . '\')"' : '') . '>' . $label . '</button> ';
-    $list .= '<details class="kirim"' . ($f === 'ditinjau' ? ' open' : '') . '><summary><b>' . e($t['judul'] ?: '(tanpa judul)') . '</b><span class="mute" style="font-size:13px"> · ' . e(LT_RUBRIK[$t['rubrik']][0] ?? '') . ' · ' . e($t['penulis'] ?: '?') . ($t['tepercaya'] ? ' <span class="pill done">tepercaya</span>' : '') . ' · ' . e(lt_tgl($t['dikirim'] ?: $t['diubah'])) . ($t['status'] === 'terbit' ? ' · ' . (int)$t['dilihat'] . ' dibaca' : '') . '</span></summary>'
+    $pil = array_values(array_filter(explode(',', (string)$t['ilu_unsur']))); $oto = zk_ilu_pilih((string)$t['judul'], (string)$t['rubrik'], (string)$t['isi']);
+    $sel = ''; for ($i = 0; $i < 3; $i++) { $sel .= '<select name="unsur[]" style="font:inherit;font-size:13px;border:1px solid var(--line);border-radius:10px;padding:6px 10px">'; foreach ($iluNama as $n) $sel .= '<option value="' . $n . '"' . (($pil[$i] ?? $oto[$i] ?? '') === $n ? ' selected' : '') . '>' . str_replace('_', ' ', $n) . '</option>'; $sel .= '</select>'; }
+    $ilu = '<div style="display:grid;grid-template-columns:200px 1fr;gap:14px;align-items:start;background:var(--mist);border-radius:14px;padding:12px"><img src="' . e(lt_ilu_url($t)) . '" alt="" style="width:200px;aspect-ratio:600/460;border-radius:10px;display:block">'
+        . '<form method="post" action="/literasi/tinjau.php" style="display:flex;flex-direction:column;gap:8px;font-size:13px">' . csrf_field() . '<input type="hidden" name="id" value="' . $t['id'] . '"><input type="hidden" name="act" value="ilu">'
+        . '<b>Ilustrasi otomatis</b><span class="mute">Dirakit dari judul, rubrik, dan isi' . ($pil ? ' (unsur dipilih manual)' : '') . '. Variasi tata letak ' . ((int)$t['ilu_varian'] + 1) . ' dari 6.</span>'
+        . '<div style="display:flex;gap:6px;flex-wrap:wrap">' . str_replace("<select ", "<select style=\"flex:1;min-width:150px\" ", $sel) . '</div>'
+        . '<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn gold" style="min-height:32px;padding:4px 12px;font-size:13px" type="submit" name="varian" value="' . (int)$t['ilu_varian'] . '">Pakai unsur ini</button>'
+        . '<button class="btn ghost" style="min-height:32px;padding:4px 12px;font-size:13px" type="submit" name="acak" value="1">Tata letak lain</button>'
+        . ($pil ? '<button class="btn ghost" style="min-height:32px;padding:4px 12px;font-size:13px" type="submit" name="otomatis" value="1">Kembali otomatis</button>' : '')
+        . '<a class="btn ghost" style="min-height:32px;padding:4px 12px;font-size:13px" href="' . e(lt_ilu_url($t)) . '&unduh=1">Unduh SVG</a></div></form></div>';
+    $list .= '<details class="kirim" id="t' . $t['id'] . '"' . ($f === 'ditinjau' ? ' open' : '') . '><summary><b>' . e($t['judul'] ?: '(tanpa judul)') . '</b><span class="mute" style="font-size:13px"> · ' . e(LT_RUBRIK[$t['rubrik']][0] ?? '') . ' · ' . e($t['penulis'] ?: '?') . ($t['tepercaya'] ? ' <span class="pill done">tepercaya</span>' : '') . ' · ' . e(lt_tgl($t['dikirim'] ?: $t['diubah'])) . ($t['status'] === 'terbit' ? ' · ' . (int)$t['dilihat'] . ' dibaca' : '') . '</span></summary>'
         . '<div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">'
-        . '<p class="mute" style="font-size:14px">' . e($t['dek']) . '</p>'
+        . '<p class="mute" style="font-size:14px">' . e($t['dek']) . '</p>' . $ilu
         . '<p style="font-size:13px"><a href="/literasi/k.php?id=' . $t['id'] . '&pra=1" target="_blank">Buka pratinjau tulisan</a>' . ($t['status'] === 'terbit' ? ' · <a href="' . e(lt_url($t)) . '" target="_blank">halaman terbit</a>' : '') . ' · penulis: ' . e($t['email']) . ($t['afiliasi'] ? ' · ' . e($t['afiliasi']) : '') . ' · ' . str_word_count(strip_tags(lt_html($t['isi']))) . ' kata · ' . count(lt_sumber($t)) . ' sumber</p>'
         . ($kurang ? '<div class="err" style="font-size:13px"><b>Belum memenuhi syarat:</b> ' . e(implode(' ', $kurang)) . '</div>' : '')
         . '<form method="post" action="/literasi/tinjau.php" style="display:flex;flex-direction:column;gap:10px">' . csrf_field() . '<input type="hidden" name="id" value="' . $t['id'] . '">'

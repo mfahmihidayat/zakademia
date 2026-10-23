@@ -209,6 +209,7 @@ h2{margin-top:28px}
 <h2>Alat pengelolaan</h2>' . ($ltAntre ? '<p class="err"><b>' . $ltAntre . ' tulisan kontributor</b> menunggu tinjauan Anda. <a href="/literasi/tinjau.php">Tinjau sekarang</a></p>' : '') . '
 <div class="alat">
   <a href="/asesmen/admin.php"><b>Dashboard asesmen</b><small>' . $n($kir) . ' kiriman' . ($kirBaru ? ' · <span class="pill">' . $kirBaru . ' baru</span>' : '') . ' · hasil, kirim email, ekspor CSV</small></a>
+  <a href="/admin/ilu.php"><b>Perakit ilustrasi</b><small>gambar vektor gaya Zakademia dari judul; otomatis untuk tulisan kontributor</small></a>
   <a href="/literasi/tinjau.php"><b>Tinjauan tulisan kontributor</b><small>' . $n($ltAntre) . ' menunggu tinjauan · ' . $n($ltTerbit) . ' terbit · ' . $n($ltPenulis) . ' penulis</small></a>
   <a href="/survei/hasil.php"><b>Hasil survei</b><small>' . $n($svJml) . ' jawaban terkumpul</small></a>
   <a href="/rekomendasi/admin.php"><b>Admin Rekomendasi</b><small>' . $n($rkAkses) . ' akses aktif · webhook Lynk.id, tambah manual</small></a>

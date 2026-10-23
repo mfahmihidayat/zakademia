@@ -87,6 +87,13 @@ Tolak, Tarik, sunting ringan judul/rubrik/ringkasan, tandai penulis tepercaya); 
 Tulisan terbit dirender `literasi/k.php` dari tabel `lt_tulisan` dengan template yang sama seperti artikel tim,
 ikut tampil di daftar Literasi (dimuat `literasi/api.php`), pencarian situs, dan `literasi/sitemap-kontributor.xml`.
 
+**Perakit ilustrasi** (`inc/ilu.php`): setiap tulisan kontributor mendapat gambar vektor otomatis bergaya Zakademia,
+dirakit dari perpustakaan ±34 unsur SVG (koin, masjid, padi, grafik, orang, dsb.) yang dipilih dari kata kunci judul,
+rubrik, dan isi; deterministik, tanpa layanan luar. Disajikan `literasi/ilu.php?id=N` (SVG; `&png=1` memakai Imagick
+bila ada, kalau tidak jatuh ke gambar OG bawaan) untuk kartu, hero artikel, dan og:image. Admin mengatur unsur dan
+tata letak (6 variasi, kolom `ilu_varian`, `ilu_unsur`) dari halaman Tinjauan, atau merakit bebas di `/admin/ilu.php`
+dan mengunduh SVG untuk artikel redaksi/media sosial.
+
 ## Ruang Belajar (LMS)
 
 Struktur kelas → modul → materi (bacaan, video YouTube, berkas, kuis, praktik) disimpan di tabel `lms_*` dan dikelola

@@ -31,6 +31,7 @@ function lt_db(): PDO
         status TEXT NOT NULL DEFAULT "draf", catatan TEXT, dibuat TEXT NOT NULL, diubah TEXT NOT NULL, dikirim TEXT, terbit TEXT, dilihat INTEGER NOT NULL DEFAULT 0)');
     $pdo->exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_lt_slug ON lt_tulisan (slug)');
     $pdo->exec('CREATE INDEX IF NOT EXISTS idx_lt_status ON lt_tulisan (status, terbit)');
+    foreach (['ilu_varian INTEGER NOT NULL DEFAULT 0', 'ilu_unsur TEXT NOT NULL DEFAULT ""'] as $kol) { try { $pdo->exec('ALTER TABLE lt_tulisan ADD COLUMN ' . $kol); } catch (Throwable $e) {} }
     $ok = true;
     return $pdo;
 }
@@ -149,10 +150,17 @@ function lt_chip(string $r, bool $big = false): string
     [$n, $q, $ic] = LT_RUBRIK[$r] ?? LT_RUBRIK['talk'];
     return '<span class="lt-chip' . ($big ? ' big' : '') . '"><img src="/assets/images/' . $ic . '" alt=""><b>' . $n . '</b>' . ($big ? '<i>' . e($q) . '</i>' : '') . '</span>';
 }
+/** Ilustrasi otomatis (perakit, inc/ilu.php) untuk sebuah tulisan: SVG, dan URL-nya untuk kartu/og:image. */
+function lt_ilu_svg(array $t): string
+{
+    require_once dirname(__DIR__) . '/inc/ilu.php';
+    $u = array_filter(explode(',', (string)($t['ilu_unsur'] ?? '')));
+    return zk_ilu_rakit((string)$t['judul'], (string)$t['rubrik'], (string)$t['isi'], (int)($t['ilu_varian'] ?? 0), $u);
+}
+function lt_ilu_url(array $t): string { return '/literasi/ilu.php?id=' . (int)$t['id'] . '&v=' . substr(md5($t['judul'] . $t['rubrik'] . ($t['ilu_varian'] ?? 0) . ($t['ilu_unsur'] ?? '')), 0, 8); }
 function lt_card(array $t): string
 {
-    $ic = LT_RUBRIK[$t['rubrik']][2] ?? 'rb-talk.webp';
-    return '<a class="lt-card" href="' . e(lt_url($t)) . '"><span class="lt-thumb rub"><img src="/assets/images/' . $ic . '" alt="" loading="lazy"></span>' . lt_chip($t['rubrik']) . '<h3>' . e($t['judul']) . '</h3><p>' . e($t['dek']) . '</p>'
+    return '<a class="lt-card" href="' . e(lt_url($t)) . '"><span class="lt-thumb ilu"><img src="' . e(lt_ilu_url($t)) . '" alt="" loading="lazy" width="600" height="460"></span>' . lt_chip($t['rubrik']) . '<h3>' . e($t['judul']) . '</h3><p>' . e($t['dek']) . '</p>'
         . '<span class="lt-meta">' . e(lt_tgl($t['terbit'] ?: $t['diubah'])) . ' · ' . lt_menit($t['isi']) . ' menit baca · ' . e($t['penulis'] ?: 'Kontributor') . '</span></a>';
 }
 function lt_head(string $title, string $desc, string $canon, string $img, string $extra = '', bool $noindex = false): string
@@ -194,12 +202,13 @@ function lt_halaman(array $t, bool $pratinjau = false): string
         'author' => ['@type' => 'Person', 'name' => $nama] + ($t['afiliasi'] ? ['affiliation' => $t['afiliasi']] : []),
         'publisher' => ['@type' => 'Organization', 'name' => 'Zakademia', 'logo' => ['@type' => 'ImageObject', 'url' => LT_BASE . '/assets/images/logo-color.png']], 'mainEntityOfPage' => $canon];
     $tulisanLain = $lain ? '<section class="lt-more lt-wrap"><h2>Tulisan kontributor lain</h2><div class="lt-grid">' . implode('', array_map('lt_card', $lain)) . '</div></section>' : '';
-    $out = lt_head($t['judul'] . ' | ' . $rn . ' Zakademia', $t['dek'], $canon, LT_BASE . '/assets/images/og-kontributor.png',
+    $out = lt_head($t['judul'] . ' | ' . $rn . ' Zakademia', $t['dek'], $canon, LT_BASE . lt_ilu_url($t) . '&png=1',
         $pratinjau ? '' : '<script type="application/ld+json">' . json_encode($ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>', $pratinjau);
     $out .= ($pratinjau ? '<div class="lt-wrap" style="margin-top:14px"><p class="lt-pre">Pratinjau · status: <b>' . e(LT_STATUS[$t['status']] ?? $t['status']) . '</b>. Beginilah tampilannya bila terbit.</p></div>' : '')
         . '<main id="isi"><article class="lt-art"><header class="lt-head lt-wrap-n">'
         . '<p class="lt-crumb"><a href="/literasi/">Literasi</a> / <a href="/literasi/?rubrik=' . e($t['rubrik']) . '">' . $rn . '</a> / Kontributor</p>' . lt_chip($t['rubrik'], true)
         . '<h1>' . e($t['judul']) . '</h1><p class="lt-dek">' . e($t['dek']) . '</p>'
+        . '<figure class="lt-hero ilu"><img src="' . e(lt_ilu_url($t)) . '" alt="" width="600" height="460"></figure>'
         . '<p class="lt-byline"><span class="lt-ava" aria-hidden="true">' . e(lt_inisial($nama)) . '</span><span><b>' . e($nama) . '</b>' . ($t['afiliasi'] ? ' · ' . e($t['afiliasi']) : '') . '<br>'
         . e(lt_tgl($t['terbit'] ?: $t['diubah'])) . ' · ' . lt_menit($t['isi']) . ' menit baca · <span class="lt-tag">Tulisan kontributor, ditinjau editor Zakademia</span></span></p></header>'
         . '<div class="lt-wrap-n">' . ($poin ? '<aside class="lt-poin" aria-label="Poin penting"><b>Poin penting</b><ul>' . $poin . '</ul></aside>' : '')

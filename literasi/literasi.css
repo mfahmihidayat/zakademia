@@ -152,3 +152,5 @@ main#isi.lt-wrap{padding-bottom:64px}
 .lt-poin b{letter-spacing:0;text-transform:none;font-size:15px;color:var(--deep)}
 .contoh b:first-child{letter-spacing:0;text-transform:none;font-size:13.5px}
 .lt-src h2{letter-spacing:0;text-transform:none;font-size:18px}
+
+.lt-hero.ilu{background:#F7F6EE}.lt-hero.ilu img{width:100%;height:100%;object-fit:cover}.lt-thumb.ilu{background:#F7F6EE}.lt-thumb.ilu img{padding:0;object-fit:cover}
