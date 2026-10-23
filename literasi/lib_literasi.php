@@ -163,7 +163,7 @@ function lt_head(string $title, string $desc, string $canon, string $img, string
         . '<meta property="og:url" content="' . e($canon) . '"><meta property="og:image" content="' . e($img) . '"><meta name="twitter:card" content="summary_large_image">'
         . '<link rel="icon" href="/assets/images/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com">'
         . '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
-        . '<link rel="stylesheet" href="/literasi/literasi.css?v=202610230400">' . zk_kepala_aset() . $extra . '</head><body>'
+        . '<link rel="stylesheet" href="/literasi/literasi.css?v=202610232045">' . zk_kepala_aset() . $extra . '</head><body>'
         . '<a class="skip" href="#isi">Langsung ke isi</a>' . zk_kepala();
 }
 function lt_foot(): string

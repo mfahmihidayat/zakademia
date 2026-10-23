@@ -33,7 +33,7 @@ if ($ok) echo '<p class="ok" role="status" style="margin-bottom:14px">' . e($ok)
 if ($error) echo '<p class="err" role="alert" style="margin-bottom:14px">' . e($error) . '</p>';
 echo '<div class="lms-two"><div>';
 echo '<section class="card" style="overflow:hidden"><div class="kh" style="display:flex;gap:16px;align-items:center;padding:24px;background:var(--deep);color:#FFFFF0">' . ($img ? '<img src="' . $img . '" alt="" style="width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,240,.6)">' : '')
-    . '<div><p class="small" style="margin:0 0 4px;opacity:.85;font-weight:700;letter-spacing:.06em">KELAS' . ($img ? ' · BERSAMA ' . strtoupper(LMS_PEMANDU[$k['pemandu']]) : '') . '</p><h1 style="margin:0;color:#FFFFF0;font-size:clamp(22px,3.4vw,30px);line-height:1.2">' . e($k['judul']) . '</h1>'
+    . '<div><p class="small" style="margin:0 0 4px;opacity:.85;font-weight:600">Kelas' . ($img ? ' bersama ' . LMS_PEMANDU[$k['pemandu']] : '') . '</p><h1 style="margin:0;color:#FFFFF0;font-size:clamp(22px,3.4vw,30px);line-height:1.2">' . e($k['judul']) . '</h1>'
     . '<p style="margin:6px 0 0;font-size:14px;opacity:.9">' . $n . ' materi · ' . ($menit >= 60 ? round($menit / 60, 1) . ' jam' : $menit . ' menit') . ' · ' . (lms_berbayar($k) ? e($k['harga'] ?: 'Berbayar') : 'Gratis') . ($k['sertifikat'] ? ' · sertifikat' : '') . '</p></div></div>'
     . '<div style="padding:22px 24px"><div class="isi" style="font-size:15.5px;line-height:1.7">' . lt_html($k['deskripsi'] ?: $k['ringkas']) . '</div>'
     . ($k['tujuan'] ? '<h2 style="font-size:17px;margin:18px 0 6px">Setelah kelas ini Anda dapat</h2><div class="isi" style="font-size:15px">' . lt_html($k['tujuan']) . '</div>' : '') . '</div></section>';

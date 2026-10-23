@@ -147,3 +147,8 @@ main#isi.lt-wrap{padding-bottom:64px}
 .lt-thumb.rub{background:linear-gradient(135deg,var(--mist),#fff);display:flex;align-items:center;justify-content:center}
 .lt-thumb.rub img{width:84px;height:84px;padding:0;object-fit:contain;border-radius:50%;box-shadow:0 10px 24px -12px rgba(11,77,51,.5)}
 .lt-lanjut{border-style:solid;border-color:var(--line);background:var(--mist)}
+
+.lt-eyebrow{display:none}
+.lt-poin b{letter-spacing:0;text-transform:none;font-size:15px;color:var(--deep)}
+.contoh b:first-child{letter-spacing:0;text-transform:none;font-size:13.5px}
+.lt-src h2{letter-spacing:0;text-transform:none;font-size:18px}

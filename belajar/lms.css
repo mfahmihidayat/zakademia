@@ -37,3 +37,4 @@
 @media(max-width:860px){.lms-two{grid-template-columns:1fr}.lms-side{order:2}}
 .baca-prog{position:fixed;left:0;top:0;height:4px;background:var(--gold);width:0;z-index:60;transition:width .1s linear}
 @media(max-width:860px){.lms-nav form{position:sticky;bottom:12px}}
+.lms-daftar .mod{letter-spacing:0;text-transform:none;font-size:13.5px}

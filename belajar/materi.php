@@ -48,7 +48,7 @@ lms_head($t['judul'], '<a href="/belajar/">Ruang Belajar</a> / <a href="' . e($s
 echo '<main class="wrap"><div class="lms-two"><div>';
 if ($ok) echo '<p class="ok" role="status" style="margin-bottom:14px">' . e($ok) . '</p>';
 if ($error) echo '<p class="err" role="alert" style="margin-bottom:14px">' . e($error) . '</p>';
-echo '<article class="card lms-body"><p class="mute small" style="margin:0 0 6px;font-weight:700;letter-spacing:.06em">' . strtoupper(LMS_JENIS[$t['jenis']]) . ' · ' . e(strtoupper($t['modul'])) . ' · ' . (int)$t['menit'] . ' MENIT</p><h1>' . e($t['judul']) . '</h1>';
+echo '<article class="card lms-body"><p class="mute small" style="margin:0 0 6px;font-weight:600">' . LMS_JENIS[$t['jenis']] . ' · ' . e($t['modul']) . ' · ' . (int)$t['menit'] . ' menit</p><h1>' . e($t['judul']) . '</h1>';
 if ($t['jenis'] === 'video' && $t['tautan']) echo lms_video_embed($t['tautan']);
 if ($t['isi'] && $t['jenis'] !== 'kuis') echo '<div class="isi">' . lt_html($t['isi']) . '</div>';
 if ($t['jenis'] === 'berkas' && $t['tautan']) echo '<p style="margin-top:16px"><a class="btn" href="' . e($t['tautan']) . '" target="_blank" rel="noopener">Buka berkas</a></p>';

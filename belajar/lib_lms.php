@@ -298,7 +298,7 @@ function lms_head(string $title, string $crumb = ''): void
     echo '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
         . '<title>' . e($title) . ' · Zakademia</title><link rel="icon" href="/assets/images/favicon.png">'
         . '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
-        . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/belajar/lms.css?v=1">' . zk_kepala_aset() . '</head><body>'
+        . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/belajar/lms.css?v=2">' . zk_kepala_aset() . '</head><body>'
         . zk_kepala();
 }
 function lms_foot(): void { echo '<script src="/js/stat.js?v=2" defer></script></body></html>'; }
