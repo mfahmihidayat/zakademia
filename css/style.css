@@ -530,3 +530,12 @@ main section.wrap.sec,.deep .wrap.sec{padding-block:0 var(--jarak)}
 .detail h3,.ph-caption,.book-meta,.paper-meta{font:600 14px var(--sans);letter-spacing:0;text-transform:none}
 .detail h3{color:var(--ink);font-size:16px}.ph-caption{color:var(--gold-text)}.book-meta,.paper-meta{color:var(--mute);font-weight:500;font-size:13px}
 .so-copy h3{margin-top:0}
+/* Kajian dan buku: rapatkan ruang kosong */
+.studies{align-items:start}
+.study-refs{margin-top:4px}.study-refs a{display:flex;gap:8px}.study-refs a::before{content:"→";color:var(--gold);flex:none}
+.books{grid-template-columns:repeat(auto-fit,minmax(min(100%,470px),1fr));align-items:start}
+.book{grid-template-columns:150px minmax(0,1fr);gap:24px;align-items:start}
+.book .cover.real{aspect-ratio:3/4}
+.book-body{display:flex;flex-direction:column;gap:6px}.book-body p{margin:0}
+.books.compact .book{grid-template-columns:110px minmax(0,1fr)}
+@media(max-width:560px){.book{grid-template-columns:96px minmax(0,1fr);gap:16px}}
