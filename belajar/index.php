@@ -18,7 +18,7 @@ $kartu = function (array $k, ?array $r) use ($pdo) {
         . '<div class="kb"><p>' . e($k['ringkas']) . '</p><div class="km"><span>' . ($r ? ($r['tuntas'] ? 'Selesai · sertifikat terbit' : $r['persen'] . '% selesai') : (lms_berbayar($k) ? '<span class="harga">' . e($k['harga'] ?: 'Berbayar') . '</span>' : 'Gratis')) . '</span><span class="btn" style="min-height:36px;padding:6px 14px;font-size:13px">' . ($r ? 'Lanjutkan' : 'Lihat kelas') . '</span></div></div></a>';
 };
 lms_head('Ruang Belajar');
-echo '<main class="wrap"><div class="lms-head"><h1>Belajar.</h1><p class="mute">Kelas mandiri seputar zakat, wakaf, data, dan riset untuk lembaga. Setiap materi singkat, diakhiri kuis dan praktik dengan alat Zakademia. Kemajuan tersimpan di akun, dan sertifikat terbit otomatis saat kelas tuntas.</p></div>';
+echo '<main class="wrap"><div class="lms-head"><h1>Belajar dengan tenang, praktik langsung.</h1><p class="mute">Kelas mandiri seputar zakat, wakaf, data, dan riset untuk lembaga. Setiap materi singkat, diakhiri kuis dan praktik dengan alat Zakademia. Kemajuan tersimpan di akun, dan sertifikat terbit otomatis saat kelas tuntas.</p></div>';
 if ($saya) {
     echo '<h2 style="margin:0 0 12px">Kelas saya</h2><div class="lms-grid" style="margin-bottom:34px">';
     foreach ($saya as $k) echo $kartu($k, lms_ringkas((int)$u['id'], $k));

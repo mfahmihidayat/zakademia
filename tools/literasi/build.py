@@ -137,7 +137,7 @@ def index_page():
     out = HEAD.format(title='Literasi | Zakademia', desc='Kabar, istilah, kisah, panduan, angka, dan tanya jawab seputar zakat, wakaf, dan filantropi Islam.',
                       canon=BASE + '/literasi/', ogtype='website', img=f'{BASE}/assets/images/og-image.png', v=V, extra='')
     out += f'''<main id="isi" class="lt-wrap">
-<header class="lt-ihead"><p class="lt-eyebrow">Literasi</p><h1>Literasi.</h1>
+<header class="lt-ihead"><p class="lt-eyebrow">Literasi</p><h1>Ilmu yang dibagikan kepada semua.</h1>
 <p>Enam rubrik untuk memahami zakat, wakaf, dan filantropi Islam: kabar terbaru, istilah, kisah, panduan, angka, dan tanya jawab. Setiap tulisan disertai sumbernya.</p></header>
 <div class="lt-tulis"><p><b>Punya pengalaman atau kajian seputar zakat dan wakaf?</b> Tulis untuk Zakademia. Setiap tulisan ditinjau editor sebelum terbit dan tampil dengan nama Anda.</p><a class="lt-btn gold" href="/literasi/tulis/">Mulai menulis</a></div>
 <div class="lt-filter" role="group" aria-label="Saring menurut rubrik">{chips}</div>
