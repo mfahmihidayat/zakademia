@@ -59,6 +59,10 @@ $judul = $b['judul'] . ': ' . $b['sub'];
 $jml = $meta ? (int)$meta['jumlah'] : 0;
 $prat = (int)$c['pratinjau'];
 $harga = bk_rp((string)$c['harga']);
+$coret = bk_rp((string)($c['harga_coret'] ?? ''));
+$nh = (int)preg_replace('/\D/', '', $harga); $nc = (int)preg_replace('/\D/', '', $coret);
+$hemat = ($nh > 0 && $nc > $nh) ? (int)round(($nc - $nh) * 100 / $nc) : 0;
+if (!$hemat) $coret = '';
 $lynk = $c['lynk_url'];
 $masuk = '/asesmen/masuk.php?next=' . urlencode($self);
 $daftar = '/asesmen/daftar.php?next=' . urlencode($self);
@@ -100,6 +104,10 @@ h1.judul{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.02em
 .ring{line-height:1.75;margin:0 0 18px}
 .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:14px 0 8px}
 .harga{font-size:22px;font-weight:800;color:var(--deep)}
+.hargabox{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.coret{font-size:16px;font-weight:600;color:var(--mute);text-decoration:line-through;text-decoration-thickness:1.5px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hemat{font-size:12.5px;font-weight:700;color:#8A3B12;background:#FCE9D9;border-radius:999px;padding:3px 10px;align-self:center}
 .card2{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;margin-top:22px}
 .card2 h2{font-size:17px;margin:0}
 .card2 label{font-weight:600;font-size:14px;display:flex;flex-direction:column;gap:6px}
@@ -135,7 +143,7 @@ h1.judul{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.02em
     <div class="cta"><a class="btn" href="<?= e($self) ?>baca">Baca buku</a><span class="mute" style="font-size:14px">Akses aktif untuk <?= e($u['email']) ?><?= ($akses['sumber'] ?? '') === 'admin' ? ' (admin)' : '' ?>.</span></div>
 <?php else: ?>
     <div class="cta">
-      <?= $harga !== '' ? '<span class="harga">' . e($harga) . '</span>' : '' ?>
+      <?= $harga !== '' ? '<span class="hargabox">' . ($coret !== '' ? '<s class="coret"><span class="sr-only">Harga normal </span>' . e($coret) . '</s>' : '') . '<span class="harga">' . ($coret !== '' ? '<span class="sr-only">Harga diskon </span>' : '') . e($harga) . '</span>' . ($hemat ? '<span class="hemat">Hemat ' . $hemat . '%</span>' : '') . '</span>' : '' ?>
       <?= $lynk !== '' ? '<a class="btn gold" href="' . e($lynk) . '" target="_blank" rel="noopener">Beli di Lynk.id</a>' : '<span class="mute" style="font-size:14px">Tautan pembelian segera tersedia.</span>' ?>
       <a class="btn ghost" href="<?= e($self) ?>baca">Baca pratinjau (<?= $prat ?> halaman)</a>
     </div>

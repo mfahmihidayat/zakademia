@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else {
             $conf['buku'][$slug]['lynk_url'] = $url;
             $conf['buku'][$slug]['harga'] = bk_rp(clip($_POST['harga'] ?? '', 40));
+            $conf['buku'][$slug]['harga_coret'] = bk_rp(clip($_POST['harga_coret'] ?? '', 40));
             $conf['buku'][$slug]['kata_kunci'] = clip($_POST['kata_kunci'] ?? '', 80);
             $conf['buku'][$slug]['pratinjau'] = $prat;
             bk_conf_save($conf);
@@ -76,6 +77,7 @@ foreach (BK_BUKU as $s => $bk) {
   <div class="row"><b>' . e($bk['judul']) . '</b><span class="mute">' . ($meta ? (int)$meta['jumlah'] . ' halaman · <a href="/buku/' . e($s) . '/" target="_blank">halaman buku</a>' : 'gambar halaman belum diunggah') . '</span></div>
   <label>Tautan produk di Lynk.id (tombol "Beli")<input name="lynk_url" value="' . e($c['lynk_url']) . '" placeholder="https://lynk.id/zakademia/..."></label>
   <label>Harga yang ditampilkan (angka saja juga boleh, misalnya 79000; Rp ditambahkan otomatis)<input name="harga" value="' . e($c['harga']) . '" maxlength="40"></label>
+  <label>Harga sebelum diskon, tampil dicoret (kosongkan bila tidak ada diskon)<input name="harga_coret" value="' . e($c['harga_coret'] ?? '') . '" maxlength="40" placeholder="Rp199.000"></label>
   <label>Kata kunci nama produk di Lynk.id (untuk mengenali transaksi buku ini dari webhook)<input name="kata_kunci" value="' . e($c['kata_kunci']) . '" maxlength="80"></label>
   <label>Jumlah halaman pratinjau yang terbuka untuk semua orang<input name="pratinjau" type="number" min="1" max="200" value="' . (int)$c['pratinjau'] . '"></label>
   <button class="btn ghost" type="submit">Simpan</button></form>';

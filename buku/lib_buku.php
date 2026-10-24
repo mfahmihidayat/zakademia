@@ -17,7 +17,7 @@ const BK_BUKU = [
         'penerbit' => 'Zakademia · 2026',
         'ringkas' => 'Panduan memilih, memadukan, dan menerapkan desain penelitian zakat dan wakaf. Sepuluh bab yang mencakup metode normatif-syariah, kuantitatif, kualitatif, historis, campuran, terapan, digital, dan lanjutan, dengan contoh kasus, kotak Dalam Jurnal, kuis, dan kamus istilah di tepi halaman.',
         'kata_kunci' => 'Metodologi',
-        'harga' => 'Rp79.000', 'harga_rev' => '2026-10-24',
+        'harga' => 'Rp79.000', 'harga_coret' => 'Rp199.000', 'harga_rev' => '2026-10-24b',
         'pratinjau' => 24,
         'tahun' => '2026',
         'bab' => [
@@ -64,9 +64,11 @@ function bk_conf(): array
     $ubah = false;
     if ($c['kunci'] === '') { $c['kunci'] = bin2hex(random_bytes(20)); $ubah = true; }
     foreach (BK_BUKU as $slug => $b) {
-        $c['buku'][$slug] = ($c['buku'][$slug] ?? []) + ['lynk_url' => '', 'harga' => '', 'kata_kunci' => $b['kata_kunci'], 'pratinjau' => $b['pratinjau'], 'aktif' => 1];        /* harga baru dari katalog diterapkan sekali; setelah itu admin tetap bisa mengubahnya */
+        $c['buku'][$slug] = ($c['buku'][$slug] ?? []) + ['lynk_url' => '', 'harga' => '', 'harga_coret' => '', 'kata_kunci' => $b['kata_kunci'], 'pratinjau' => $b['pratinjau'], 'aktif' => 1];
+        /* harga baru dari katalog diterapkan sekali; setelah itu admin tetap bisa mengubahnya */
         if (($b['harga_rev'] ?? '') !== '' && ($c['buku'][$slug]['harga_rev'] ?? '') !== $b['harga_rev']) {
             $c['buku'][$slug]['harga'] = $b['harga'];
+            $c['buku'][$slug]['harga_coret'] = $b['harga_coret'] ?? '';
             $c['buku'][$slug]['harga_rev'] = $b['harga_rev'];
             $ubah = true;
         }
