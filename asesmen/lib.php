@@ -329,7 +329,7 @@ function flash(?string $msg = null): ?string
     $m = $_SESSION['flash'] ?? null; unset($_SESSION['flash']); return $m;
 }
 
-const ORG_TYPES = ['Lembaga amil zakat', 'BAZNAS daerah', 'Unit pengumpul zakat', 'Nazhir wakaf', 'Lembaga filantropi kampus', 'Lembaga filantropi korporat', 'Lainnya'];
+const ORG_TYPES = ['Lembaga amil zakat', 'BAZNAS daerah', 'Unit pengumpul zakat', 'Nazhir wakaf', 'Lembaga filantropi kampus', 'Lembaga filantropi korporat', 'Kampus', 'Lainnya'];
 
 /** Tampilan halaman akun (masuk, daftar, lupa kata sandi, akun). */
 function page(string $title, string $body, string $width = '440px'): void
