@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         elseif ($prat < 1 || $prat > 200) $error = 'Jumlah halaman pratinjau antara 1 dan 200.';
         else {
             $conf['buku'][$slug]['lynk_url'] = $url;
-            $conf['buku'][$slug]['harga'] = clip($_POST['harga'] ?? '', 40);
+            $conf['buku'][$slug]['harga'] = bk_rp(clip($_POST['harga'] ?? '', 40));
             $conf['buku'][$slug]['kata_kunci'] = clip($_POST['kata_kunci'] ?? '', 80);
             $conf['buku'][$slug]['pratinjau'] = $prat;
             bk_conf_save($conf);
@@ -75,7 +75,7 @@ foreach (BK_BUKU as $s => $bk) {
     $atur .= '<form method="post" action="admin.php" style="display:flex;flex-direction:column;gap:14px;border:1px solid var(--line);border-radius:16px;padding:16px">' . csrf_field() . '<input type="hidden" name="act" value="atur"><input type="hidden" name="buku" value="' . e($s) . '">
   <div class="row"><b>' . e($bk['judul']) . '</b><span class="mute">' . ($meta ? (int)$meta['jumlah'] . ' halaman · <a href="/buku/' . e($s) . '/" target="_blank">halaman buku</a>' : 'gambar halaman belum diunggah') . '</span></div>
   <label>Tautan produk di Lynk.id (tombol "Beli")<input name="lynk_url" value="' . e($c['lynk_url']) . '" placeholder="https://lynk.id/zakademia/..."></label>
-  <label>Harga yang ditampilkan (teks, misalnya Rp149.000)<input name="harga" value="' . e($c['harga']) . '" maxlength="40"></label>
+  <label>Harga yang ditampilkan (angka saja juga boleh, misalnya 79000; Rp ditambahkan otomatis)<input name="harga" value="' . e($c['harga']) . '" maxlength="40"></label>
   <label>Kata kunci nama produk di Lynk.id (untuk mengenali transaksi buku ini dari webhook)<input name="kata_kunci" value="' . e($c['kata_kunci']) . '" maxlength="80"></label>
   <label>Jumlah halaman pratinjau yang terbuka untuk semua orang<input name="pratinjau" type="number" min="1" max="200" value="' . (int)$c['pratinjau'] . '"></label>
   <button class="btn ghost" type="submit">Simpan</button></form>';
@@ -114,7 +114,7 @@ page('Buku digital · Admin', '
   <label>Buku<select name="buku">' . $opsi . '</select></label>
   <label>Email pembeli<input type="email" name="email" required></label>
   <label>Nomor pesanan atau bukti transfer (opsional)<input name="ref" maxlength="120"></label>
-  <label>Nilai pembayaran (opsional)<input name="nilai" maxlength="40" placeholder="Rp149.000"></label>
+  <label>Nilai pembayaran (opsional)<input name="nilai" maxlength="40" placeholder="Rp79.000"></label>
   <label>Catatan (opsional)<input name="catatan" maxlength="200" placeholder="transfer BSI 21 Okt"></label>
   <label class="check"><input type="checkbox" name="kirim" value="1" checked> Kirim email berisi tautan baca ke pembeli</label>
   <button class="btn" type="submit">Tambah akses</button>

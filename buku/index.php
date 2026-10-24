@@ -58,7 +58,7 @@ $base = ($https ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'zakadem
 $judul = $b['judul'] . ': ' . $b['sub'];
 $jml = $meta ? (int)$meta['jumlah'] : 0;
 $prat = (int)$c['pratinjau'];
-$harga = $c['harga'] !== '' ? $c['harga'] : '';
+$harga = bk_rp((string)$c['harga']);
 $lynk = $c['lynk_url'];
 $masuk = '/asesmen/masuk.php?next=' . urlencode($self);
 $daftar = '/asesmen/daftar.php?next=' . urlencode($self);

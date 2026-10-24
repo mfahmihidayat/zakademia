@@ -17,6 +17,7 @@ const BK_BUKU = [
         'penerbit' => 'Zakademia · 2026',
         'ringkas' => 'Panduan memilih, memadukan, dan menerapkan desain penelitian zakat dan wakaf. Sepuluh bab yang mencakup metode normatif-syariah, kuantitatif, kualitatif, historis, campuran, terapan, digital, dan lanjutan, dengan contoh kasus, kotak Dalam Jurnal, kuis, dan kamus istilah di tepi halaman.',
         'kata_kunci' => 'Metodologi',
+        'harga' => 'Rp79.000', 'harga_rev' => '2026-10-24',
         'pratinjau' => 24,
         'tahun' => '2026',
         'bab' => [
@@ -63,10 +64,24 @@ function bk_conf(): array
     $ubah = false;
     if ($c['kunci'] === '') { $c['kunci'] = bin2hex(random_bytes(20)); $ubah = true; }
     foreach (BK_BUKU as $slug => $b) {
-        $c['buku'][$slug] = ($c['buku'][$slug] ?? []) + ['lynk_url' => '', 'harga' => '', 'kata_kunci' => $b['kata_kunci'], 'pratinjau' => $b['pratinjau'], 'aktif' => 1];
+        $c['buku'][$slug] = ($c['buku'][$slug] ?? []) + ['lynk_url' => '', 'harga' => '', 'kata_kunci' => $b['kata_kunci'], 'pratinjau' => $b['pratinjau'], 'aktif' => 1];        /* harga baru dari katalog diterapkan sekali; setelah itu admin tetap bisa mengubahnya */
+        if (($b['harga_rev'] ?? '') !== '' && ($c['buku'][$slug]['harga_rev'] ?? '') !== $b['harga_rev']) {
+            $c['buku'][$slug]['harga'] = $b['harga'];
+            $c['buku'][$slug]['harga_rev'] = $b['harga_rev'];
+            $ubah = true;
+        }
     }
     if ($ubah) bk_conf_save($c);
     return $c;
+}
+/** Teks harga selalu berawalan Rp dengan titik ribuan: "79000" atau "Rp 79.000,-" menjadi "Rp79.000". Teks lain dibiarkan. */
+function bk_rp(string $h): string
+{
+    $h = trim($h);
+    if ($h === '') return '';
+    $angka = preg_replace('/,-?$|,00$/', '', preg_replace('/^rp\.?\s*/i', '', $h));
+    if (!preg_match('/^\d{1,3}(\.\d{3})*$|^\d+$/', $angka)) return $h;
+    return 'Rp' . number_format((int)str_replace('.', '', $angka), 0, ',', '.');
 }
 function bk_conf_save(array $c): void
 {
