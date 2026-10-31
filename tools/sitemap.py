@@ -14,6 +14,12 @@ def mtime(path):
 pages = [('/', 'index.html', 'weekly', '1.0'), ('/literasi/', 'literasi/index.html', 'daily', '0.9'),
          ('/buku/metodologi/', 'buku/index.php', 'monthly', '0.9'), ('/asesmen/', 'asesmen/index.html', 'monthly', '0.8'),
          ('/belajar/', 'belajar/index.php', 'monthly', '0.7')]
+# Halaman ringkasan bab buku digital (buku/isi_<slug>.php)
+import re as _re
+for f in sorted(glob.glob(os.path.join(ROOT, 'buku', 'isi_*.php'))):
+    slug = os.path.basename(f)[4:-4]
+    nbab = len(_re.findall(r"^\s{12}\[\n\s+'judul' =>", open(f, encoding='utf-8').read(), _re.M))
+    for i in range(1, nbab + 1): pages.append(('/buku/%s/bab-%d/' % (slug, i), 'buku/isi_%s.php' % slug, 'monthly', '0.7'))
 # /survei/ dan /analitik/ memerlukan masuk (noindex), /layanan/ hanya pengalihan ke beranda: tidak dimasukkan.
 # Halaman kelas: slug dari seed kelas (kelas baru ditambahkan di sini atau di seed).
 try:

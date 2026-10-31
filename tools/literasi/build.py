@@ -75,9 +75,25 @@ def terkait(a, n=3):
     skor = sorted((o for o in ARTIKEL if o is not a), key=lambda o: (-(2 * (o['rubrik'] == a['rubrik']) + 3 * len(ka & kata(o))), o['tanggal']))
     return skor[:n]
 
+# Bab buku Metodologi Penelitian Filantropi Islam yang paling dekat dengan tiap tulisan (slug -> (nomor bab, judul bab)).
+BAB_BUKU = {
+    'retensi-donatur-lembaga-zakat': (3, 'Metode Kuantitatif'),
+    'membaca-angka-zakat-nasional-2025': (1, 'Pengantar Penelitian Filantropi Islam'),
+    'rakornas-baznas-2026-target-70-triliun': (10, 'Tantangan dan Dampak Penelitian Filantropi Islam'),
+    'delapan-asnaf-penerima-zakat': (2, 'Metode Normatif-Syariah'),
+    'zakat-pengurang-penghasilan-kena-pajak': (2, 'Metode Normatif-Syariah'),
+    'tugas-nazhir-wakaf': (4, 'Metode Kualitatif'),
+    'wakaf-uang-wakaf-melalui-uang-cwls': (2, 'Metode Normatif-Syariah'),
+    'rs-mata-achmad-wardi-wakaf-yang-mengembalikan-penglihatan': (7, 'Metode Terapan'),
+    'zakat-infak-sedekah-wakaf-apa-bedanya': (1, 'Pengantar Penelitian Filantropi Islam'),
+}
+
 def lanjutan(a):
     """Kotak tautan ke produk Zakademia yang relevan dengan tulisan."""
     j = a['judul'].lower()
+    if a['slug'] in BAB_BUKU:
+        n, jb = BAB_BUKU[a['slug']]
+        return ('Ingin menelitinya lebih dalam?', f'Bab {n} buku Metodologi Penelitian Filantropi Islam, {jb}, membahas cara meneliti persoalan seperti ini pada zakat dan wakaf; ringkasan babnya terbuka untuk semua.', f'/buku/metodologi/bab-{n}/', f'Baca ringkasan Bab {n}')
     if 'wakaf' in j or 'nazhir' in j: return ('Ingin meneliti wakaf lebih dalam?', 'Buku digital Metodologi Penelitian Filantropi Islam membahas desain penelitian zakat dan wakaf dalam sepuluh bab; 24 halaman pertama gratis.', '/buku/metodologi/', 'Baca pratinjau buku')
     if a['rubrik'] in ('stat', 'flash'): return ('Membaca angka lembaga Anda sendiri?', 'Kelas Analitik Penghimpunan di Ruang Belajar mengajarkan retensi, nilai donatur, dan biaya penghimpunan dari rekap lembaga Anda.', '/belajar/', 'Buka Ruang Belajar')
     if a['rubrik'] == 'tips': return ('Mengelola lembaga zakat?', 'Asesmen Kesiapan Penghimpunan gratis memetakan kesiapan lembaga pada enam dimensi dan memberi rekomendasi langkah berikutnya.', '/asesmen/', 'Mulai asesmen')

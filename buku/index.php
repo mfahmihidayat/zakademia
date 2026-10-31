@@ -15,6 +15,7 @@ $b = BK_BUKU[$slug];
 $conf = bk_conf();
 $c = $conf['buku'][$slug];
 $meta = bk_meta($slug);
+$isiFile = __DIR__ . '/isi_' . $slug . '.php'; $BI = null; if (is_file($isiFile)) { require $isiFile; $BI = BK_ISI[$slug] ?? null; }
 $self = '/buku/' . $slug . '/';
 $u = current_user();
 $akses = $u ? bk_access($u, $slug) : null;
@@ -85,7 +86,7 @@ header('Cache-Control: no-store');
      'numberOfPages' => $jml ?: null, 'genre' => 'Metodologi penelitian', 'about' => ['Filantropi Islam', 'Zakat', 'Wakaf', 'Metodologi penelitian'],
      'author' => array_map(fn($n) => ['@type' => 'Person', 'name' => trim($n)], explode(',', $b['penulis'])),
      'publisher' => ['@type' => 'Organization', 'name' => 'Zakademia', 'url' => $base . '/', 'logo' => $base . '/assets/images/logo-color.png'],
-     'hasPart' => array_map(fn($i, $x) => ['@type' => 'Chapter', 'position' => $i + 1, 'name' => 'Bab ' . ($i + 1) . ': ' . $x[0]], array_keys($b['bab'] ?? []), $b['bab'] ?? []),
+     'hasPart' => array_map(fn($i, $x) => ['@type' => 'Chapter', 'position' => $i + 1, 'name' => 'Bab ' . ($i + 1) . ': ' . $x[0]] + ($BI ? ['url' => $base . $self . 'bab-' . ($i + 1) . '/', 'description' => $x[1]] : []), array_keys($b['bab'] ?? []), $b['bab'] ?? []),
      'offers' => $lynk !== '' ? ['@type' => 'Offer', 'url' => $lynk, 'availability' => 'https://schema.org/InStock', 'priceCurrency' => 'IDR'] + (preg_match('/[\d.]+/', str_replace('.', '', $harga), $m) && (int)$m[0] > 0 ? ['price' => (int)$m[0]] : []) : null],
     ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Zakademia', 'item' => $base . '/'], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Publikasi', 'item' => $base . '/#kajian/buku'], ['@type' => 'ListItem', 'position' => 3, 'name' => $b['judul'], 'item' => $base . $self]]],
     !empty($b['faq']) ? ['@type' => 'FAQPage', 'mainEntity' => array_map(fn($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]], $b['faq'])] : null,
@@ -124,13 +125,19 @@ h1.judul{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.02em
 
 .isi ol b{display:block;color:var(--deep)}.isi ol span{font-size:14px;color:var(--mute);line-height:1.5}
 .isi details{border-bottom:1px solid var(--line);padding:12px 0}.isi summary{font-weight:700;cursor:pointer;color:var(--deep)}.isi details p{margin:8px 0 0;line-height:1.65}
+.prakata p{line-height:1.8;margin:0 0 14px;font-size:16px}
+.isi ol b a{color:var(--deep);text-decoration:none}.isi ol b a:hover{text-decoration:underline}
+.toc h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:16px 0 8px}.toc h3:first-child{margin-top:0}
+.toc details{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px 14px;margin-bottom:8px}.toc summary{font-weight:700;cursor:pointer}.toc summary a{color:var(--deep);text-decoration:none}.toc summary a:hover{text-decoration:underline}
+.toc details>ul{margin:10px 0 2px;padding-left:4px;list-style:none;line-height:1.6;font-size:14.5px}.toc .k{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;color:var(--gold);font-weight:600}
+.toc details ul ul{list-style:disc;padding-left:22px;color:var(--mute);font-size:14px;margin:2px 0 6px}
 .ok{background:var(--mist);border:1px solid var(--line);color:var(--deep);border-radius:12px;padding:10px 14px;font-size:14px}
 </style></head><body>
 <?= zk_kepala() ?>
 <main class="wrap" style="padding-top:32px;padding-bottom:70px">
 <div class="bk">
   <div>
-    <div class="cov"><img src="/buku/hal.php?b=<?= e($slug) ?>&amp;n=1" alt="Sampul <?= e($b['judul']) ?>" width="1100" height="1467"></div>
+    <div class="cov"><img src="/assets/images/cover-<?= e($slug) ?>.webp" alt="Sampul <?= e($b['judul']) ?>" width="600" height="800" fetchpriority="high"></div>
   </div>
   <div>
     <span class="kicker">Buku digital · <?= e($b['penerbit']) ?></span>
@@ -185,7 +192,21 @@ h1.judul{font-size:clamp(26px,3.4vw,38px);line-height:1.15;letter-spacing:-.02em
 <section class="isi" aria-labelledby="h-isi">
   <div><h2 id="h-isi">Isi buku</h2><p class="mute" style="line-height:1.65;margin:0">Buku <b><?= e($b['judul']) ?></b> karya <?= e($b['penulis']) ?> membahas <?= count($b['bab']) ?> bab metode penelitian zakat dan wakaf, dari pendekatan normatif-syariah hingga big data dan pemodelan formal.</p>
   <?php if (!empty($b['faq'])): ?><h2 style="margin-top:28px">Pertanyaan umum</h2><?php foreach ($b['faq'] as $f): ?><details><summary><?= e($f[0]) ?></summary><p><?= e($f[1]) ?></p></details><?php endforeach; endif; ?></div>
-  <ol><?php foreach ($b['bab'] as $i => $x): ?><li><div><b>Bab <?= $i + 1 ?>. <?= e($x[0]) ?></b><span><?= e($x[1]) ?></span></div></li><?php endforeach; ?></ol>
+  <ol><?php foreach ($b['bab'] as $i => $x): ?><li><div><b><?= $BI ? '<a href="' . e($self . 'bab-' . ($i + 1) . '/') . '">' : '' ?>Bab <?= $i + 1 ?>. <?= e($x[0]) ?><?= $BI ? '</a>' : '' ?></b><span><?= e($x[1]) ?></span></div></li><?php endforeach; ?></ol>
+</section>
+<?php endif; ?>
+<?php if ($BI): ?>
+<section class="isi" aria-labelledby="h-prakata" style="margin-top:40px">
+  <div><h2 id="h-prakata">Dari prakata penulis</h2><p class="mute" style="line-height:1.65;margin:0">Mengapa buku ini ditulis, dan sikap metodologis yang ditawarkannya. <a href="<?= e($self) ?>baca" style="color:var(--deep);font-weight:600">Baca prakata lengkap di pratinjau</a>.</p></div>
+  <div class="prakata"><?php foreach ($BI['prakata'] as $p): ?><p><?= e($p) ?></p><?php endforeach; ?><p class="mute" style="font-size:14px">— <?= e($b['penulis']) ?>, Jakarta, Oktober 2026</p></div>
+</section>
+<section class="isi" aria-labelledby="h-daftar" style="margin-top:40px">
+  <div><h2 id="h-daftar">Daftar isi lengkap</h2><p class="mute" style="line-height:1.65;margin:0">Tiga bagian, sepuluh bab, dan subbab yang dibahas. Setiap judul bab membuka ringkasan bab tersebut.</p></div>
+  <div class="toc"><?php $bg = 0; foreach ($BI['bab'] as $i => $x): if ($x['bagian'] !== $bg) { $bg = $x['bagian']; echo '<h3>' . e($BI['bagian'][$bg]) . '</h3>'; } ?>
+    <details><summary><a href="<?= e($self . 'bab-' . ($i + 1) . '/') ?>">Bab <?= $i + 1 ?> <?= e($x['judul']) ?></a></summary>
+      <ul><?php foreach ($x['subbab'] as $sb): ?><li><span class="k"><?= e($sb[0]) ?></span> <?= e($sb[1]) ?><?= $sb[2] ? '<ul>' . implode('', array_map(fn($y) => '<li>' . e($y) . '</li>', $sb[2])) . '</ul>' : '' ?></li><?php endforeach; ?></ul>
+    </details>
+  <?php endforeach; ?></div>
 </section>
 <?php endif; ?>
 </main>

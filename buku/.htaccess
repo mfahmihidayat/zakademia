@@ -8,13 +8,16 @@ DirectoryIndex index.php
   RewriteRule ^([a-z0-9-]+)/baca/?$ baca.php?b=$1 [L,QSA]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([a-z0-9-]+)/bab-([0-9]+)/?$ bab.php?b=$1&n=$2 [L,QSA]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^([a-z0-9-]+)/?$ index.php?b=$1 [L,QSA]
 </IfModule>
-<FilesMatch "^(lib_buku)\.php$">
+<FilesMatch "^(lib_buku|isi_[a-z0-9-]+)\.php$">
   Require all denied
 </FilesMatch>
 <IfModule mod_headers.c>
-  <FilesMatch "^(index|baca|admin|webhook)\.php$">
+  <FilesMatch "^(index|baca|admin|webhook|bab)\.php$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
   </FilesMatch>
 </IfModule>
