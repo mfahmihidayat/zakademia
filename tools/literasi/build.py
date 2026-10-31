@@ -38,7 +38,7 @@ HEAD = '''<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="/literasi/literasi.css?v={v}">
-<link rel="stylesheet" href="/css/kepala.css?v=1"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/kepala.js?v=2" defer></script>
+<link rel="stylesheet" href="/css/kepala.css?v=2"><link rel="stylesheet" href="/css/cari.css?v=202610190100"><script src="/js/kepala.js?v=3" defer></script>
 {extra}
 </head>
 <body>
