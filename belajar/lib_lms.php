@@ -291,12 +291,19 @@ function lms_pdf_dari_jpeg(string $jpeg, int $w, int $h): string
 }
 
 /* ---------- tampilan ---------- */
-function lms_head(string $title, string $crumb = ''): void
+function lms_head(string $title, string $crumb = '', string $desc = '', string $canon = '', array $schema = []): void
 {
     header('Content-Type: text/html; charset=utf-8'); header('Cache-Control: no-store'); header('X-Frame-Options: DENY'); header('Referrer-Policy: same-origin');
     $u = current_user();
+    // Halaman publik (katalog dan halaman kelas) diberi deskripsi, canonical, dan schema; halaman akun (materi, sertifikat) tidak diindeks.
+    $seo = $canon !== ''
+        ? '<meta name="description" content="' . e($desc) . '"><link rel="canonical" href="' . e($canon) . '">'
+          . '<meta property="og:type" content="website"><meta property="og:site_name" content="Zakademia"><meta property="og:title" content="' . e($title) . '"><meta property="og:description" content="' . e($desc) . '">'
+          . '<meta property="og:url" content="' . e($canon) . '"><meta property="og:image" content="https://zakademia.com/assets/images/og-image.png"><meta name="twitter:card" content="summary_large_image">'
+          . ($schema ? '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' : '')
+        : '<meta name="robots" content="noindex">';
     echo '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-        . '<title>' . e($title) . ' · Zakademia</title><link rel="icon" href="/assets/images/favicon.png">'
+        . '<title>' . e($title) . ' · Zakademia</title>' . $seo . '<link rel="icon" href="/assets/images/favicon.png">'
         . '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">'
         . '<link rel="stylesheet" href="/survei/assets/sv.css?v=3"><link rel="stylesheet" href="/belajar/lms.css?v=2">' . zk_kepala_aset() . '</head><body>'
         . zk_kepala();
@@ -308,4 +315,15 @@ function lms_video_embed(string $url): string
     if (str_starts_with($url, '/belajar/video.php')) return '<div class="lms-video"><video controls controlsList="nodownload" playsinline preload="metadata" src="' . e($url) . '" style="position:absolute;inset:0;width:100%;height:100%;background:#000"></video></div>';
     if (preg_match('#(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{6,})#', $url, $m)) return '<div class="lms-video"><iframe src="https://www.youtube-nocookie.com/embed/' . e($m[1]) . '" title="Video materi" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>';
     return '<p><a class="btn" href="' . e($url) . '" target="_blank" rel="noopener">Buka video</a></p>';
+}
+
+/** Schema.org Course untuk satu kelas (dipakai di katalog dan halaman kelas). */
+function lms_schema_course(array $k, int $menit = 0): array
+{
+    $c = ['@type' => 'Course', '@id' => 'https://zakademia.com/belajar/' . $k['slug'] . '/#kelas', 'name' => $k['judul'], 'description' => $k['ringkas'] ?? '', 'url' => 'https://zakademia.com/belajar/' . $k['slug'] . '/',
+        'inLanguage' => 'id', 'provider' => ['@type' => 'Organization', 'name' => 'Zakademia', 'url' => 'https://zakademia.com/'],
+        'hasCourseInstance' => ['@type' => 'CourseInstance', 'courseMode' => 'Online', 'courseWorkload' => 'PT' . max(1, (int)ceil($menit / 60)) . 'H'],
+        'offers' => ['@type' => 'Offer', 'category' => lms_berbayar($k) ? 'Paid' : 'Free', 'priceCurrency' => 'IDR', 'url' => 'https://zakademia.com/belajar/' . $k['slug'] . '/']];
+    if (!lms_berbayar($k)) $c['offers']['price'] = 0; elseif (preg_match('/[\d.]+/', str_replace('.', '', (string)($k['harga'] ?? '')), $m) && (int)$m[0] > 0) $c['offers']['price'] = (int)$m[0];
+    return $c;
 }

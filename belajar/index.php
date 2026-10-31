@@ -17,7 +17,11 @@ $kartu = function (array $k, ?array $r) use ($pdo) {
         . ($r ? '<div class="bar"><i style="width:' . $r['persen'] . '%"></i></div>' : '') . '</div></div>'
         . '<div class="kb"><p>' . e($k['ringkas']) . '</p><div class="km"><span>' . ($r ? ($r['tuntas'] ? 'Selesai · sertifikat terbit' : $r['persen'] . '% selesai') : (lms_berbayar($k) ? '<span class="harga">' . e($k['harga'] ?: 'Berbayar') . '</span>' : 'Gratis')) . '</span><span class="btn" style="min-height:36px;padding:6px 14px;font-size:13px">' . ($r ? 'Lanjutkan' : 'Lihat kelas') . '</span></div></div></a>';
 };
-lms_head('Ruang Belajar');
+$menitKelas = function (array $k) use ($pdo): int { return (int)$pdo->query('SELECT COALESCE(SUM(menit),0) FROM lms_materi t JOIN lms_modul m ON m.id = t.modul_id WHERE m.kelas_id = ' . (int)$k['id'])->fetchColumn(); };
+lms_head('Ruang Belajar', '', 'Kelas mandiri seputar zakat, wakaf, data, dan riset untuk lembaga filantropi Islam: materi singkat, kuis, praktik dengan alat Zakademia, dan sertifikat.', 'https://zakademia.com/belajar/',
+    ['@context' => 'https://schema.org', '@graph' => [
+        ['@type' => 'ItemList', 'name' => 'Kelas Ruang Belajar Zakademia', 'itemListElement' => array_values(array_map(fn($i, $k) => ['@type' => 'ListItem', 'position' => $i + 1, 'item' => lms_schema_course($k, $menitKelas($k))], array_keys($kelas), $kelas))],
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Zakademia', 'item' => 'https://zakademia.com/'], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Ruang Belajar', 'item' => 'https://zakademia.com/belajar/']]]]]);
 echo '<main class="wrap"><div class="lms-head"><h1>Belajar dengan tenang, praktik langsung.</h1><p class="mute">Kelas mandiri seputar zakat, wakaf, data, dan riset untuk lembaga. Setiap materi singkat, diakhiri kuis dan praktik dengan alat Zakademia. Kemajuan tersimpan di akun, dan sertifikat terbit otomatis saat kelas tuntas.</p></div>';
 if ($saya) {
     echo '<h2 style="margin:0 0 12px">Kelas saya</h2><div class="lms-grid" style="margin-bottom:34px">';

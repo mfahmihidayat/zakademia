@@ -13,8 +13,14 @@ def mtime(path):
 
 pages = [('/', 'index.html', 'weekly', '1.0'), ('/literasi/', 'literasi/index.html', 'daily', '0.9'),
          ('/buku/metodologi/', 'buku/index.php', 'monthly', '0.9'), ('/asesmen/', 'asesmen/index.html', 'monthly', '0.8'),
-         ('/survei/', 'survei/index.php', 'monthly', '0.6'), ('/analitik/', 'analitik/index.php', 'monthly', '0.6'),
-         ('/belajar/', 'belajar/index.php', 'monthly', '0.6'), ('/layanan/', 'layanan/index.php', 'monthly', '0.6')]
+         ('/belajar/', 'belajar/index.php', 'monthly', '0.7')]
+# /survei/ dan /analitik/ memerlukan masuk (noindex), /layanan/ hanya pengalihan ke beranda: tidak dimasukkan.
+# Halaman kelas: slug dari seed kelas (kelas baru ditambahkan di sini atau di seed).
+try:
+    import json
+    for k in json.load(open(os.path.join(ROOT, 'belajar', 'seed.json'), encoding='utf-8')):
+        if k.get('slug'): pages.append(('/belajar/%s/' % k['slug'], 'belajar/seed.json', 'monthly', '0.7'))
+except Exception: pass
 for f in sorted(glob.glob(os.path.join(ROOT, 'literasi', '*', 'index.html'))):
     slug = os.path.basename(os.path.dirname(f))
     pages.append(('/literasi/%s/' % slug, 'literasi/%s/index.html' % slug, 'monthly', '0.8'))

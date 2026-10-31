@@ -27,7 +27,9 @@ $no = $u && $daftar ? lms_sertifikat($u, $k) : null;
 $img = lms_pemandu($k['pemandu']);
 $n = 0; $menit = 0; $lanjut = null;
 foreach ($isi as $m) foreach ($m['materi'] as $t) { $n++; $menit += (int)$t['menit']; if (!$lanjut && $daftar && !isset($prog[(int)$t['id']])) $lanjut = $t; }
-lms_head($k['judul'], '<a href="/belajar/">Ruang Belajar</a>');
+lms_head($k['judul'], '<a href="/belajar/">Ruang Belajar</a>', (string)($k['ringkas'] ?? ''), 'https://zakademia.com/belajar/' . $k['slug'] . '/',
+    ['@context' => 'https://schema.org', '@graph' => [lms_schema_course($k, $menit),
+        ['@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => 'Zakademia', 'item' => 'https://zakademia.com/'], ['@type' => 'ListItem', 'position' => 2, 'name' => 'Ruang Belajar', 'item' => 'https://zakademia.com/belajar/'], ['@type' => 'ListItem', 'position' => 3, 'name' => $k['judul'], 'item' => 'https://zakademia.com/belajar/' . $k['slug'] . '/']]]]]);
 echo '<main class="wrap">';
 if ($ok) echo '<p class="ok" role="status" style="margin-bottom:14px">' . e($ok) . '</p>';
 if ($error) echo '<p class="err" role="alert" style="margin-bottom:14px">' . e($error) . '</p>';
